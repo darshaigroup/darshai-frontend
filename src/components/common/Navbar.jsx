@@ -1,6 +1,5 @@
-// This component is responsible for rendering the navigation bar at the top of the application. 
+// This component is responsible for rendering the navigation bar at the top of the application.
 // It includes links to different sections of the app and is designed to be responsive and visually appealing.
-
 import {useState} from 'react'
 import { NavLink } from 'react-router-dom';
 
@@ -12,30 +11,31 @@ const navItems = [
 
 function Navbar() {
   const [isOpen,setIsopen] = useState(false);
+  const [activeItem, setActiveItem] = useState(null);
   return (
    <nav className = "sticky top-0 z-50 bg-lightBg/80 backdrop-blur-md border-b border-gray-200">
     <div className = "max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-        
+
       {/* Logo Section */}
-        <div className = "flex items-center gap-2 cursor-pointer">
-            <span className = "text-xl font-bold text-primary">@</span>
-            <h1 className = "font-heading text-lg md:text-xl font-semibold text-gray-800">Darshai</h1>
+        <div className = "flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform">
+            <span className = "text-3xl font-bold text-primary animate-pulse">@</span>
+            <h1 className = "font-heading text-2xl md:text-3xl font-bold text-primary tracking-widest">DARSHAI</h1>
         </div>
 
       {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-6">
           {navItems.map((item)=>(
-            <NavLink 
+            <NavLink
             key = {item.name}
             to = {item.path}
-            className = {({isActive}) => `group relative font-body text-sm tracking-wide transition duration-300 ${isActive ? 'text-primary' : 'text-gray-600 hover:text-primary'} `}>
+            end={item.path === "/"} 
+            className = {({isActive}) => `group px-4 py-2 rounded-lg font-body text-base font-bold uppercase tracking-wide transition duration-300 ${isActive ? 'bg-primary/20 border border-primary/40 text-primary backdrop-blur-sm' : 'text-gray-700 hover:bg-primary/10 hover:text-primary'} `}>
               {item.name}
-              <span className = "absolute left-0 -bottom-1 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
             </NavLink>
           ))}
         </div>
 
-        <button className = "hidden md:block bg-primary text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-primaryDark hover:scale-105 transation duration-300">
+        <button className = "hidden md:block bg-primary text-white px-7 py-2.5 rounded-full font-bold uppercase tracking-wider text-sm shadow-lg hover:bg-primaryDark hover:scale-105 hover:shadow-xl transition duration-300">
           Login
         </button>
 
@@ -51,16 +51,21 @@ function Navbar() {
         <div className="flex flex-col items-center gap-6">
           {
             navItems.map((item) => (
-              <NavLink
-                 key = {item.name}
-                 to = {item.path}
-                 onClick={() => setIsopen(false)}
-                className={({isActive}) => `text-base font-body transition ${ isActive ? 'text-primary':'text-gray-700 hover:text-primary'}`}>
-                  {item.name}
-                </NavLink>
+            <NavLink
+           key={item.name}
+           to={item.path}
+           onClick={() => setActiveItem(item.name)}
+           className={`group px-4 py-2 rounded-lg font-body text-base font-bold uppercase tracking-wide transition duration-300 ${
+          activeItem === item.name && activeItem !== null
+          ? "bg-primary/20 border border-primary/40 text-primary backdrop-blur-sm"
+      : "text-gray-700 hover:bg-primary/10 hover:text-primary"
+  }`}
+>
+  {item.name}
+</NavLink>
             ))
           }
-          <button className="bg-primary text-white px-6 py-2 rounded-full font-medium shadow-md hover:bg-primaryDark transition">
+          <button className="bg-primary text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm shadow-lg hover:bg-primaryDark transition">
             Login
           </button>
 
@@ -68,6 +73,6 @@ function Navbar() {
       </div>
    </nav>
   );
-};
+}
 
 export default Navbar;                                       
