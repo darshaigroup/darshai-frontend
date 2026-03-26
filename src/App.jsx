@@ -11,7 +11,7 @@ function App() {
   return (
    <div className="h-screen flex items-center justify-center bg-gray-100">
       <h1 className="text-5xl font-bold text-green-600">
-        Tailwind v4 Working 🚀
+        Tailwind v4 Working 
       </h1>
     </div>
   );
