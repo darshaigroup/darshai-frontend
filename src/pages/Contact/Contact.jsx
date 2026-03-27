@@ -1,5 +1,5 @@
 import React from 'react'
-
+import bg from "../../assets/images/bg.png";
 function Contact() {
   const [formData, setFormData] = React.useState({
     name: "",
@@ -22,9 +22,19 @@ function Contact() {
     };
 
   return (
-    <div className="min-h-screen bg-lightBg px-6 md:px-16 py-12">
-      
-      <div className="grid md:grid-cols-2 gap-10 items-center">
+    <div className="relative min-h-screen flex items-center px-6 md:px-16 py-12 overflow-hidden">
+
+      {/* 🔥 Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center scale-105 opacity-80"
+        style={{ backgroundImage: `url(${bg})` }}
+      />
+
+      {/* 🔥 Sink Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/70 to-white/10 backdrop-blur-sm" />
+
+      {/* 🔥 CONTENT */}
+      <div className="relative z-10 grid md:grid-cols-2 gap-10 items-center w-full max-w-7xl mx-auto">
 
         {/* LEFT */}
         <div>

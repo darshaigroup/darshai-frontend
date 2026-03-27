@@ -10,7 +10,9 @@ export default {
         primary: "#6B8E4E",
         primaryDark: "#4F6D3A",
         gold: "#C9A24A",
-        lightBg: "#F7F5F0",
+        lightBg: "#F7F5F0",   
+        primaryLight: "#2E6F95", 
+        accent: "#6FBF73",      
       },
       fontFamily: {
         heading: ["Playfair Display", "serif"],
