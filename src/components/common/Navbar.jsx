@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-//import logo from "../../assets/logo.png";
+import logo from "../../assets/images/logo.png";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -35,17 +35,17 @@ function Navbar() {
       <div className="max-w-9xl mx-auto flex items-center justify-between px-5 md:px-8 py-4">
 
         {/* 🔹 Logo */}
-        {/* <div className="flex items-center gap-2">
-          <img src={logo} alt="Darshai Logo" className="h-8 md:h-10" />
-        </div> */}
-        <div className="flex items-center gap-1 cursor-pointer group">
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="Darshai Logo" className="h-50 md:h-20" />
+        </div>
+        {/* <div className="flex items-center gap-1 cursor-pointer group">
           <span className="text-3xl font-bold text-primary group-hover:rotate-12 transition duration-300">
             @
           </span>
           <h1 className="font-heading text-2xl md:text-3xl font-bold text-primary tracking-widest">
             DARSHAI
           </h1>
-        </div>
+        </div> */}
 
         {/* 🔹 Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
