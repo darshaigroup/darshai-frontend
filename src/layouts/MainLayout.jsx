@@ -6,9 +6,12 @@ const MainLayout = () => {
   return (
     <div className="bg-lightBg min-h-screen">
       <Navbar />
-      <main>
+      
+      {/* Add padding so content not hidden behind fixed navbar */}
+      <main className="pt-24">
         <Outlet />
       </main>
+
       <Footer />
     </div>
   );

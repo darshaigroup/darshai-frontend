@@ -7,6 +7,9 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
+
+  // ✅ Added Doctor Dashboard
+  { name: "Dashboard", path: "/doctor-dashboard" },
 ];
 
 function Navbar() {
@@ -27,25 +30,17 @@ function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-  scrolled
-    ? "bg-white border-b border-gray-200 shadow-sm"
-    : "bg-white"
-}`}
+        scrolled
+          ? "bg-white border-b border-gray-200 shadow-sm"
+          : "bg-white"
+      }`}
     >
       <div className="max-w-9xl mx-auto flex items-center justify-between px-5 md:px-8 py-4">
 
         {/* 🔹 Logo */}
         <div className="flex items-center gap-2">
-          <img src={logo} alt="Darshai Logo" className="h-50 md:h-20" />
+          <img src={logo} alt="Darshai Logo" className="h-20 md:h-20" />
         </div>
-        {/* <div className="flex items-center gap-1 cursor-pointer group">
-          <span className="text-3xl font-bold text-primary group-hover:rotate-12 transition duration-300">
-            @
-          </span>
-          <h1 className="font-heading text-2xl md:text-3xl font-bold text-primary tracking-widest">
-            DARSHAI
-          </h1>
-        </div> */}
 
         {/* 🔹 Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
@@ -59,9 +54,10 @@ function Navbar() {
                 to={item.path}
                 className={({ isActive }) =>
                   `px-5 py-2 rounded-full text-sm font-normal border transition duration-300
-          ${isActive
-                    ? "bg-primary text-white border-primary"
-                    : "border-primary text-primary hover:bg-primary hover:text-white"
+                  ${
+                    isActive
+                      ? "bg-primary text-white border-primary"
+                      : "border-primary text-primary hover:bg-primary hover:text-white"
                   }`
                 }
               >
@@ -71,7 +67,7 @@ function Navbar() {
           ))}
         </div>
 
-        {/* 🔹 Button */}
+        {/* 🔹 Login Button */}
         <button className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-primaryLight transition">
           Login
         </button>
@@ -89,17 +85,17 @@ function Navbar() {
 
       {/* 🔹 Mobile Dropdown */}
       <div
-        className={`md:hidden transition-all duration-500 overflow-hidden ${isOpen ? "max-h-80 py-4" : "max-h-0"
-          } bg-white/80 backdrop-blur-xl`}
+        className={`md:hidden transition-all duration-500 overflow-hidden ${
+          isOpen ? "max-h-80 py-4" : "max-h-0"
+        } bg-white/80 backdrop-blur-xl`}
       >
         <div className="flex flex-col items-center gap-5">
-
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
               onClick={() => setIsOpen(false)}
-              className="px-5 py-2 rounded-full text-gray-700 hover:bg-white/30 hover:backdrop-blur-md hover:text-primary transition"
+              className="px-5 py-2 rounded-full text-gray-700 hover:bg-white/30 hover:text-primary transition"
             >
               {item.name}
             </NavLink>
