@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+//Tailwind configuration file for the project, defining custom colors, fonts, and animations to be used throughout the application. This configuration allows for a consistent design language and enhances the visual appeal of the user interface.
+** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
