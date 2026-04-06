@@ -4,11 +4,10 @@ import Footer from "../components/common/Footer";
 
 const MainLayout = () => {
   return (
-    <div className="bg-lightBg min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      
-      {/* Add padding so content not hidden behind fixed navbar */}
-      <main className="pt-24">
+
+      <main className="pt-28">
         <Outlet />
       </main>
 
