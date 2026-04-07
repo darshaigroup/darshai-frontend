@@ -12,7 +12,8 @@ import {
   HeartPulse,
   Shield,
   TrendingUp,
-  Award
+  Award,
+  Leaf
 } from "lucide-react";
 import {
   LineChart,
@@ -22,7 +23,9 @@ import {
   BarChart,
   Bar,
   AreaChart,
-  Area
+  Area,
+  RadialBarChart,
+  RadialBar
 } from "recharts";
 
 const patients = [
@@ -33,7 +36,8 @@ const patients = [
     photo: "doctor.jpg",
     avatarColor: "from-emerald-400 to-teal-500",
     longevityScore: 78,
-    dosha: "Vata-Pitta",
+    doshaScores: {vata: 45, pitta: 35, kapha: 20},
+    dominantDosha: "Vata-Pitta",
     doshaColor: "from-blue-400 to-indigo-500",
     riskLevel: "medium",
     lastVisit: "2 days ago",
@@ -58,7 +62,8 @@ const patients = [
     photo: "wellness.png",
     avatarColor: "from-green-400 to-emerald-500",
     longevityScore: 85,
-    dosha: "Kapha",
+    doshaScores: {vata: 15, pitta: 25, kapha: 60},
+    dominantDosha: "Kapha",
     doshaColor: "from-emerald-400 to-teal-500",
     riskLevel: "low",
     lastVisit: "5 days ago",
@@ -83,7 +88,8 @@ const patients = [
     photo: "herb.png",
     avatarColor: "from-red-400 to-orange-500",
     longevityScore: 72,
-    dosha: "Pitta",
+    doshaScores: {vata: 25, pitta: 55, kapha: 20},
+    dominantDosha: "Pitta",
     doshaColor: "from-orange-400 to-red-500",
     riskLevel: "high",
     lastVisit: "1 day ago",
@@ -108,7 +114,8 @@ const patients = [
     photo: "doctor1.png",
     avatarColor: "from-purple-400 to-violet-500",
     longevityScore: 81,
-    dosha: "Tridoshic",
+    doshaScores: {vata: 35, pitta: 30, kapha: 35},
+    dominantDosha: "Tridoshic",
     doshaColor: "from-indigo-400 to-purple-500",
     riskLevel: "low",
     lastVisit: "3 days ago",
@@ -134,11 +141,19 @@ const riskBadges = {
   high: { color: "red", label: "High Risk" }
 };
 
+const doshaConfig = [
+  { name: "Vata", color: "from-blue-400 to-indigo-500", fill: "#3b82f6" },
+  { name: "Pitta", color: "from-orange-400 to-red-500", fill: "#ef4444" },
+  { name: "Kapha", color: "from-emerald-400 to-teal-500", fill: "#10b981" }
+];
+
 export default function Patients() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterRisk, setFilterRisk] = useState("all");
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [recalculateOpen, setRecalculateOpen] = useState(false);
+  const [tempDoshaScores, setTempDoshaScores] = useState({});
 
   const filteredPatients = patients.filter((patient) => {
     const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -265,7 +280,7 @@ export default function Patients() {
             >
               {/* Gradient Badge */}
               <div className={`absolute top-6 right-6 px-4 py-2 rounded-full text-xs font-bold bg-gradient-to-r ${patient.doshaColor} text-white shadow-lg`}>
-                {patient.dosha}
+                {patient.dominantDosha}
               </div>
 
               {/* Avatar */}
@@ -289,8 +304,37 @@ export default function Patients() {
                 <span>{patient.age} yrs • {patient.lastVisit}</span>
               </div>
 
+              {/* Dosha Scores */}
+              <div className="mb-6 pt-6 border-t border-white/10">
+                <div className="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <Leaf className="w-4 h-4" />
+                  Dosha Scores
+                </div>
+                <div className="space-y-3">
+                  {doshaConfig.map(({ name, color, fill }, idx) => (
+                    <div key={name} className="flex items-center justify-between">
+                      <span className="text-indigo-300 font-medium capitalize">{name}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 bg-white/10 rounded-full h-2 overflow-hidden">
+                          <div 
+                            className={`h-2 rounded-full transition-all`}
+                            style={{ 
+                              width: `${selectedPatient ? selectedPatient.doshaScores[name.toLowerCase()] || 0 : patient.doshaScores[name.toLowerCase()]}%`,
+                              background: fill 
+                            }} 
+                          />
+                        </div>
+                        <span className="text-white font-bold text-sm">
+                          {selectedPatient ? selectedPatient.doshaScores[name.toLowerCase()] || 0 : patient.doshaScores[name.toLowerCase()]}%
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-6 mb-8">
+              <div className="grid grid-cols-2 gap-6 mb-8"> 
                 {/* Longevity */}
                 <div className="group-hover:scale-105 transition-transform">
                   <div className="flex items-center gap-3 mb-2">
@@ -335,9 +379,156 @@ export default function Patients() {
                     <span className="font-bold text-white">RHR: <span className="text-emerald-400">{patient.rhr} bpm</span></span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
-    <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-      <path fillRule="evenodd" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" clipRule="evenodd"/>
-    </svg>
+                    <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" clipRule="evenodd"/>
+                    </svg>
+                    <span className="font-bold text-white">Sleep: <span className="text-emerald-400">{patient.sleepAvg}h avg</span></span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Protocol & CTA */}
+              <div className="pt-6 border-t border-white/10">
+                <div className="text-sm text-indigo-400 mb-4">{patient.protocol}</div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 py-4 px-8 rounded-2xl font-bold text-white shadow-xl hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-3 text-lg"
+                >
+                  <Eye className="w-5 h-5" />
+                  View Full Profile
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Patients Grid */}
+        <motion.div
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+        >
+          {filteredPatients.map((patient, index) => (
+            <motion.div
+              key={patient.id}
+              variants={cardVariants}
+              custom={index}
+              whileHover={{ y: -12, scale: 1.02 }}
+              className="group bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl hover:shadow-emerald-500/50 hover:border-emerald-400/50 transition-all duration-500 cursor-pointer relative overflow-hidden"
+              onClick={() => setSelectedPatient(patient)}
+            >
+              {/* Gradient Badge */}
+              <div className={`absolute top-6 right-6 px-4 py-2 rounded-full text-xs font-bold bg-gradient-to-r ${patient.doshaColor} text-white shadow-lg`}>
+                {patient.dominantDosha}
+              </div>
+
+              {/* Avatar */}
+              <div className="flex items-start justify-between mb-6 relative z-10">
+                <div className={`w-24 h-24 rounded-3xl flex items-center justify-center shadow-2xl text-2xl font-bold text-white ${patient.avatarColor} group-hover:scale-110 transition-transform duration-300`}>
+                  {patient.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div className="opacity-0 group-hover:opacity-100 transition-all flex gap-2 ml-auto">
+                  <motion.button whileTap={{ scale: 0.9 }} className="p-3 bg-white/20 hover:bg-white/30 rounded-2xl border border-white/30 transition-all">
+                    <MessageCircle size={18} />
+                  </motion.button>
+                  <motion.button whileTap={{ scale: 0.9 }} className="p-3 bg-white/20 hover:bg-white/30 rounded-2xl border border-white/30 transition-all">
+                    <Calendar size={18} />
+                  </motion.button>
+                </div>
+              </div>
+
+              {/* Name & Status */}
+              <h3 className="text-2xl font-bold text-white mb-2">{patient.name}</h3>
+              <div className="flex items-center gap-4 mb-6 text-sm text-indigo-300">
+                <span>{patient.age} yrs • {patient.lastVisit}</span>
+              </div>
+
+              {/* Dosha Scores */}
+              <div className="mb-6 pt-6 border-t border-white/10">
+                <div className="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <Leaf className="w-4 h-4" />
+                  Dosha Scores
+                </div>
+                <div className="space-y-3">
+                  {doshaConfig.map(({ name, color, fill }, idx) => (
+                    <div key={name} className="flex items-center justify-between">
+                      <span className="text-indigo-300 font-medium capitalize">{name}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 bg-white/10 rounded-full h-2 overflow-hidden">
+                          <div 
+                            className={`h-2 rounded-full transition-all`}
+                            style={{ 
+                              width: `${selectedPatient ? selectedPatient.doshaScores[name.toLowerCase()] || 0 : patient.doshaScores[name.toLowerCase()]}%`,
+                              background: fill 
+                            }} 
+                          />
+                        </div>
+                        <span className="text-white font-bold text-sm">
+                          {selectedPatient ? selectedPatient.doshaScores[name.toLowerCase()] || 0 : patient.doshaScores[name.toLowerCase()]}%
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Metrics Grid */}
+              <div className="grid grid-cols-2 gap-6 mb-8"> 
+                {/* Longevity */}
+                <div className="group-hover:scale-105 transition-transform">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-emerald-400 font-bold text-2xl">{patient.longevityScore}</div>
+                      <div className="text-xs text-indigo-400 uppercase tracking-wider">Longevity Score</div>
+                    </div>
+                  </div>
+                  <div className="w-full bg-white/10 rounded-full h-2">
+                    <div className="bg-gradient-to-r from-emerald-400 to-teal-500 h-2 rounded-full transition-all" style={{ width: `${patient.progress}%` }} />
+                  </div>
+                </div>
+
+                {/* Risk */}
+                <div>
+                  <div className={`px-4 py-2 rounded-2xl inline-flex items-center gap-2 text-sm font-bold text-white shadow-lg ${patient.riskColor === 'green' ? 'bg-emerald-500/90' : patient.riskColor === 'orange' ? 'bg-orange-500/90' : 'bg-red-500/90'}`}>
+                    <AlertCircle size={16} />
+                    {riskBadges[patient.riskLevel]?.label || patient.riskLevel}
+                  </div>
+                </div>
+              </div>
+
+              {/* Charts */}
+              <div className="grid grid-cols-2 gap-6 mb-8 h-32">
+                {/* HRV Trend */}
+                <div className="bg-white/5 rounded-2xl p-3 border border-white/10">
+                  <div className="text-xs text-indigo-400 uppercase tracking-wider mb-2">HRV Trend</div>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={patient.hrvTrend}>
+                      <Line type="monotone" dataKey="hrv" stroke="#10b981" strokeWidth={3} dot={false} />
+                      <Tooltip />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                {/* Sleep/RHR */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-sm">
+                    <HeartPulse className="w-5 h-5 text-red-400" />
+                    <span className="font-bold text-white">RHR: <span className="text-emerald-400">{patient.rhr} bpm</span></span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" clipRule="evenodd"/>
+                    </svg>
                     <span className="font-bold text-white">Sleep: <span className="text-emerald-400">{patient.sleepAvg}h avg</span></span>
                   </div>
                 </div>
@@ -388,7 +579,7 @@ export default function Patients() {
                           <Shield className="w-5 h-5" />
                           Longevity: <span className="text-emerald-400 font-bold text-2xl">{selectedPatient.longevityScore}</span>
                         </span>
-                        <span>{selectedPatient.dosha}</span>
+                        <span>{selectedPatient.dominantDosha}</span>
                       </div>
                     </div>
                     <motion.button
@@ -405,6 +596,56 @@ export default function Patients() {
 
                 {/* Modal Content */}
                 <div className="p-8 space-y-8">
+                  {/* Dosha Analysis */}
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
+                    <div className="flex items-center gap-3 mb-8">
+                      <Leaf className="w-8 h-8 text-emerald-400" />
+                      <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">Vikriti Analysis</h3>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      <div>
+                        <ResponsiveContainer width="100%" height={250}>
+                          <RadialBarChart data={doshaConfig.map(d => ({...d, vikriti: selectedPatient.doshaScores[d.name.toLowerCase()]}))} innerRadius="30%" outerRadius="80%">
+                            <RadialBar
+                              minAngle={15}
+                              background
+                              clockWise
+                              dataKey="vikriti"
+                              cornerRadius={20}
+                            />
+                            <Tooltip />
+                          </RadialBarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      <div className="space-y-6">
+                        {doshaConfig.map(dosha => {
+                          const score = selectedPatient.doshaScores[dosha.name.toLowerCase()];
+                          const aggravation = score > 33 ? `+${Math.round(score - 33)}% aggravation` : 'Stable';
+                          return (
+                            <div key={dosha.name} className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                              <div className={`w-20 h-20 mx-auto rounded-2xl flex items-center justify-center shadow-xl mb-4`} 
+                                   style={{ backgroundColor: dosha.fill + '40', border: `2px solid ${dosha.fill}60` }}>
+                                <span className="text-2xl font-bold text-white">{score}%</span>
+                              </div>
+                              <div className="font-bold text-white text-lg capitalize mb-1">{dosha.name}</div>
+                              <div className={`text-sm font-medium ${score > 40 ? 'text-orange-400' : 'text-emerald-400'}`}>
+                                {aggravation}
+                              </div>
+                            </div>
+                          );
+                        })}
+                        <motion.button 
+                          whileHover={{ scale: 1.05 }} 
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => setRecalculateOpen(true)}
+                          className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 py-4 px-6 rounded-2xl font-bold text-white shadow-xl hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-3 text-lg mx-auto"
+                        >
+                          🔄 Recalculate Dosha
+                        </motion.button>
+                      </div>
+                    </div>
+                  </motion.div>
+
                   {/* Biometrics Timeline */}
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-6">7-Day Biometrics</h3>
@@ -432,7 +673,9 @@ export default function Patients() {
                       <div className="bg-white/5 rounded-3xl p-6 border border-white/10">
                         <div className="flex items-center gap-3 mb-4">
                           <div className="w-12 h-12 bg-purple-500/20 border-2 border-purple-400/30 rounded-2xl flex items-center justify-center">
-                            <Moon className="w-6 h-6 text-purple-400" />
+                            <svg className="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h1v1a1 1 0 001 1h3a1 1 0 001 -1v-1h1a1 1 0 100 -2h-1V8a1 1 0 00-1 -1h-3a1 1 0 00-1 1v1H7z" clipRule="evenodd"/>
+                            </svg>
                           </div>
                           <div>
                             <div className="text-emerald-400 font-bold text-xl">{selectedPatient.sleepAvg}h avg</div>
@@ -486,15 +729,106 @@ export default function Patients() {
               </motion.div>
             </motion.div>
           )}
+      </AnimatePresence>
+
+        {/* Recalculate Dosha Modal */}
+        <AnimatePresence>
+          {recalculateOpen && selectedPatient && (
+            <motion.div
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4"
+              onClick={() => setRecalculateOpen(false)}
+            >
+              <motion.div
+                layout
+                className="bg-gradient-to-br from-slate-800/95 to-emerald-900/95 backdrop-blur-xl border border-emerald-400/50 rounded-3xl max-w-md w-full max-h-[80vh] overflow-y-auto shadow-3xl"
+                onClick={e => e.stopPropagation()}
+              >
+                <div className="p-8 border-b border-emerald-400/30">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent mb-2">
+                    Recalculate Dosha
+                  </h3>
+                  <p className="text-indigo-300">Quick reassessment based on recent biometrics</p>
+                </div>
+                <div className="p-8 space-y-6">
+                  {['vata', 'pitta', 'kapha'].map((dosha) => (
+                    <div key={dosha}>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="capitalize font-bold text-white">{dosha}</span>
+                        <span className="text-emerald-400 font-bold text-xl">{tempDoshaScores[dosha] || selectedPatient.doshaScores[dosha]}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="5"
+                        max="80"
+                        value={tempDoshaScores[dosha] || selectedPatient.doshaScores[dosha]}
+                        onChange={(e) => {
+                          const newScores = {
+                            ...tempDoshaScores,
+                            [dosha]: parseInt(e.target.value)
+                          };
+                          // Normalize to ~100%
+                          const total = Object.values(newScores).reduce((a, b) => a + b, 0);
+                          if (total > 0) {
+                            Object.keys(newScores).forEach(key => {
+                              newScores[key] = Math.round((newScores[key] / total) * 100);
+                            });
+                          }
+                          setTempDoshaScores(newScores);
+                        }}
+                        className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
+                      />
+                    </div>
+                  ))}
+                  <div className="flex gap-3 pt-6 border-t border-white/10">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setRecalculateOpen(false)}
+                      className="flex-1 py-4 px-6 bg-white/20 backdrop-blur border border-white/30 rounded-2xl text-white font-bold hover:bg-white/30 transition-all text-sm"
+                    >
+                      Cancel
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        // Mock AI recalculation with small random adjustment
+                        const adjustments = {
+                          vata: (Math.random() - 0.5) * 8,
+                          pitta: (Math.random() - 0.5) * 8,
+                          kapha: (Math.random() - 0.5) * 8
+                        };
+                        const newScores = {};
+                        let total = 0;
+                        ['vata', 'pitta', 'kapha'].forEach(d => {
+                          newScores[d] = Math.max(5, Math.round((selectedPatient.doshaScores[d] || 33) + adjustments[d]));
+                          total += newScores[d];
+                        });
+                        // Normalize
+                        Object.keys(newScores).forEach(d => {
+                          newScores[d] = Math.round((newScores[d] / total) * 100);
+                        });
+                        
+                        // Update selected patient (local state only)
+                        setSelectedPatient(prev => ({ ...prev, doshaScores: newScores }));
+                        setRecalculateOpen(false);
+                        setTempDoshaScores({});
+                      }}
+                      className="flex-1 py-4 px-6 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-2xl font-bold text-white shadow-xl hover:shadow-emerald-500/50 transition-all text-sm flex items-center justify-center gap-2"
+                    >
+                      ✅ Update Dosha
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
-
-      <style jsx>{`
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

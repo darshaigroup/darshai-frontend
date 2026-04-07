@@ -15,7 +15,7 @@ import {
   RadialBarChart,
   RadialBar,
 } from "recharts";
-import { HeartPulse, AlertCircle, Leaf, Activity, Clock, Zap, Shield } from "lucide-react";
+import { HeartPulse, AlertCircle, Leaf, Activity, Clock, Zap, Shield, Users, Calendar } from "lucide-react";
 
 const patientData = {
   name: "Rajesh Kumar",
@@ -83,6 +83,61 @@ export default function DoctorDashboard() {
           <button className="px-6 py-3 bg-white/10 backdrop-blur border border-white/20 rounded-2xl hover:bg-white/20 transition-all hover:scale-105 text-indigo-100 font-medium">
             Switch Patient
           </button>
+        </div>
+
+        {/* Patient Overview Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl p-8 shadow-xl hover:shadow-slate-500/50 hover:scale-[1.02] transition-all group cursor-default">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-slate-400/20 to-indigo-400/20 border-2 border-slate-400/40 rounded-2xl flex items-center justify-center group-hover:bg-slate-400/30 transition-all">
+                <Users className="w-7 h-7 text-slate-300 group-hover:text-slate-100" />
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white mb-1">247</div>
+                <div className="text-slate-300 text-sm font-medium">Total Patients</div>
+              </div>
+            </div>
+            <div className="text-xs text-indigo-400">All registered cases</div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl p-8 shadow-xl hover:shadow-emerald-500/50 hover:scale-[1.02] transition-all group">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400/30 to-green-500/30 border-2 border-emerald-400/50 rounded-2xl flex items-center justify-center group-hover:bg-emerald-400/50 transition-all">
+                <Users className="w-7 h-7 text-emerald-400 group-hover:text-emerald-100" />
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white mb-1">24</div>
+                <div className="text-emerald-400 text-sm font-bold">New Patients</div>
+              </div>
+            </div>
+            <div className="text-xs text-indigo-300">This month</div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl p-8 shadow-xl hover:shadow-blue-500/50 hover:scale-[1.02] transition-all group">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-400/30 to-indigo-500/30 border-2 border-blue-400/50 rounded-2xl flex items-center justify-center group-hover:bg-blue-400/50 transition-all">
+                <Users className="w-7 h-7 text-blue-400 group-hover:text-blue-100" />
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white mb-1">223</div>
+                <div className="text-blue-400 text-sm font-bold">Old Patients</div>
+              </div>
+            </div>
+            <div className="text-xs text-indigo-300">Returning cases</div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl p-8 shadow-xl hover:shadow-purple-500/50 hover:scale-[1.02] transition-all group">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-400/30 to-pink-500/30 border-2 border-purple-400/50 rounded-2xl flex items-center justify-center group-hover:bg-purple-400/50 transition-all">
+                <Calendar className="w-7 h-7 text-purple-400 group-hover:text-purple-100" />
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white mb-1">18</div>
+                <div className="text-purple-400 text-sm font-bold">Today's Appointments</div>
+              </div>
+            </div>
+            <div className="text-xs text-indigo-300">Scheduled consultations</div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 mb-8">

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
-import LoginBg from "../../assets/images/Login.jpg";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,148 +18,137 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
 
-    try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/auth/login`,
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed");
       }
+    );
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    const data = await res.json();
 
-      alert("Login successful!");
-      navigate("/doctor-dashboard");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      throw new Error(data.message || "Login failed");
     }
-  };
 
-  const handleDemo = () => {
-    setFormData({
-      email: "demo@doctor.com",
-      password: "demo123"
-    });
-  };
+    // ✅ Save token
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    // ✅ Redirect from backend response (best practice)
+    navigate(data.redirect || "/doctor-dashboard");
+
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: `url(${LoginBg})` }}
-      />
-      
-      {/* Animated Floating Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-blob"></div>
-        <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-gradient-to-r from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-32 right-1/4 w-80 h-80 bg-gradient-to-r from-pink-400/20 to-rose-400/20 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border border-gray-200">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Login
+          </h1>
+<p className="text-gray-600 font-bold tracking-wider">Welcome back to DARSHAI</p>
+        </div>
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-        {/* Glassmorphism Card */}
-        <div className="w-full max-w-md p-8 sm:p-10 bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl animate-float shadow-glow">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white via-indigo-100 to-white/70 bg-clip-text text-transparent mb-3 drop-shadow-lg">
-              Login
-            </h1>
-            <p className="text-indigo-100/90 text-lg sm:text-xl font-medium drop-shadow-md">
-              Welcome back to your wellness journey
-            </p>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 p-4 rounded-lg mb-6">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-lg"
+              required
+            />
           </div>
 
-          {error && (
-            <div className="bg-red-500/20 border border-red-400/50 text-red-100 p-4 rounded-2xl mb-6 backdrop-blur-sm shadow-glow animate-pulse">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="group relative">
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/10 hover:bg-white/20 border border-white/30 rounded-2xl backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-400/30 transition-all duration-500 text-lg shadow-inner group-hover:shadow-glow"
-                required
-              />
-            </div>
-
-            <div className="group relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-5 py-4 pr-12 bg-white/10 hover:bg-white/20 border border-white/30 rounded-2xl backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-400/30 transition-all duration-500 text-lg shadow-inner group-hover:shadow-glow"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-white/70 hover:text-white transition-all hover:scale-110"
-              >
-                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
-              </button>
-              
-            </div>
-
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 text-indigo-200/90">
-                <input type="checkbox" className="w-5 h-5 rounded-lg bg-white/10 border-white/30 focus:ring-indigo-400 text-indigo-400 transition-all hover:scale-105" />
-                <span>Remember me</span>
-              </label>
-              <a href="/forgot-password" className="text-indigo-300 hover:text-white font-medium transition-all hover:underline">
-                Forgot Password?
-              </a>
-            </div>
-
+          <div className="relative">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-lg"
+              required
+            />
             <button
-              type="submit"
-              disabled={loading}
-              className={`group w-full py-4 rounded-2xl font-semibold text-lg transition-all duration-300 overflow-hidden relative ${
-                loading
-                  ? "bg-slate-600/50 cursor-not-allowed"
-                  : "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-2xl hover:shadow-pink-500/30 hover:scale-[1.02] active:scale-[0.98]"
-              } text-white border-0 focus:outline-none focus:ring-4 focus:ring-indigo-500/40 shadow-xl shadow-indigo-500/20`}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-11 p-1 text-gray-500 hover:text-gray-700"
             >
-              {loading ? (
-                <>
-                  <span className="flex items-center justify-center gap-2">
-                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    Signing In...
-                  </span>
-                </>
-              ) : (
-                "Login"
-              )}
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
             </button>
-          </form>
+          </div>
 
-          <p className="mt-8 pt-6 text-center text-indigo-300 text-xs border-t border-white/10">
-            Don't have an account?{' '}
-            <a href="/signup" className="font-semibold text-white hover:text-emerald-400 transition-all hover:underline">
-              Sign up here
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex items-center">
+              <input type="checkbox" className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+              <span className="ml-2 text-gray-700">Remember me</span>
+            </label>
+            <a href="/forgot-password" className="text-blue-600 hover:text-blue-500 font-medium">
+              Forgot Password?
             </a>
-          </p>
-        </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-1 px-3 rounded-lg font-medium text-xs transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-primary hover:bg-primary-dark text-white"
+            }`}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <div className="w-4 h-4 border border-gray-300 border-t-primary rounded-full animate-spin"></div>
+                Signing in...
+              </span>
+            ) : (
+              "Login"
+            )}
+          </button>
+        </form>
+
+
+
+        <p className="mt-8 text-center text-sm text-gray-600 border-t pt-6">
+          Don't have an account?{' '}
+          <a href="/signup" className="font-semibold text-primary hover:text-primary-dark">
+            Sign up here
+          </a>
+        </p>
       </div>
     </div>
   );
