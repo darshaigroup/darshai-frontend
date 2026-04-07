@@ -7,16 +7,15 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
+  { name: "Dashboard", path: "/doctor-dashboard" },
 ];
 
-function Navbar() {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -27,57 +26,46 @@ function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-  scrolled
-    ? "bg-white border-b border-gray-200 shadow-sm"
-    : "bg-white"
-}`}
+        scrolled ? "bg-white border-b border-gray-200 shadow-sm" : "bg-white"
+      }`}
     >
       <div className="max-w-9xl mx-auto flex items-center justify-between px-5 md:px-8 py-4">
-
-        {/* 🔹 Logo */}
         <div className="flex items-center gap-2">
-          <img src={logo} alt="Darshai Logo" className="h-50 md:h-20" />
+          <img src={logo} alt="Darshai Logo" className="h-16 md:h-20" />
         </div>
-        {/* <div className="flex items-center gap-1 cursor-pointer group">
-          <span className="text-3xl font-bold text-primary group-hover:rotate-12 transition duration-300">
-            @
-          </span>
-          <h1 className="font-heading text-2xl md:text-3xl font-bold text-primary tracking-widest">
-            DARSHAI
-          </h1>
-        </div> */}
 
-        {/* 🔹 Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
-          {navItems.map((item) => (
+          {navItems.map(({ name, path }) => (
             <motion.div
-              key={item.name}
+              key={name}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
             >
               <NavLink
-                to={item.path}
+                to={path}
                 className={({ isActive }) =>
-                  `px-5 py-2 rounded-full text-sm font-normal border transition duration-300
-          ${isActive
-                    ? "bg-primary text-white border-primary"
-                    : "border-primary text-primary hover:bg-primary hover:text-white"
+                  `px-5 py-2 rounded-full text-sm font-normal border transition duration-300 ${
+                    isActive
+                      ? "bg-primary text-white border-primary"
+                      : "border-primary text-primary hover:bg-primary hover:text-white"
                   }`
                 }
               >
-                {item.name}
+                {name}
               </NavLink>
             </motion.div>
           ))}
         </div>
 
-        {/* 🔹 Button */}
-        <button className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-primaryLight transition">
+        <NavLink
+          to="/login"
+          className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-primaryLight transition"
+        >
           Login
-        </button>
+        </NavLink>
 
-        {/* 🔹 Mobile Menu Button */}
         <button
+          aria-label="Toggle menu"
           className="md:hidden flex flex-col gap-1"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -87,31 +75,32 @@ function Navbar() {
         </button>
       </div>
 
-      {/* 🔹 Mobile Dropdown */}
       <div
-        className={`md:hidden transition-all duration-500 overflow-hidden ${isOpen ? "max-h-80 py-4" : "max-h-0"
-          } bg-white/80 backdrop-blur-xl`}
+        className={`md:hidden transition-all duration-500 overflow-hidden ${
+          isOpen ? "max-h-80 py-4" : "max-h-0"
+        } bg-white/80 backdrop-blur-xl`}
       >
         <div className="flex flex-col items-center gap-5">
-
-          {navItems.map((item) => (
+          {navItems.map(({ name, path }) => (
             <NavLink
-              key={item.name}
-              to={item.path}
+              key={name}
+              to={path}
               onClick={() => setIsOpen(false)}
-              className="px-5 py-2 rounded-full text-gray-700 hover:bg-white/30 hover:backdrop-blur-md hover:text-primary transition"
+              className="px-5 py-2 rounded-full text-gray-700 hover:bg-white/30 hover:text-primary transition"
             >
-              {item.name}
+              {name}
             </NavLink>
           ))}
 
-          <button className="bg-primary text-white px-6 py-2 rounded-full">
+          <NavLink
+            to="/login"
+            className="bg-primary text-white px-6 py-2 rounded-full"
+            onClick={() => setIsOpen(false)}
+          >
             Login
-          </button>
+          </NavLink>
         </div>
       </div>
     </motion.nav>
   );
 }
-
-export default Navbar;
