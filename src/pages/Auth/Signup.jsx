@@ -6,12 +6,12 @@ function Signup() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
     phone: "",
-    specialty: ""
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -23,41 +23,50 @@ function Signup() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.confirmPassword) {
+    setError("Passwords do not match");
+    return;
+  }
+
+  setLoading(true);
+  setError("");
+
+  try {
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: formData.firstname,
+        lastName: formData.lastname,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword
+      }),
+    });
+
+    const data = await res.json();
+    console.log("API RESPONSE:", data);
+
+    if (!res.ok) {
+      throw new Error(data.message || "Signup failed");
     }
 
-    setLoading(true);
-    setError("");
+    alert("Signup successful!");
+    navigate("/patient-dashboard");
 
-    try {
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      alert("Signup successful! Welcome aboard!");
-      navigate("/doctor-dashboard");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    console.error(err);
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-900 to-indigo-900">
@@ -104,13 +113,36 @@ function Signup() {
             <div>
               <input
                 type="text"
-                name="fullName"
-                placeholder="Full Name"
-                value={formData.fullName}
+                name="firstname"
+                placeholder="First Name"
+                value={formData.firstname}
                 onChange={handleChange}
                 className="w-full px-5 py-4 bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl backdrop-blur-sm text-white placeholder-teal-200/80 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/30 transition-all duration-500 text-lg shadow-inner hover:shadow-emerald-500/20"
                 required
               />
+            </div>
+             <div>
+              <input
+                type="text"
+                name="lastname"
+                placeholder="Last Name"
+                value={formData.lastname}
+                onChange={handleChange}
+                className="w-full px-5 py-4 bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl backdrop-blur-sm text-white placeholder-teal-200/80 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/30 transition-all duration-500 text-lg shadow-inner hover:shadow-emerald-500/20"
+                required
+              />
+            </div>
+            
+             <div>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full px-5 py-4 bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl backdrop-blur-sm text-white placeholder-teal-200/80 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/30 transition-all duration-500 text-lg shadow-inner hover:shadow-emerald-500/20"
+              />
+        
             </div>
 
             <div>
@@ -125,24 +157,7 @@ function Signup() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl backdrop-blur-sm text-white placeholder-teal-200/80 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/30 transition-all duration-500 text-lg shadow-inner hover:shadow-emerald-500/20"
-              />
-              <input
-                type="text"
-                name="specialty"
-                placeholder="Specialty"
-                value={formData.specialty}
-                onChange={handleChange}
-                className="w-full px-5 py-4 bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl backdrop-blur-sm text-white placeholder-teal-200/80 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/30 transition-all duration-500 text-lg shadow-inner hover:shadow-emerald-500/20"
-              />
-            </div>
+           
 
             <div className="group relative">
               <input
