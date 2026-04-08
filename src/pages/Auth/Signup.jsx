@@ -1,3 +1,5 @@
+//Signup page
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginBg from "../../assets/images/Login.jpg";
