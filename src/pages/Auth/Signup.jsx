@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginBg from "../../assets/images/Login.jpg";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Signup() {
   const navigate = useNavigate();
@@ -85,16 +86,12 @@ function Signup() {
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         <div className="w-full max-w-lg p-8 sm:p-12 bg-white/3 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-2xl shadow-emerald-500/20 animate-float">
           <div className="text-center mb-10">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-emerald-400 via-teal-400 to-cyan-400 rounded-3xl mx-auto mb-6 shadow-2xl shadow-emerald-500/40 flex items-center justify-center animate-spin-slow">
-              <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m2-4h1m-1 4h1" />
-              </svg>
-            </div>
+            
             <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-white via-emerald-50 to-teal-50 bg-clip-text text-transparent mb-4 drop-shadow-2xl">
               Join Darshai
             </h1>
             <p className="text-teal-100/95 text-xl font-medium drop-shadow-lg max-w-md mx-auto leading-relaxed">
-              Create your doctor account and start your digital wellness journey
+              Create your account and start your digital wellness journey
             </p>
           </div>
 
@@ -133,7 +130,7 @@ function Signup() {
               />
             </div>
             
-             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+             <div >
               <input
                 type="tel"
                 name="phone"
@@ -175,9 +172,7 @@ function Signup() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-teal-200 hover:text-white hover:bg-white/10 rounded-xl transition-all hover:scale-110"
               >
-                <svg className={`w-5 h-5 ${showPassword ? 'opacity-100' : 'opacity-70'}`} fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C19.542 5.383 15.425 1 10 1a9.959 9.959 0 00-4.512.757L4.83 2.344zM10 7a3 3 0 100 6 3 3 0 000-6zm-1 8a8.919 8.919 0 01-4.027-.922l-.941.941A10.059 10.059 0 0010 19c5.523 0 10 4.617 10 10s-4.617 10-10 10a9.954 9.954 0 01-4.583-.788l-1.344 1.344a1 1 0 01-1.414-1.414l1.344-1.344A9.954 9.954 0 011 10c0-5.523-4.617-10-10-10s10 4.617 10 10zm2 2a1 1 0 11-2 1 1 1 0 012 0z" clipRule="evenodd" />
-                </svg>
+                 {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
               </button>
             </div>
 
@@ -196,9 +191,7 @@ function Signup() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-teal-200 hover:text-white hover:bg-white/10 rounded-xl transition-all hover:scale-110"
               >
-                <svg className={`w-5 h-5 ${showConfirmPassword ? 'opacity-100' : 'opacity-70'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+                 {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
               </button>
             </div>
 
@@ -216,7 +209,7 @@ function Signup() {
                 </span>
               ) : (
                 <>
-                  <span>Get Started Free</span>
+                  <span>Get Started</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </>
               )}
