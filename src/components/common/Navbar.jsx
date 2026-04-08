@@ -1,73 +1,106 @@
-// This component is responsible for rendering the navigation bar at the top of the application. 
-// It includes links to different sections of the app and is designed to be responsive and visually appealing.
-
-import {useState} from 'react'
-import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
+import logo from "../../assets/images/logo.png";
 
 const navItems = [
-  {name:"Home", path:"/"},
-  {name:"About", path:"/about"},
-  {name:"Contact", path:"/contact"},
-]
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contact" },
+  { name: "Dashboard", path: "/doctor-dashboard" },
+];
 
-function Navbar() {
-  const [isOpen,setIsopen] = useState(false);
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-   <nav className = "sticky top-0 z-50 bg-lightBg/80 backdrop-blur-md border-b border-gray-200">
-    <div className = "max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-        
-      {/* Logo Section */}
-        <div className = "flex items-center gap-2 cursor-pointer">
-            <span className = "text-xl font-bold text-primary">@</span>
-            <h1 className = "font-heading text-lg md:text-xl font-semibold text-gray-800">Darshai</h1>
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        scrolled ? "bg-white border-b border-gray-200 shadow-sm" : "bg-white"
+      }`}
+    >
+      <div className="max-w-9xl mx-auto flex items-center justify-between px-5 md:px-8 py-4">
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="Darshai Logo" className="h-16 md:h-20" />
         </div>
 
-      {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-10">
-          {navItems.map((item)=>(
-            <NavLink 
-            key = {item.name}
-            to = {item.path}
-            className = {({isActive}) => `group relative font-body text-sm tracking-wide transition duration-300 ${isActive ? 'text-primary' : 'text-gray-600 hover:text-primary'} `}>
-              {item.name}
-              <span className = "absolute left-0 -bottom-1 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-            </NavLink>
+          {navItems.map(({ name, path }) => (
+            <motion.div
+              key={name}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <NavLink
+                to={path}
+                className={({ isActive }) =>
+                  `px-5 py-2 rounded-full text-sm font-normal border transition duration-300 ${
+                    isActive
+                      ? "bg-primary text-white border-primary"
+                      : "border-primary text-primary hover:bg-primary hover:text-white"
+                  }`
+                }
+              >
+                {name}
+              </NavLink>
+            </motion.div>
           ))}
         </div>
 
-        <button className = "hidden md:block bg-primary text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-primaryDark hover:scale-105 transation duration-300">
+        <NavLink
+          to="/login"
+          className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-primaryLight transition"
+        >
           Login
-        </button>
+        </NavLink>
 
-        <button className = "md:hidden flex flex-col gap-1" onClick={() => setIsopen(!isOpen)}>
-          <span className = "w-6 h-[2px] bg-gray-800"></span>
-          <span className = "w-6 h-[2px] bg-gray-800"></span>
-          <span className = "w-6 h-[2px] bg-gray-800"></span>
+        <button
+          aria-label="Toggle menu"
+          className="md:hidden flex flex-col gap-1"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span className="w-6 h-[2px] bg-primary"></span>
+          <span className="w-6 h-[2px] bg-primary"></span>
+          <span className="w-6 h-[2px] bg-primary"></span>
         </button>
       </div>
 
-      {/*Responsive view*/}
-      <div className={`md:hidden transition-all duration-300 overflow-hidden ${ isOpen ? 'max-h-96 py-4' : 'max-h-0'} bg-lightBg`}>
-        <div className="flex flex-col items-center gap-6">
-          {
-            navItems.map((item) => (
-              <NavLink
-                 key = {item.name}
-                 to = {item.path}
-                 onClick={() => setIsopen(false)}
-                className={({isActive}) => `text-base font-body transition ${ isActive ? 'text-primary':'text-gray-700 hover:text-primary'}`}>
-                  {item.name}
-                </NavLink>
-            ))
-          }
-          <button className="bg-primary text-white px-6 py-2 rounded-full font-medium shadow-md hover:bg-primaryDark transition">
-            Login
-          </button>
+      <div
+        className={`md:hidden transition-all duration-500 overflow-hidden ${
+          isOpen ? "max-h-80 py-4" : "max-h-0"
+        } bg-white/80 backdrop-blur-xl`}
+      >
+        <div className="flex flex-col items-center gap-5">
+          {navItems.map(({ name, path }) => (
+            <NavLink
+              key={name}
+              to={path}
+              onClick={() => setIsOpen(false)}
+              className="px-5 py-2 rounded-full text-gray-700 hover:bg-white/30 hover:text-primary transition"
+            >
+              {name}
+            </NavLink>
+          ))}
 
+          <NavLink
+            to="/login"
+            className="bg-primary text-white px-6 py-2 rounded-full"
+            onClick={() => setIsOpen(false)}
+          >
+            Login
+          </NavLink>
         </div>
       </div>
-   </nav>
+    </motion.nav>
   );
-};
-
-export default Navbar;                                       
+}

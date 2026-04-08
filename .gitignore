@@ -11,6 +11,8 @@ lerna-debug.log*
 dist
 dist-ssr
 *.local
+node_modules/
+tailwind.config.js
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +24,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env

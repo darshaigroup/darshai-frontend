@@ -1,22 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: "#6B8E4E",
-        primaryDark: "#4F6D3A",
-        gold: "#C9A24A",
-        lightBg: "#F7F5F0",
+        primary: '#5c6ac4',
+        primaryLight: '#7e8efc',
       },
-      fontFamily: {
-        heading: ["Playfair Display", "serif"],
-        body: ["Inter", "sans-serif"],
+      animation: {
+        'blob': 'blob 7s infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'spin-slow': 'spin-slow 20s linear infinite',
       },
+      boxShadow: {
+        'glow': '0 0 20px rgba(99, 102, 241, 0.4)',
+      }
     },
   },
   plugins: [],
-};
+}
