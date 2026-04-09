@@ -4,7 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
 import DoctorDashboard from "../pages/Dashboard/DoctorDashboard";
-import Patients from "../pages/Dashboard/Patients";
+import Patients from "../pages/Doctor-Dashboard/Patients/Patients";
 import Biometrics from "../pages/Dashboard/Biometrics";
 import Alerts from "../pages/Dashboard/Alerts";
 import DoshaEngine from "../pages/Dashboard/DoshaEngine";
@@ -13,6 +13,7 @@ import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
 import Signup from "../pages/Auth/Signup";
+import QuestionnaireFlow from "../pages/Doctor-Dashboard/Questionnaire/QuestionnaireFlow";
 
 import Retreats from "../pages/Dashboard/Retreats";
 import Reports from "../pages/Dashboard/Reports";
@@ -27,6 +28,8 @@ const AppRoutes = () => {
         <Route path="about" element={<About />} />
         <Route path="doctor-dashboard" element={<DoctorDashboard />} />
         <Route path="patients" element={<Patients />} />
+
+<Route path="/dashboard/patient-question" element={<QuestionnaireFlow />} />
         <Route path="biometrics" element={<Biometrics />} />
         <Route path="alerts" element={<Alerts />} />
         <Route path="dosha" element={<DoshaEngine />} />
