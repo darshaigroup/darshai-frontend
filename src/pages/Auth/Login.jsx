@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { isAuthenticated } from "../../utils/auth";
+import loadingGif from "../../assets/images/logoEffect.gif";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,142 +16,145 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // ✅ AUTO REDIRECT IF ALREADY LOGGED IN
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/doctor-dashboard");
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError("");
+  // ✅ SAFE LOGIN HANDLER
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-  try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/auth/login`,
-      {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      if (!API_URL) {
+        throw new Error("API URL not configured");
+      }
+
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+      });
+
+      // 🔥 SAFE JSON PARSE (fixes your previous error)
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
       }
-    );
 
-    const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
 
-    if (!res.ok) {
-      throw new Error(data.message || "Login failed");
+      // ✅ SAVE AUTH DATA
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // ✅ REDIRECT (backend-controlled or fallback)
+      navigate(data.redirect || "/doctor-dashboard");
+
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-
-    // ✅ Save token
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-
-    // ✅ Redirect from backend response (best practice)
-    navigate(data.redirect || "/doctor-dashboard");
-
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border border-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+
+      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border">
+
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Login
-          </h1>
-<p className="text-gray-600 font-bold tracking-wider">Welcome back to DARSHAI</p>
+          <h1 className="text-3xl font-bold text-gray-900">Login</h1>
+          <p className="text-gray-600 font-bold">Welcome back to DARSHAI</p>
         </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 p-4 rounded-lg mb-6">
+          <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-lg"
-              required
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
 
+          {/* Email */}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg"
+            required
+          />
+
+          {/* Password */}
           <div className="relative">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
             <input
               type={showPassword ? "text" : "password"}
-              id="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-lg"
+              className="w-full p-3 border rounded-lg pr-10"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-11 p-1 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-3"
             >
-              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center">
-              <input type="checkbox" className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-              <span className="ml-2 text-gray-700">Remember me</span>
-            </label>
-            <a href="/forgot-password" className="text-blue-600 hover:text-blue-500 font-medium">
-              Forgot Password?
-            </a>
-          </div>
-
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-1 px-3 rounded-lg font-medium text-xs transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-primary hover:bg-primary-dark text-white"
+            className={`w-full py-3 rounded-lg text-white ${
+              loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <div className="w-4 h-4 border border-gray-300 border-t-primary rounded-full animate-spin"></div>
-                Signing in...
-              </span>
-            ) : (
-              "Login"
-            )}
+            {loading ? "Signing in..." : "Login"}
           </button>
+
         </form>
 
-
-
-        <p className="mt-8 text-center text-sm text-gray-600 border-t pt-6">
-          Don't have an account?{' '}
-          <a href="/signup" className="font-semibold text-primary hover:text-primary-dark">
-            Sign up here
+        {/* Links */}
+        <p className="mt-6 text-center text-sm">
+          <a href="/forgot-password" className="text-blue-600">
+            Forgot Password?
           </a>
         </p>
+
+        <p className="mt-4 text-center text-sm">
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-600 font-semibold">
+            Sign up
+          </a>
+        </p>
+
       </div>
+      {loading && (
+      <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <img src={loadingGif} alt="loading" className="w-20 h-20" />
+      </div>
+    )}
     </div>
   );
 }

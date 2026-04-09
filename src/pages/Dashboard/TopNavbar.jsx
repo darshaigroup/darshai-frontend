@@ -48,7 +48,7 @@ export default function TopNavbar() {
         {/* 👤 Profile */}
         <div className="flex items-center gap-2 cursor-pointer">
           <img
-            src="https://i.pravatar.cc/40"
+            src=""
             alt="profile"
             className="w-9 h-9 rounded-full"
           />

@@ -1,50 +1,64 @@
-import { Routes, Route } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
+// src/routes/AppRoutes.jsx
 
+import { Routes, Route } from "react-router-dom";
+
+// Layouts
+import MainLayout from "../layouts/MainLayout";
+import DashboardLayout from "../layouts/DashboardLayout";
+
+// Auth
+import ProtectedRoute from "./ProtectedRoute";
+
+// Public Pages
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
+
+// Auth Pages
+import Login from "../pages/Auth/Login";
+import Signup from "../pages/Auth/Signup";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
+
+// Dashboard Pages
+import DoctorDashboard from "../pages/Doctor-Dashboard/DoctorDashboard";
 import Patients from "../pages/Doctor-Dashboard/Patients/Patients";
 import Biometrics from "../pages/Doctor-Dashboard/Biometrics";
 import Alerts from "../pages/Doctor-Dashboard/Alerts";
-import DoshaEngine from "../pages/Dashboard/DoshaEngine";
-import Protocols from "../pages/Dashboard/Protocols";
-import Contact from "../pages/Contact/Contact";
-import Login from "../pages/Auth/Login";
-import ForgotPassword from "../pages/Auth/ForgotPassword";
-import Signup from "../pages/Auth/Signup";
-import QuestionnaireFlow from "../pages/Doctor-Dashboard/Questionnaire/QuestionnaireFlow";
-import DoctorDashboard from "../pages/Doctor-Dashboard/DoctorDashboard";
-import Retreats from "../pages/Dashboard/Retreats";
 import Reports from "../pages/Doctor-Dashboard/Reports";
 import Messages from "../pages/Doctor-Dashboard/Messages";
 import Settings from "../pages/Doctor-Dashboard/Settings";
+import QuestionnaireFlow from "../pages/Doctor-Dashboard/Questionnaire/QuestionnaireFlow";
 
-const AppRoutes = () => {
+export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="doctor-dashboard" element={<DoctorDashboard />} />
-        <Route path="patients" element={<Patients />} />
-
-<Route path="/dashboard/patient-question" element={<QuestionnaireFlow />} />
-        <Route path="biometrics" element={<Biometrics />} />
-        <Route path="alerts" element={<Alerts />} />
-        <Route path="dosha" element={<DoshaEngine />} />
-        <Route path="protocols" element={<Protocols />} />
-        <Route path="retreats" element={<Retreats />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="messages" element={<Messages />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="contact" element={<Contact />} />
-
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Route>
-<Route path="login" element={<Login />} />
-      <Route path="forgot-password" element={<ForgotPassword />} />
-      <Route path="signup" element={<Signup />} />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+
+      <Route
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+        <Route path="/patients" element={<Patients />} />
+        <Route path="/biometrics" element={<Biometrics />} />
+        <Route path="/alerts" element={<Alerts />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/dashboard/patient-question" element={<QuestionnaireFlow />} />
+      </Route>
+
     </Routes>
   );
-};
-
-export default AppRoutes;
+}
