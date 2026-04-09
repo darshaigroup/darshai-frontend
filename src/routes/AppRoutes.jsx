@@ -25,9 +25,11 @@ import Patients from "../pages/Doctor-Dashboard/Patients/Patients";
 import Biometrics from "../pages/Doctor-Dashboard/Biometrics";
 import Alerts from "../pages/Doctor-Dashboard/Alerts";
 import Reports from "../pages/Doctor-Dashboard/Reports";
+
 import Messages from "../pages/Doctor-Dashboard/Messages";
 import Settings from "../pages/Doctor-Dashboard/Settings";
 import QuestionnaireFlow from "../pages/Doctor-Dashboard/Questionnaire/QuestionnaireFlow";
+import Loading from "../pages/Doctor-Dashboard/Questionnaire/Loading";
 
 export default function AppRoutes() {
   return (
@@ -57,6 +59,7 @@ export default function AppRoutes() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/dashboard/patient-question" element={<QuestionnaireFlow />} />
+        <Route path="/loading" element={<Loading />} />
       </Route>
 
     </Routes>

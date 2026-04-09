@@ -848,3 +848,154 @@ function Patients() {
 }
 
 export default Patients;
+
+
+// import React, { useState, useEffect } from "react";
+// import { motion } from "framer-motion";
+// import DarshaiSidebar from "../../Dashboard/DarshaiSidebar";
+// import { Search, Filter, Plus, Eye } from "lucide-react";
+// import { useNavigate } from "react-router-dom";
+
+// function Patients() {
+//   const [patientList, setPatientList] = useState([]);
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [filterRisk, setFilterRisk] = useState("all");
+
+//   const navigate = useNavigate();
+
+//   // ✅ Load patient from localStorage
+//   useEffect(() => {
+//     const storedPatient = JSON.parse(localStorage.getItem("newPatient"));
+
+//     if (storedPatient) {
+//       const age = calculateAge(storedPatient.dob);
+
+//       const patientCard = {
+//         id: storedPatient.id,
+//         name: storedPatient.name,
+//         age,
+//         lastVisit: "Just now",
+
+//         doshaScores: {
+//           vata: Math.floor(Math.random() * 100),
+//           pitta: Math.floor(Math.random() * 100),
+//           kapha: Math.floor(Math.random() * 100),
+//         },
+
+//         dominantDosha: "Vata-Pitta",
+//         longevityScore: Math.floor(Math.random() * 100),
+//         riskLevel: "medium",
+//         progress: 70,
+//       };
+
+//       setPatientList([patientCard]); // ✅ only latest patient
+//     }
+//   }, []);
+
+//   // ✅ Age calculation
+//   const calculateAge = (dob) => {
+//     const birthDate = new Date(dob);
+//     const diff = Date.now() - birthDate.getTime();
+//     return new Date(diff).getUTCFullYear() - 1970;
+//   };
+
+//   // ✅ Filter logic
+//   const filteredPatients = patientList.filter((patient) => {
+//     const matchesSearch = patient.name
+//       .toLowerCase()
+//       .includes(searchTerm.toLowerCase());
+
+//     const matchesFilter =
+//       filterRisk === "all" || patient.riskLevel === filterRisk;
+
+//     return matchesSearch && matchesFilter;
+//   });
+
+//   return (
+//     <div className="flex min-h-screen bg-[#020617] text-white">
+//       <DarshaiSidebar />
+
+//       <div className="flex-1 p-6 md:p-8">
+
+//         {/* HEADER */}
+//         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+//           <div>
+//             <h1 className="text-3xl md:text-4xl font-bold">
+//               Patient Portal
+//             </h1>
+//             <p className="text-gray-400">
+//               Ayurvedic Intelligence Dashboard
+//             </p>
+//           </div>
+
+//           <button
+//             onClick={() => navigate("/add-patient")}
+//             className="flex items-center gap-2 px-6 py-3 bg-emerald-500 rounded-xl"
+//           >
+//             <Plus size={18} />
+//             Add Patient
+//           </button>
+//         </div>
+
+//         {/* SEARCH */}
+//         <div className="mb-6">
+//           <input
+//             placeholder="Search patients..."
+//             value={searchTerm}
+//             onChange={(e) => setSearchTerm(e.target.value)}
+//             className="w-full p-3 rounded-xl bg-white/10 border border-white/20"
+//           />
+//         </div>
+
+//         {/* PATIENT CARD */}
+//         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+//           {filteredPatients.map((patient) => (
+//             <motion.div
+//               key={patient.id}
+//               whileHover={{ scale: 1.03 }}
+//               className="bg-white/10 p-6 rounded-2xl border border-white/20"
+//             >
+//               {/* Initials */}
+//               <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-4">
+//                 {patient.name.slice(0, 2).toUpperCase()}
+//               </div>
+
+//               {/* Name */}
+//               <h2 className="text-xl font-bold">{patient.name}</h2>
+//               <p className="text-sm text-gray-400 mb-4">
+//                 {patient.age} yrs • {patient.lastVisit}
+//               </p>
+
+//               {/* Dosha */}
+//               <div className="space-y-2 mb-4">
+//                 <p>Vata: {patient.doshaScores.vata}%</p>
+//                 <p>Pitta: {patient.doshaScores.pitta}%</p>
+//                 <p>Kapha: {patient.doshaScores.kapha}%</p>
+//               </div>
+
+//               {/* Score */}
+//               <div className="flex justify-between items-center mb-4">
+//                 <span className="text-lg font-bold">
+//                   {patient.longevityScore}
+//                 </span>
+//                 <span className="bg-emerald-500 px-3 py-1 rounded-lg text-sm">
+//                   Medium
+//                 </span>
+//               </div>
+
+//               {/* CTA */}
+//               <button className="w-full py-2 bg-yellow-400 text-black rounded-xl flex items-center justify-center gap-2">
+//                 <Eye size={16} />
+//                 View More
+//               </button>
+//             </motion.div>
+//           ))}
+
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Patients;
