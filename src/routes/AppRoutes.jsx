@@ -3,10 +3,9 @@ import MainLayout from "../layouts/MainLayout";
 
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
-import DoctorDashboard from "../pages/Dashboard/DoctorDashboard";
 import Patients from "../pages/Doctor-Dashboard/Patients/Patients";
-import Biometrics from "../pages/Dashboard/Biometrics";
-import Alerts from "../pages/Dashboard/Alerts";
+import Biometrics from "../pages/Doctor-Dashboard/Biometrics";
+import Alerts from "../pages/Doctor-Dashboard/Alerts";
 import DoshaEngine from "../pages/Dashboard/DoshaEngine";
 import Protocols from "../pages/Dashboard/Protocols";
 import Contact from "../pages/Contact/Contact";
@@ -14,11 +13,11 @@ import Login from "../pages/Auth/Login";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
 import Signup from "../pages/Auth/Signup";
 import QuestionnaireFlow from "../pages/Doctor-Dashboard/Questionnaire/QuestionnaireFlow";
-
+import DoctorDashboard from "../pages/Doctor-Dashboard/DoctorDashboard";
 import Retreats from "../pages/Dashboard/Retreats";
-import Reports from "../pages/Dashboard/Reports";
-import Messages from "../pages/Dashboard/Messages";
-import Settings from "../pages/Dashboard/Settings";
+import Reports from "../pages/Doctor-Dashboard/Reports";
+import Messages from "../pages/Doctor-Dashboard/Messages";
+import Settings from "../pages/Doctor-Dashboard/Settings";
 
 const AppRoutes = () => {
   return (
