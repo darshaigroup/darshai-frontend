@@ -188,7 +188,7 @@ export default function Navbar() {
               : "bg-black/80 text-white hover:bg-black"
           }`}
         >
-          Join Waitlist
+          Join us
         </button>
       </div>
     </motion.nav>
