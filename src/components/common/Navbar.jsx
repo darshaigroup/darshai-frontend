@@ -63,7 +63,7 @@ export default function Navbar() {
         {/* LOGO */}
         <Link to="/" className="flex items-center">
           <img
-            src="https://storage.googleapis.com/m-infra.appspot.com/public/res/ais/darshai_logo.png"
+            src="https://www.darshai.in/logoSm.jpg"
             alt="Darshai"
             className={`transition-all duration-500 object-contain ${
               isScrolled ? "h-10 md:h-12" : "h-14 md:h-16"
