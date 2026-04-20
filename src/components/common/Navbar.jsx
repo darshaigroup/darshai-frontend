@@ -1,105 +1,195 @@
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
-import logo from "../../assets/images/logo.png";
-
-const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Contact", path: "/contact" },
-  { name: "Dashboard", path: "/doctor-dashboard" },
-];
+import { ChevronDown } from "lucide-react";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isExploreOpen, setIsExploreOpen] = useState(false);
+  const [isProgramOpen, setIsProgramOpen] = useState(false);
+
+  // ✅ FIXED scroll detection (reliable)
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Our Story", path: "/story" },
+  ];
+
+  const programLinks = [
+    { name: "Protocols", path: "/program/protocols" },
+    { name: "Geo-Wellness Center", path: "/program/center" },
+    { name: "Treatment", path: "/program/treatment" },
+  ];
+
+  const exploreLinks = [
+    { name: "Journal", path: "/explore/journal" },
+    { name: "Media", path: "/explore/media" },
+    { name: "Magazine", path: "/explore/magazine" },
+    { name: "Video", path: "/explore/video" },
+    { name: "Image", path: "/explore/image" },
+    { name: "Brochure", path: "/explore/brochure" },
+    { name: "Blog", path: "/explore/blog" },
+  ];
+
   return (
     <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? "bg-white border-b border-gray-200 shadow-sm" : "bg-white"
-      }`}
+      initial={false}
+      animate={{
+        // ✅ FIX: never fully transparent
+        backgroundColor: isScrolled
+          ? "rgba(245, 241, 232, 0.95)"
+          : "rgba(255, 255, 255, 0.7)",
+        backdropFilter: "blur(12px)",
+        borderBottomColor: isScrolled
+          ? "rgba(21, 128, 61, 0.08)"
+          : "rgba(21, 128, 61, 0.03)",
+        paddingTop: isScrolled ? "1rem" : "1.5rem",
+        paddingBottom: isScrolled ? "1rem" : "1.5rem",
+      }}
+      className="fixed top-0 left-0 right-0 z-50 px-6 md:px-20 border-b transition-all duration-500"
     >
-      <div className="max-w-9xl mx-auto flex items-center justify-between px-5 md:px-8 py-4">
-        <div className="flex items-center gap-2">
-          <img src={logo} alt="Darshai Logo" className="h-16 md:h-20" />
-        </div>
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
 
+        {/* LOGO */}
+        <Link to="/" className="flex items-center">
+          <img
+            src="https://storage.googleapis.com/m-infra.appspot.com/public/res/ais/darshai_logo.png"
+            alt="Darshai"
+            className={`transition-all duration-500 object-contain ${
+              isScrolled ? "h-10 md:h-12" : "h-14 md:h-16"
+            }`}
+          />
+        </Link>
+
+        {/* NAV LINKS */}
         <div className="hidden md:flex items-center gap-10">
-          {navItems.map(({ name, path }) => (
-            <motion.div
-              key={name}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
+
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`relative font-medium transition-colors duration-300 ${
+                location.pathname === link.path
+                  ? "text-yellow-600"
+                  : "text-gray-800"
+              } hover:text-yellow-600`}
             >
-              <NavLink
-                to={path}
-                className={({ isActive }) =>
-                  `px-5 py-2 rounded-full text-sm font-normal border transition duration-300 ${
-                    isActive
-                      ? "bg-primary text-white border-primary"
-                      : "border-primary text-primary hover:bg-primary hover:text-white"
-                  }`
-                }
-              >
-                {name}
-              </NavLink>
-            </motion.div>
-          ))}
-        </div>
+              {link.name}
 
-        <NavLink
-          to="/login"
-          className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow hover:bg-primaryLight transition"
-        >
-          Login
-        </NavLink>
-
-        <button
-          aria-label="Toggle menu"
-          className="md:hidden flex flex-col gap-1"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span className="w-6 h-[2px] bg-primary"></span>
-          <span className="w-6 h-[2px] bg-primary"></span>
-          <span className="w-6 h-[2px] bg-primary"></span>
-        </button>
-      </div>
-
-      <div
-        className={`md:hidden transition-all duration-500 overflow-hidden ${
-          isOpen ? "max-h-80 py-4" : "max-h-0"
-        } bg-white/80 backdrop-blur-xl`}
-      >
-        <div className="flex flex-col items-center gap-5">
-          {navItems.map(({ name, path }) => (
-            <NavLink
-              key={name}
-              to={path}
-              onClick={() => setIsOpen(false)}
-              className="px-5 py-2 rounded-full text-gray-700 hover:bg-white/30 hover:text-primary transition"
-            >
-              {name}
-            </NavLink>
+              {location.pathname === link.path && (
+                <motion.div
+                  layoutId="nav-underline"
+                  className="absolute -bottom-1 left-0 right-0 h-[2px] bg-yellow-600"
+                />
+              )}
+            </Link>
           ))}
 
-          <NavLink
-            to="/login"
-            className="bg-primary text-white px-6 py-2 rounded-full"
-            onClick={() => setIsOpen(false)}
+          {/* PROGRAM DROPDOWN */}
+          <div
+            className="relative"
+            onMouseEnter={() => setIsProgramOpen(true)}
+            onMouseLeave={() => setIsProgramOpen(false)}
           >
-            Login
-          </NavLink>
+            <button className="flex items-center gap-1 text-gray-800 hover:text-yellow-600">
+              Our Program
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${
+                  isProgramOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {isProgramOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border py-2"
+                >
+                  {programLinks.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className="block px-5 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-yellow-600"
+                      onClick={() => setIsProgramOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* EXPLORE DROPDOWN */}
+          <div
+            className="relative"
+            onMouseEnter={() => setIsExploreOpen(true)}
+            onMouseLeave={() => setIsExploreOpen(false)}
+          >
+            <button className="flex items-center gap-1 text-gray-800 hover:text-yellow-600">
+              Explore
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${
+                  isExploreOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {isExploreOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-xl border py-2"
+                >
+                  {exploreLinks.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className="block px-5 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-yellow-600"
+                      onClick={() => setIsExploreOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* CONTACT */}
+          <Link
+            to="/contact"
+            className="text-gray-800 hover:text-yellow-600"
+          >
+            Contact Us
+          </Link>
         </div>
+
+        {/* CTA BUTTON */}
+        <button
+          className={`px-6 py-3 rounded-full text-sm font-semibold transition-all ${
+            isScrolled
+              ? "bg-green-800 text-white hover:bg-green-700"
+              : "bg-black/80 text-white hover:bg-black"
+          }`}
+        >
+          Join Waitlist
+        </button>
       </div>
     </motion.nav>
   );
