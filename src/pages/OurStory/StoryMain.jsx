@@ -12,7 +12,7 @@ const OurStory = () => {
     <div className="bg-[#f6f3ef] text-gray-800 overflow-hidden">
 
       {/* HERO SECTION */}
-      <section className="relative h-[50vh] flex items-center justify-center text-center overflow-hidden">
+      <section className="relative h-[60vh] flex items-center justify-center text-center overflow-hidden">
 
         {/* Background Image */}
         <motion.img
@@ -105,17 +105,13 @@ const OurStory = () => {
         </motion.div>
       </section>
 
-      {/* BIO LUXURY */}
-      <section className="max-w-7xl mx-auto px-6 pb-24">
-        <h3 className="text-3xl font-serif text-yellow-700">Bio-Luxury</h3>
-        <p className="text-xs tracking-[4px] text-yellow-600 mt-2">
-          A NEW CATEGORY
-        </p>
-      </section>
+
 
       {/* BRAIN TRUST */}
       <section className="max-w-7xl mx-auto px-6 py-24">
-
+       <p className="text-xs tracking-[3px] text-yellow-700 mb-4">
+          OUR LEADER
+        </p>
         <h2
           className="text-[42px] md:text-[72px] font-serif text-center mb-20"
           style={{ color: brandGreen }}
@@ -178,32 +174,61 @@ const OurStory = () => {
 
       {/* FINAL HERO BLOCK */}
       <section className="max-w-5xl mx-auto px-6 pb-24">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: easing }}
-          viewport={{ once: true }}
-          className="rounded-[40px] overflow-hidden relative shadow-[0_50px_120px_rgba(0,0,0,0.4)]"
-        >
-          <img
-            src={herb}
-            alt="herb"
-            className="w-full h-[500px] object-cover"
-          />
+  <motion.div
+    initial={{ opacity: 0, scale: 0.96 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 1.5, ease: easing }}
+    viewport={{ once: true }}
+    className="rounded-[40px] overflow-hidden relative shadow-[0_50px_120px_rgba(0,0,0,0.4)]"
+  >
+    {/* IMAGE */}
+    <img
+      src={herb}
+      alt="herb"
+      className="w-full h-[520px] object-cover"
+    />
 
-          <div
-            className="absolute inset-0"
-            style={{ backgroundColor: brandGreen, opacity: 0.85 }}
-          />
+    {/* GREEN OVERLAY */}
+    <div
+      className="absolute inset-0"
+      style={{ backgroundColor: brandGreen, opacity: 0.85 }}
+    />
 
-          <div className="absolute inset-0 flex items-center justify-center text-center text-white px-6">
-            <p className="text-xl md:text-2xl font-light max-w-2xl leading-relaxed">
-              We solve the crisis of modern burnout by recalibrating the human system.
-            </p>
-          </div>
-        </motion.div>
-      </section>
-     <Protocol />
+    {/* CONTENT */}
+    <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+
+      {/* TOP LABEL */}
+      <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6 uppercase">
+        Our North Star
+      </p>
+
+      {/* MAIN HEADING */}
+      <h2 className="text-[32px] md:text-[64px] font-serif leading-[1.1] tracking-[-0.02em] max-w-4xl">
+        To restore biological sovereignty through the{" "}
+        <span className="italic">
+          fusion of ancient ecology and modern AI.
+        </span>
+      </h2>
+
+      {/* SUBTEXT */}
+      <p className="mt-6 text-sm md:text-lg text-white/80 max-w-2xl leading-relaxed">
+        We solve the crisis of modern burnout by recalibrating the human system at its architectural foundation.
+      </p>
+
+    </div>
+  </motion.div>
+</section>
+      {/* BIO LUXURY */}
+      <div className="max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
+        <h3 className="text-3xl font-serif text-yellow-700">
+          Bio-Luxury
+        </h3>
+
+        <p className="text-xs tracking-[4px] text-yellow-600 mt-2">
+          A NEW CATEGORY
+        </p>
+      </div>
+      <Protocol />
     </div>
   );
 };

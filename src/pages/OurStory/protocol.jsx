@@ -82,8 +82,17 @@ const protocols = [
 
 export default function ProtocolPreview() {
   return (
-    <section className="bg-[#F1ECE2] py-24 px-6">
+    <section className="bg-[#f6f3ef] py-24 px-6">
 
+      <div className="flex flex-col items-center text-center mb-16 px-6">
+        <h2
+          className="text-[42px] md:text-[72px] font-serif leading-[1.05] tracking-[-0.02em]"
+          style={{ color: brandGreen }}
+        >
+          Our Protocols
+        </h2>
+
+      </div>
       <div className="max-w-7xl mx-auto space-y-32">
 
         {protocols.map((item, i) => (
@@ -93,9 +102,8 @@ export default function ProtocolPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className={`flex flex-col ${
-              i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-            } items-center gap-16`}
+            className={`flex flex-col ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+              } items-center gap-16`}
           >
 
             {/* TEXT */}
