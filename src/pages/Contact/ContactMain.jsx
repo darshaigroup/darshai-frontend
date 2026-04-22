@@ -2,6 +2,8 @@ import PageHeader from "../../components/common/PageHeader";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
+import hero from "../../assets/images/DoctorHomepage.jpg";
+const easing = [0.16, 1, 0.3, 1];
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -60,17 +62,55 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F1E8]">
+    <div className="min-h-screen bg-[#f6f3ef]">
 
       {/* HERO */}
-      <PageHeader
-        tag="Get in Touch"
-        title="Contact Darshai"
-        subtitle="Have questions or want to know more about our services? We're here to help."
-        image="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&q=80&w=2000"
-        overlay="bg-[#1F4D3E]/80"
-      />
+    <section className="relative h-[60vh] flex items-center justify-center text-center overflow-hidden">
 
+  {/* BACKGROUND IMAGE */}
+  <motion.img
+    src={hero} // replace with your variable (hero / currentCat.img etc.)
+    alt="hero"
+    className="absolute inset-0 w-full h-full object-cover"
+    initial={{ scale: 1.1 }}
+    animate={{ scale: 1 }}
+    transition={{ duration: 2, ease: easing }}
+  />
+
+  {/* GREEN OVERLAY */}
+  <div
+    className="absolute inset-0"
+    style={{ backgroundColor: "#1E7A3A", opacity: 0.75 }}
+  />
+
+  {/* CONTENT */}
+  <motion.div
+  className="relative z-10 text-white max-w-4xl px-6 text-center mx-auto"
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1.2, ease: easing }}
+>
+
+  {/* 🔹 TAG (GENESIS / GET IN TOUCH STYLE) */}
+  <div className="mb-6 flex justify-center">
+    <span className="text-[11px] tracking-[4px] text-[#C6A75E] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
+      GET IN TOUCH
+    </span>
+  </div>
+
+  {/* 🔹 HEADING */}
+  <h1 className="text-[42px] md:text-[72px] font-serif mb-6 leading-[1.05] tracking-[-0.02em]">
+    Connect with Darshai
+  </h1>
+
+  {/* 🔹 SUBTEXT */}
+  <p className="text-lg md:text-xl opacity-80 font-light max-w-2xl mx-auto leading-relaxed">
+    Whether you have questions about our program or want to explore a partnership,
+    we’re here to listen.
+  </p>
+
+</motion.div>
+</section>
       {/* MAIN SECTION */}
       <section className="py-20 px-6 md:px-20 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">

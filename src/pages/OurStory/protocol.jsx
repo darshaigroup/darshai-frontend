@@ -8,35 +8,36 @@ const protocols = [
   {
     gear: "GEAR 1",
     title: "Sovereign Protocols",
-    desc: "Hyper-personalized longevity retreats. 7-day bespoke interventions at exclusive partner Geo-Wellness centers.",
+    desc: "Biological Sovereignty for the Elite",
     icon: Shield,
     features: [
-      "Bespoke Interventions",
-      "Vitality Score Tracking",
-      "Concierge Bio-Butler",
+      "Hyper-Personalized Longevity Retreats",
+      "Biological Sovereignty Dashboard + Bio-Hacking Kit",
+      "Personalized Luxury Geo-Wellness Experience",
+      
     ],
     img: "/images/protocol1.jpg",
   },
   {
     gear: "GEAR 2",
     title: "Corporate Ecology",
-    desc: "Specialized 5-day intensive programs to reverse burnout and decision fatigue for executive teams.",
+    desc: "Executive Reset & Team Vitality.",
     icon: Users,
     features: [
-      "Executive Reset",
-      "Vitality Audits",
-      "Longevity Circle",
+      "The '2+1' Executive Reset Program",
+      "Corporate Longevity Audits",
+      "Founders' Longevity Circle",
     ],
     img: "/images/protocol2.jpg",
   },
   {
     gear: "GEAR 3",
     title: "Maintenance Modules",
-    desc: "Post-retreat diet and lifestyle guidance delivered through the DARSHAI App and expert video library.",
+    desc: "Sustained Wellness at Your Fingertips.",
     icon: Activity,
     features: [
-      "Digital Plans",
-      "Vaidhya Library",
+      "Digital Maintenance Plans",
+      "Vaidhya Video Library",
       "Real-Time Guidance",
     ],
     img: "/images/protocol3.jpg",
@@ -44,37 +45,36 @@ const protocols = [
   {
     gear: "GEAR 4",
     title: "Longevity Prep-Kits",
-    desc: "Bio-validated herbal kits and the 'Neuro-Reset' collection for stress recovery and gut health.",
+    desc: "Lab-Validated Wellness at Home.",
     icon: Zap,
     features: [
-      "Lab-Tested Formulas",
-      "Clinical Truth Dossier",
-      "Precision Unboxing",
+      " Bio-Validated Herbal Kits",
+      "Neuro-Reset Collection",
+      "Precision Unboxing Experience",
     ],
     img: "/images/protocol4.jpg",
   },
   {
     gear: "GEAR 5",
     title: "Precision Tech Events",
-    desc: "Bio-hacking workshops and limited-edition wellness activations in major tech hubs.",
+    desc: "Community, Knowledge & Experience.",
     icon: Globe,
     features: [
       "Bio-Hacking Workshops",
-      "Pop-Up Experiences",
-      "Longevity Summits",
+      "Pop-Up Geo-Wellness Experiences",
+      "Longevity Summits and ",
     ],
     img: "/images/protocol5.jpg",
   },
   {
     gear: "GEAR 6",
     title: "Precision Ecology & Corporate Auditing",
-    desc: "Environmental Optimization for Organizations. We redesign workspaces into biologically optimized hubs.",
+    desc: "Environmental Optimization for Organizations",
     icon: Globe,
     features: [
-      "Office Auditing (Light, Air, Acoustic)",
-      "Biophilic HRV Integration",
-      "Corporate Nutrition Auditing",
-      "Longevity Certification",
+      "Periodic Office Auditing",
+      "Biophilic Integration",
+      "Corporate Nutrition & 'Agni' Auditing",
     ],
     img: "/images/protocol6.jpg",
   },
@@ -148,19 +148,29 @@ export default function ProtocolPreview() {
             </div>
 
             {/* IMAGE */}
-            <div className="flex-1 w-full group">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.6 }}
-                className="rounded-[40px] overflow-hidden shadow-2xl"
-              >
-                <img
-                  src={item.img}
-                  alt={item.title}
-                  className="w-full h-[420px] object-cover grayscale group-hover:grayscale-0 transition duration-700"
-                />
-              </motion.div>
-            </div>
+           <div className="flex-1 w-full group relative">
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    transition={{ duration: 0.6 }}
+    className="rounded-[40px] overflow-hidden shadow-2xl relative"
+  >
+    {/* IMAGE */}
+    <img
+      src={item.img}
+      alt={item.title}
+      className="w-full h-[420px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+    />
+
+    {/* 🔥 GREEN OVERLAY */}
+    <div
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
+      style={{
+        background:
+          "linear-gradient(to top, rgba(30,122,58,0.9), rgba(30,122,58,0.4), transparent)",
+      }}
+    />
+  </motion.div>
+</div>
 
           </motion.div>
         ))}

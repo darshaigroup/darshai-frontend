@@ -37,9 +37,12 @@ const OurStory = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: easing }}
         >
-          <p className="tracking-[4px] text-xs opacity-80 mb-4">
-            THE GENESIS
-          </p>
+           {/* 🔹 TAG (GENESIS / GET IN TOUCH STYLE) */}
+  <div className="mb-6 flex justify-center">
+    <span className="text-[11px] tracking-[4px] text-[#C6A75E] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
+      THE GENESIS
+    </span>
+  </div>
 
           <h1 className="text-[42px] md:text-[72px] font-serif mb-6 leading-[1.05] tracking-[-0.02em]">
             Why DARSHAI Exists
@@ -89,29 +92,43 @@ const OurStory = () => {
           </p>
         </motion.div>
 
-        {/* RIGHT IMAGE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="rounded-[40px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)]"
-        >
-          <img
-            src={brain}
-            alt="wellness"
-            className="w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-          />
-        </motion.div>
+       {/* RIGHT IMAGE */}
+<motion.div
+  initial={{ opacity: 0, scale: 0.9 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 1.2, ease: easing }}
+  className="rounded-[40px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] group relative"
+>
+
+  {/* IMAGE */}
+  <img
+    src={brain}
+    alt="wellness"
+    className="w-full h-[500px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+  />
+
+  {/* 🔥 GREEN OVERLAY (ON HOVER) */}
+  <div
+    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
+    style={{
+      background:
+        "linear-gradient(to top, rgba(30,122,58,0.85), rgba(30,122,58,0.4), transparent)",
+    }}
+  />
+
+</motion.div>
       </section>
 
 
 
       {/* BRAIN TRUST */}
       <section className="max-w-7xl mx-auto px-6 py-24">
-       <p className="text-xs tracking-[3px] text-yellow-700 mb-4">
-          OUR LEADER
-        </p>
+      <div className="text-center mb-6">
+  <p className="text-xs tracking-[3px] text-yellow-700">
+    OUR LEADER
+  </p>
+</div>
         <h2
           className="text-[42px] md:text-[72px] font-serif text-center mb-20"
           style={{ color: brandGreen }}
@@ -153,20 +170,35 @@ const OurStory = () => {
           </motion.div>
 
           {/* CARD 2 */}
+         {/* CARD 1 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.2, ease: easing }}
+            transition={{ duration: 1.2, ease: easing }}
             viewport={{ once: true }}
-            className="rounded-[40px] p-12 text-white flex flex-col justify-end"
-            style={{
-              background: `linear-gradient(to bottom right, ${brandGreen}, #4ba86f)`
-            }}
+            className="group"
           >
-            <h4 className="text-3xl font-serif mb-2">Dr. Renjith</h4>
-            <p className="text-xs tracking-[4px] text-yellow-400">
-              HEAD OF WELLNESS & CURATION
-            </p>
+            <div className="rounded-[40px] overflow-hidden relative shadow-xl">
+              <img
+                src="/images/founder.jpg"
+                alt="founder"
+                className="w-full h-[500px] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[1200ms]"
+              />
+
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: "linear-gradient(to top, rgba(30,122,58,0.9), transparent)"
+                }}
+              />
+
+              <div className="absolute bottom-8 left-8 text-white">
+                <h4 className="text-2xl font-serif">Dr Renjith N Raj</h4>
+                <p className="text-xs tracking-[4px] text-yellow-400">
+                  FOUNDER & CEO
+                </p>
+              </div>
+            </div>
           </motion.div>
 
         </div>

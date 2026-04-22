@@ -64,7 +64,7 @@ export default function Explore() {
       : CONTENT.filter((item) => item.category === activeCategory);
 
   return (
-    <div className="bg-[#F1ECE2] min-h-screen">
+    <div className="bg-[#f6f3ef] min-h-screen">
 
       {/* HERO */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
@@ -98,25 +98,32 @@ export default function Explore() {
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-          {filteredContent.map((item) => (
-            <motion.div
-              key={item.id}
-              whileHover={{ scale: 1.05 }}
-              className="relative rounded-[30px] overflow-hidden shadow-xl group"
-            >
-              <img
-                src={item.img}
-                className="w-full h-[400px] object-cover"
-              />
+         {filteredContent.map((item) => (
+  <motion.div
+    key={item.id}
+    className="relative rounded-[30px] overflow-hidden shadow-xl group cursor-pointer"
+  >
+    {/* IMAGE */}
+    <img
+      src={item.img}
+      className="w-full h-[400px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+    />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1E7A3A]/90 to-transparent" />
+    {/* 🔥 HOVER GRADIENT (HIDDEN → SHOW) */}
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
+      style={{
+        background:
+          "linear-gradient(to top, rgba(30,122,58,0.9), rgba(30,122,58,0.4), transparent)",
+      }}
+    />
 
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <h3 className="text-2xl font-serif">{item.title}</h3>
-                <p className="text-sm opacity-80">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+    {/* 🔥 TEXT (HIDDEN → SHOW) */}
+    <div className="absolute bottom-6 left-6 right-6 text-white opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700">
+      <h3 className="text-2xl font-serif">{item.title}</h3>
+      <p className="text-sm opacity-80">{item.desc}</p>
+    </div>
+  </motion.div>
+))}
 
         </div>
       </section>

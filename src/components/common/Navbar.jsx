@@ -117,7 +117,7 @@ export default function Navbar() {
 
           {/* CONTACT */}
           <Link to="/contact" className={`group ${textColor}`}>
-            <span className={hoverItem}>CONTACT</span>
+            <span className={hoverItem}>CONTACT US</span>
           </Link>
         </div>
 
@@ -141,57 +141,115 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* 📱 MOBILE MENU (UNCHANGED) */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.4 }}
-            className="fixed top-0 right-0 w-[80%] max-w-sm h-screen bg-[#F1ECE2] z-50 flex flex-col p-6 shadow-2xl"
-          >
-            <div className="flex justify-between items-center">
-              <img src={logo} className="w-[100px]" />
-              <FaTimes size={24} onClick={() => setMenuOpen(false)} />
-            </div>
+   {/* 📱 MOBILE MENU */}
+{/* 📱 MOBILE MENU */}
+<AnimatePresence>
+  {menuOpen && (
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ duration: 0.4 }}
+      className="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#F1ECE2] z-50 flex flex-col px-6 py-8 shadow-2xl overflow-y-auto"
+    >
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-10">
+        <img src={logo} className="w-[100px]" />
+        <FaTimes size={24} onClick={() => setMenuOpen(false)} />
+      </div>
 
-            <div className="flex flex-col items-center gap-6 mt-12 text-lg text-[#1E7A3A]">
+      {/* 🔹 NAVIGATION */}
+      <div className="mb-10">
+        <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
+          NAVIGATION
+        </p>
 
-              <Link to="/" onClick={() => setMenuOpen(false)}>HOME</Link>
-              <Link to="/story" onClick={() => setMenuOpen(false)}>OUR STORY</Link>
+        <div className="flex flex-col gap-4 text-2xl font-serif">
+          {[
+            { name: "Home", path: "/" },
+            { name: "Our Story", path: "/story" },
+            { name: "Contact", path: "/contact" },
+          ].map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              onClick={() => setMenuOpen(false)}
+              className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
+            >
+              <span className="text-[#1E7A3A] transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
+                {item.name}
+              </span>
 
-              <Link to="/program/geo-wellness" onClick={() => setMenuOpen(false)}>
-                Geo Wellness
-              </Link>
-              <Link to="/program/treatment" onClick={() => setMenuOpen(false)}>
-                Treatment
-              </Link>
+              {/* underline glow */}
+              <span className="absolute left-2 bottom-0 w-0 h-[2px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)] shadow-[0_0_8px_#C6A75E]" />
+            </Link>
+          ))}
+        </div>
+      </div>
 
-              <Link to="/explore/video" onClick={() => setMenuOpen(false)}>
-                Videos
-              </Link>
-              <Link to="/explore/image" onClick={() => setMenuOpen(false)}>
-                Images
-              </Link>
-              <Link to="/explore/brochure" onClick={() => setMenuOpen(false)}>
-                Brochure
-              </Link>
-              <Link to="/explore/blog" onClick={() => setMenuOpen(false)}>
-                Blog
-              </Link>
+      {/* 🔹 PROGRAMS */}
+      <div className="mb-10">
+        <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
+          PROGRAMS
+        </p>
 
-              <Link to="/contact" onClick={() => setMenuOpen(false)}>
-                CONTACT
-              </Link>
+        <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
+          {[
+            { name: "Wellness Programmes", path: "/program/treatment" },
+            { name: "Geo-Wellness Center", path: "/program/geo-wellness" },
+          ].map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              onClick={() => setMenuOpen(false)}
+              className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
+            >
+              <span className="transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
+                {item.name}
+              </span>
 
-              <button className="bg-[#1E7A3A] text-white px-6 py-3 rounded-full mt-6">
-                JOIN WAITLIST
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <span className="absolute left-2 bottom-0 w-0 h-[1px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)]" />
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* 🔹 ARCHIVE */}
+      <div className="mb-12">
+        <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
+          ARCHIVE
+        </p>
+
+        <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
+          {[
+            { name: "Video", path: "/explore/video" },
+            { name: "Image", path: "/explore/image" },
+            { name: "Blog", path: "/explore/blog" },
+            { name: "Brochure", path: "/explore/brochure" },
+          ].map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              onClick={() => setMenuOpen(false)}
+              className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
+            >
+              <span className="transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
+                {item.name}
+              </span>
+
+              <span className="absolute left-2 bottom-0 w-0 h-[1px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)]" />
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA */}
+      <button className="bg-[#1E7A3A] text-white py-4 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
+        JOIN WAITLIST
+      </button>
+    </motion.div>
+  )}
+</AnimatePresence>
     </nav>
   );
 }
