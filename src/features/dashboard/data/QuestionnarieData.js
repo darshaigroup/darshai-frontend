@@ -1,0 +1,38 @@
+export const questionnaireData = [
+  {
+    id: 1,
+    title: "Initial Prakriti Analysis",
+    description: "Comprehensive body constitution assessment",
+    category: "Ayurvedic",
+    duration: "15 MINS",
+    type: "prakriti",
+    status: "active",
+  },
+  {
+    id: 2,
+    title: "Sleep Quality Audit",
+    description: "Tracking circadian rhythm and sleep patterns",
+    category: "Lifestyle",
+    duration: "5 MINS",
+    type: "sleep",
+    status: "active",
+  },
+  {
+    id: 3,
+    title: "Biomarker Progress",
+    description: "Regular health metrics and vital signs",
+    category: "Clinical",
+    duration: "10 MINS",
+    type: "biomarker",
+    status: "active",
+  },
+  {
+    id: 4,
+    title: "Mental Wellness Survey",
+    description: "Stress levels and cognitive health assessment",
+    category: "Psychological",
+    duration: "12 MINS",
+    type: "mental",
+    status: "active",
+  },
+];

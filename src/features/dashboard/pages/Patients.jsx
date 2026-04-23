@@ -1,43 +1,62 @@
 import { useState } from "react";
-import PatientFilter from "../components/PatientFilter";
-import PatientTable from "../components/PatientTable";
+import PatientCard from "../components/patients/PatientCard";
+import PatientFilter from "../components/patients/PatientFilter";
+import AddPatientModal from "../components/patients/AddPatientModal";
 
 const dummyPatients = [
   {
     id: 1,
-    name: "John Doe",
-    age: 32,
-    gender: "Male",
-    condition: "Diabetes",
-    status: "Under Treatment",
+    name: "Aria Montgomery",
+    age: 28,
+    gender: "Female",
+    type: "VATA-PITTA",
+    email: "aria@example.com",
+    phone: "+1 (555) 000-0000",
+    status: "Stable",
+    img: "/patients/p1.jpg",
   },
   {
     id: 2,
-    name: "Jane Smith",
-    age: 28,
-    gender: "Female",
-    condition: "Cardio",
-    status: "Recovered",
+    name: "Julian Thorne",
+    age: 45,
+    gender: "Male",
+    type: "KAPHA",
+    email: "julian@example.com",
+    phone: "+1 (555) 000-0000",
+    status: "Stable",
+    img: "/patients/p2.jpg",
   },
 ];
 
 const Patients = () => {
-  const [patients, setPatients] = useState(dummyPatients);
-
-  const handleSearch = (query) => {
-    const filtered = dummyPatients.filter((p) =>
-      p.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setPatients(filtered);
-  };
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="space-y-6">
-      {/* Filters */}
-      <PatientFilter onSearch={handleSearch} />
+    <div className="space-y-8">
 
-      {/* Table */}
-      <PatientTable patients={patients} />
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-semibold text-[#1E293B]">
+          Patient Directory
+        </h1>
+        <p className="text-gray-500">
+          Precision health monitoring for your practice
+        </p>
+      </div>
+
+      {/* Filter */}
+      <PatientFilter onAdd={() => setShowModal(true)} />
+
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {dummyPatients.map((p) => (
+          <PatientCard key={p.id} patient={p} />
+        ))}
+      </div>
+
+      {/* Modal */}
+      {showModal && <AddPatientModal onClose={() => setShowModal(false)} />}
+
     </div>
   );
 };
