@@ -53,24 +53,6 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-
-      {/* 🔹 Bottom Profile */}
-      <div className="bg-white p-4 rounded-2xl shadow-sm">
-        <div className="flex items-center gap-3">
-          <img
-            src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150"
-            className="w-10 h-10 rounded-full"
-          />
-          <div>
-            <p className="text-sm font-semibold">Dr. Renjith N Raj</p>
-            <p className="text-xs text-gray-400">Senior Practitioner</p>
-          </div>
-        </div>
-
-        <button className="mt-3 text-sm text-green-600 flex items-center gap-2">
-          👤 View Profile
-        </button>
-      </div>
     </div>
   );
 };

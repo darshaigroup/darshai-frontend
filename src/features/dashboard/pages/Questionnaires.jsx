@@ -1,65 +1,100 @@
-import { questionnaireData } from "../data/questionnaireData";
+import { useLocation } from "react-router-dom";
+
+import { questionnaireData } from "../data/QuestionnarieData";
 import { submissionsData } from "../data/submissionsData";
-import QuestionnaireCard from "../components/QuestionnaireCard";
+
+import QuestionnaireCard from "../components/Questionnaires/QuestionnaireCard";
+import PendingList from "../components/Questionnaires/PendingList";
 
 const Questionnaires = () => {
-  return (
-    <div className="p-6 space-y-6">
+  const location = useLocation();
 
-      {/* HEADER */}
-      <div>
-        <h1 className="text-3xl font-bold text-[#1E293B]">
-          Clinical Questionnaires
-        </h1>
-        <p className="text-gray-500">
-          Assign standardized assessments to your patients
-        </p>
+  // 🔥 Patient from AddPatientModal
+  const patient = location.state?.patient;
+
+  return (
+    <div className="p-8 bg-[#F6F9F8] min-h-screen space-y-8">
+
+      {/* ================= HEADER ================= */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-semibold text-[#1E293B]">
+            Clinical Questionnaires
+          </h1>
+          <p className="text-gray-500 mt-1">
+            Assign standardized assessments to your patients
+          </p>
+        </div>
+
+        <button className="px-5 py-2.5 rounded-full 
+        bg-gradient-to-r from-[#1E7A3A] to-[#5E9387] 
+        text-white shadow-md text-sm">
+          + Create Template
+        </button>
       </div>
 
-      {/* CARDS */}
+      {/* ================= SELECTED PATIENT ================= */}
+      {patient && (
+        <div className="bg-white rounded-2xl p-5 shadow-sm border flex items-center justify-between">
+
+          <div>
+            <h2 className="text-lg font-semibold text-[#1E293B]">
+              Assigning Questionnaire To
+            </h2>
+
+            <p className="text-gray-600 text-sm mt-1">
+              {patient.name} • {patient.phone}
+            </p>
+
+            <p className="text-xs text-gray-400 mt-1">
+              {patient.occupation} • {patient.location}
+            </p>
+          </div>
+
+          <div className="text-sm text-green-600 font-medium">
+            Ready for Assignment
+          </div>
+        </div>
+      )}
+
+      {/* ================= QUESTIONNAIRE CARDS ================= */}
       <div className="grid grid-cols-4 gap-6">
         {questionnaireData.map((item) => (
-          <QuestionnaireCard key={item.id} data={item} />
+          <QuestionnaireCard
+            key={item.id}
+            data={item}
+            patient={patient}   // 🔥 pass patient
+          />
         ))}
       </div>
 
-      {/* PENDING */}
-      <div className="bg-white p-6 rounded-3xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">
-          Pending Submissions
-        </h2>
+      {/* ================= LOWER GRID ================= */}
+      <div className="grid grid-cols-3 gap-6">
 
-        {submissionsData.map((item) => (
-          <div
-            key={item.id}
-            className="flex justify-between items-center py-3 border-b"
-          >
-            <div>
-              <p className="font-medium">{item.patientName}</p>
-              <p className="text-sm text-gray-400">
-                {item.type} • {item.time}
-              </p>
-            </div>
+        {/* LEFT → Pending */}
+        <div className="col-span-2">
+          <PendingList data={submissionsData} />
+        </div>
 
-            <div className="flex items-center gap-3">
-              <span
-                className={`text-xs px-3 py-1 rounded-full ${
-                  item.risk === "Low"
-                    ? "bg-green-100 text-green-600"
-                    : item.risk === "Medium"
-                    ? "bg-orange-100 text-orange-600"
-                    : "bg-red-100 text-red-600"
-                }`}
-              >
-                {item.risk} Risk
-              </span>
-
-              <button className="text-sm text-blue-600">
-                Review
-              </button>
-            </div>
+        {/* RIGHT → Form Builder */}
+        <div className="bg-[#1E2F4F] text-white rounded-[32px] p-6 flex flex-col justify-center items-center text-center">
+          
+          <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-2xl mb-4">
+            +
           </div>
-        ))}
+
+          <h3 className="text-lg font-semibold mb-2">
+            Form Builder
+          </h3>
+
+          <p className="text-sm text-gray-300 mb-5">
+            Create custom AI-enhanced questionnaires for specific patient needs.
+          </p>
+
+          <button className="bg-white text-[#1E2F4F] px-5 py-2 rounded-full text-sm font-medium">
+            Launch Builder
+          </button>
+        </div>
       </div>
     </div>
   );

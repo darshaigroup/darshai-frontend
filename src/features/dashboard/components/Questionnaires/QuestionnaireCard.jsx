@@ -1,31 +1,39 @@
 const QuestionnaireCard = ({ data }) => {
   return (
-    <div className="bg-white rounded-3xl p-5 shadow-sm hover:shadow-md transition">
+    <div className="bg-white/90 backdrop-blur rounded-[28px] p-6 
+    shadow-[0_10px_30px_rgba(0,0,0,0.05)] 
+    hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+    transition-all duration-300">
 
-      {/* Duration */}
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">
+      {/* Top Row */}
+      <div className="flex justify-between items-center mb-4">
+        <div className="w-10 h-10 rounded-full bg-[#E8F5EC] flex items-center justify-center text-[#1E7A3A]">
+          ✔
+        </div>
+
+        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full font-medium text-gray-600">
           {data.duration}
         </span>
       </div>
 
       {/* Title */}
-      <h3 className="font-semibold text-lg text-[#1E293B]">
+      <h3 className="text-[18px] font-semibold text-[#1E293B] leading-snug">
         {data.title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-gray-500 mt-1">
+      <p className="text-sm text-gray-500 mt-2 leading-relaxed">
         {data.description}
       </p>
 
-      {/* Category */}
-      <span className="inline-block mt-3 text-xs bg-green-100 text-green-600 px-3 py-1 rounded-full">
+      {/* Tag */}
+      <span className="inline-block mt-4 text-xs bg-[#E8F5EC] text-[#1E7A3A] px-3 py-1 rounded-full">
         {data.category}
       </span>
 
       {/* Button */}
-      <button className="mt-5 w-full py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm">
+      <button className="mt-6 w-full py-2.5 rounded-full bg-[#F3F5F4] 
+      hover:bg-[#E8ECEA] text-sm font-medium transition">
         Assign to Patient →
       </button>
     </div>
