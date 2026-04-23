@@ -11,7 +11,11 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+
+        {/* HOME */}
         <Route path="/" element={<Home />} />
+
+        {/* STORY */}
         <Route path="/story" element={<OurStory />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/program" element={<OurProgram />} />

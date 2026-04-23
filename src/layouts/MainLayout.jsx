@@ -7,10 +7,16 @@ const MainLayout = () => {
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
 
+<<<<<<< HEAD
       <main>
         <Outlet />
       </main>
 
+=======
+      <main className="pt-[110px]">
+  <Outlet />
+</main>
+>>>>>>> feature/new/home
       <Footer />
     </div>
   );

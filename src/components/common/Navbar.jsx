@@ -20,6 +20,12 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ✅ Program links (IMPORTANT FIX)
+  const programLinks = [
+    { name: "Wellness Programmes", path: "/program" },
+    { name: "Geo-Wellness Center", path: "/program/geo-wellness-center" },
+  ];
+
   // 🔹 Common styles
   const textColor = scrolled ? "text-[#1E7A3A]" : "text-white";
 
