@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 const ProgramMain = () => {
   const { category } = useParams();
+  const [activeProgram, setActiveProgram] = React.useState(null);
 
   if (category === 'geo-wellness-center') {
     return <GeoWellnessCenter />;
@@ -136,9 +137,27 @@ const ProgramMain = () => {
         Our approach integrates chronobiology with targeted nutrient density
         to reboot your cellular potential.
       </p>
+      <button
+  onClick={() =>
+    setActiveProgram({
+      title: "Rejuvenation Programme",
+      label: "DARSHAI VITAL RESET",
+      image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+      description:
+        "Inspired by the regenerative heritage of the Himalayas...",
+    })
+  }
+  className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium"
+>
+  DISCOVER THE PROTOCOL
+  <span className="w-10 h-10 rounded-full border border-green-800 flex items-center justify-center">
+    ⚡
+  </span>
+</button>
 
     </div>
   </div>
+
 </section>
 {/* ================= MINDFULNESS PROGRAMME ================= */}
 <section className="bg-[#e9e4db] py-24 px-6 md:px-16">
@@ -181,6 +200,24 @@ const ProgramMain = () => {
         cognitive clarity, and improve emotional resilience. We transition
         you from a state of survival to a state of sovereign flow.
       </p>
+     <button
+  onClick={() =>
+    setActiveProgram({
+      title: "Mindfulness Programme",
+      label: "DARSHAI MIND BALANCE",
+      image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+      description:
+        "Cultivate calm, clarity, and inner peace through guided practices.",
+    })
+  }
+  className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
+>
+  DISCOVER THE PROTOCOL
+  <span className="w-10 h-10 border border-green-800 rounded-full flex items-center justify-center">
+    ⚡
+  </span>
+</button>
+
 
     </div>
 
@@ -266,14 +303,23 @@ const ProgramMain = () => {
         We go beyond superficial 'cleanses' to address systemic toxic load.
       </p>
 
-      {/* CTA */}
-      <button className="flex items-center gap-3 text-green-800 font-medium tracking-widest hover:text-yellow-700 transition">
-        DISCOVER THE PROTOCOL
-        <span className="w-8 h-8 rounded-full border border-green-800 flex items-center justify-center">
-          →
-        </span>
-      </button>
-
+      <button
+  onClick={() =>
+    setActiveProgram({
+      title: "Detox Programme",
+      label: "DARSHAI DEEP DETOX",
+      image: "https://images.unsplash.com/photo-1552693673-1bf958298935",
+      description:
+        "Cleanse your system and refresh your body from within.",
+    })
+  }
+  className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
+>
+  DISCOVER THE PROTOCOL
+  <span className="w-10 h-10 border border-green-800 rounded-full flex items-center justify-center">
+    ⚡
+  </span>
+</button>
     </div>
   </div>
 </section>
@@ -318,6 +364,23 @@ const ProgramMain = () => {
         cardiovascular capacity, and functional performance. Fitness is
         treated as a tectonic foundation for healthspan.
       </p>
+      <button
+  onClick={() =>
+    setActiveProgram({
+      title: "Fitness Programme",
+      label: "DARSHAI BODY CONDITIONING",
+      image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438",
+      description:
+        "Build strength, stamina, and confidence with tailored workouts.",
+    })
+  }
+  className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
+>
+  DISCOVER THE PROTOCOL
+  <span className="w-10 h-10 border border-green-800 rounded-full flex items-center justify-center">
+    ⚡
+  </span>
+</button>
 
     </div>
 
@@ -350,8 +413,122 @@ const ProgramMain = () => {
 
   </div>
 </section>
+{/* ================= LAST SECTION ================= */}
+<section className="bg-[#e9e4db] py-28 px-6 md:px-16">
+  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+    {/* LEFT - IMAGE WITH OVERLAY TEXT */}
+    <div className="relative overflow-hidden rounded-[40px]">
+
+      {/* Image */}
+      <img
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+        alt="Personalised Wellness"
+        className="w-full h-[520px] object-cover"
+      />
+
+      {/* Green Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1f6b4f]/90 via-[#1f6b4f]/40 to-transparent" />
+
+      {/* Bottom Text */}
+      <div className="absolute bottom-8 left-8 text-white">
+        <p className="text-xs tracking-[0.35em] text-yellow-400 mb-2">
+          DARSHAI PERSONALISED JOURNEYS
+        </p>
+        <h2 className="text-3xl md:text-4xl font-serif leading-tight">
+          Personalised Wellness <br /> Programmes
+        </h2>
+      </div>
+
+      {/* Top Right Icon */}
+      <div className="absolute top-6 right-6 w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-xl">
+        ⚡
+      </div>
+    </div>
+
+    {/* RIGHT - SIMPLE TEXT BLOCK */}
+    <div>
+      <p className="text-yellow-700 italic text-lg mb-4">
+        Signature Wellness Journeys
+      </p>
+
+      <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
+        Personalised Wellness Programmes
+      </h2>
+
+      <p className="border-l-4 border-yellow-600 pl-4 italic text-green-700 text-lg">
+        "Designed around your unique needs for holistic transformation."
+      </p>
+      <button
+  onClick={() =>
+    setActiveProgram({
+      title: "Personalised Wellness Programmes",
+      label: "DARSHAI PERSONALISED JOURNEYS",
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      description:
+        "Designed around your unique needs for holistic transformation.",
+    })
+  }
+  className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
+>
+  DISCOVER THE PROTOCOL
+  <span className="w-10 h-10 border border-green-800 rounded-full flex items-center justify-center">
+    ⚡
+  </span>
+</button>
+    </div>
+
+  </div>
+</section>
+{/* ===== FULL SCREEN DISCOVER OVERLAY ===== */}
+{activeProgram && (
+  <div className="fixed inset-0 z-50 bg-[#e9e4db] overflow-y-auto">
+
+    {/* CLOSE BUTTON */}
+    <button
+      onClick={() => setActiveProgram(null)}
+      className="absolute top-6 right-6 text-green-800 text-3xl z-50"
+    >
+      ✕
+    </button>
+
+    <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center min-h-screen px-6 md:px-16 py-20">
+
+      {/* IMAGE */}
+      <div className="relative">
+        <img
+          src={activeProgram.image}
+          alt={activeProgram.title}
+          className="w-full h-[600px] object-cover rounded-[20px]"
+        />
+        <div className="absolute inset-0 bg-green-900/30 rounded-[20px]" />
+      </div>
+
+      {/* CONTENT */}
+      <div>
+        <p className="text-xs tracking-[0.3em] text-yellow-700 mb-4">
+          {activeProgram.label}
+        </p>
+
+        <h2 className="text-5xl md:text-7xl font-serif text-green-800 mb-6">
+          {activeProgram.title}
+        </h2>
+
+        <p className="border-l-4 border-yellow-600 pl-6 italic text-green-700 text-xl mb-6">
+          {activeProgram.description}
+        </p>
+
+        <p className="text-green-800/80 text-lg leading-relaxed">
+          Full protocol details go here...
+        </p>
+      </div>
+
+    </div>
+  </div>
+)}
 
 </div>
+
   );
 }
 export default ProgramMain;
