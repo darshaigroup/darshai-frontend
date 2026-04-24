@@ -80,13 +80,13 @@ export default function Navbar() {
             {programOpen && (
               <div className={dropdownStyle}>
                 <Link
-                  to="/program/geo-wellness"
+                  to="/program/treatment"
                   className="px-5 py-2 hover:text-[#C9A75B]"
                 >
                   Wellness Programmes
                 </Link>
                 <Link
-                  to="/program/treatment"
+                  to="/program/geo-wellness"
                   className="px-5 py-2 hover:text-[#C9A75B]"
                 >
                   Geo-Wellness Center

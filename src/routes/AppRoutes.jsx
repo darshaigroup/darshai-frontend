@@ -19,28 +19,35 @@ import GeoWellness from "../features/dashboard/pages/GeoWellness";
 import Reports from "../features/dashboard/pages/Reports";
 import Questionnaires from "../features/dashboard/pages/Questionnaires";
 import PatientProfile from "../features/dashboard/pages/PatientProfile";
-
+import RouteLoader from "@/layouts/RouteLoader";
 // Auth
 import Login from "../pages/Auth/Login";
 
 const AppRoutes = () => {
   return (
     <Routes>
-
       <Route path="/login" element={<Login />} />
 
       {/* PUBLIC */}
+     
       <Route element={<MainLayout />}>
+       <Route element={<RouteLoader />}>
         <Route path="/" element={<Home />} />
         <Route path="/story" element={<OurStory />} />
         <Route path="/contact" element={<ContactUs />} />
+
+        {/* ✅ FIXED */}
         <Route path="/program" element={<OurProgram />} />
+        <Route path="/program/:category" element={<OurProgram />} />
+        <Route path="/program/treatment" element={<OurProgram />} /> 
+
         <Route path="/explore" element={<Explore />} />
+        <Route path="/explore/:category" element={<Explore />} />
+      </Route>
       </Route>
 
       {/* DASHBOARD */}
       <Route path="/dashboard" element={<DashboardLayout />}>
-
         <Route index element={<Overview />} />
 
         <Route path="analysis" element={<Analysis />} />
@@ -52,9 +59,7 @@ const AppRoutes = () => {
         <Route path="reports" element={<Reports />} />
         <Route path="geowellness" element={<GeoWellness />} />
         <Route path="questionnaires" element={<Questionnaires />} />
-
       </Route>
-
     </Routes>
   );
 };
