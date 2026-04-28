@@ -24,45 +24,52 @@ export default function Login() {
   };
 
   // 🔹 LOGIN HANDLER
-  const handleLogin = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const API_URL =
-        import.meta.env.VITE_API_URL;
-
-      const res = await fetch(`${API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed");
-      }
-
-      // ✅ STORE AUTH DATA
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      // ✅ ROLE-BASED REDIRECT (IMPORTANT)
-      if (data.user?.role === "doctor") {
-        navigate("/dashboard");
-      } else {
-        navigate("/"); // future patient dashboard
-      }
-
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+const handleLogin = async () => {
+  try {
+    if (!form.email || !form.password) {
+      setError("Email and password required");
+      return;
     }
-  };
+
+    setLoading(true);
+    setError("");
+
+    const API_URL =
+      import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+    const res = await fetch(`${API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Login failed"); // ✅ FIXED
+    }
+
+    // ✅ STORE DATA
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    // ✅ HANDLE BACKEND REDIRECT
+    if (data.redirect === "/doctor-dashboard") {
+      navigate("/dashboard/analysis"); // doctor landing page
+    } else if (data.redirect === "/patient-dashboard") {
+      navigate("/dashboard"); // patient landing
+    } else {
+      navigate("/dashboard"); // fallback
+    }
+
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#f4efe6] flex items-center justify-center px-6">
@@ -105,7 +112,7 @@ export default function Login() {
 
           {/* CLOSE */}
           <button
-            onClick={() => window.history.back()}
+            onClick={() => navigate("/")}
             className="absolute top-6 right-6 text-gray-400 hover:text-black"
           >
             ✕
