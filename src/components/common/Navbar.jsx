@@ -150,6 +150,7 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
+        <Link to="/login">
         <button
           onClick={() => navigate("/dashboard")}
           className={`hidden md:block px-5 py-2 rounded-full transition ${
@@ -158,8 +159,9 @@ export default function Navbar() {
               : "border border-white text-white"
           }`}
         >
-          JOIN WAITLIST
+          BEGIN JOURNEY
         </button>
+        </Link>
 
         {/* MOBILE ICON */}
         <button
@@ -277,7 +279,7 @@ export default function Navbar() {
 
             {/* CTA */}
             <button className="bg-[#1E7A3A] text-white py-4 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
-              JOIN WAITLIST
+              BEGIN JOURNEY
             </button>
           </motion.div>
         )}

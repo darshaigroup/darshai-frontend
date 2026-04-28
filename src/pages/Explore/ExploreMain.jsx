@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 
 /* ✅ IMPORT LOCAL IMAGES */
-import videoImg from "../../assets/images/logoEffect.gif";
-import imageImg from "../../assets/images/watch.jpg";
-import brochureImg from "../../assets/images/watch.jpg";
-import blogImg from "../../assets/images/watch.jpg";
+import videoImg from "@/assets/images/logoEffect.gif";
+import imageImg from "@/assets/images/watch.jpg";
+import brochureImg from "@/assets/images/watch.jpg";
+import blogImg from "@/assets/images/watch.jpg";
 
 const CATEGORIES = [
   { id: "all", name: "All", img: videoImg },
@@ -66,26 +65,17 @@ export default function Explore() {
   return (
     <div className="bg-[#f6f3ef] min-h-screen">
 
-      {/* HERO */}
+      {/* HERO (STATIC — NO ANIMATION) */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <img
-              src={currentCat.img}
-              className="w-full h-full object-cover"
-            />
+        <div className="absolute inset-0">
+          <img
+            src={currentCat.img}
+            className="w-full h-full object-cover"
+          />
 
-            <div className="absolute inset-0 bg-[#1E7A3A]/75 backdrop-blur-sm" />
-          </motion.div>
-        </AnimatePresence>
+          <div className="absolute inset-0 bg-[#1E7A3A]/75 backdrop-blur-sm" />
+        </div>
 
         <div className="relative z-10 text-center px-6">
           <h1 className="text-5xl md:text-7xl text-white font-serif mb-4 capitalize">
@@ -98,32 +88,33 @@ export default function Explore() {
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-         {filteredContent.map((item) => (
-  <motion.div
-    key={item.id}
-    className="relative rounded-[30px] overflow-hidden shadow-xl group cursor-pointer"
-  >
-    {/* IMAGE */}
-    <img
-      src={item.img}
-      className="w-full h-[400px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
-    />
+          {filteredContent.map((item) => (
+            <div
+              key={item.id}
+              className="relative rounded-[30px] overflow-hidden shadow-xl group cursor-pointer"
+            >
+              {/* IMAGE */}
+              <img
+                src={item.img}
+                className="w-full h-[400px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+              />
 
-    {/* 🔥 HOVER GRADIENT (HIDDEN → SHOW) */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
-      style={{
-        background:
-          "linear-gradient(to top, rgba(30,122,58,0.9), rgba(30,122,58,0.4), transparent)",
-      }}
-    />
+              {/* GREEN OVERLAY */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(30,122,58,0.9), rgba(30,122,58,0.4), transparent)",
+                }}
+              />
 
-    {/* 🔥 TEXT (HIDDEN → SHOW) */}
-    <div className="absolute bottom-6 left-6 right-6 text-white opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700">
-      <h3 className="text-2xl font-serif">{item.title}</h3>
-      <p className="text-sm opacity-80">{item.desc}</p>
-    </div>
-  </motion.div>
-))}
+              {/* TEXT */}
+              <div className="absolute bottom-6 left-6 right-6 text-white opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700">
+                <h3 className="text-2xl font-serif">{item.title}</h3>
+                <p className="text-sm opacity-80">{item.desc}</p>
+              </div>
+            </div>
+          ))}
 
         </div>
       </section>

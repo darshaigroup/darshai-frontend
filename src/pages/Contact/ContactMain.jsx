@@ -1,8 +1,7 @@
-import PageHeader from "../../components/common/PageHeader";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
-import hero from "../../assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/DoctorHomepage.jpg";
 const easing = [0.16, 1, 0.3, 1];
 
 export default function ContactUs() {
@@ -62,54 +61,41 @@ export default function ContactUs() {
 
   return (
     <div className="min-h-screen bg-[#f6f3ef]">
-      {/* HERO */}
       <section className="relative h-[60vh] flex items-center justify-center text-center overflow-hidden">
-        {/* BACKGROUND IMAGE */}
         <motion.img
-          src={hero} // replace with your variable (hero / currentCat.img etc.)
+          src={hero} 
           alt="hero"
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2, ease: easing }}
         />
-
-        {/* GREEN OVERLAY */}
         <div
           className="absolute inset-0"
           style={{ backgroundColor: "#1E7A3A", opacity: 0.75 }}
         />
-
-        {/* CONTENT */}
         <motion.div
           className="relative z-10 text-white max-w-4xl px-6 text-center mx-auto"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: easing }}
         >
-          {/* 🔹 TAG (GENESIS / GET IN TOUCH STYLE) */}
           <div className="mb-6 flex justify-center">
             <span className="text-[11px] tracking-[4px] text-[#C6A75E] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
               GET IN TOUCH
             </span>
           </div>
-
-          {/* 🔹 HEADING */}
           <h1 className="text-[42px] md:text-[72px] font-serif mb-6 leading-[1.05] tracking-[-0.02em]">
             Connect with Darshai
           </h1>
-
-          {/* 🔹 SUBTEXT */}
           <p className="text-lg md:text-xl opacity-80 font-light max-w-2xl mx-auto leading-relaxed">
             Whether you have questions about our program or want to explore a
             partnership, we’re here to listen.
           </p>
         </motion.div>
       </section>
-      {/* MAIN SECTION */}
       <section className="py-20 px-6 md:px-20 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* LEFT */}
           <div>
             <h2 className="text-5xl md:text-6xl font-serif text-[#1E7A3A] mb-8">
               Let’s start a{" "}
@@ -121,7 +107,6 @@ export default function ContactUs() {
             </p>
 
             <div className="space-y-10">
-              {/* EMAIL */}
               <div className="flex gap-6 items-start">
                 <div className="w-14 h-14 bg-[#1F4D3E]/5 rounded-2xl flex items-center justify-center shrink-0">
                   <Mail
@@ -140,8 +125,6 @@ export default function ContactUs() {
                   </a>
                 </div>
               </div>
-
-              {/* PHONE */}
               <div className="flex gap-6 items-start">
                 <div className="w-14 h-14 bg-[#1F4D3E]/5 rounded-2xl flex items-center justify-center shrink-0">
                   <Phone
@@ -160,8 +143,6 @@ export default function ContactUs() {
                   </a>
                 </div>
               </div>
-
-              {/* LOCATION */}
               <div className="flex gap-6 items-start">
                 <div className="w-14 h-14 bg-[#1F4D3E]/5 rounded-2xl flex items-center justify-center shrink-0">
                   <MapPin
@@ -188,15 +169,12 @@ export default function ContactUs() {
               </div>
             </div>
           </div>
-
-          {/* FORM */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-[#F7F3EA] p-10 rounded-[40px] shadow-xl"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* NAME */}
               <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Full Name
@@ -209,8 +187,6 @@ export default function ContactUs() {
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
-
-              {/* EMAIL */}
               <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Email Address
@@ -224,8 +200,6 @@ export default function ContactUs() {
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
-
-              {/* PHONE */}
               <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Phone Number
@@ -239,8 +213,6 @@ export default function ContactUs() {
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
-
-              {/* LOCATION */}
               <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Location
@@ -253,8 +225,6 @@ export default function ContactUs() {
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
-
-              {/* INTEREST */}
               <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Interest
@@ -271,8 +241,6 @@ export default function ContactUs() {
                   <option>Other</option>
                 </select>
               </div>
-
-              {/* MESSAGE */}
               <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Message
@@ -286,8 +254,6 @@ export default function ContactUs() {
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-[25px] outline-none"
                 />
               </div>
-
-              {/* BUTTON */}
               <button
                 type="submit"
                 disabled={loading}
@@ -299,8 +265,6 @@ export default function ContactUs() {
           </motion.div>
         </div>
       </section>
-
-      {/* MAP */}
       <section className="px-6 md:px-20 pb-20 max-w-7xl mx-auto">
         <div className="rounded-[40px] overflow-hidden shadow-xl border border-[#1F4D3E]/10">
           <iframe

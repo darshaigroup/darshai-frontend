@@ -1,32 +1,38 @@
 import { Routes, Route } from "react-router-dom";
 
 // Layouts
-import MainLayout from "../layouts/MainLayout";
-import DashboardLayout from "../layouts/DoctorDashboardLayout";
+import MainLayout from "@/layouts/MainLayout";
+import DashboardLayout from "@/layouts/DoctorDashboardLayout";
 
 // Public Pages
-import Home from "../pages/Home/HomeMain";
-import OurStory from "../pages/OurStory/StoryMain";
-import OurProgram from "../pages/OurProgram/ProgramMain";
-import Explore from "../pages/Explore/ExploreMain";
-import ContactUs from "../pages/Contact/ContactMain";
+import Home from "@/pages/Home/HomeMain";
+import OurStory from "@/pages/OurStory/StoryMain";
+import OurProgram from "@/pages/OurProgram/ProgramMain";
+import Explore from "@/pages/Explore/ExploreMain";
+import ContactUs from "@/pages/Contact/ContactMain";
+import PrivacyPolicy from "@/pages/LegalFile/PrivacyPolicy";
+import TermsConditions from "@/pages/LegalFile/TermsConditions";
+
 
 // Dashboard Pages
-import Overview from "../features/dashboard/pages/Overview";
-import Analysis from "../features/dashboard/pages/Analysis";
-import Patients from "../features/dashboard/pages/Patients";
-import GeoWellness from "../features/dashboard/pages/GeoWellness";
-import Reports from "../features/dashboard/pages/Reports";
-import Questionnaires from "../features/dashboard/pages/Questionnaires";
-import PatientProfile from "../features/dashboard/pages/PatientProfile";
+import Overview from "@/features/dashboard/pages/Overview";
+import Analysis from "@/features/dashboard/pages/Analysis";
+import Patients from "@/features/dashboard/pages/Patients";
+import GeoWellness from "@/features/dashboard/pages/GeoWellness";
+import Reports from "@/features/dashboard/pages/Reports";
+import Questionnaires from "@/features/dashboard/pages/Questionnaires";
+import PatientProfile from "@/features/dashboard/pages/PatientProfile";
 import RouteLoader from "@/layouts/RouteLoader";
 // Auth
-import Login from "../pages/Auth/Login";
+import Login from "@/pages/Auth/Login";
+import Register from "@/pages/Auth/Register";
+
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* PUBLIC */}
      
@@ -43,6 +49,9 @@ const AppRoutes = () => {
 
         <Route path="/explore" element={<Explore />} />
         <Route path="/explore/:category" element={<Explore />} />
+
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsConditions />} />
       </Route>
       </Route>
 

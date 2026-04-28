@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Shield, Users, Activity, Zap, Globe, Check } from "lucide-react";
 
 const brandGreen = "#1E7A3A";
@@ -14,7 +13,6 @@ const protocols = [
       "Hyper-Personalized Longevity Retreats",
       "Biological Sovereignty Dashboard + Bio-Hacking Kit",
       "Personalized Luxury Geo-Wellness Experience",
-      
     ],
     img: "/images/protocol1.jpg",
   },
@@ -48,7 +46,7 @@ const protocols = [
     desc: "Lab-Validated Wellness at Home.",
     icon: Zap,
     features: [
-      " Bio-Validated Herbal Kits",
+      "Bio-Validated Herbal Kits",
       "Neuro-Reset Collection",
       "Precision Unboxing Experience",
     ],
@@ -62,7 +60,7 @@ const protocols = [
     features: [
       "Bio-Hacking Workshops",
       "Pop-Up Geo-Wellness Experiences",
-      "Longevity Summits and ",
+      "Longevity Summits",
     ],
     img: "/images/protocol5.jpg",
   },
@@ -84,6 +82,7 @@ export default function ProtocolPreview() {
   return (
     <section className="bg-[#f6f3ef] py-24 px-6">
 
+      {/* TITLE */}
       <div className="flex flex-col items-center text-center mb-16 px-6">
         <h2
           className="text-[42px] md:text-[72px] font-serif leading-[1.05] tracking-[-0.02em]"
@@ -91,19 +90,16 @@ export default function ProtocolPreview() {
         >
           Our Protocols
         </h2>
-
       </div>
+
       <div className="max-w-7xl mx-auto space-y-32">
 
         {protocols.map((item, i) => (
-          <motion.div
+          <div
             key={i}
-            initial={{ opacity: 0, y: 80 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className={`flex flex-col ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } items-center gap-16`}
+            className={`flex flex-col ${
+              i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+            } items-center gap-16`}
           >
 
             {/* TEXT */}
@@ -115,7 +111,10 @@ export default function ProtocolPreview() {
                   <item.icon className="text-white" size={24} />
                 </div>
 
-                <span className="text-sm tracking-[3px]" style={{ color: brandGold }}>
+                <span
+                  className="text-sm tracking-[3px]"
+                  style={{ color: brandGold }}
+                >
                   {item.gear}
                 </span>
               </div>
@@ -144,35 +143,31 @@ export default function ProtocolPreview() {
                   </li>
                 ))}
               </ul>
-
             </div>
 
-            {/* IMAGE */}
-           <div className="flex-1 w-full group relative">
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    transition={{ duration: 0.6 }}
-    className="rounded-[40px] overflow-hidden shadow-2xl relative"
-  >
-    {/* IMAGE */}
-    <img
-      src={item.img}
-      alt={item.title}
-      className="w-full h-[420px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
-    />
+            {/* IMAGE (ONLY HOVER EFFECT KEPT) */}
+            <div className="flex-1 w-full group relative">
+              <div className="rounded-[40px] overflow-hidden shadow-2xl relative">
 
-    {/* 🔥 GREEN OVERLAY */}
-    <div
-      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
-      style={{
-        background:
-          "linear-gradient(to top, rgba(30,122,58,0.9), rgba(30,122,58,0.4), transparent)",
-      }}
-    />
-  </motion.div>
-</div>
+                {/* IMAGE */}
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-[420px] object-cover transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+                />
 
-          </motion.div>
+                {/* GREEN OVERLAY */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(30,122,58,0.9), rgba(30,122,58,0.4), transparent)",
+                  }}
+                />
+              </div>
+            </div>
+
+          </div>
         ))}
 
       </div>
