@@ -4,24 +4,21 @@ import DarshaiLoader from "@/components/ui/loader/DarshaiLoader";
 
 const RouteLoader = () => {
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
 
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 800); // smoother UX (not 2s)
 
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
-  return (
-    <>
-      {loading && <DarshaiLoader />}
-      <Outlet /> 
-    </>
-  );
+  if (loading) return <DarshaiLoader />;
+
+  return <Outlet />;
 };
 
 export default RouteLoader;
