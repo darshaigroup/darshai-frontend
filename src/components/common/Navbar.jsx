@@ -115,6 +115,12 @@ export default function Navbar() {
 
             {exploreOpen && (
               <div className={dropdownStyle}>
+                  <Link
+                  to="/explore/journal"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
+                  Journal
+                </Link>
                 <Link
                   to="/explore/video"
                   className="px-5 py-2 hover:text-[#C9A75B]"
@@ -256,6 +262,7 @@ export default function Navbar() {
 
               <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
                 {[
+                  { name: "Journal", path: "/explore/journal" },
                   { name: "Video", path: "/explore/video" },
                   { name: "Image", path: "/explore/image" },
                   { name: "Blog", path: "/explore/blog" },
@@ -278,9 +285,11 @@ export default function Navbar() {
             </div>
 
             {/* CTA */}
-            <button className="bg-[#1E7A3A] text-white py-4 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
+            <Link to="/login">
+            <button className="bg-[#1E7A3A] text-white py-4 px-3 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
               BEGIN JOURNEY
             </button>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

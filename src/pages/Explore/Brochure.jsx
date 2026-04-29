@@ -6,5 +6,6 @@ export const brochureData = [
     title: "Protocol Guide",
     img: brochureImg,
     desc: "Download system.",
+    pdf: "/pdfs/DARSHAI_Brochure.pdf", // ✅ add this
   },
 ];
