@@ -13,6 +13,7 @@ export default {
         'blob': 'blob 7s infinite',
         'float': 'float 6s ease-in-out infinite',
         'spin-slow': 'spin-slow 20s linear infinite',
+        'heroZoom': 'heroZoom 20s ease-in-out infinite',
       },
       boxShadow: {
         'glow': '0 0 20px rgba(99, 102, 241, 0.4)',

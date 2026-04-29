@@ -13,27 +13,19 @@ export default function Navbar() {
   let programTimeout;
   let exploreTimeout;
 
-  // 🔥 Scroll detection
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ✅ Program links (IMPORTANT FIX)
-  const programLinks = [
-    { name: "Wellness Programmes", path: "/program" },
-    { name: "Geo-Wellness Center", path: "/program/geo-wellness-center" },
-  ];
-
-  // 🔹 Common styles
   const textColor = scrolled ? "text-[#1E7A3A]" : "text-white";
 
   const hoverItem =
     "inline-block transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#C9A75B]";
 
   const dropdownStyle =
-    "absolute top-full mt-4 w-48 bg-white rounded-xl shadow-xl py-3 flex flex-col text-[#1E7A3A] text-sm z-50";
+    "absolute top-full mt-4 w-56 bg-white rounded-xl shadow-xl py-3 flex flex-col text-[#1E7A3A] text-sm z-50";
 
   return (
     <nav
@@ -44,22 +36,20 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
         {/* LOGO */}
-        <img src={logo} className="w-[120px]" />
+        <img src={logo} className="w-[120px]" alt="logo" />
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex gap-10 font-medium relative">
 
-          {/* HOME */}
           <Link to="/" className={`group ${textColor}`}>
             <span className={hoverItem}>HOME</span>
           </Link>
 
-          {/* STORY */}
           <Link to="/story" className={`group ${textColor}`}>
             <span className={hoverItem}>OUR STORY</span>
           </Link>
 
-          {/* 🔥 PROGRAM DROPDOWN */}
+          {/* PROGRAM DROPDOWN */}
           <div
             className="relative group"
             onMouseEnter={() => {
@@ -77,17 +67,21 @@ export default function Navbar() {
 
             {programOpen && (
               <div className={dropdownStyle}>
-                <Link to="/program/geo-wellness" className="px-5 py-2 hover:text-[#C9A75B]">
-                 Wellness Programmes
+                <Link to="/program" className="px-5 py-2 hover:text-[#C9A75B]">
+                  Wellness Programmes
                 </Link>
-                <Link to="/program/treatment" className="px-5 py-2 hover:text-[#C9A75B]">
-                 Geo-Wellness Center
+
+                <Link
+                  to="/program/geo-wellness-center"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
+                  Geo-Wellness Center
                 </Link>
               </div>
             )}
           </div>
 
-          {/* 🔥 EXPLORE DROPDOWN */}
+          {/* EXPLORE DROPDOWN */}
           <div
             className="relative group"
             onMouseEnter={() => {
@@ -121,14 +115,14 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* CONTACT */}
           <Link to="/contact" className={`group ${textColor}`}>
             <span className={hoverItem}>CONTACT US</span>
           </Link>
         </div>
 
         {/* CTA */}
-        <button
+        <Link
+          to="/patient-dashboard"
           className={`hidden md:block px-5 py-2 rounded-full transition ${
             scrolled
               ? "bg-[#1E7A3A] text-white"
@@ -136,7 +130,7 @@ export default function Navbar() {
           }`}
         >
           JOIN WAITLIST
-        </button>
+        </Link>
 
         {/* MOBILE ICON */}
         <button
@@ -147,115 +141,74 @@ export default function Navbar() {
         </button>
       </div>
 
-   {/* 📱 MOBILE MENU */}
-{/* 📱 MOBILE MENU */}
-<AnimatePresence>
-  {menuOpen && (
-    <motion.div
-      initial={{ x: "100%" }}
-      animate={{ x: 0 }}
-      exit={{ x: "100%" }}
-      transition={{ duration: 0.4 }}
-      className="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#F1ECE2] z-50 flex flex-col px-6 py-8 shadow-2xl overflow-y-auto"
-    >
-      {/* HEADER */}
-      <div className="flex justify-between items-center mb-10">
-        <img src={logo} className="w-[100px]" />
-        <FaTimes size={24} onClick={() => setMenuOpen(false)} />
-      </div>
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.4 }}
+            className="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#F1ECE2] z-50 flex flex-col px-6 py-8 shadow-2xl overflow-y-auto"
+          >
+            <div className="flex justify-between items-center mb-10">
+              <img src={logo} className="w-[100px]" alt="logo" />
+              <FaTimes size={24} onClick={() => setMenuOpen(false)} />
+            </div>
 
-      {/* 🔹 NAVIGATION */}
-      <div className="mb-10">
-        <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
-          NAVIGATION
-        </p>
+            {/* NAVIGATION */}
+            <div className="mb-10">
+              <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
+                NAVIGATION
+              </p>
 
-        <div className="flex flex-col gap-4 text-2xl font-serif">
-          {[
-            { name: "Home", path: "/" },
-            { name: "Our Story", path: "/story" },
-            { name: "Contact", path: "/contact" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              onClick={() => setMenuOpen(false)}
-              className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
-            >
-              <span className="text-[#1E7A3A] transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
-                {item.name}
-              </span>
+              <div className="flex flex-col gap-4 text-2xl font-serif">
+                <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+                <Link to="/story" onClick={() => setMenuOpen(false)}>Our Story</Link>
+                <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+              </div>
+            </div>
 
-              {/* underline glow */}
-              <span className="absolute left-2 bottom-0 w-0 h-[2px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)] shadow-[0_0_8px_#C6A75E]" />
+            {/* PROGRAMS */}
+            <div className="mb-10">
+              <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
+                PROGRAMS
+              </p>
+
+              <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
+                <Link to="/program" onClick={() => setMenuOpen(false)}>
+                  Wellness Programmes
+                </Link>
+
+                <Link
+                  to="/program/geo-wellness-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Geo-Wellness Center
+                </Link>
+              </div>
+            </div>
+
+            {/* EXPLORE */}
+            <div className="mb-12">
+              <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
+                EXPLORE
+              </p>
+
+              <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
+                <Link to="/explore/video">Video</Link>
+                <Link to="/explore/image">Image</Link>
+                <Link to="/explore/blog">Blog</Link>
+                <Link to="/explore/brochure">Brochure</Link>
+              </div>
+            </div>
+
+            <Link to="/patient-dashboard" className="bg-[#1E7A3A] text-white py-4 rounded-full text-lg tracking-widest">
+              JOIN WAITLIST
             </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* 🔹 PROGRAMS */}
-      <div className="mb-10">
-        <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
-          PROGRAMS
-        </p>
-
-        <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
-          {[
-            { name: "Wellness Programmes", path: "/program/treatment" },
-            { name: "Geo-Wellness Center", path: "/program/geo-wellness" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              onClick={() => setMenuOpen(false)}
-              className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
-            >
-              <span className="transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
-                {item.name}
-              </span>
-
-              <span className="absolute left-2 bottom-0 w-0 h-[1px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)]" />
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* 🔹 ARCHIVE */}
-      <div className="mb-12">
-        <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
-          ARCHIVE
-        </p>
-
-        <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
-          {[
-            { name: "Video", path: "/explore/video" },
-            { name: "Image", path: "/explore/image" },
-            { name: "Blog", path: "/explore/blog" },
-            { name: "Brochure", path: "/explore/brochure" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              onClick={() => setMenuOpen(false)}
-              className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
-            >
-              <span className="transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
-                {item.name}
-              </span>
-
-              <span className="absolute left-2 bottom-0 w-0 h-[1px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)]" />
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* CTA */}
-      <button className="bg-[#1E7A3A] text-white py-4 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
-        JOIN WAITLIST
-      </button>
-    </motion.div>
-  )}
-</AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

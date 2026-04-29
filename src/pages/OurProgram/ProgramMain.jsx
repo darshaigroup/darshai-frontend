@@ -86,11 +86,9 @@ const ProgramMain = () => {
 
       {/* Overlay Text */}
       <div className="absolute bottom-6 left-6 text-white">
-        <p className="text-xs tracking-[0.3em] text-yellow-400 mb-2">
-          DARSHAI VITAL RESET
-        </p>
+       
         <h3 className="text-2xl md:text-3xl font-serif">
-          Rejuvenation Programme
+           Darshai Vital Reset
         </h3>
       </div>
 
@@ -109,10 +107,9 @@ const ProgramMain = () => {
           ⚡
         </div>
         <div>
-          <p className="text-xs tracking-[0.3em] text-yellow-700">
-            DARSHAI VITAL RESET
+          <p className="text-xs tracking-[0.2em] text-yellow-900">
+          Vitality Focus
           </p>
-          <p className="text-xs text-gray-500">VITALITY FOCUS</p>
         </div>
       </div>
 
@@ -122,7 +119,7 @@ const ProgramMain = () => {
       </p>
 
       <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-        Rejuvenation Programme
+        Darshai Vital Reset
       </h2>
 
       {/* Quote */}
@@ -132,19 +129,16 @@ const ProgramMain = () => {
 
       {/* Description */}
       <p className="text-green-800/80 leading-relaxed text-lg">
-        A structured therapeutic protocol aimed at restoring physiological
-        balance, improving energy levels, and supporting systemic recovery.
-        Our approach integrates chronobiology with targeted nutrient density
-        to reboot your cellular potential.
+       The Rejuvenation Programme is a structured therapeutic pathway designed to restore vitality, resilience, and systemic balance by integrating Ayurvedic rasāyana principles with modern wellness practices. It focuses on enhancing cellular repair, strengthening immunity, and regulating biological rhythms through a combination of personalised nutrition, targeted herbal formulations, and restorative therapies. The programme works to reduce fatigue, improve energy levels, and support overall physiological function while incorporating lifestyle coaching to ensure long-term sustainability. It is particularly suited for individuals experiencing stress, burnout, low energy, or age-related decline, offering a comprehensive approach to revitalisation and long-term health optimisation.  
       </p>
-      <button
+     <button
   onClick={() =>
     setActiveProgram({
-      title: "Rejuvenation Programme",
-      label: "DARSHAI VITAL RESET",
+      title: " Darshai Vital Reset",
+      label: " Vitality Focus",
       image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
       description:
-        "Inspired by the regenerative heritage of the Himalayas...",
+        "The Rejuvenation Programme is a structured therapeutic pathway designed to restore vitality, resilience, and systemic balance by integrating Ayurvedic rasāyana principles with modern wellness practices. It focuses on enhancing cellular repair, strengthening immunity, and regulating biological rhythms through personalised nutrition, herbal formulations, and restorative therapies. The programme reduces fatigue, improves energy, and supports long-term health optimisation for individuals experiencing stress, burnout, or age-related decline."
     })
   }
   className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium"
@@ -154,7 +148,6 @@ const ProgramMain = () => {
     ⚡
   </span>
 </button>
-
     </div>
   </div>
 
@@ -169,13 +162,13 @@ const ProgramMain = () => {
       {/* Top Label */}
       <div className="flex items-center gap-3 mb-6">
         <div className="w-12 h-12 bg-green-700 rounded-2xl flex items-center justify-center text-white text-xl">
-          💚
+          ⚡
         </div>
         <div>
-          <p className="text-xs tracking-[0.3em] text-yellow-700">
-            DARSHAI MIND BALANCE
+          <p className="text-xs tracking-[0.2em] text-yellow-700">
+            Resilience Focus
           </p>
-          <p className="text-xs text-gray-500">RESILIENCE FOCUS</p>
+         
         </div>
       </div>
 
@@ -186,7 +179,7 @@ const ProgramMain = () => {
 
       {/* Title */}
       <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-        Mindfulness Programme
+        Darshai Mind Balance
       </h2>
 
       {/* Quote */}
@@ -196,9 +189,7 @@ const ProgramMain = () => {
 
       {/* Description */}
       <p className="text-green-800/80 leading-relaxed text-lg">
-        Evidence-informed practices to regulate stress response, enhance
-        cognitive clarity, and improve emotional resilience. We transition
-        you from a state of survival to a state of sovereign flow.
+       The Mindfulness Programme is designed to cultivate mental clarity, emotional balance, and resilience through structured, evidence-informed practices such as guided meditation, breathwork, and awareness training. It helps regulate the nervous system, reduce stress responses, and enhance focus by building deeper awareness of thought patterns and emotional triggers. Participants learn to respond to challenges with greater balance rather than reactivity, while also gaining practical tools that can be applied in professional and personal environments. This programme supports improved sleep, emotional stability, and cognitive performance, making it well suited for professionals, students, and individuals seeking sustainable mental wellbeing.  
       </p>
      <button
   onClick={() =>
@@ -207,7 +198,7 @@ const ProgramMain = () => {
       label: "DARSHAI MIND BALANCE",
       image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
       description:
-        "Cultivate calm, clarity, and inner peace through guided practices.",
+        "The Mindfulness Programme is designed to cultivate mental clarity, emotional balance, and resilience through structured, evidence-informed practices such as guided meditation, breathwork, and awareness training. It helps regulate the nervous system, reduce stress responses, and enhance focus by building deeper awareness of thought patterns and emotional triggers. Participants learn to respond to challenges with greater balance rather than reactivity, while also gaining practical tools that can be applied in professional and personal environments. This programme supports improved sleep, emotional stability, and cognitive performance, making it well suited for professionals, students, and individuals seeking sustainable mental wellbeing.  ",
     })
   }
   className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
@@ -228,16 +219,27 @@ const ProgramMain = () => {
         alt="Mindfulness"
         className="w-full h-[500px] object-cover rounded-[40px]"
       />
+  {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 to-transparent rounded-[40px]" />
 
+      {/* Bottom Text */}
+      <div className="absolute bottom-6 left-6 text-white">
+        
+        <h3 className="text-2xl md:text-3xl font-serif">
+          Darshai Mind Balance
+        </h3>
+      </div>
       {/* Optional subtle overlay (for premium feel) */}
       <div className="absolute inset-0 bg-black/10 rounded-[40px]"></div>
     </div>
+    
 
   </div>
 </section>
 {/* ================= DETOX PROGRAMME ================= */}
 <section className="bg-[#e9e4db] py-24 px-6 md:px-16">
   <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
 
     {/* LEFT IMAGE */}
     <div className="relative">
@@ -251,11 +253,9 @@ const ProgramMain = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 to-transparent rounded-[40px]" />
 
       <div className="absolute bottom-6 left-6 text-white">
-        <p className="text-xs tracking-[0.3em] text-yellow-400 mb-2">
-          DARSHAI DEEP DETOX
-        </p>
+
         <h3 className="text-2xl md:text-3xl font-serif">
-          Detox Programme
+          Detox Deep Detox
         </h3>
       </div>
 
@@ -274,10 +274,10 @@ const ProgramMain = () => {
           ⚡
         </div>
         <div>
-          <p className="text-xs tracking-[0.3em] text-yellow-700">
-            DARSHAI DEEP DETOX
+          <p className="text-xs tracking-[0.2em] text-yellow-700">
+            Metabolic Focus
           </p>
-          <p className="text-xs text-gray-500">METABOLIC FOCUS</p>
+          
         </div>
       </div>
 
@@ -288,7 +288,7 @@ const ProgramMain = () => {
 
       {/* Title */}
       <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-        Detox Programme
+        Darshai Deep Detox
       </h2>
 
       {/* Quote */}
@@ -298,9 +298,7 @@ const ProgramMain = () => {
 
       {/* Description */}
       <p className="text-green-800/80 leading-relaxed text-lg mb-10">
-        Targeted cleansing interventions designed to optimise metabolic
-        function and support the body’s natural detoxification pathways.
-        We go beyond superficial 'cleanses' to address systemic toxic load.
+        The Detox Programme is a targeted intervention focused on optimising metabolism and supporting the body’s natural detoxification processes through a blend of Ayurvedic purification principles and modern nutritional science. It aims to eliminate āma (metabolic toxins), strengthen agni (digestive function), and restore systemic balance using personalised dietary protocols, herbal formulations, and therapeutic practices such as controlled fasting and sweating therapies. This structured approach helps reset internal systems, improve digestion, and enhance metabolic efficiency, leading to better energy levels, clearer skin, and overall physiological balance. It is ideal for individuals dealing with lifestyle-related imbalances, digestive issues, or seasonal transitions.  
       </p>
 
       <button
@@ -310,7 +308,7 @@ const ProgramMain = () => {
       label: "DARSHAI DEEP DETOX",
       image: "https://images.unsplash.com/photo-1552693673-1bf958298935",
       description:
-        "Cleanse your system and refresh your body from within.",
+        "The Detox Programme is a targeted intervention focused on optimising metabolism and supporting the body’s natural detoxification processes through a blend of Ayurvedic purification principles and modern nutritional science. It aims to eliminate āma (metabolic toxins), strengthen agni (digestive function), and restore systemic balance using personalised dietary protocols, herbal formulations, and therapeutic practices such as controlled fasting and sweating therapies. This structured approach helps reset internal systems, improve digestion, and enhance metabolic efficiency, leading to better energy levels, clearer skin, and overall physiological balance. It is ideal for individuals dealing with lifestyle-related imbalances, digestive issues, or seasonal transitions.  .",
     })
   }
   className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
@@ -336,10 +334,10 @@ const ProgramMain = () => {
           🛡️
         </div>
         <div>
-          <p className="text-xs tracking-[0.3em] text-yellow-700">
-            DARSHAI BODY CONDITIONING
+          <p className="text-xs tracking-[0.2em] text-yellow-700">
+            Performance Focus
           </p>
-          <p className="text-xs text-gray-500">PERFORMANCE FOCUS</p>
+          
         </div>
       </div>
 
@@ -350,7 +348,7 @@ const ProgramMain = () => {
 
       {/* Title */}
       <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-        Fitness Programme
+         Darshai Body Conditioning
       </h2>
 
       {/* Quote */}
@@ -360,18 +358,24 @@ const ProgramMain = () => {
 
       {/* Description */}
       <p className="text-green-800/80 leading-relaxed text-lg">
-        Individually prescribed training protocols to improve strength,
-        cardiovascular capacity, and functional performance. Fitness is
-        treated as a tectonic foundation for healthspan.
+        Personalised Wellness Programmes provide a comprehensive, data-driven approach to health optimisation by tailoring interventions to each individual’s unique profile. Combining Ayurvedic diagnostics with biomarker analysis and lifestyle insights, these programmes address constitution, current imbalances, and personal health goals through integrated strategies across nutrition, stress management, movement, and detoxification. Continuous monitoring and refinement ensure that the programme evolves in response to measurable progress, delivering precise and adaptive care. This approach supports improved systemic balance, enhanced resilience, and sustainable wellbeing, making it ideal for individuals seeking a customised and outcome-oriented health journe  
+
+ 
+
+
       </p>
       <button
   onClick={() =>
     setActiveProgram({
-      title: "Fitness Programme",
+      title: "Darshai Body Conditioning",
       label: "DARSHAI BODY CONDITIONING",
-      image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438",
+      subtitle: "Strength & Flow",
+      quote: "Build strength, stamina, and confidence with tailored workouts.",
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
       description:
-        "Build strength, stamina, and confidence with tailored workouts.",
+        "Personalised Wellness Programmes provide a comprehensive, data-driven approach to health optimisation by tailoring interventions to each individual’s unique profile.",
+      details:
+        "Combining Ayurvedic diagnostics with biomarker analysis and lifestyle insights, these programmes address constitution, current imbalances, and personal health goals through integrated strategies across nutrition, stress management, movement, and detoxification. Continuous monitoring and refinement ensure that the programme evolves in response to measurable progress, delivering precise and adaptive care. This approach supports improved systemic balance, enhanced resilience, and sustainable wellbeing, making it ideal for individuals seeking a customised and outcome-oriented health journey.",
     })
   }
   className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
@@ -387,7 +391,7 @@ const ProgramMain = () => {
     {/* RIGHT IMAGE */}
     <div className="relative">
       <img
-        src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
         alt="Fitness"
         className="w-full h-[500px] object-cover rounded-[40px]"
       />
@@ -397,89 +401,21 @@ const ProgramMain = () => {
 
       {/* Bottom Text */}
       <div className="absolute bottom-6 left-6 text-white">
-        <p className="text-xs tracking-[0.3em] text-yellow-400 mb-2">
-          DARSHAI BODY CONDITIONING
-        </p>
+        
         <h3 className="text-2xl md:text-3xl font-serif">
-          Fitness Programme
+          Darshai Body Conditioning
         </h3>
       </div>
 
       {/* Top Icon */}
       <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/30 backdrop-blur flex items-center justify-center text-white">
-        ⚡
+        ⚡  
       </div>
     </div>
 
   </div>
 </section>
-{/* ================= LAST SECTION ================= */}
-<section className="bg-[#e9e4db] py-28 px-6 md:px-16">
-  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-    {/* LEFT - IMAGE WITH OVERLAY TEXT */}
-    <div className="relative overflow-hidden rounded-[40px]">
-
-      {/* Image */}
-      <img
-        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
-        alt="Personalised Wellness"
-        className="w-full h-[520px] object-cover"
-      />
-
-      {/* Green Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1f6b4f]/90 via-[#1f6b4f]/40 to-transparent" />
-
-      {/* Bottom Text */}
-      <div className="absolute bottom-8 left-8 text-white">
-        <p className="text-xs tracking-[0.35em] text-yellow-400 mb-2">
-          DARSHAI PERSONALISED JOURNEYS
-        </p>
-        <h2 className="text-3xl md:text-4xl font-serif leading-tight">
-          Personalised Wellness <br /> Programmes
-        </h2>
-      </div>
-
-      {/* Top Right Icon */}
-      <div className="absolute top-6 right-6 w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-xl">
-        ⚡
-      </div>
-    </div>
-
-    {/* RIGHT - SIMPLE TEXT BLOCK */}
-    <div>
-      <p className="text-yellow-700 italic text-lg mb-4">
-        Signature Wellness Journeys
-      </p>
-
-      <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-        Personalised Wellness Programmes
-      </h2>
-
-      <p className="border-l-4 border-yellow-600 pl-4 italic text-green-700 text-lg">
-        "Designed around your unique needs for holistic transformation."
-      </p>
-      <button
-  onClick={() =>
-    setActiveProgram({
-      title: "Personalised Wellness Programmes",
-      label: "DARSHAI PERSONALISED JOURNEYS",
-      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      description:
-        "Designed around your unique needs for holistic transformation.",
-    })
-  }
-  className="mt-10 flex items-center gap-4 text-green-800 tracking-[0.3em] font-medium hover:text-yellow-700 transition"
->
-  DISCOVER THE PROTOCOL
-  <span className="w-10 h-10 border border-green-800 rounded-full flex items-center justify-center">
-    ⚡
-  </span>
-</button>
-    </div>
-
-  </div>
-</section>
 {/* ===== FULL SCREEN DISCOVER OVERLAY ===== */}
 {activeProgram && (
   <div className="fixed inset-0 z-50 bg-[#e9e4db] overflow-y-auto">
@@ -514,13 +450,27 @@ const ProgramMain = () => {
           {activeProgram.title}
         </h2>
 
-        <p className="border-l-4 border-yellow-600 pl-6 italic text-green-700 text-xl mb-6">
+        {activeProgram.subtitle && (
+          <p className="text-yellow-700 italic text-lg mb-4">
+            {activeProgram.subtitle}
+          </p>
+        )}
+
+        {activeProgram.quote && (
+          <p className="border-l-4 border-yellow-600 pl-6 italic text-green-700 text-xl mb-6">
+            {activeProgram.quote}
+          </p>
+        )}
+
+        <p className="text-green-800/80 leading-relaxed text-lg mb-6">
           {activeProgram.description}
         </p>
 
-        <p className="text-green-800/80 text-lg leading-relaxed">
-          Full protocol details go here...
-        </p>
+        {activeProgram.details && (
+          <p className="text-green-800/80 leading-relaxed text-lg">
+            {activeProgram.details}
+          </p>
+        )}
       </div>
 
     </div>
