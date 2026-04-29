@@ -57,7 +57,7 @@ const handleLogin = async () => {
 
     // ✅ HANDLE BACKEND REDIRECT
     if (data.redirect === "/doctor-dashboard") {
-      navigate("/dashboard/analysis"); // doctor landing page
+      navigate("/dashboard"); // doctor landing page
     } else if (data.redirect === "/patient-dashboard") {
       navigate("/dashboard"); // patient landing
     } else {
