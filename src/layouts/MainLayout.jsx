@@ -7,10 +7,9 @@ const MainLayout = () => {
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
 
-      <main className="pt-28">
+      <main>
         <Outlet />
       </main>
-
       <Footer />
     </div>
   );
