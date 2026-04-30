@@ -5,7 +5,7 @@ import RightPanel from "@/components/RightPanel";
 import TopNavbar from "@/features/dashboard/components/layout/TopNavBar";
 import AddPatientModal from "@/features/dashboard/components/patients/AddPatientModal"; // ✅ ADD THIS
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+//added imports for new modal functionality
 const DoctorDashboardLayout = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showRightPanel, setShowRightPanel] = useState(false);
