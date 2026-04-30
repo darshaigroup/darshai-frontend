@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from "@/features/dashboard/components/layout/Sidebar";
 import RightPanel from "@/components/RightPanel";
-import TopNavbar from "@/features/dashboard/components/layout/TopNavbar";
+import TopNavbar from "@/features/dashboard/components/layout/TopNavBar";
 import AddPatientModal from "@/features/dashboard/components/patients/AddPatientModal"; // ✅ ADD THIS
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
