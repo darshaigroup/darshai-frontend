@@ -1,12 +1,24 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
+  const location = useLocation();
 
-  if (!token || token === "undefined") {
-    return <Navigate to="/login" replace />;
+  const isValidToken =
+    token && token !== "undefined" && token !== "null";
+
+  // ❌ NOT LOGGED IN → redirect to login
+  if (!isValidToken) {
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
+  // ✅ LOGGED IN → allow access
   return <Outlet />;
 };
 

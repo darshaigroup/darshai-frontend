@@ -116,10 +116,10 @@ const Footer = () => {
 
         {/* 🔥 PROGRAMS */}
         <FooterColumn title="Programs">
-          <FooterLink to="/program/treatment">
+          <FooterLink to="/program">
             Wellness Programmes
           </FooterLink>
-          <FooterLink to="/program/geo-wellness">
+          <FooterLink to="/program/geo-wellness-center">
             Geo-Wellness Center
           </FooterLink>
         </FooterColumn>

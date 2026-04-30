@@ -80,13 +80,13 @@ export default function Navbar() {
             {programOpen && (
               <div className={dropdownStyle}>
                 <Link
-                  to="/program/treatment"
+                  to="/program"
                   className="px-5 py-2 hover:text-[#C9A75B]"
                 >
                   Wellness Programmes
                 </Link>
                 <Link
-                  to="/program/geo-wellness"
+                  to="/program/geo-wellness-center"
                   className="px-5 py-2 hover:text-[#C9A75B]"
                 >
                   Geo-Wellness Center
@@ -232,10 +232,10 @@ export default function Navbar() {
 
               <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
                 {[
-                  { name: "Wellness Programmes", path: "/program/treatment" },
+                  { name: "Wellness Programmes", path: "/program" },
                   {
                     name: "Geo-Wellness Center",
-                    path: "/program/geo-wellness",
+                    path: "/program/geo-wellness-center",
                   },
                 ].map((item) => (
                   <Link

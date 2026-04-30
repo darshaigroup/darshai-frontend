@@ -1,6 +1,8 @@
 const API_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+  console.log("API URL:", API_URL);
+
 /* SEND OTP */
 export const sendOtp = async (email) => {
   try {
@@ -12,7 +14,13 @@ export const sendOtp = async (email) => {
       body: JSON.stringify({ email }),
     });
 
-    return await res.json();
+    if (!res.ok) {
+      return { success: false, message: "Server error" };
+    }
+
+    const data = await res.json();
+    return data;
+
   } catch (err) {
     return { success: false, message: "Network error" };
   }
@@ -26,7 +34,10 @@ export const verifyOtp = async (email, otp) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, otp }),
+      body: JSON.stringify({
+        email,
+       otp, 
+      }),
     });
 
     return await res.json();

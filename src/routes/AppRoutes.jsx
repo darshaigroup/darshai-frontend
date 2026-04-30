@@ -54,23 +54,22 @@ const AppRoutes = () => {
         </Route>
       </Route>
 
-      {/* 🩺 PROTECTED DASHBOARD */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+      {/* 🔐 PROTECTED DASHBOARD */}
+<Route element={<ProtectedRoute />}>
+  <Route path="/dashboard" element={<DashboardLayout />}>
 
-          {/* Loader applied inside dashboard */}
-          <Route element={<RouteLoader />}>
-            <Route index element={<Overview />} />
-            <Route path="analysis" element={<Analysis />} />
-            <Route path="patients" element={<Patients />} />
-            <Route path="patients/:id" element={<PatientProfile />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="geowellness" element={<GeoWellness />} />
-            <Route path="questionnaires" element={<Questionnaires />} />
-          </Route>
+    <Route element={<RouteLoader />}>
+      <Route index element={<Overview />} />
+      <Route path="analysis" element={<Analysis />} />
+      <Route path="patients" element={<Patients />} />
+      <Route path="patients/:id" element={<PatientProfile />} />
+      <Route path="reports" element={<Reports />} />
+      <Route path="geowellness" element={<GeoWellness />} />
+      <Route path="questionnaires" element={<Questionnaires />} />
+    </Route>
 
-        </Route>
-      </Route>
+  </Route>
+</Route>
 
     </Routes>
   );

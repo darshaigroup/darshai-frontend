@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import hero from "@/assets/images/DoctorHomepage.jpg";
 
 export default function Login() {
   const navigate = useNavigate();
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (token && token !== "undefined") {
+    navigate("/dashboard");
+  }
+}, []);
 
   const [form, setForm] = useState({
     email: "",
@@ -57,11 +64,11 @@ const handleLogin = async () => {
 
     // ✅ HANDLE BACKEND REDIRECT
     if (data.redirect === "/doctor-dashboard") {
-      navigate("/dashboard"); // doctor landing page
+      navigate("/dashboard", { replace: true }); // doctor landing page
     } else if (data.redirect === "/patient-dashboard") {
-      navigate("/dashboard"); // patient landing
+      navigate("/dashboard", { replace: true }); // patient landing
     } else {
-      navigate("/dashboard"); // fallback
+      navigate("/dashboard", { replace: true }); // fallback
     }
 
   } catch (err) {

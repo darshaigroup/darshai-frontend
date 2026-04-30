@@ -1,7 +1,8 @@
 import hero from "@/assets/images/DoctorHomepage.jpg";
-import brain from "@/assets/images/dosha.jpg";
+import bg4 from "@/assets/images/bg4.png";
 import herb from "@/assets/images/herb.jpg";
 import Protocol from "./protocol.jsx";
+import doctor from "@/assets/images/doctor.jpeg";
 import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 
@@ -100,9 +101,9 @@ const OurStory = () => {
               <div className="sticky top-24">
                 <div className="rounded-[40px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] group">
                   <img
-                    src={brain}
+                    src={bg4}
                     alt="wellness"
-                    className="w-full h-[500px] md:h-[650px] object-cover transition-all duration-[1200ms] group-hover:scale-110"
+                    className="w-full h-[300px] md:h-[650px] object-cover transition-all duration-[1200ms] group-hover:scale-110"
                   />
 
                   <div
@@ -202,16 +203,16 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
               {/* IMAGE CARD (unchanged effect) */}
               <div className="rounded-[40px] overflow-hidden relative shadow-xl">
                 <img
-                  src="/images/founder.jpg"
+                  src={person.name === "Veekshitha V" ? doctor : doctor}
                   alt={person.name}
-                  className="w-full h-[500px] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[1200ms]"
+                  className="w-full h-[900px] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[1200ms]"
                 />
 
                 <div
                   className="absolute inset-0"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(30,122,58,0.9), transparent)",
+                      "linear-gradient(to top, rgba(30,100,58,0.9), transparent)",
                   }}
                 />
 
