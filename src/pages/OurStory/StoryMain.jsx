@@ -3,6 +3,7 @@ import bg4 from "@/assets/images/bg4.png";
 import herb from "@/assets/images/herb.jpg";
 import Protocol from "./protocol.jsx";
 import doctor from "@/assets/images/doctor.jpeg";
+import ceo from "@/assets/images/ceo.webp";
 import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 
@@ -88,7 +89,7 @@ const OurStory = () => {
             className="text-[42px] md:text-[72px] font-serif leading-tight"
             style={{ color: brandGreen }}
           >
-           Reclaiming Sovereignty
+            Reclaiming Sovereignty
           </h2>
         </div>
 
@@ -203,13 +204,17 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
               {/* IMAGE CARD (unchanged effect) */}
               <div className="rounded-[40px] overflow-hidden relative shadow-xl">
                 <img
-                  src={person.name === "Veekshitha V" ? doctor : doctor}
+                  src={person.name === "Veekshitha V" ? ceo : doctor}
                   alt={person.name}
-                  className="w-full h-[900px] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[1200ms]"
+                  className="w-full h-[900px] object-cover group-hover:scale-110 transition-all duration-[1200ms]"
                 />
 
                 <div
-                  className="absolute inset-0"
+                  className="
+    absolute inset-0
+    opacity-0 group-hover:opacity-100
+    transition duration-700
+  "
                   style={{
                     background:
                       "linear-gradient(to top, rgba(30,100,58,0.9), transparent)",
@@ -226,7 +231,7 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
 
               {/* 🔥 NEW DESCRIPTION BLOCK */}
               <div className="mt-6 px-2">
-                <p className="text-xs tracking-[4px] text-yellow-700 mb-3 uppercase">
+                <p className="text-xs text-center tracking-[4px] text-yellow-700 mb-3 uppercase">
                   {person.title}
                 </p>
 
@@ -253,16 +258,16 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
             <div className="mb-6 flex justify-center">
-    <span className="text-[11px] tracking-[4px] text-[#d1c957] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 uppercase">
-      Our North Star
-    </span>
-  </div>
+              <span className="text-[11px] tracking-[4px] text-[#d1c957] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 uppercase">
+                Our North Star
+              </span>
+            </div>
             <h2 className="text-[32px] md:text-[64px] font-serif leading-[1.1] max-w-4xl">
               {" "}
-             To reset a baseline is to architect a legacy{" "}
+              To reset a baseline is to architect a legacy{" "}
               <span className="italic">
                 {" "}
-                 that outlives the chronological clock.{" "}
+                that outlives the chronological clock.{" "}
               </span>{" "}
             </h2>
             <p className="mt-6 text-sm md:text-lg text-white/80 max-w-2xl">

@@ -1,4 +1,4 @@
-import brochureImg from "@/assets/images/watch.jpg";
+import brochureImg from "@/assets/images/logos.png";
 
 export const brochureData = [
   {

@@ -1,4 +1,4 @@
-import blogImg from "@/assets/images/watch.jpg";
+import blogImg from "@/assets/images/logos.png";
 
 export const blogData = [
   {

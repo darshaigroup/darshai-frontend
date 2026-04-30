@@ -1,4 +1,4 @@
-import imageImg from "@/assets/images/watch.jpg";
+import imageImg from "@/assets/images/logos.png";
 
 export const imageData = [
   {

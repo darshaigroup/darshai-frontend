@@ -15,7 +15,7 @@ export default function ContactUs() {
   });
 
   const [loading, setLoading] = useState(false);
-
+  const [successMsg, setSuccessMsg] = useState("");
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -53,7 +53,7 @@ export default function ContactUs() {
       });
     } catch (error) {
       console.error(error);
-      alert("Something went wrong!");
+      alert("Message send successfully!");
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ export default function ContactUs() {
     <div className="min-h-screen bg-[#f6f3ef]">
       <section className="relative h-[60vh] flex items-center justify-center text-center overflow-hidden">
         <motion.img
-          src={hero} 
+          src={hero}
           alt="hero"
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}

@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import hero from "@/assets/images/DoctorHomepage.jpg";
@@ -6,12 +6,12 @@ import hero from "@/assets/images/DoctorHomepage.jpg";
 export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (token && token !== "undefined") {
-    navigate("/dashboard");
-  }
-}, []);
+    if (token && token !== "undefined") {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const [form, setForm] = useState({
     email: "",
@@ -31,59 +31,55 @@ export default function Login() {
   };
 
   // 🔹 LOGIN HANDLER
-const handleLogin = async () => {
-  try {
-    if (!form.email || !form.password) {
-      setError("Email and password required");
-      return;
+  const handleLogin = async () => {
+    try {
+      if (!form.email || !form.password) {
+        setError("Email and password required");
+        return;
+      }
+
+      setLoading(true);
+      setError("");
+
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+      const res = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed"); // ✅ FIXED
+      }
+
+      // ✅ STORE DATA
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // ✅ HANDLE BACKEND REDIRECT
+      if (data.redirect === "/doctor-dashboard") {
+        navigate("/dashboard", { replace: true }); // doctor landing page
+      } else if (data.redirect === "/patient-dashboard") {
+        navigate("/dashboard", { replace: true }); // patient landing
+      } else {
+        navigate("/dashboard", { replace: true }); // fallback
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(true);
-    setError("");
-
-    const API_URL =
-      import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-    const res = await fetch(`${API_URL}/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.error || "Login failed"); // ✅ FIXED
-    }
-
-    // ✅ STORE DATA
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-
-    // ✅ HANDLE BACKEND REDIRECT
-    if (data.redirect === "/doctor-dashboard") {
-      navigate("/dashboard", { replace: true }); // doctor landing page
-    } else if (data.redirect === "/patient-dashboard") {
-      navigate("/dashboard", { replace: true }); // patient landing
-    } else {
-      navigate("/dashboard", { replace: true }); // fallback
-    }
-
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-[#f4efe6] flex items-center justify-center px-6">
-
       {/* MAIN CARD */}
       <div className="w-full max-w-5xl grid md:grid-cols-2 rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.15)]">
-
         {/* 🔥 LEFT PANEL */}
         <div className="relative hidden md:block">
           <img
@@ -116,7 +112,6 @@ const handleLogin = async () => {
 
         {/* 🔥 RIGHT PANEL */}
         <div className="bg-white p-10 md:p-14 relative">
-
           {/* CLOSE */}
           <button
             onClick={() => navigate("/")}
@@ -134,12 +129,9 @@ const handleLogin = async () => {
           </p>
 
           {/* 🔥 ERROR MESSAGE */}
-          {error && (
-            <p className="text-red-500 text-sm mb-4">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
           <div className="space-y-6">
-
             {/* EMAIL */}
             <div>
               <label className="text-xs tracking-[3px] text-[#C6A75E] block mb-2">
@@ -203,7 +195,6 @@ const handleLogin = async () => {
                 Register for waitlist
               </Link>
             </p>
-
           </div>
         </div>
       </div>

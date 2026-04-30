@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Mail,
-  User,
-  Phone,
-  MapPin,
-  Briefcase,
-} from "lucide-react";
+import { Mail, User, Phone, MapPin, Briefcase } from "lucide-react";
 import hero from "@/assets/images/DoctorHomepage.jpg";
 import { sendOtp, verifyOtp, registerUser } from "@/services/authService";
 
@@ -18,7 +12,7 @@ export default function Register() {
 
   /* FORM STATE */
   const [form, setForm] = useState({
-    name: "",
+    fullName: "",
     phone: "",
     occupation: "",
     location: "",
@@ -31,10 +25,10 @@ export default function Register() {
   const validate = () => {
     const newErrors = {};
 
-    if (!form.name.trim()) {
-      newErrors.name = "Full name is required";
-    } else if (!/^[a-zA-Z\s]{3,50}$/.test(form.name)) {
-      newErrors.name = "Only letters, min 3 characters";
+    if (!form.fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    } else if (!/^[a-zA-Z\s]{3,50}$/.test(form.fullName)) {
+      newErrors.fullName = "Only letters, min 3 characters";
     }
 
     if (!form.phone.trim()) {
@@ -65,12 +59,13 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-[#F4EFE6] flex items-center justify-center px-6">
-
       <div className="w-full max-w-6xl grid md:grid-cols-2 rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.15)]">
-
         {/* LEFT PANEL */}
         <div className="relative hidden md:block">
-          <img src={hero} className="absolute inset-0 w-full h-full object-cover" />
+          <img
+            src={hero}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           <div className="absolute inset-0 bg-[#1E7A3A]/90" />
 
           <div className="relative z-10 p-14 text-white h-full flex flex-col justify-between">
@@ -95,7 +90,6 @@ export default function Register() {
 
         {/* RIGHT PANEL */}
         <div className="bg-[#F7F7F7] p-10 md:p-14 relative">
-
           {/* FORM */}
           {step === "form" && (
             <>
@@ -108,17 +102,16 @@ export default function Register() {
               </p>
 
               <div className="space-y-5">
-
                 {/* NAME */}
                 <Input
                   label="FULL NAME"
                   icon={<User size={16} />}
-                  value={form.name}
+                  value={form.fullName}
                   onChange={(e) =>
-                    setForm({ ...form, name: e.target.value })
+                    setForm({ ...form, fullName: e.target.value })
                   }
                 />
-                {errors.name && <Error text={errors.name} />}
+                {errors.fullName && <Error text={errors.fullName} />}
 
                 {/* PHONE */}
                 <Input
@@ -159,11 +152,10 @@ export default function Register() {
                   label="EMAIL ADDRESS"
                   icon={<Mail size={16} />}
                   value={form.email}
-                  onChange={(e) =>
-                    setForm({ ...form, email: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                   rightButton={
                     <button
+                      disabled={verified}
                       onClick={async () => {
                         if (!validate()) return;
 
@@ -182,10 +174,16 @@ export default function Register() {
                       }}
                       className="text-[10px] px-3 py-1 rounded-full bg-[#1E7A3A] text-white ml-2"
                     >
-                      {loading ? "..." : "VERIFY"}
+                      {verified ? "VERIFIED✓" : loading ? "..." : "VERIFY"}
                     </button>
                   }
                 />
+
+                {verified && (
+                  <p className="text-xs text-green-800 mt-1">
+                    ✓ Email verified
+                  </p>
+                )}
                 {errors.email && <Error text={errors.email} />}
 
                 {/* JOIN */}
@@ -193,17 +191,26 @@ export default function Register() {
                   disabled={!verified || loading}
                   onClick={async () => {
                     if (!validate()) return;
-                    if (!verified) return;
+                    if (!verified) {
+                      setError("Please verify your email first");
+                      return;
+                    }
 
                     setLoading(true);
 
-                    const res = await registerUser(form);
+                    try {
+                      const res = await registerUser(form);
 
-                    if (res.success) {
-                      setStep("success");
-                      setError("");
-                    } else {
-                      setError(res.message);
+                      console.log("REGISTER RESPONSE:", res);
+
+                      if (res?.success) {
+                        setStep("success");
+                        setError("");
+                      } else {
+                        setError(res?.message || "Registration failed");
+                      }
+                    } catch (err) {
+                      setError("Something went wrong");
                     }
 
                     setLoading(false);
@@ -217,7 +224,6 @@ export default function Register() {
                 >
                   {loading ? "PROCESSING..." : "JOIN WAITLIST →"}
                 </button>
-
               </div>
             </>
           )}
@@ -229,18 +235,55 @@ export default function Register() {
                 Verify OTP
               </h2>
 
-              <div className="flex gap-3 mb-6">
-                {otp.map((d, i) => (
+              <div className="flex justify-center gap-2 sm:gap-3 mb-6">
+                {otp.map((digit, index) => (
                   <input
-                    key={i}
+                    key={index}
+                    id={`otp-${index}`}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     maxLength={1}
-                    value={d}
+                    value={digit}
                     onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      if (!value) return;
+
                       const newOtp = [...otp];
-                      newOtp[i] = e.target.value;
+                      newOtp[index] = value;
                       setOtp(newOtp);
+
+                      // 👉 move forward
+                      const next = document.getElementById(`otp-${index + 1}`);
+                      if (next) next.focus();
                     }}
-                    className="w-12 h-14 text-center bg-[#E9EDED] rounded-xl"
+                    onKeyDown={(e) => {
+                      if (e.key === "Backspace") {
+                        if (otp[index]) {
+                          const newOtp = [...otp];
+                          newOtp[index] = "";
+                          setOtp(newOtp);
+                        } else {
+                          const prev = document.getElementById(
+                            `otp-${index - 1}`,
+                          );
+                          if (prev) prev.focus();
+                        }
+                      }
+                    }}
+                    className="
+        w-10 h-12
+        sm:w-12 sm:h-14
+        md:w-14 md:h-16
+        text-center
+        text-base sm:text-lg md:text-xl
+        font-semibold
+        bg-[#E9EDED]
+        rounded-xl
+        outline-none
+        transition
+        focus:ring-2 focus:ring-[#1E7A3A]
+      "
                   />
                 ))}
               </div>
@@ -270,7 +313,6 @@ export default function Register() {
           {/* SUCCESS */}
           {step === "success" && (
             <div className="flex flex-col items-center justify-center text-center h-full">
-
               <div className="w-24 h-24 rounded-full border border-[#E6D3A3] flex items-center justify-center mb-6">
                 ✨
               </div>
@@ -280,7 +322,10 @@ export default function Register() {
               </h2>
 
               <p className="text-[#7FA497] text-sm max-w-md leading-relaxed mb-8">
-                Thank you for joining our exclusive circle. Your journey to peak performance begins with this step. Our specialized team will review your profile and connect with you shortly to discuss your place in the 2026 Sovereign Pilot.
+                Thank you for joining our exclusive circle. Your journey to peak
+                performance begins with this step. Our specialized team will
+                review your profile and connect with you shortly to discuss your
+                place in the 2026 Sovereign Pilot.
               </p>
 
               <button
@@ -300,9 +345,7 @@ export default function Register() {
 /* INPUT */
 const Input = ({ label, icon, value, onChange, rightButton }) => (
   <div>
-    <p className="text-[10px] tracking-[3px] text-[#9BB5A9] mb-2">
-      {label}
-    </p>
+    <p className="text-[10px] tracking-[3px] text-[#9BB5A9] mb-2">{label}</p>
 
     <div className="flex items-center bg-[#E9EDED] px-4 py-4 rounded-2xl">
       <span className="text-[#C6A75E] mr-3">{icon}</span>
@@ -317,6 +360,4 @@ const Input = ({ label, icon, value, onChange, rightButton }) => (
 );
 
 /* ERROR */
-const Error = ({ text }) => (
-  <p className="text-xs text-red-500 mt-1">{text}</p>
-);
+const Error = ({ text }) => <p className="text-xs text-red-500 mt-1">{text}</p>;
