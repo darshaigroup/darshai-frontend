@@ -38,14 +38,21 @@ const Footer = () => {
     AI-Native Longevity Protocols
   </p>
 
+  <h2
+    className="text-1xl font-serif tracking-wide mt-4"
+    style={{ color: brandGreen }}
+  >
+    ADDRESS
+  </h2>
   {/* LOCATION (CLICKABLE → MAPS) */}
   <a
-    href="https://maps.google.com/?q=India"
+    href="https://maps.google.com/?q=K-tech Innovation Hub Mangalore"
     target="_blank"
     rel="noopener noreferrer"
-    className="text-sm mt-4 text-[#5F756B] block hover:text-[#1E7A3A]"
+    className="text-sm text-[#5F756B] block hover:text-[#1E7A3A]"
   >
-    India
+    K-tech Innovation Hub, (CIF), 3rd Floor, Plama Center, Bejai - Kapikad Rd,
+      near Jayalakshmi Silks, Lalbagh, Mangaluru, Karnataka 575004
   </a>
 
   {/* EMAIL (CLICKABLE) */}

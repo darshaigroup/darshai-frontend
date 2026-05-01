@@ -3,12 +3,12 @@ import GeoWellnessCenter from "./GeoWellnessCenter";
 import { useParams } from "react-router-dom";
 
 const ProgramMain = () => {
-  const { category } = useParams();
   const [activeProgram, setActiveProgram] = React.useState(null);
 
-  if (category === 'geo-wellness-center') {
-    return <GeoWellnessCenter />;
-  }
+ const { category } = useParams();
+
+if (category === "geo-wellness") return <GeoWellnessCenter />;
+if (category === "treatment") return <ProgramMain />;
   return (
     <div className="w-full">
 

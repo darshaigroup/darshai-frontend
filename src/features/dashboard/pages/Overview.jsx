@@ -1,52 +1,39 @@
 import Greeting from "../components/overview/Greeting";
 import StatCard from "../components/overview/StatCard";
+import PatientOverviewChart from "../components/overview/PatientOverviewChart";
 import PatientTable from "../components/overview/PatientPreviewTable";
-import ScheduleList from "../components/overview/ScheduleList";
-import PatientChart from "../components/patients/PatientChart";
 
 import {
   FaUserInjured,
+  FaUserPlus,
+  FaUserCheck,
   FaCalendarCheck,
-  FaNotesMedical,
 } from "react-icons/fa";
 
 const Overview = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+
+      {/* Greeting */}
       <Greeting />
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCard
-          title="Total Patients"
-          value="120"
-          icon={<FaUserInjured />}
-          color="bg-gradient-to-r from-green-500 to-green-700"
-        />
-
-        <StatCard
-          title="Appointments"
-          value="45"
-          icon={<FaCalendarCheck />}
-          color="bg-gradient-to-r from-blue-500 to-blue-700"
-        />
-
-        <StatCard
-          title="Reports"
-          value="30"
-          icon={<FaNotesMedical />}
-          color="bg-gradient-to-r from-purple-500 to-purple-700"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <StatCard title="Total Patients" value="1450" icon={<FaUserInjured />} change={0.39} color="text-blue-500" />
+        <StatCard title="New Patients" value="63" icon={<FaUserPlus />} change={0.62} color="text-purple-500" />
+        <StatCard title="Old Patients" value="313" icon={<FaUserCheck />} change={-0.12} color="text-green-500" />
+        <StatCard title="Appointments" value="1971" icon={<FaCalendarCheck />} change={2} color="text-orange-500" />
       </div>
 
-      {/* Chart + Schedule */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <PatientChart />
-        <ScheduleList />
+      {/* Bottom */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <PatientTable />
+        </div>
+
+        <PatientOverviewChart />
       </div>
 
-      {/* Table */}
-      <PatientTable />
     </div>
   );
 };

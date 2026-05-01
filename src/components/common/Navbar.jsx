@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../assets/images/logo.png";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
@@ -34,13 +36,12 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-
         {/* LOGO */}
         <img src={logo} className="w-[120px]" alt="logo" />
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex gap-10 font-medium relative">
-
+          {/* HOME */}
           <Link to="/" className={`group ${textColor}`}>
             <span className={hoverItem}>HOME</span>
           </Link>
@@ -60,19 +61,20 @@ export default function Navbar() {
               programTimeout = setTimeout(() => setProgramOpen(false), 200);
             }}
           >
-            <div className={`flex items-center gap-2 cursor-pointer ${textColor}`}>
+            <div
+              className={`flex items-center gap-2 cursor-pointer ${textColor}`}
+            >
               <span className={hoverItem}>OUR PROGRAM</span>
               <FaChevronDown size={12} />
             </div>
 
             {programOpen && (
               <div className={dropdownStyle}>
-                <Link to="/program" className="px-5 py-2 hover:text-[#C9A75B]">
+                <Link to="/program/treatment" className="px-5 py-2 hover:text-[#C9A75B]">
                   Wellness Programmes
                 </Link>
-
                 <Link
-                  to="/program/geo-wellness-center"
+                  to="/program/geo-wellness"
                   className="px-5 py-2 hover:text-[#C9A75B]"
                 >
                   Geo-Wellness Center
@@ -92,23 +94,43 @@ export default function Navbar() {
               exploreTimeout = setTimeout(() => setExploreOpen(false), 200);
             }}
           >
-            <div className={`flex items-center gap-2 cursor-pointer ${textColor}`}>
+            <div
+              className={`flex items-center gap-2 cursor-pointer ${textColor}`}
+            >
               <span className={hoverItem}>EXPLORE</span>
               <FaChevronDown size={12} />
             </div>
 
             {exploreOpen && (
               <div className={dropdownStyle}>
-                <Link to="/explore/video" className="px-5 py-2 hover:text-[#C9A75B]">
+                  <Link
+                  to="/explore/journal"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
+                  Journal
+                </Link>
+                <Link
+                  to="/explore/video"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
                   Videos
                 </Link>
-                <Link to="/explore/image" className="px-5 py-2 hover:text-[#C9A75B]">
+                <Link
+                  to="/explore/image"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
                   Images
                 </Link>
-                <Link to="/explore/brochure" className="px-5 py-2 hover:text-[#C9A75B]">
+                <Link
+                  to="/explore/brochure"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
                   Brochure
                 </Link>
-                <Link to="/explore/blog" className="px-5 py-2 hover:text-[#C9A75B]">
+                <Link
+                  to="/explore/blog"
+                  className="px-5 py-2 hover:text-[#C9A75B]"
+                >
                   Blog
                 </Link>
               </div>
@@ -121,15 +143,17 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
-        <Link
-          to="/patient-dashboard"
+        <Link to="/login">
+        <button
+          onClick={() => navigate("/dashboard")}
           className={`hidden md:block px-5 py-2 rounded-full transition ${
             scrolled
               ? "bg-[#1E7A3A] text-white"
               : "border border-white text-white"
           }`}
         >
-          JOIN WAITLIST
+          BEGIN JOURNEY
+        </button>
         </Link>
 
         {/* MOBILE ICON */}
@@ -141,7 +165,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* 📱 MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -151,60 +175,106 @@ export default function Navbar() {
             transition={{ duration: 0.4 }}
             className="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#F1ECE2] z-50 flex flex-col px-6 py-8 shadow-2xl overflow-y-auto"
           >
+            {/* HEADER */}
             <div className="flex justify-between items-center mb-10">
               <img src={logo} className="w-[100px]" alt="logo" />
               <FaTimes size={24} onClick={() => setMenuOpen(false)} />
             </div>
 
-            {/* NAVIGATION */}
+            {/* 🔹 NAVIGATION */}
             <div className="mb-10">
               <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
                 NAVIGATION
               </p>
 
               <div className="flex flex-col gap-4 text-2xl font-serif">
-                <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-                <Link to="/story" onClick={() => setMenuOpen(false)}>Our Story</Link>
-                <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+                {[
+                  { name: "Home", path: "/" },
+                  { name: "Our Story", path: "/story" },
+                  { name: "Contact", path: "/contact" },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setMenuOpen(false)}
+                    className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
+                  >
+                    <span className="text-[#1E7A3A] transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
+                      {item.name}
+                    </span>
+
+                    {/* underline glow */}
+                    <span className="absolute left-2 bottom-0 w-0 h-[2px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)] shadow-[0_0_8px_#C6A75E]" />
+                  </Link>
+                ))}
               </div>
             </div>
 
-            {/* PROGRAMS */}
+            {/* 🔹 PROGRAMS */}
             <div className="mb-10">
               <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
                 PROGRAMS
               </p>
 
               <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
-                <Link to="/program" onClick={() => setMenuOpen(false)}>
-                  Wellness Programmes
-                </Link>
+                {[
+                  { name: "Wellness Programmes", path: "/program/treatment" },
+                  {
+                    name: "Geo-Wellness Center",
+                    path: "/program/geo-wellness",
+                  },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setMenuOpen(false)}
+                    className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
+                  >
+                    <span className="transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
+                      {item.name}
+                    </span>
 
-                <Link
-                  to="/program/geo-wellness-center"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Geo-Wellness Center
-                </Link>
+                    <span className="absolute left-2 bottom-0 w-0 h-[1px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)]" />
+                  </Link>
+                ))}
               </div>
             </div>
 
-            {/* EXPLORE */}
+            {/* 🔹 ARCHIVE */}
             <div className="mb-12">
               <p className="text-xs tracking-[4px] text-[#C6A75E] mb-6">
-                EXPLORE
+                ARCHIVE
               </p>
 
               <div className="flex flex-col gap-3 text-base text-[#3E8E6B]">
-                <Link to="/explore/video">Video</Link>
-                <Link to="/explore/image">Image</Link>
-                <Link to="/explore/blog">Blog</Link>
-                <Link to="/explore/brochure">Brochure</Link>
+                {[
+                  { name: "Journal", path: "/explore/journal" },
+                  { name: "Video", path: "/explore/video" },
+                  { name: "Image", path: "/explore/image" },
+                  { name: "Blog", path: "/explore/blog" },
+                  { name: "Brochure", path: "/explore/brochure" },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setMenuOpen(false)}
+                    className="group relative px-2 py-1 rounded-md transition-all duration-300 hover:bg-[#C6A75E]/10 active:scale-95"
+                  >
+                    <span className="transition-all duration-300 group-hover:text-[#C6A75E] group-hover:drop-shadow-[0_0_6px_#C6A75E] inline-block">
+                      {item.name}
+                    </span>
+
+                    <span className="absolute left-2 bottom-0 w-0 h-[1px] bg-[#C6A75E] transition-all duration-300 group-hover:w-[calc(100%-16px)]" />
+                  </Link>
+                ))}
               </div>
             </div>
 
-            <Link to="/patient-dashboard" className="bg-[#1E7A3A] text-white py-4 rounded-full text-lg tracking-widest">
-              JOIN WAITLIST
+            {/* CTA */}
+            <Link to="/login">
+            <button className="bg-[#1E7A3A] text-white py-4 px-3 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
+              BEGIN JOURNEY
+            </button>
             </Link>
           </motion.div>
         )}
