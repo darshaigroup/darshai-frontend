@@ -1,248 +1,465 @@
-// src/pages/GeoWellnessCenter.jsx
+import React, { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import {
+  AlertCircle,
+  Lightbulb,
+  Cpu,
+  Map,
+  BarChart3,
+  ArrowRight,
+} from "lucide-react";
 
-import React from "react";
+const slides = [
+  {
+    id: "problem",
+    category: "THE PROBLEM",
+    icon: AlertCircle,
+    title: 'The Problem: The Illusion of "Wellness"',
+    content: [
+      "The global wellness tourism and corporate health industries are fundamentally flawed.",
+      "They are reactive, generic, and completely void of measurable biological data.",
+      'Today, corporate leaders and High-Net-Worth Individuals (HNIs) are routinely sold "feel-good" spa experiences. These luxury vacations offer a temporary psychological escape, but they carry zero scientific accountability and deliver no lasting physiological impact. You check out of the resort, return to the high-stress environment of the city, and the burnout immediately resumes.',
+    ],
+  },
+  {
+    id: "solution",
+    category: "THE SOLUTION",
+    icon: Lightbulb,
+    title: "The DARSHAI Solution: Precision Longevity Interventions",
+    content: [
+      "DARSHAI is India;s first AI-Native, IP-Driven Travel & Health-Tech Group. We are entirely disrupting the global wellness market by shifting the focus from generic hospitality to engineered human performance.",
+      "Rather than operating a mass-market app or standard tour agency, we function on an elite Concierge Model, processing deep-tech biological data to deliver hyper-personalized interventions.",
+    ],
+  },
+  {
+    id: "engine",
+    category: "HOW WE ENGINEER YOUR LONGEVITY",
+    icons: [Cpu, Map, BarChart3],
+    title: "How We Engineer Your Longevity",
+    subSections: [
+      {
+        heading: "The Dharsh-AI Engine",
+        description: "Our proprietary intelligence does not guess; it calculates. We correlate your real-time human health metrics—including blood biomarkers and clinical assessments—with the localized environmental ecology of our curated Geo-Wellness zones.",
+      },
+      {
+        heading: "The Sovereign Protocols",
+        description: "We match your specific biological deficit to the exact geographical coordinate (Coast, Forest, or Mountain) and Ayurvedic intervention required to heal it.",
+      },
+      {
+        heading: "The Protocol Efficacy Score (PES)",
+        description: "We believe in absolute scientific proof. To guarantee an ROI on your health, our system generates a quantifiable PES. We don't just tell you that you feel better; we show you the exact data proving how our localized therapies, diets, and environments are actively reversing burnout and lowering your biological age.",
+      },
+    ],
+  },
+];
 
-const GeoWellnessCenter = () => {
+// ---------- UNIQUE ANIMATION COMPONENTS ----------
+
+// 1. Biometric Pulse Background
+const BiometricPulse = () => {
+  const pathRef = useRef(null);
   return (
-    <div>
-      <style>
-        {`
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(30px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}
-      </style>
-
-      {/* HERO SECTION */}
-      <section className="relative h-[420px] flex items-center justify-center text-center">
-  <img
-    src="/images/herb.jpg"
-    alt="Geo Wellness"
-    className="absolute inset-0 w-full h-full object-cover"
-  />
-
-        {/* overlay */}
-        <div className="absolute inset-0 bg-slate-950/70"></div>
-
-
-        <div className="relative z-10 text-white px-6">
-          <h1 className="text-4xl md:text-6xl font-serif leading-tight animate-[fadeIn_1s_ease-in-out]">
-            Geo-Wellness Centers
-          </h1>
-          <p className="mt-5 text-base md:text-xl max-w-3xl mx-auto opacity-90 animate-[fadeIn_1.2s_ease-in-out]">
-            Exclusive partner locations optimized for circadian and environmental correction.
-          </p>
-          <p className="mt-6 text-sm md:text-base text-slate-200 max-w-2xl mx-auto leading-relaxed animate-[fadeIn_1.4s_ease-in-out]">
-            At DARSHAI, we believe that geography is a clinical variable. We do not own resorts; we
-            certify Curated Sanctuaries. Each location is a white-labelled partner site that has
-            undergone a rigorous DARSHAI audit to ensure it meets our standards for atmospheric
-            purity, light spectrum, and geological frequency.
-          </p>
-        </div>
-      </section>
-
-    {/* ================= CURATED SANCTUARIES (FULL SECTION) ================= */}
-      <section className="bg-[#f7f3ec] py-24 px-6 md:px-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.35em] text-amber-700 mb-4">
-              CURATED SANCTUARIES
-            </p>
-  <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-slate-900 leading-tight">
-              Certified South Indian sanctuaries designed to restore rhythm, balance, and metabolic resilience.
-            </h2>
-          </div>
-
-          <div className="grid gap-10 lg:grid-cols-2">
-<article className="rounded-[32px] border border-slate-200 shadow-sm overflow-hidden relative hover:scale-[1.02] hover:shadow-2xl transition-all duration-500 group">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent group-hover:from-black/30">
-                <img
-                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
-                  alt="Ragdima Sanctuary"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-slate-900/60"></div>
-              </div>
-              <div className="relative z-10 p-8 text-white">
-                <p className="text-xs uppercase tracking-[0.35em] text-amber-300 mb-3">
-                  Ragdima Sanctuary
-                </p>
-              <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 group-hover:text-amber-100 transition-colors">
-                  Udupi, Karnataka
-                </h3>
-                <p className="text-slate-200 leading-relaxed mb-5">
-                  The Coastal Bio-Hub located in the pristine coastal belt of Udupi. Ragdima is a sanctuary optimized for high-ionization air and transdermal mineral absorption.
-                  The proximity to the Arabian Sea provides constant salt-dense, negative-ion-rich air that acts as a natural nebulizer for systemic inflammation and respiratory clarity.
-                </p>
-                <ul className="space-y-3 text-slate-200 mb-6">
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Geo-Wellness Factor:</strong> High negative ion concentration and Vastu-integrated maritime airflow.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Primary Intervention:</strong> Vagus nerve stimulation and rapid reduction of oxidative stress.
-                  </li>
-                </ul>
-              </div>
-            </article>
-
-            <article className="rounded-[32px] border border-slate-200 shadow-sm overflow-hidden relative">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.unsplash.com/photo-1464822759844-d150f39a97d3"
-                  alt="Kanasu Sanctuary"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-slate-900/60"></div>
-              </div>
-              <div className="relative z-10 p-8 text-white">
-                <p className="text-xs uppercase tracking-[0.35em] text-amber-300 mb-3">
-                  Kanasu Sanctuary
-                </p>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 group-hover:text-amber-100 transition-colors">
-                  Karnataka Highlands
-                </h3>
-                <p className="text-slate-200 leading-relaxed mb-5">
-                  The Circadian Blueprint. Kanasu is our premier vertical sanctuary, situated far above urban light pollution and atmospheric haze. This highland coordinate is selected for its spectral light integrity, allowing precise recalibration of the pineal gland and restoration of natural cortisol rhythms.
-                </p>
-                <ul className="space-y-3 text-slate-200 mb-6">
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Geo-Wellness Factor:</strong> High-altitude oxygen density and total absence of technological noise.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Primary Intervention:</strong> Sleep architecture restoration and cognitive performance optimization.
-                  </li>
-                </ul>
-              </div>
-            </article>
-
-            <article className="rounded-[32px] border border-slate-200 shadow-sm overflow-hidden relative">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
-                  alt="Malabar Botanical Corridor"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-slate-900/60"></div>
-              </div>
-              <div className="relative z-10 p-8 text-white">
-                <p className="text-xs uppercase tracking-[0.35em] text-amber-300 mb-3">
-                  Malabar Botanical Corridor
-                </p>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 group-hover:text-amber-100 transition-colors">
-                  Palakkad, Kerala
-                </h3>
-                <p className="text-slate-200 leading-relaxed mb-5">
-                  The Metabolic Reset. Located in the unique Palakkad Gap, this sanctuary sits in a rare low-humidity micro-climate within the Western Ghats biodiversity corridor. The air here is a dense bio-aerosol of healing compounds from over 600 species of endemic medicinal herbs.
-                </p>
-                <ul className="space-y-3 text-slate-200 mb-6">
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Geo-Wellness Factor:</strong> Natural temperature regulation and high phytoncide (forest aerosol) density.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Primary Intervention:</strong> Agni (metabolic fire) activation and deep-tissue systemic detox.
-                  </li>
-                </ul>
-              </div>
-            </article>
-
-            <article className="rounded-[32px] border border-slate-200 shadow-sm overflow-hidden relative">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.unsplash.com/photo-1464822759844-d150f39a97d3"
-                  alt="Western Ghats Highlands"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-slate-900/60"></div>
-              </div>
-              <div className="relative z-10 p-8 text-white">
-                <p className="text-xs uppercase tracking-[0.35em] text-amber-300 mb-3">
-                  Western Ghats Highlands
-                </p>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 group-hover:text-amber-100 transition-colors">
-                  Coorg & Wayanad
-                </h3>
-                <p className="text-slate-200 leading-relaxed mb-5">
-                  The Circadian Blueprint. A vertical sanctuary network optimized for high-altitude recovery and spectral light integrity. Far above urban pollution, these coordinates allow precise recalibration of the pineal gland and cortisol rhythms.
-                </p>
-                <ul className="space-y-3 text-slate-200 mb-6">
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Geo-Wellness Factor:</strong> Rare mountain silence and high-altitude oxygen density.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-300"></span>
-                    <strong>Primary Intervention:</strong> Sleep architecture restoration and cognitive clarity protocols.
-                  </li>
-                </ul>
-              </div>
-            </article>
-          </div>
-
-          <div className="mt-20 rounded-[32px] border border-slate-200 bg-slate-950 px-8 py-12 text-white">
-            <div className="max-w-4xl mx-auto">
-              <p className="text-xs uppercase tracking-[0.35em] text-amber-300 mb-3">
-                The DARSHAI Audit
-              </p>
-              <h3 className="text-3xl font-serif text-white mb-6 animate-[fadeInUp_1s_ease-in-out]">
-                Every sanctuary is vetted across four proprietary metrics before integration into the Dharsh AI engine.
-              </h3>
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-4">
-                  <p className="font-semibold text-amber-300">1. Atmospheric Density</p>
-                  <p className="text-slate-300 leading-relaxed">
-                    Purity and ionization levels of the local micro-climate.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <p className="font-semibold text-amber-300">2. Spectral Light Integrity</p>
-                  <p className="text-slate-300 leading-relaxed">
-                    Natural infrared and UV-A/B availability for hormonal balance.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <p className="font-semibold text-amber-300">3. Acoustic Baseline</p>
-                  <p className="text-slate-300 leading-relaxed">
-                    The absence of technological noise to ensure deep-brain silence.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <p className="font-semibold text-amber-300">4. Geological Resonance</p>
-                  <p className="text-slate-300 leading-relaxed">
-                    The mineral profile of the local soil and water (Ojas-factor).
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+      <svg className="absolute bottom-0 left-0 w-full h-32" preserveAspectRatio="none">
+        <motion.path
+          d="M0,50 Q25,30 50,50 T100,50 T150,50 T200,50 T250,50 T300,50 T350,50 T400,50 T450,50 T500,50 T550,50 T600,50 T650,50 T700,50 T750,50 T800,50"
+          fill="none"
+          stroke="#4ade80"
+          strokeWidth="2"
+          animate={{
+            d: [
+              "M0,50 Q25,30 50,50 T100,50 T150,50 T200,50 T250,50 T300,50 T350,50 T400,50 T450,50 T500,50 T550,50 T600,50 T650,50 T700,50 T750,50 T800,50",
+              "M0,50 Q25,70 50,50 T100,50 T150,30 T200,50 T250,70 T300,50 T350,30 T400,50 T450,50 T500,70 T550,50 T600,30 T650,50 T700,50 T750,70 T800,50",
+              "M0,50 Q25,30 50,50 T100,50 T150,50 T200,50 T250,50 T300,50 T350,50 T400,50 T450,50 T500,50 T550,50 T600,50 T650,50 T700,50 T750,50 T800,50",
+            ],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </svg>
+      <motion.div
+        className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"
+        animate={{ x: ["-100%", "100%"] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+      />
     </div>
   );
 };
 
-export default GeoWellnessCenter;
+// 2. Data Stream Background Lines
+const DataStream = () => {
+  const lines = Array.from({ length: 12 }, (_, i) => ({
+    id: i,
+    top: `${Math.random() * 100}%`,
+    delay: Math.random() * 5,
+    duration: Math.random() * 8 + 4,
+  }));
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+      {lines.map((line) => (
+        <motion.div
+          key={line.id}
+          className="absolute h-px bg-gradient-to-r from-transparent via-green-400 to-transparent w-32"
+          style={{ top: line.top, left: "-8rem" }}
+          animate={{ x: ["0%", "120%"] }}
+          transition={{
+            duration: line.duration,
+            repeat: Infinity,
+            delay: line.delay,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
+// 3. Card Hover Scan Effect (CSS + motion)
+const ScanCard = ({ children }) => {
+  return (
+    <div className="relative group overflow-hidden rounded-2xl">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+      {children}
+    </div>
+  );
+};
+
+// 4. Breathing Icon Cluster
+const BreathingIcon = ({ Icon, delay = 0 }) => {
+  return (
+    <motion.div
+      animate={{ scale: [1, 1.08, 1] }}
+      transition={{ duration: 2.5, repeat: Infinity, delay, ease: "easeInOut" }}
+    >
+      <Icon className="w-10 h-10 text-white" />
+    </motion.div>
+  );
+};
+
+// 5. Typewriter Category (only on slide change)
+const TypewriterCategory = ({ text }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    setDisplayText("");
+    setIsTyping(true);
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        setDisplayText(text.slice(0, i + 1));
+        i++;
+      } else {
+        clearInterval(interval);
+        setIsTyping(false);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return (
+    <div className="flex items-center gap-1">
+      <span className="text-sm uppercase text-green-100/80 tracking-[0.4em]">
+        {displayText}
+      </span>
+      {isTyping && (
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+          className="w-0.5 h-4 bg-green-400"
+        />
+      )}
+    </div>
+  );
+};
+
+// 6. Directional Slide Transition wrapper
+const SlideTransition = ({ children, direction }) => {
+  const variants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+  center: {
+      x: 0,
+      opacity: 1,
+    },
+  exit: (dir) => ({
+      x: dir < 0 ? 300 : -300,
+      opacity: 0,
+    }),
+  };
+  return (
+    <motion.div
+      custom={direction}
+      variants={variants}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// ---------- MAIN COMPONENT ----------
+export default function Philosophy() {
+  const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
+  const navigate = useNavigate();
+  const intervalRef = useRef(null);
+  const progressIntervalRef = useRef(null);
+
+  // Timer & Progress logic
+  const startTimer = (resetProgress = true) => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+
+    if (resetProgress) setProgress(0);
+    const startTime = Date.now();
+
+    intervalRef.current = setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % slides.length;
+        setDirection(next > prev ? 1 : -1);
+        return next;
+      });
+      setProgress(0);
+    }, 8500);
+
+    progressIntervalRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min((elapsed / 8500) * 100, 100);
+      setProgress(newProgress);
+    }, 50);
+  };
+
+  useEffect(() => {
+    startTimer(true);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+    };
+}, []);
+
+  const handleDotClick = (index) => {
+    if (index === active) return;
+    setDirection(index > active ? 1 : -1);
+    setActive(index);
+    startTimer(true);
+  };
+
+  const current = slides[active];
+  const Icons = current.icons || [current.icon];
+
+  // Segment-based progress ring color
+  const getSegmentColor = () => {
+    if (active === 0) return "#ef4444"; // red for problem
+    if (active === 1) return "#22c55e"; // green for solution
+    return "#fbbf24"; // amber/gold for engine
+  };
+  const circumference = 2 * Math.PI * 12; // radius 6 -> 37.7
+  const strokeDashoffset = circumference * (1 - progress / 100);
+
+  return (
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-green-950 via-green-800 to-green-600 text-white">
+      {/* Unique Background Layers */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.08),transparent_35%)]" />
+        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <BiometricPulse />
+        <DataStream />
+
+        {/* Floating orbs */}
+        <motion.div
+          animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
+          transition={{ duration: 12, repeat: Infinity }}
+          className="absolute top-20 right-20 w-72 h-72 bg-green-300/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ y: [0, 40, 0], x: [0, -20, 0] }}
+          transition={{ duration: 15, repeat: Infinity }}
+          className="absolute bottom-20 left-20 w-96 h-96 bg-emerald-200/10 rounded-full blur-3xl"
+        />
+      </div>
+
+      {/* Navbar */}
+      <nav className="absolute top-0 left-0 w-full z-50 px-8 md:px-16 py-8">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <img src="/logo.png" alt="Darshai" className="h-14 w-auto object-contain" />
+          </div>
+          <div className="w-14 h-14" />
+        </div>
+      </nav>
+
+      {/* Main Slideshow with Directional Transitions */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 pt-36">
+        <AnimatePresence mode="wait" custom={direction}>
+          <SlideTransition key={current.id} direction={direction}>
+            <div className="w-full max-w-7xl grid lg:grid-cols-2 gap-14 items-center">
+              {/* Left Side */}
+              <div className="space-y-10">
+                <TypewriterCategory text={current.category} />
+
+                {/* Icon cluster with breathing effect */}
+                <div className="flex gap-4">
+                  {current.subSections ? (
+                    current.subSections.map((_, idx) => {
+                      const Icon = Icons[idx];
+                      return (
+                        <div
+                          key={idx}
+                          className="w-20 h-20 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-2xl"
+                        >
+                          <BreathingIcon Icon={Icon} delay={idx * 0.3} />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    Icons.map((Icon, idx) => (
+                      <div
+                        key={idx}
+                        className="w-20 h-20 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-2xl"
+                      >
+                        <BreathingIcon Icon={Icon} delay={idx * 0.2} />
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                <motion.h1
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="text-3xl md:text-4xl lg:text-5xl font-extralight leading-[1.05]"
+                >
+                  {current.title}
+                </motion.h1>
+
+                <div className="w-40 h-[2px] bg-gradient-to-r from-green-400 to-transparent" />
+              </div>
+
+              {/* Right Side - Cards with Scan Effect */}
+              <div className="space-y-5">
+                {current.subSections ? (
+                  current.subSections.map((section, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.2 }}
+                    >
+                      <ScanCard>
+                        <div className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-6 shadow-2xl hover:from-white/15 transition-all duration-500 border border-white/10">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-emerald-400 flex items-center justify-center">
+                              {index === 0 && <Cpu className="w-4 h-4 text-white" />}
+                              {index === 1 && <Map className="w-4 h-4 text-white" />}
+                              {index === 2 && <BarChart3 className="w-4 h-4 text-white" />}
+                            </div>
+                            <h3 className="text-lg font-semibold text-white">
+                              {section.heading}
+                            </h3>
+                          </div>
+                          <p className="text-base md:text-lg font-light leading-relaxed text-white/90">
+                            {section.description}
+                          </p>
+                        </div>
+                      </ScanCard>
+                    </motion.div>
+                  ))
+                ) : (
+                  current.content.map((paragraph, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.2 }}
+                    >
+                      <ScanCard>
+                        <div className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-6 shadow-2xl hover:from-white/15 transition-all duration-500 border border-white/10">
+                          <p className="text-base md:text-lg font-light leading-relaxed text-white/90">
+                            {paragraph}
+                          </p>
+                        </div>
+                      </ScanCard>
+                    </motion.div>
+                  ))
+                )}
+              </div>
+            </div>
+          </SlideTransition>
+        </AnimatePresence>
+      </div>
+
+      {/* Bottom Navigation - Enhanced Dots with Segmented Progress Ring */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-full px-4 py-3 shadow-2xl">
+            {slides.map((slide, index) => (
+              <button
+                key={slide.id}
+                onClick={() => handleDotClick(index)}
+                className="relative group"
+              >
+                {active === index && (
+                  <svg className="absolute -top-1 -left-1 w-6 h-6 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="6"
+                      fill="none"
+                      stroke={`${getSegmentColor()}30`}
+                      strokeWidth="1.5"
+                    />
+                    <motion.circle
+                      cx="8"
+                      cy="8"
+                      r="6"
+                      fill="none"
+                      stroke={getSegmentColor()}
+                      strokeWidth="1.5"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={strokeDashoffset}
+                      strokeLinecap="round"
+                      transform="rotate(-90 8 8)"
+                    />
+                  </svg>
+                )}
+                <div
+                  className={`transition-all duration-500 ${
+                    active === index
+                      ? "w-3 h-3 rounded-full bg-green-400 shadow-lg shadow-green-400/50"
+                      : "w-2 h-2 rounded-full bg-white/40 hover:bg-white/70"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* End Button */}
+          {active === slides.length - 1 && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/our-program")}
+              className="px-6 py-3 rounded-full bg-gradient-to-r from-green-400 to-emerald-400 text-green-900 font-medium flex items-center gap-2 hover:from-green-300 hover:to-emerald-300 transition-all shadow-lg"
+            >
+              Explore
+              <ArrowRight className="w-4 h-4" />
+            </motion.button>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
