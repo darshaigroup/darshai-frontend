@@ -143,9 +143,9 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
-        <Link to="/login">
+        <Link to="/patient-dashboard">
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/patient-dashboard")}
           className={`hidden md:block px-5 py-2 rounded-full transition ${
             scrolled
               ? "bg-[#1E7A3A] text-white"
@@ -271,7 +271,7 @@ export default function Navbar() {
             </div>
 
             {/* CTA */}
-            <Link to="/login">
+            <Link to="/patient-dashboard">
             <button className="bg-[#1E7A3A] text-white py-4 px-3 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
               BEGIN JOURNEY
             </button>

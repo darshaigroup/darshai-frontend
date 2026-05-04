@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import {
-  AlertCircle,
-  Lightbulb,
-  Cpu,
-  Map,
-  BarChart3,
-  ArrowRight,
-  Zap,
+  Brain,
+  Mountain,
   Target,
-  Shield
+  Compass,
+  ShieldCheck,
 } from "lucide-react";
 
 const slides = [
   {
     id: "problem",
     category: "THE PROBLEM",
-    icon: AlertCircle,
+    icon: Brain,
     title: 'The Problem: The Illusion of "Wellness"',
     content: [
       "The global wellness tourism and corporate health industries are fundamentally flawed.",
@@ -28,7 +23,7 @@ const slides = [
   {
     id: "solution",
     category: "THE SOLUTION",
-    icon: Lightbulb,
+    icon: Mountain,
     title: "The DARSHAI Solution: Precision Longevity Interventions",
     content: [
       "DARSHAI is India;s first AI-Native, IP-Driven Travel & Health-Tech Group. We are entirely disrupting the global wellness market by shifting the focus from generic hospitality to engineered human performance.",
@@ -37,8 +32,8 @@ const slides = [
   },
   {
     id: "engine",
-    category: "HOW WE ENGINEER YOUR LONGEVITY",
-    icons: [Cpu, Map, BarChart3],
+    
+    icons: [Target, Compass, ShieldCheck],
     title: "How We Engineer Your Longevity",
     subSections: [
       {
@@ -57,9 +52,8 @@ const slides = [
   },
 ];
 
-export default function Philosophy() {
+export default function DarshaiGreenLuxurySlideshow() {
   const [active, setActive] = useState(0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -77,7 +71,7 @@ export default function Philosophy() {
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.08),transparent_35%)]" />
+        <div className="absolute inset-0 bg-[radial_gradient(circle_at_bottom_left,rgba(255,255,255,0.08),transparent_35%)]" />
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
         <motion.div
@@ -128,16 +122,16 @@ export default function Philosophy() {
                 {current.category}
               </motion.p>
 
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 {current.subSections ? (
                   current.subSections.map((_, idx) => {
                     const Icon = Icons[idx];
                     return (
                       <div
                         key={idx}
-                        className="w-20 h-20 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-2xl"
+                        className="w-16 h-16 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg flex items-center justify-center shadow-2xl"
                       >
-                        <Icon className="w-10 h-10 text-white" />
+                        <Icon className="w-8 h-8 text-white" />
                       </div>
                     );
                   })
@@ -145,9 +139,9 @@ export default function Philosophy() {
                   Icons.map((Icon, idx) => (
                     <div
                       key={idx}
-                      className="w-20 h-20 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-2xl"
+                      className="w-16 h-16 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg flex items-center justify-center shadow-2xl"
                     >
-                      <Icon className="w-10 h-10 text-white" />
+                      <Icon className="w-8 h-8 text-white" />
                     </div>
                   ))
                 )}
@@ -161,7 +155,7 @@ export default function Philosophy() {
                 {current.title}
               </motion.h1>
 
-              <div className="w-40 h-[2px] bg-gradient-to-r from-green-400 to-transparent" />
+              <div className="w-40 h-[2px] bg-white/40" />
             </div>
 
             {/* Right Side */}
@@ -173,18 +167,11 @@ export default function Philosophy() {
                     initial={{ opacity: 0, x: 40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.2 }}
-                    className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-6 shadow-2xl hover:from-white/15 transition-all duration-500 border border-white/10"
+                    className="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-6 shadow-2xl hover:bg-white/15 transition-all duration-500"
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-emerald-400 flex items-center justify-center">
-                        {index === 0 && <Cpu className="w-4 h-4 text-white" />}
-                        {index === 1 && <Map className="w-4 h-4 text-white" />}
-                        {index === 2 && <BarChart3 className="w-4 h-4 text-white" />}
-                      </div>
-                      <h3 className="text-lg font-semibold text-white">
-                        {section.heading}
-                      </h3>
-                    </div>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      {section.heading}
+                    </h3>
                     <p className="text-base md:text-lg font-light leading-relaxed text-white/90">
                       {section.description}
                     </p>
@@ -197,7 +184,7 @@ export default function Philosophy() {
                     initial={{ opacity: 0, x: 40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.2 }}
-                    className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-6 shadow-2xl hover:from-white/15 transition-all duration-500 border border-white/10"
+                    className="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-6 shadow-2xl hover:bg-white/15 transition-all duration-500"
                   >
                     <p className="text-base md:text-lg font-light leading-relaxed text-white/90">
                       {paragraph}
@@ -210,7 +197,7 @@ export default function Philosophy() {
         </AnimatePresence>
       </div>
 
-      {/* Bottom Navigation - Dots and Optional Button */}
+      {/* Bottom Navigation - Only dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
         <div className="flex items-center gap-4">
           {/* Dot Indicators */}
@@ -221,29 +208,15 @@ export default function Philosophy() {
                 onClick={() => setActive(index)}
                 className={`transition-all duration-500 ${
                   active === index
-                    ? "w-10 h-2 rounded-full bg-green-400"
+                    ? "w-10 h-2 rounded-full bg-white"
                     : "w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/70"
                 }`}
               />
             ))}
           </div>
-
-          {/* End Button - Only on last slide */}
-          {active === slides.length - 1 && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/our-program")}
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-green-400 to-emerald-400 text-green-900 font-medium flex items-center gap-2 hover:from-green-300 hover:to-emerald-300 transition-all shadow-lg"
-            >
-              Explore
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-          )}
         </div>
       </div>
     </section>
   );
 }
+

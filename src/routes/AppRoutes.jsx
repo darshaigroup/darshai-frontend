@@ -25,6 +25,11 @@ import ContactUs from "../pages/Contact/ContactMain";
 // Auth
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
+import PatientProtectedRoute from "./PatientProtectedRoute";
+import PatientLayout from "../pages/PatientDashboard/PatientLayout";
+import Assessment from "../pages/PatientDashboard/Assessment";
+import PatientDetails from "../pages/PatientDashboard/PatientDetails";
+import Result from "../pages/PatientDashboard/Result";
 
 const AppRoutes = () => {
   return (
@@ -52,14 +57,14 @@ const AppRoutes = () => {
         <Route path="/explore/:category" element={<Explore />} />
       </Route>
 
-      {/* 🩺 DOCTOR DASHBOARD */}
-      {/* <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<Overview />} />
-        <Route path="analysis" element={<Analysis />} />
-        <Route path="patients" element={<Patients />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="schedule" element={<Schedule />} />
-      </Route> */}
+      {/* 🩺 PATIENT DASHBOARD */}
+      <Route path="/patient-dashboard/*" element={<PatientProtectedRoute />}>
+        <Route path="" element={<PatientLayout />}>
+          <Route index element={<PatientDetails />} />
+          <Route path="assessment" element={<Assessment />} />
+          <Route path="result" element={<Result />} />
+        </Route>
+      </Route>
     </Routes>
   );
 };
