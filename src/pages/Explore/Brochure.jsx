@@ -5,7 +5,7 @@ export const brochureData = [
     id: 1,
     title: "Protocol Guide",
     img: brochureImg,
-    desc: "Download system.",
-    pdf: "/pdfs/DARSHAI_Brochure.pdf", // ✅ add this
+    desc: "Interesting protocol guide for longevity seekers.",
+    pdf:"/pdfs/DARSHAI_Brochure.pdf",
   },
 ];
