@@ -9,6 +9,7 @@ import ProtectedRoute from "@/layouts/ProtectedRoute";
 
 // Public Pages
 import Home from "@/pages/Home/HomeMain";
+import Philosophy from "@/pages/Home/Philosophy";
 import OurStory from "@/pages/OurStory/StoryMain";
 import OurProgram from "@/pages/OurProgram/ProgramMain";
 import Explore from "@/pages/Explore/ExploreMain";
@@ -42,6 +43,7 @@ const AppRoutes = () => {
       <Route element={<MainLayout />}>
         <Route element={<RouteLoader />}>
           <Route path="/" element={<Home />} />
+          <Route path="/philosophy" element={<Philosophy />} />
           <Route path="/story" element={<OurStory />} />
           <Route path="/contact" element={<ContactUs />} />
 
