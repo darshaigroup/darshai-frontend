@@ -5,6 +5,9 @@ import treatment1 from "@/assets/images/Treatment1.png";
 import treatment2 from "@/assets/images/Treatment2.png";
 import treatment3 from "@/assets/images/Treatment3.png";
 import treatment4 from "@/assets/images/Treatment4.png";
+import hero from "@/assets/images/MainImg.png";
+
+const brandGreen = "#1E7A3A";
 
 const ProgramMain = () => {
   const [activeProgram, setActiveProgram] = React.useState(null);
@@ -18,16 +21,18 @@ const ProgramMain = () => {
   return (
     <div className="w-full">
       {/* ================= HERO ================= */}
-      <section className="relative h-[600px] w-full">
+      <section className="relative h-[60vh] flex items-center justify-center text-center overflow-hidden">
         {/* Background */}
         <img
-          src="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
+          src={hero}
           alt="wellness"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-green-900/80"></div>
+         <div
+          className="absolute inset-0"
+          style={{ backgroundColor: brandGreen, opacity: 0.75 }}
+        />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">

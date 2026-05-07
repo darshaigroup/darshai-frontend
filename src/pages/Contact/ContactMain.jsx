@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
 const easing = [0.16, 1, 0.3, 1];
 
 export default function ContactUs() {

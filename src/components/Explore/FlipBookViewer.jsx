@@ -1,24 +1,20 @@
 import { useState, useRef, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { pdfjs, Document, Page } from "react-pdf";
+import * as pdfjsLib from "pdfjs-dist";
+
+// ✅ worker setup (REQUIRED)
 import worker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
-
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = worker;
+pdfjsLib.GlobalWorkerOptions.workerSrc = worker;
 
 export default function FlipBookViewer({ pdf, onClose }) {
-  const [numPages, setNumPages] = useState(null);
-  const [isOpened, setIsOpened] = useState(false);
-
+  const [pages, setPages] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
   const [pageWidth, setPageWidth] = useState(600);
   const [pageHeight, setPageHeight] = useState(800);
-  const [isMobile, setIsMobile] = useState(false);
 
+  const containerRef = useRef(null);
   const bookRef = useRef(null);
   const flipSoundRef = useRef(null);
-  const containerRef = useRef(null);
 
   // 🔊 Flip sound
   const playFlipSound = () => {
@@ -31,24 +27,18 @@ export default function FlipBookViewer({ pdf, onClose }) {
   // 📱 Responsive sizing
   useEffect(() => {
     const updateSize = () => {
-      if (!containerRef.current) return;
+      const width = containerRef.current?.offsetWidth || window.innerWidth;
+      const height = window.innerHeight;
 
-      const containerWidth = containerRef.current.offsetWidth;
-      const containerHeight = window.innerHeight;
-
-      const mobile = containerWidth < 768;
+      const mobile = width < 768;
       setIsMobile(mobile);
 
       if (mobile) {
-        // 📱 MOBILE → single page full width
-        const width = containerWidth - 20;
-        setPageWidth(width);
-        setPageHeight(containerHeight * 0.85);
+        setPageWidth(width - 20);
+        setPageHeight(height * 0.85);
       } else {
-        // 💻 DESKTOP → 2-page spread
-        const width = containerWidth / 2 - 60;
-        setPageWidth(width);
-        setPageHeight(containerHeight * 0.85);
+        setPageWidth(width / 2 - 60);
+        setPageHeight(height * 0.85);
       }
     };
 
@@ -57,18 +47,37 @@ export default function FlipBookViewer({ pdf, onClose }) {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  // 📖 Auto open animation
+  // 📄 Load PDF manually
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpened(true);
+    const loadPDF = async () => {
+      const pdfDoc = await pdfjsLib.getDocument(pdf).promise;
 
-      setTimeout(() => {
-        bookRef.current?.pageFlip().flipNext();
-      }, 600);
-    }, 500);
+      const loadedPages = [];
 
-    return () => clearTimeout(timer);
-  }, []);
+      for (let i = 1; i <= pdfDoc.numPages; i++) {
+        const page = await pdfDoc.getPage(i);
+
+        const viewport = page.getViewport({ scale: 2 });
+
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({
+          canvasContext: context,
+          viewport,
+        }).promise;
+
+        loadedPages.push(canvas.toDataURL());
+      }
+
+      setPages(loadedPages);
+    };
+
+    loadPDF();
+  }, [pdf]);
 
   return (
     <div
@@ -76,86 +85,41 @@ export default function FlipBookViewer({ pdf, onClose }) {
       className="fixed inset-0 z-50 bg-black flex items-center justify-center overflow-hidden"
     >
       {/* 🔊 SOUND */}
-      <audio
-        ref={flipSoundRef}
-        src="/sounds/page-flip.mp3"
-        preload="auto"
-      />
+      <audio ref={flipSoundRef} src="/sounds/page-flip.mp3" />
 
       {/* ❌ CLOSE */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-50 w-11 h-11 rounded-full bg-white/10 backdrop-blur text-white border border-white/20 hover:bg-white/20 transition"
+        className="absolute top-6 right-6 z-50 w-11 h-11 rounded-full bg-white/10 text-white"
       >
         ✕
       </button>
 
-      {/* 🌫 BACKGROUND GLOW */}
-      <div className="absolute w-[80%] h-[80%] bg-green-700/20 blur-[140px] rounded-full" />
-
-      {/* 📚 PAGE STACK (DEPTH EFFECT) */}
-      {!isMobile && (
-        <>
-          <div className="absolute w-[80%] h-[85%] bg-white/5 rounded-[20px] blur-[2px] translate-x-4 translate-y-4" />
-          <div className="absolute w-[80%] h-[85%] bg-white/10 rounded-[20px] blur-[1px] translate-x-2 translate-y-2" />
-        </>
-      )}
-
-      {/* 📖 BOOK WRAPPER */}
-      <div
-        className={`relative transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isOpened ? "scale-100 rotate-0" : "scale-75 rotate-[-6deg]"
-        }`}
-      >
-        <Document
-          file={pdf}
-          onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-          loading={<div className="text-white">Loading PDF...</div>}
-          onLoadError={(err) => console.error("PDF ERROR:", err)}
+      {/* 📖 BOOK */}
+      {pages.length > 0 && (
+        <HTMLFlipBook
+          ref={bookRef}
+          width={pageWidth}
+          height={pageHeight}
+          showCover={!isMobile}
+          usePortrait={isMobile}
+          drawShadow
+          onFlip={playFlipSound}
         >
-          {numPages && (
-            <HTMLFlipBook
-              ref={bookRef}
-              width={pageWidth}
-              height={pageHeight}
-              size="fixed"
-              showCover={!isMobile}
-              usePortrait={isMobile}
-              mobileScrollSupport={true}
-              drawShadow={true}
-              maxShadowOpacity={0.5}
-              className="shadow-[0_60px_160px_rgba(0,0,0,0.9)]"
-              onFlip={playFlipSound}
+          {pages.map((src, i) => (
+            <div
+              key={i}
+              className="w-full h-full flex items-center justify-center bg-white"
             >
-              {Array.from(new Array(numPages), (_, i) => (
-                <div
-                  key={i}
-                  className="relative w-full h-full bg-white overflow-hidden flex items-center justify-center"
-                >
-                  {/* 📄 FULL PAGE */}
-                 <Page
-  pageNumber={i + 1}
-  scale={Math.min(
-    pageWidth / 600,     // fit width
-    pageHeight / 800     // fit height
-  )}
-  renderTextLayer={false}
-  renderAnnotationLayer={false}
-/>
-
-                  {/* 🌗 EDGE SHADING */}
-                  {!isMobile && (
-                    <>
-                      <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-black/20 to-transparent pointer-events-none" />
-                      <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-black/10 to-transparent pointer-events-none" />
-                    </>
-                  )}
-                </div>
-              ))}
-            </HTMLFlipBook>
-          )}
-        </Document>
-      </div>
+              <img
+                src={src}
+                alt={`Page ${i + 1}`}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ))}
+        </HTMLFlipBook>
+      )}
     </div>
   );
 }

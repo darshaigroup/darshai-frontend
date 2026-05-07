@@ -1,9 +1,9 @@
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
 import bg4 from "@/assets/images/bg4.png";
 import herb from "@/assets/images/herb.jpg";
 import Protocol from "./protocol.jsx";
 import doctor from "@/assets/images/doctor.jpeg";
-import ceo from "@/assets/images/ceo.webp";
+import ceo1 from "@/assets/images/ceo1.jpeg";
 import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 
@@ -204,7 +204,7 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
               {/* IMAGE CARD (unchanged effect) */}
               <div className="rounded-[40px] overflow-hidden relative shadow-xl">
                 <img
-                  src={person.name === "Veekshitha V" ? ceo : doctor}
+                  src={person.name === "Veekshitha V" ? ceo1 : doctor}
                   alt={person.name}
                   className="w-full h-[900px] object-cover group-hover:scale-110 transition-all duration-[1200ms]"
                 />

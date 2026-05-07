@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Mail, User, Phone, MapPin, Briefcase } from "lucide-react";
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
+import { useNavigate, Link } from "react-router-dom";
 import { sendOtp, verifyOtp, registerUser } from "@/services/authService";
 
 export default function Register() {
@@ -9,6 +10,7 @@ export default function Register() {
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   /* FORM STATE */
   const [form, setForm] = useState({
@@ -90,6 +92,12 @@ export default function Register() {
 
         {/* RIGHT PANEL */}
         <div className="bg-[#F7F7F7] p-10 md:p-14 relative">
+          <button
+            onClick={() => navigate("/")}
+            className="absolute top-6 right-6 text-gray-400 hover:text-black"
+          >
+            ✕
+          </button>
           {/* FORM */}
           {step === "form" && (
             <>

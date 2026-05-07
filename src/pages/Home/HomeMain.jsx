@@ -3,14 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import bg2 from "@/assets/images/bg2.png";
+import bg7 from "@/assets/images/bg7.png";
 import bg3 from "@/assets/images/bg3.png";
-import sover from "@/assets/images/sover.png";
-import corporate from "@/assets/images/corporate.png";
+import bg8 from "@/assets/images/bg8.png";
+import sover from "@/assets/images/health.jpeg";
+import corporate from "@/assets/images/nature.jpeg";
 import maintenance from "@/assets/images/maintenance.png";
 import prepkit from "@/assets/images/prepkit.png";
 import precision from "@/assets/images/precision.png";
 import environment from "@/assets/images/environment.png";
 import ceo from "@/assets/images/ceo.webp";
+import yoga from "@/assets/images/yoga.png";
+
 
 const SLIDES = [
   {
@@ -19,14 +23,14 @@ const SLIDES = [
     desc: "Predictive Longevity. We map your biological data to South India’s most potent healing coordinates to reverse your chronological age.",
   },
   {
-    image: bg2,
-    title: "The Transition to Strategic Health Autonomy.",
-    desc: "Predictive Longevity. We map your biological data to South India’s most potent healing coordinates to reverse your chronological age.",
+    image: bg7,
+    title: "From Health Management to Biological Mastery.",
+    desc: "Stop guessing and start governing your biology. We synchronize your real-time biomarkers with the Earth’s most potent healing coordinates to engineer a younger, more resilient version of you.",
   },
   {
-    image: bg2,
-    title: "The Transition to Strategic Health Autonomy.",
-    desc: "Predictive Longevity. We map your biological data to South India’s most potent healing coordinates to reverse your chronological age.",
+    image: bg8,
+    title: "Your DNA is the Map. Geo-Wellness is the Destination.",
+    desc: "We’ve decoded the synergy between human physiology and geography. By matching your unique bio-profile to specific South Indian landscapes, we turn every mile travelled into a calculated strike against aging.",
   },
 ];
 
@@ -58,7 +62,10 @@ function HomeMain() {
           >
             <img
               src={SLIDES[current].image}
-              className="w-full h-full object-cover"
+              className=" w-full h-full
+    object-cover
+    object-center
+    md:object-center"
             />
 
             {/* Overlay */}
@@ -352,29 +359,32 @@ function HomeMain() {
             {/* GEAR 6 */}
             <motion.div
               className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 30 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.8, delay: 2.4 }}
             >
-              <motion.img
+              <img
                 src={environment}
-                alt="Precision Ecology & Corporate Auditing"
                 className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.0, delay: 2.4 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-24 group-hover:translate-y-0 transition-all duration-700">
-                <p className="text-xs tracking-widest text-green-200 mb-2 opacity-0 group-hover:opacity-100">
+
+              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent" />
+
+              <div
+                className="absolute inset-0 flex flex-col justify-end p-8 
+    opacity-0 translate-y-24 
+    group-hover:opacity-100 group-hover:translate-y-0 
+    transition-all duration-700"
+              >
+                <p className="text-xs tracking-widest text-green-200 mb-2">
                   GEAR 6
                 </p>
+
                 <h3 className="text-3xl font-serif text-white mb-3">
                   Precision Ecology & Corporate Auditing
                 </h3>
-                <p className="text-sm text-white/80 opacity-0 group-hover:opacity-100 transition delay-150">
-                  Office Auditing
-                </p>
+
+                <p className="text-sm text-white/80">Office Auditing</p>
               </div>
             </motion.div>
           </div>
@@ -470,7 +480,7 @@ function HomeMain() {
           className="absolute inset-0"
         >
           <img
-            src={bg3} // ✅ use import instead of string path
+            src={yoga} // ✅ use import instead of string path
             alt="Meditation"
             className="w-full h-full object-cover"
           />

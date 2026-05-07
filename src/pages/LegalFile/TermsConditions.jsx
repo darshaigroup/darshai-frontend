@@ -1,7 +1,7 @@
 // src/pages/Legal/TermsConditions.jsx
 
 import { motion } from "framer-motion";
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
 import { MapPin, Mail, Phone } from "lucide-react";
 
 const easing = [0.16, 1, 0.3, 1];
