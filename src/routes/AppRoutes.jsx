@@ -13,6 +13,7 @@ import Philosophy from "@/pages/Home/Philosophy";
 import OurStory from "@/pages/OurStory/StoryMain";
 import OurProgram from "@/pages/OurProgram/ProgramMain";
 import Explore from "@/pages/Explore/ExploreMain";
+import BlogArticle from "@/pages/Explore/BlogArticle";
 import FlipBookPage from "@/components/Explore/FlipBookPage";
 import ContactUs from "@/pages/Contact/ContactMain";
 import PrivacyPolicy from "@/pages/LegalFile/PrivacyPolicy";
@@ -52,6 +53,7 @@ const AppRoutes = () => {
 
           <Route path="/explore" element={<Explore />} />
           <Route path="/explore/:category" element={<Explore />} />
+          <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/pdf/:file" element={<FlipBookPage />} />
 
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
