@@ -9,7 +9,7 @@ import Home from "../pages/Home/HomeMain";
 import Philosophy from "../pages/Home/Philosophy";
 import OurStory from "../pages/OurStory/StoryMain";
 import OurProgram from "../pages/OurProgram/ProgramMain";
-import GeoWellnessCenter from "../pages/OurProgram/GeoWellnessCenter";
+import GeoWellnessCenter, { GeoWellnessCategory } from "../pages/OurProgram/GeoWellnessCenter";
 import Explore from "../pages/Explore/ExploreMain";
 import ContactUs from "../pages/Contact/ContactMain";
 
@@ -52,6 +52,7 @@ const AppRoutes = () => {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/program" element={<OurProgram />} />
         <Route path="/program/geo-wellness" element={<GeoWellnessCenter />} />
+        <Route path="/program/geo-wellness/:category" element={<GeoWellnessCategory />} />
         <Route path="/program/treatment" element={<OurProgram />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/explore/:category" element={<Explore />} />
