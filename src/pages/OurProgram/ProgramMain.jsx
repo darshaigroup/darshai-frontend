@@ -3,7 +3,7 @@ import GeoWellnessCenter from "./GeoWellnessCenter";
 import { Link, useParams } from "react-router-dom";
 import treatment1 from "@/assets/images/Treatment1.png";
 import treatment2 from "@/assets/images/Treatment2.png";
-import treatment3 from "@/assets/images/Treatment3.png";
+import treatment3 from "@/assets/images/Treatment5.png";
 import treatment4 from "@/assets/images/Treatment4.png";
 import hero from "@/assets/images/MainImg.png";
 
@@ -431,12 +431,12 @@ const ProgramMain = () => {
 
             {/* Subtitle */}
             <p className="text-yellow-700 italic text-lg mb-2">
-              Strength & Flow
+              Signature Wellness Journeys
             </p>
 
             {/* Title */}
             <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-              Darshai Body Conditioning
+             Darshai Personalised Journey
             </h2>
 
             {/* Quote */}
@@ -463,11 +463,11 @@ const ProgramMain = () => {
             <button
               onClick={() =>
                 setActiveProgram({
-                  title: "Darshai Body Conditioning",
-                  label: "DARSHAI BODY CONDITIONING",
-                  subtitle: "Strength & Flow",
+                  title: "Darshai Personalised Journey",
+                  label: "DARSHAI PERSONALISED JOURNEY",
+                  subtitle: "Signature Wellness Journeys",
                   quote:
-                    "Build strength, stamina, and confidence with tailored workouts.",
+                    "Designed around your unique needs for holistic transformation.",
                   image: treatment4,
                   description:
                     "Personalised Wellness Programmes provide a comprehensive, data-driven approach to health optimisation by tailoring interventions to each individual’s unique profile.",

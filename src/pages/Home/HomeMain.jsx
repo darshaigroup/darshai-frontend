@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import bg2 from "@/assets/images/bg2.png";
 import bg7 from "@/assets/images/bg7.png";
 import bg3 from "@/assets/images/bg3.png";
@@ -13,7 +14,7 @@ import prepkit from "@/assets/images/prepkit.png";
 import precision from "@/assets/images/precision.png";
 import environment from "@/assets/images/environment.png";
 import ceo from "@/assets/images/ceo.webp";
-import yoga from "@/assets/images/yoga.png";
+import yoga from "@/assets/images/yoga1.png";
 
 
 const SLIDES = [
@@ -46,6 +47,23 @@ function HomeMain() {
 
     return () => clearInterval(interval);
   }, []);
+  const sliderRef = useRef(null);
+
+const scrollLeft = () => {
+
+  sliderRef.current?.scrollBy({
+    left: -420,
+    behavior: "smooth",
+  });
+};
+
+const scrollRight = () => {
+
+  sliderRef.current?.scrollBy({
+    left: 420,
+    behavior: "smooth",
+  });
+};
   return (
     <div>
       {/* HERO SECTION */}
@@ -208,187 +226,300 @@ function HomeMain() {
           </motion.div>
         </div>
 
-        {/* Full-Width Horizontal Scroll Section */}
-        <div className="w-full overflow-x-auto scroll-smooth scrollbar-hide">
-          <div className="flex gap-8 px-6 md:px-12 w-max snap-x snap-mandatory pb-4">
-            {/* GEAR 1 */}
-            <motion.div
-              className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
+        
+<div className="relative w-full">
+
+  {/* LEFT ARROW */}
+  <button
+    onClick={scrollLeft}
+    className="
+      hidden lg:flex
+      absolute left-4 top-1/2 -translate-y-1/2
+      z-30
+
+      w-14 h-14 rounded-full
+
+      items-center justify-center
+
+      bg-white/10
+      backdrop-blur-xl
+      border border-white/20
+
+      text-white
+
+      shadow-[0_10px_40px_rgba(59,130,246,0.25)]
+
+      hover:bg-blue-500/20
+
+      transition-all duration-500
+    "
+  >
+    <ChevronLeft size={28} />
+  </button>
+
+  {/* RIGHT ARROW */}
+  <button
+    onClick={scrollRight}
+    className="
+      hidden lg:flex
+      absolute right-4 top-1/2 -translate-y-1/2
+      z-30
+
+      w-14 h-14 rounded-full
+
+      items-center justify-center
+
+      bg-white/10
+      backdrop-blur-xl
+      border border-white/20
+
+      text-white
+
+      shadow-[0_10px_40px_rgba(59,130,246,0.25)]
+
+      hover:bg-blue-500/20
+
+      transition-all duration-500
+    "
+  >
+    <ChevronRight size={28} />
+  </button>
+
+  {/* SLIDER */}
+  <div
+    ref={sliderRef}
+    className="
+      w-full
+      overflow-x-auto
+      scroll-smooth
+      scrollbar-hide
+
+      lg:overflow-hidden
+    "
+  >
+
+    <div
+      className="
+        flex
+        gap-8
+        px-6
+        md:px-12
+
+        w-max
+
+        snap-x
+        snap-mandatory
+
+        pb-4
+      "
+    >
+
+      {[
+        {
+          gear: "GEAR 1",
+          title: "Sovereign Protocols",
+          desc: "7-Day Luxury Geo-Wellness Interventions",
+          img: sover,
+          delay: 1.4,
+        },
+        {
+          gear: "GEAR 2",
+          title: "Corporate Ecology",
+          desc: "5-Day Executive Reset for B2B",
+          img: corporate,
+          delay: 1.6,
+        },
+        {
+          gear: "GEAR 3",
+          title: "Maintenance Modules",
+          desc: "Habit Tracking & Video Library",
+          img: maintenance,
+          delay: 1.8,
+        },
+        {
+          gear: "GEAR 4",
+          title: "Longevity Prep-Kits",
+          desc: "Waitlist / Coming Soon",
+          img: prepkit,
+          delay: 2,
+        },
+        {
+          gear: "GEAR 5",
+          title: "Precision Tech Events",
+          desc: "Bio-hacking Workshops / Hackathons",
+          img: precision,
+          delay: 2.2,
+        },
+        {
+          gear: "GEAR 6",
+          title: "Precision Ecology & Corporate Auditing",
+          desc: "Office Auditing",
+          img: environment,
+          delay: 2.4,
+        },
+      ].map((item, i) => (
+
+        <motion.div
+          key={i}
+          className="
+            group
+
+            min-w-[320px]
+            md:min-w-[380px]
+
+            h-[500px]
+            relative
+
+            rounded-[36px]
+            overflow-hidden
+
+            flex-shrink-0
+            snap-start
+
+            border border-white/10
+
+            bg-white/5
+            backdrop-blur-2xl
+
+            shadow-[0_20px_80px_rgba(0,0,0,0.25)]
+
+            transition-all
+            duration-700
+
+            hover:scale-[1.03]
+          "
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.8,
+            delay: item.delay,
+          }}
+        >
+
+          {/* IMAGE */}
+          <motion.img
+            src={item.img}
+            alt={item.title}
+            className="
+              w-[400px]
+              h-full
+              object-cover
+
+              transition-all
+              duration-[1200ms]
+              ease-[cubic-bezier(0.16,1,0.3,1)]
+
+              group-hover:scale-110
+            "
+            initial={{
+              scale: 1.05,
+            }}
+            animate={{
+              scale: 1,
+            }}
+            transition={{
+              duration: 1,
+              delay: item.delay,
+            }}
+          />
+
+          {/* OVERLAY */}
+          <div
+            className="
+              absolute inset-0
+
+              bg-gradient-to-t
+              from-[#021B33]/95
+              via-[#0A3D62]/40
+              to-[#2563EB]/10
+
+              opacity-80
+              group-hover:opacity-100
+
+              transition-all
+              duration-700
+            "
+          />
+
+          {/* TEXT */}
+          <div
+            className="
+              absolute inset-0
+
+              flex flex-col justify-end
+
+              p-8
+
+              opacity-0
+              translate-y-16
+
+              group-hover:opacity-100
+              group-hover:translate-y-0
+
+              transition-all
+              duration-700
+            "
+          >
+
+            <p
+              className="
+                text-xs
+                tracking-widest
+                text-blue-200
+                mb-2
+
+                opacity-0
+                group-hover:opacity-100
+
+                transition duration-500
+              "
             >
-              <motion.img
-                src={sover}
-                alt="Sovereign Protocols"
-                className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.0, delay: 1.4 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-24 group-hover:translate-y-0 transition-all duration-700">
-                <p className="text-xs tracking-widest text-green-200 mb-2 opacity-0 group-hover:opacity-100 transition duration-500">
-                  GEAR 1
-                </p>
-                <h3 className="text-3xl font-serif text-white mb-3">
-                  Sovereign Protocols
-                </h3>
-                <p className="text-sm text-white/80 opacity-0 group-hover:opacity-100 transition duration-500 delay-150">
-                  7-Day Luxury Geo-Wellness Interventions
-                </p>
-              </div>
-            </motion.div>
+              {item.gear}
+            </p>
 
-            {/* GEAR 2 */}
-            <motion.div
-              className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.6 }}
+            <h3
+              className="
+                text-3xl
+                font-serif
+                text-white
+                mb-3
+              "
             >
-              <motion.img
-                src={corporate}
-                alt="Corporate Ecology"
-                className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.0, delay: 1.6 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-24 group-hover:translate-y-0 transition-all duration-700">
-                <p className="text-xs tracking-widest text-green-200 mb-2 opacity-0 group-hover:opacity-100">
-                  GEAR 2
-                </p>
-                <h3 className="text-3xl font-serif text-white mb-3">
-                  Corporate Ecology
-                </h3>
-                <p className="text-sm text-white/80 opacity-0 group-hover:opacity-100 transition delay-150">
-                  5-Day Executive Reset for B2B
-                </p>
-              </div>
-            </motion.div>
+              {item.title}
+            </h3>
 
-            {/* GEAR 3 */}
-            <motion.div
-              className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.8 }}
+            <p
+              className="
+                text-sm
+                text-blue-100/80
+                leading-7
+
+                opacity-0
+                group-hover:opacity-100
+
+                transition duration-700 delay-150
+              "
             >
-              <motion.img
-                src={maintenance}
-                alt="Maintenance Modules"
-                className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.0, delay: 1.8 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-24 group-hover:translate-y-0 transition-all duration-700">
-                <p className="text-xs tracking-widest text-green-200 mb-2 opacity-0 group-hover:opacity-100">
-                  GEAR 3
-                </p>
-                <h3 className="text-3xl font-serif text-white mb-3">
-                  Maintenance Modules
-                </h3>
-                <p className="text-sm text-white/80 opacity-0 group-hover:opacity-100 transition delay-150">
-                  Habit Tracking & Video Library
-                </p>
-              </div>
-            </motion.div>
+              {item.desc}
+            </p>
 
-            {/* GEAR 4 */}
-            <motion.div
-              className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 2.0 }}
-            >
-              <motion.img
-                src={prepkit}
-                alt="Longevity Prep-Kits"
-                className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.0, delay: 2.0 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-24 group-hover:translate-y-0 transition-all duration-700">
-                <p className="text-xs tracking-widest text-green-200 mb-2 opacity-0 group-hover:opacity-100">
-                  GEAR 4
-                </p>
-                <h3 className="text-3xl font-serif text-white mb-3">
-                  Longevity Prep-Kits
-                </h3>
-                <p className="text-sm text-white/80 opacity-0 group-hover:opacity-100 transition delay-150">
-                  Waitlist / Coming Soon
-                </p>
-              </div>
-            </motion.div>
-
-            {/* GEAR 5 */}
-            <motion.div
-              className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 2.2 }}
-            >
-              <motion.img
-                src={precision}
-                alt="Precision Tech Events"
-                className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.0, delay: 2.2 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-24 group-hover:translate-y-0 transition-all duration-700">
-                <p className="text-xs tracking-widest text-green-200 mb-2 opacity-0 group-hover:opacity-100">
-                  GEAR 5
-                </p>
-                <h3 className="text-3xl font-serif text-white mb-3">
-                  Precision Tech Events
-                </h3>
-                <p className="text-sm text-white/80 opacity-0 group-hover:opacity-100 transition delay-150">
-                  Bio-hacking Workshops / Hackathons
-                </p>
-              </div>
-            </motion.div>
-
-            {/* GEAR 6 */}
-            <motion.div
-              className="group min-w-[320px] md:min-w-[380px] h-[500px] relative rounded-3xl overflow-hidden flex-shrink-0 snap-start cursor-pointer transform transition duration-500 hover:scale-105"
-              initial={{ y: 30 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, delay: 2.4 }}
-            >
-              <img
-                src={environment}
-                className="w-[400px] h-full object-cover transition duration-700 group-hover:scale-110"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-green-900/30 to-transparent" />
-
-              <div
-                className="absolute inset-0 flex flex-col justify-end p-8 
-    opacity-0 translate-y-24 
-    group-hover:opacity-100 group-hover:translate-y-0 
-    transition-all duration-700"
-              >
-                <p className="text-xs tracking-widest text-green-200 mb-2">
-                  GEAR 6
-                </p>
-
-                <h3 className="text-3xl font-serif text-white mb-3">
-                  Precision Ecology & Corporate Auditing
-                </h3>
-
-                <p className="text-sm text-white/80">Office Auditing</p>
-              </div>
-            </motion.div>
           </div>
-        </div>
+
+        </motion.div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</div>
       </section>
 
       {/* VISIONARY, CTA, FOOTER remain SAME (no structural issues) */}
@@ -471,61 +602,197 @@ function HomeMain() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="relative w-full h-screen flex items-center justify-center text-center overflow-hidden">
-        {/* BACKGROUND IMAGE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1], delay: 0.5 }}
-          className="absolute inset-0"
-        >
-          <img
-            src={yoga} // ✅ use import instead of string path
-            alt="Meditation"
-            className="w-full h-full object-cover"
-          />
+      <section
+  className="
+    relative
 
-          {/* DARK CINEMATIC OVERLAY */}
-          <div className="absolute inset-0 bg-black/60 shadow-[0_50px_120px_rgba(0,0,0,0.4)]" />
-        </motion.div>
+    w-full
 
-        {/* CONTENT */}
-        <div className="relative z-10 max-w-4xl px-6">
-          {/* HEADING */}
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-serif text-white mb-8 leading-tight"
-          >
-            The End of Reactive Health.
-          </motion.h2>
+    min-h-screen
 
-          {/* SUBTEXT */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 1.1 }}
-            className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed"
-          >
-            Reclaim your 168. Join an elite group of founders and leaders in our
-            2026 Sovereign Pilot. We map your data to South India's most potent
-            coordinates to reverse your biological age.
-          </motion.p>
+    flex
+    items-center
+    justify-center
 
-          {/* BUTTON */}
-          <Link to="/register">
-            <motion.button
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 1.4 }}
-              className="px-12 py-5 bg-amber-500 text-white rounded-full text-sm tracking-widest font-semibold hover:bg-amber-600 hover:scale-105 transition-all shadow-xl"
-            >
-              Apply for the Sovereign 168
-            </motion.button>
-          </Link>
-        </div>
-      </section>
+    text-center
+
+    overflow-hidden
+
+    bg-black
+  "
+>
+  {/* BACKGROUND IMAGE */}
+  <motion.div
+    initial={{ opacity: 0, scale: 1.05 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{
+      duration: 1.5,
+      ease: [0.19, 1, 0.22, 1],
+      delay: 0.5,
+    }}
+    className="
+      absolute
+      inset-0
+
+      flex
+      items-center
+      justify-center
+    "
+  >
+
+    {/* IMAGE */}
+    <img
+      src={yoga}
+      alt="Meditation"
+      className="
+        w-full
+        h-full
+
+        object-contain
+        md:object-cover
+
+        object-center
+      "
+    />
+
+    {/* CINEMATIC OVERLAY */}
+    <div
+      className="
+        absolute
+        inset-0
+
+        bg-black/55
+
+        shadow-[0_50px_120px_rgba(0,0,0,0.4)]
+      "
+    />
+
+  </motion.div>
+
+  {/* CONTENT */}
+  <div
+    className="
+      relative
+      z-10
+
+      max-w-4xl
+
+      px-6
+
+      mt-12
+    "
+  >
+
+    {/* HEADING */}
+    <motion.h2
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 1,
+        ease: [0.19, 1, 0.22, 1],
+        delay: 0.8,
+      }}
+      className="
+        text-4xl
+        md:text-6xl
+        lg:text-7xl
+
+        font-serif
+
+        text-white
+
+        mb-8
+
+        leading-tight
+      "
+    >
+      The End of Reactive Health.
+    </motion.h2>
+
+    {/* SUBTEXT */}
+    <motion.p
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 1,
+        ease: [0.19, 1, 0.22, 1],
+        delay: 1.1,
+      }}
+      className="
+        text-lg
+        md:text-xl
+
+        text-white/80
+
+        mb-10
+
+        max-w-2xl
+        mx-auto
+
+        leading-relaxed
+      "
+    >
+      Reclaim your 168. Join an elite group of founders and
+      leaders in our 2026 Sovereign Pilot. We map your data
+      to South India's most potent coordinates to reverse
+      your biological age.
+    </motion.p>
+
+    {/* BUTTON */}
+    <Link to="/register">
+      <motion.button
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 1,
+          ease: [0.19, 1, 0.22, 1],
+          delay: 1.4,
+        }}
+        className="
+          px-12
+          py-5
+
+          bg-amber-500
+
+          text-white
+
+          rounded-full
+
+          text-sm
+          tracking-widest
+          font-semibold
+
+          hover:bg-amber-600
+          hover:scale-105
+
+          transition-all
+
+          shadow-xl
+        "
+      >
+        Apply for the Sovereign 168
+      </motion.button>
+    </Link>
+
+  </div>
+
+  {/* FOOTER BLEND */}
+  <div
+    className="
+      absolute
+      bottom-0
+      left-0
+
+      w-full
+      h-40
+
+      bg-gradient-to-b
+      from-transparent
+      to-[#f3efe8]
+    "
+  />
+
+</section>
 
       {/* FOOTER QUOTE SECTION */}
       <section className="bg-[#f3efe8] py-16">
