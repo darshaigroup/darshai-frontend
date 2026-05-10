@@ -20,7 +20,7 @@ const PHILOSOPHY_DATA = [
   {
     tag: "THE SYNTHESIS",
     title: "The New Standard of Optimization",
-    text: "DARSHAI was born from a singular realization - True longevity is not found in a laboratory, nor is it found solely in a forest. It is found at the intersection of both. We bridge 5,000 years of Ayurvedic intelligence with the relentless precision of AI-driven biomarker monitoring. We don&#39;t believe in &quot;generic wellness.&quot; We believe in Biological Sovereignty—the right to own your health data, understand your unique metabolic fire (Agni), and master your environment.",
+    text: "DARSHAI was born from a singular realization - True longevity is not found in a laboratory, nor is it found solely in a forest. It is found at the intersection of both. We bridge 5,000 years of Ayurvedic intelligence with the relentless precision of AI-driven biomarker monitoring. We don't believe in &quot;generic wellness; We believe in Biological Sovereignty—the right to own your health data, understand your unique metabolic fire (Agni), and master your environment.",
   },
   {
     tag: "THE GEO-BIOTIC MAP",
@@ -376,7 +376,7 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
   "
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(30,100,58,0.9), transparent)",
+                      "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), transparent)",
                   }}
                 />
 

@@ -86,14 +86,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+           
 
             {/* OPTIONAL DARK DEPTH */}
             <div
@@ -264,14 +257,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+            
 
             {/* OPTIONAL DARK DEPTH */}
             <div
@@ -315,14 +301,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+           
 
             {/* OPTIONAL DARK DEPTH */}
             <div
@@ -498,14 +477,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+            
 
             {/* OPTIONAL DARK DEPTH */}
             <div
