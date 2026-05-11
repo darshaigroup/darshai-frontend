@@ -179,7 +179,7 @@ export default function BlogArticle() {
     {/* CONCLUSION */}
     <div className="mt-36 pt-24 border-t border-[#174EA6]/10 max-w-4xl mx-auto text-center">
       <p className="text-[34px] md:text-[56px] leading-[1.25] font-serif italic text-[#C9A75B] mb-12">
-        “The medicine of tomorrow will not wait for you to fall sick.”
+        Conclusion
       </p>
 
       <p

@@ -13,8 +13,7 @@ export const blogData = [
 
     img: book,
 
-    intro:
-      "''Your body speaks long before symptoms appear. DARSHAI transforms those silent biological signals into predictive intelligence through biomarker science, AI systems, and Geo-Wellness mapping.''",
+    
 
     sections: [
       {
@@ -181,14 +180,14 @@ export const blogData = [
         paragraphs: [
           "Standard clinical guidelines are designed for the average patient — a statistical construct that describes nobody precisely. Research now overwhelmingly shows that biological individuality is not noise around a mean, but the primary clinical signal. Your HRV baseline is different from your neighbour's. Your glucose response to identical foods differs from your colleague's. Your inflammatory patterns are shaped by your genome, your microbiome, your sleep history, and your environment.",
 
-          "DARSHAI's architecture is built on exactly this premise. Every therapeutic recommendation is generated from your own data, validated against outcome databases, and refined with each subsequent biomarker reading. The system learns. The prescription evolves. And the signals your body has been sending quietly, patiently finally get heard.",
+          "DARSHAI's architecture is built on exactly this premise. Every therapeutic recommendation is generated from your own data, validated against outcome databases, and refined with each subsequent biomarker reading. The system learns. The prescription evolves. And the signals your body has been sending quietly, patiently finally get heard. ",
 
         ],
       },
     ],
 
     conclusion:
-      "Your body is already sending you signals. The flutter in your heart rhythm at 3am. The glucose spike after what seemed like a harmless meal. The quiet suppression of your immune response before the fever arrives. These are not random noise — they are data. And data, when read by the right intelligence, becomes foresight.",
+      "Your body is already sending you signals. The flutter in your heart rhythm at 3am. The glucose spike after what seemed like a harmless meal. The quiet suppression of your immune response before the fever arrives. These are not random noise — they are data. And data, when read by the right intelligence, becomes foresight. DARSHAI exists to give you that foresight. Not as a generic health score, but as a continuously updated, biologically precise, environmentally mapped picture of where your health is heading and what you can do to change course before you ever feel the need to. The medicine of tomorrow will not wait for you to fall sick. And neither will DARSHAI.",
   },
   {
   id: 2,
@@ -203,7 +202,7 @@ export const blogData = [
   img: book,
 
   intro:
-    "'Clinical Intelligence is only as precise as the data it draws upon — and only as meaningful as the model that interprets it. DARSHAI transforms fragmented biological signals into contextual precision health intelligence through proprietary AI architectures and Geo-Wellness modelling.'",
+    "'' Clinical Intelligence is only as precise as the data it draws upon – and only as meaningful as the model that interprets it. This article examines how proprietary AI architectures, built on multi-modal data fusion and continuously validated against real – world longitudinal cohorts, are transforming the diagnostic journey from population-level probability estimates into individualised biological intelligence. At the centre of this transformation is DARSHAI's Geo-Wellness framework – a system that does not merely analyse physiology, but situates it within the living environment of each person it serves ''",
 
   sections: [
     {
@@ -281,42 +280,109 @@ export const blogData = [
     },
 
     {
-      tag: "The DARSHAI Architecture",
+  tag: "The DARSHAI Architecture",
 
-      heading: "The Geo-Wellness Layer: Why Biology Without Environment Is Incomplete",
+  heading:
+    "The Geo-Wellness Layer: Why Biology Without Environment Is Incomplete",
 
-      paragraphs: [
-        "Understanding what individual precision health intelligence requires architecturally clarifies why DARSHAI was built the way it was. Three layers work in concert: the multi-modal data ingestion and fusion engine; the longitudinal temporal modelling layer that builds individual biological baselines; and the Geo-Wellness context layer that situates biological data within environmental reality.",
+  paragraphs: [
+    "Understanding what individual precision health intelligence requires architecturally clarifies why DARSHAI was built the way it was. Three layers work in concert: the multi-modal data ingestion and fusion engine; the longitudinal temporal modelling layer that builds individual biological baselines; and the Geo-Wellness context layer that situates biological data within environmental reality.",
 
-        "The Geo-Wellness layer is DARSHAI&#39;s most architecturally distinctive contribution. It encodes the premise that biological measurements taken in isolation from their environmental context are systematically misinterpretable. A person sleeping in a city neighbourhood with persistent PM2.5 elevation will show different HRV patterns and different inflammatory markers from the same person in a low-pollution environment — and that difference does not reflect their intrinsic biology. It reflects an environmental load.",
+    "The Geo-Wellness layer is DARSHAI's most architecturally distinctive contribution. It encodes the premise that biological measurements taken in isolation from their environmental context are systematically misinterpretable. A person sleeping in a city neighbourhood with persistent PM2.5 elevation will show different HRV patterns and different inflammatory markers from the same person in a low-pollution environment — and that difference does not reflect their intrinsic biology. It reflects an environmental load.",
 
-        "DARSHAI resolves this by ingesting five environmental data streams at the user&#39;s precise geographic location and integrating them as contextual correction variables into every biological inference the model makes:",
+    "DARSHAI resolves this by ingesting five environmental data streams at the user's precise geographic location and integrating them as contextual correction variables into every biological inference the model makes:",
+  ],
+
+  table: {
+    headers: [
+      "Environmental Variable",
+      "Clinical Interpretation",
+    ],
+
+    rows: [
+      [
+        "Air quality (AQI)",
+
+        "PM2.5, PM10, nitrogen dioxide, and ozone readings are cross-correlated with HRV and sleep architecture on a rolling basis. Sustained pollutant load above personalised threshold is flagged as an autonomic stressor and incorporated into risk score computation.",
       ],
 
-    },
+      [
+        "Thermal environment",
+
+        "Ambient temperature and relative humidity affect glucose disposal kinetics, cardiac output requirements, and sleep staging quality. DARSHAI applies thermal load correction to all metabolic and cardiovascular biomarker interpretations during heat and cold extremes.",
+      ],
+
+      [
+        "Altitude & pressure",
+
+        "Barometric pressure shifts affect SpO2, cardiovascular load, and circadian timing. Users travelling vertically — to highland regions, high-altitude cities, or mountain environments — have their biological reference ranges automatically recalibrated to prevent false anomaly detection.",
+      ],
+
+      [
+        "Seasonal light exposure",
+
+        "Geographic latitude and day-length variation modulate melatonin synthesis and circadian phase alignment. Seasonal light parameters are encoded as contextual variables in all sleep-related and mood-related biological assessments.",
+      ],
+
+      [
+        "Green space proximity",
+
+        "Residential and occupational access to natural vegetation correlates with lower ambient cortisol, better autonomic recovery, and improved circadian regularity. DARSHAI incorporates green space proximity as a structural longevity variable in biological age modelling.",
+      ],
+    ],
+  },
+},
 
     {
-      heading: "From Inference to Intervention: Closing the Precision Loop",
+  heading: "From Inference to Intervention: Closing the Precision Loop",
 
-      paragraphs: [
-        "A diagnostic score without an intervention pathway is an incomplete clinical system. The precision health intelligence DARSHAI generates is designed to close the loop: every insight surfaces not just an assessment of where a user's biology currently stands, but a prioritised, modifiable action tied to the specific biological and environmental drivers the model has identified.",
+  paragraphs: [
+    "A diagnostic score without an intervention pathway is an incomplete clinical system. The precision health intelligence DARSHAI generates is designed to close the loop: every insight surfaces not just an assessment of where a user's biology currently stands, but a prioritised, modifiable action tied to the specific biological and environmental drivers the model has identified.",
+  ],
+
+  table: {
+    headers: [
+      "What DARSHAI detects",
+      "What DARSHAI enables",
+    ],
+
+    rows: [
+      [
+        "Subclinical signal departures from individual biological baselines; compound multi-modal events where two or more domains deteriorate simultaneously; environmental stress loading that exceeds personalised tolerance thresholds; and directional trajectory changes in biological age components that indicate accelerated ageing.",
+
+        "Targeted, domain-specific intervention recommendations tied to identified biological drivers; environmental modification advice grounded in real-time Geo-Wellness context; timing-optimised lifestyle guidance calibrated to circadian phase and metabolic windows; and longitudinal outcome tracking that validates whether interventions are producing measurable biological improvement.",
       ],
-    },
+    ],
+  },
+},
 
-    {
+{
+  heading: "Challenges, Constraints, and Responsible Deployment",
 
-      heading: "Challenges, Constraints, and Responsible Deployment",
+  paragraphs: [
+    "The precision health AI space is not without legitimate challenges that honest clinical discourse must address. Three deserve particular emphasis in any responsible assessment.",
+  ],
 
-      paragraphs: [
-        "The precision health AI space is not without legitimate challenges that honest clinical discourse must address. Three deserve particular emphasis in any responsible assessment.",
+  table: {
+    headers: [
+      "Data quality and representation",
+      "Interpretability and clinical trust",
+    ],
+
+    rows: [
+      [
+        "The precision of individualised AI is only as good as the data quality feeding it. Consumer wearable sensors vary in measurement accuracy, and proprietary manufacturer algorithms introduce calibration differences that affect inter-device comparability. Users from communities historically underrepresented in biomedical research may find that general foundation models perform less well for their biological profiles — a risk that requires deliberate cohort diversity in model training.",
+
+        "AI-generated health scores that cannot be explained in terms a clinician or patient can understand and verify are not clinically useful — they are trust liabilities. DARSHAI's output architecture addresses this through domain decomposition (showing which biological and environmental factors are driving each score), directional trend reporting (showing whether trajectories are improving or deteriorating), and explicit uncertainty quantification on all risk estimates.",
       ],
-    },
-
+    ],
+  },
+},
     
   ],
 
   conclusion:
-    "The distance between a clinical diagnosis and the data that made it possible has historically been enormous. A person might accumulate years of subclinical biological change before any of it becomes visible in a doctor's consulting room. Proprietary AI models trained on continuous, multi-modal biological data are compressing that distance — making the invisible visible, and making visible data actionable. From data to diagnosis is not a linear journey from input to output. It is a continuously cycling system of measurement, inference, intervention, and re-measurement — with each cycle making the intelligence more precise and the person it serves more biologically resilient. That is the architecture of precision health as a daily practice, and it is what DARSHAI is built to deliver.",
+    "The distance between a clinical diagnosis and the data that made it possible has historically been enormous. A person might accumulate years of subclinical biological change before any of it becomes visible in a doctor's consulting room. Proprietary AI models trained on continuous, multi-modal biological data are compressing that distance — making the invisible visible, and making visible data actionable. From data to diagnosis is not a linear journey from input to output. It is a continuously cycling system of measurement, inference, intervention, and re-measurement — with each cycle making the intelligence more precise and the person it serves more biologically resilient. That is the architecture of precision health as a daily practice, and it is what DARSHAI is built to deliver."
 }
 ];
 
