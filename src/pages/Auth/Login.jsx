@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
 
 export default function Login() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
 const easing = [0.16, 1, 0.3, 1];
 
 export default function ContactUs() {
@@ -17,32 +17,60 @@ export default function ContactUs() {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.phone.trim()
+    ) {
+      setSuccessMsg(
+        "Full name, email and phone number are required"
+      );
+
+      return;
+    }
+
     setLoading(true);
+    setSuccessMsg("");
 
     try {
-      const response = await fetch("https://your-api-endpoint.com/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const API_URL =
+        import.meta.env.VITE_API_URL ||
+        "http://localhost:5000";
 
-      if (!response.ok) {
-        throw new Error("Failed to send");
+      const res = await fetch(
+        `${API_URL}/api/query/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          data.message || "Failed to send inquiry"
+        );
       }
 
-      alert("Message sent successfully!");
+      setSuccessMsg(
+        "Inquiry submitted successfully!"
+      );
 
-      // reset form
       setFormData({
         name: "",
         email: "",
@@ -51,13 +79,19 @@ export default function ContactUs() {
         interest: "",
         message: "",
       });
+
     } catch (error) {
-      console.error(error);
-      alert("Message send successfully!");
+      console.error("Inquiry Error:", error);
+
+      setSuccessMsg(
+        error.message || "Something went wrong"
+      );
+
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-[#f6f3ef]">
@@ -180,10 +214,12 @@ export default function ContactUs() {
                   Full Name
                 </label>
                 <input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Name"
+                  required
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Full Name"
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
@@ -192,11 +228,12 @@ export default function ContactUs() {
                   Email Address
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="email"
+                  required
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email "
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
@@ -205,23 +242,25 @@ export default function ContactUs() {
                   Phone Number
                 </label>
                 <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="+91 9876543210"
-                  className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
-                />
-              </div>
-              <div>
+                   required
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="+91 9876543210"
+              className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
+            />
+          </div>
+          <div>
                 <label className="text-xs tracking-widest text-[#C6A75E] uppercase mb-2 block">
                   Location
                 </label>
                 <input
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  placeholder="City"
+                   type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+                  placeholder="City,State"
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 />
               </div>
@@ -230,9 +269,10 @@ export default function ContactUs() {
                   Interest
                 </label>
                 <select
-                  name="interest"
-                  value={formData.interest}
-                  onChange={handleChange}
+                 type="text"
+            name="interest"
+            value={formData.interest}
+            onChange={handleChange}
                   className="w-full bg-[#EDE6DA] px-6 py-4 rounded-full outline-none"
                 >
                   <option value="">Select Interest</option>
@@ -255,12 +295,44 @@ export default function ContactUs() {
                 />
               </div>
               <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-[#1E7A3A] text-white py-4 rounded-full tracking-widest uppercase hover:bg-[#14532d] transition shadow-lg disabled:opacity-50"
-              >
-                {loading ? "Sending..." : "Send Inquiry"}
-              </button>
+            type="submit"
+            disabled={loading}
+            className="
+              w-full
+              bg-[#1E7A3A]
+              text-white
+              py-4
+              rounded-full
+              tracking-[0.25em]
+              uppercase
+              transition-all
+              duration-300
+              hover:bg-[#14532d]
+              disabled:opacity-50
+              shadow-lg
+            "
+          >
+            {loading
+              ? "Sending..."
+              : "Send Inquiry"}
+          </button>
+
+          {successMsg && (
+            <p
+              className={`
+                text-center
+                text-sm
+                tracking-wide
+                ${
+                  successMsg.includes("successfully")
+                    ? "text-[#1E7A3A]"
+                    : "text-red-500"
+                }
+              `}
+            >
+              {successMsg}
+            </p>
+          )}
             </form>
           </motion.div>
         </div>

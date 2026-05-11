@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Mail, User, Phone, MapPin, Briefcase } from "lucide-react";
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
+import { useNavigate, Link } from "react-router-dom";
 import { sendOtp, verifyOtp, registerUser } from "@/services/authService";
 
 export default function Register() {
@@ -9,6 +10,7 @@ export default function Register() {
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   /* FORM STATE */
   const [form, setForm] = useState({
@@ -90,6 +92,12 @@ export default function Register() {
 
         {/* RIGHT PANEL */}
         <div className="bg-[#F7F7F7] p-10 md:p-14 relative">
+          <button
+            onClick={() => navigate("/")}
+            className="absolute top-6 right-6 text-gray-400 hover:text-black"
+          >
+            ✕
+          </button>
           {/* FORM */}
           {step === "form" && (
             <>
@@ -160,17 +168,26 @@ export default function Register() {
                         if (!validate()) return;
 
                         setLoading(true);
+                        setError("");
 
-                        const res = await sendOtp(form.email);
+                        try {
+                          const res = await sendOtp(form.email);
 
-                        if (res.success) {
-                          setStep("otp");
-                          setError("");
-                        } else {
-                          setError(res.message);
+                          console.log("OTP RESPONSE:", res);
+
+                          if (res?.success) {
+                            setStep("otp");
+                            setError("");
+                          } else {
+                            setError(res?.message || "Failed to send OTP");
+                          }
+                        } catch (err) {
+                          console.error(err);
+
+                          setError(err?.message || "Something went wrong");
+                        } finally {
+                          setLoading(false);
                         }
-
-                        setLoading(false);
                       }}
                       className="text-[10px] px-3 py-1 rounded-full bg-[#1E7A3A] text-white ml-2"
                     >
@@ -186,17 +203,22 @@ export default function Register() {
                 )}
                 {errors.email && <Error text={errors.email} />}
 
+                {error && <Error text={error} />}
+
                 {/* JOIN */}
                 <button
                   disabled={!verified || loading}
                   onClick={async () => {
                     if (!validate()) return;
+
                     if (!verified) {
                       setError("Please verify your email first");
+
                       return;
                     }
 
                     setLoading(true);
+                    setError("");
 
                     try {
                       const res = await registerUser(form);
@@ -210,10 +232,12 @@ export default function Register() {
                         setError(res?.message || "Registration failed");
                       }
                     } catch (err) {
-                      setError("Something went wrong");
-                    }
+                      console.error(err);
 
-                    setLoading(false);
+                      setError(err?.message || "Something went wrong");
+                    } finally {
+                      setLoading(false);
+                    }
                   }}
                   className={`w-full py-4 rounded-full tracking-[4px] text-sm mt-4
                   ${
@@ -292,13 +316,29 @@ export default function Register() {
                 onClick={async () => {
                   const code = otp.join("");
 
-                  const res = await verifyOtp(form.email, code);
+                  try {
+                    setLoading(true);
+                    setError("");
 
-                  if (res.success) {
-                    setVerified(true);
-                    setStep("form");
-                  } else {
-                    setError(res.message);
+                    const code = otp.join("");
+
+                    const res = await verifyOtp(form.email, code);
+
+                    console.log("VERIFY OTP RESPONSE:", res);
+
+                    if (res?.success) {
+                      setVerified(true);
+                      setStep("form");
+                      setError("");
+                    } else {
+                      setError(res?.message || "OTP verification failed");
+                    }
+                  } catch (err) {
+                    console.error(err);
+
+                    setError(err?.message || "Something went wrong");
+                  } finally {
+                    setLoading(false);
                   }
                 }}
                 className="bg-[#1E7A3A] text-white px-10 py-3 rounded-full"

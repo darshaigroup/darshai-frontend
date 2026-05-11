@@ -1,7 +1,8 @@
 // src/pages/GeoWellnessCenter.jsx
 
 import React from "react";
-
+import hero from "@/assets/images/MainImg.png";
+const brandGreen = "#1E7A3A";
 const GeoWellnessCenter = () => {
   return (
     <div>
@@ -9,13 +10,17 @@ const GeoWellnessCenter = () => {
       {/* HERO SECTION */}
       <section className="relative h-[400px] flex items-center justify-center text-center">
         <img
-          src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+          src={hero}
           alt="Geo Wellness"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
         {/* overlay */}
-        <div className="absolute inset-0 bg-green-900/70"></div>
+         <div
+          className="absolute inset-0"
+          style={{ backgroundColor: brandGreen, opacity: 0.75 }}
+        />
+
 
         <div className="relative z-10 text-white px-6">
           <h1 className="text-5xl md:text-6xl font-serif">

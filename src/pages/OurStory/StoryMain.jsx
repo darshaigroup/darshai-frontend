@@ -1,9 +1,9 @@
-import hero from "@/assets/images/DoctorHomepage.jpg";
+import hero from "@/assets/images/MainImg.png";
 import bg4 from "@/assets/images/bg4.png";
 import herb from "@/assets/images/herb.jpg";
 import Protocol from "./protocol.jsx";
 import doctor from "@/assets/images/doctor.jpeg";
-import ceo from "@/assets/images/ceo.webp";
+import ceo1 from "@/assets/images/ceo1.jpeg";
 import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 
@@ -20,7 +20,7 @@ const PHILOSOPHY_DATA = [
   {
     tag: "THE SYNTHESIS",
     title: "The New Standard of Optimization",
-    text: "DARSHAI was born from a singular realization - True longevity is not found in a laboratory, nor is it found solely in a forest. It is found at the intersection of both. We bridge 5,000 years of Ayurvedic intelligence with the relentless precision of AI-driven biomarker monitoring. We don&#39;t believe in &quot;generic wellness.&quot; We believe in Biological Sovereignty—the right to own your health data, understand your unique metabolic fire (Agni), and master your environment.",
+    text: "DARSHAI was born from a singular realization - True longevity is not found in a laboratory, nor is it found solely in a forest. It is found at the intersection of both. We bridge 5,000 years of Ayurvedic intelligence with the relentless precision of AI-driven biomarker monitoring. We don't believe in &quot;generic wellness; We believe in Biological Sovereignty—the right to own your health data, understand your unique metabolic fire (Agni), and master your environment.",
   },
   {
     tag: "THE GEO-BIOTIC MAP",
@@ -36,12 +36,26 @@ const PHILOSOPHY_DATA = [
 ];
 
 const OurStory = () => {
-  const ref = useRef(null);
+ 
+  const sectionRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: sectionRef,
     offset: ["start start", "end end"],
   });
+
+  // IMAGE PARALLAX
+  const imageScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1.1, 1]
+  );
+
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, -80]
+  );
   return (
     <div className="bg-[#f6f3ef] text-gray-800 overflow-hidden">
       {/* HERO SECTION */}
@@ -78,91 +92,236 @@ const OurStory = () => {
       </section>
 
       {/* PHILOSOPHY */}
-      <section className="max-w-7xl mx-auto px-6 py-32">
-        {/* HEADER */}
-        <div className="mb-24">
-          <p className="text-xs tracking-[3px] text-yellow-700 mb-4">
-            THE PHILOSOPHY
+      <section className="relative bg-[#f6f3ef] overflow-hidden">
+
+  {/* WRAPPER */}
+  <div className="max-w-7xl mx-auto px-6 py-32">
+
+    {/* HEADER */}
+    <div className="text-center mb-24">
+
+      <p className="text-xs tracking-[4px] text-yellow-700 mb-5 uppercase">
+        THE PHILOSOPHY
+      </p>
+
+      <h2
+        className="
+          text-[42px]
+          md:text-[72px]
+
+          leading-[1.05]
+          font-serif
+
+          max-w-5xl
+          mx-auto
+        "
+        style={{ color: brandGreen }}
+      >
+        Reclaiming Sovereignty
+      </h2>
+
+    </div>
+
+    {/* PREMIUM HERO IMAGE */}
+    <div className="relative flex justify-center mb-32">
+
+      {/* GLOW */}
+      <div className="absolute w-[70%] h-[70%] bg-blue-900/10 blur-[140px] rounded-full" />
+
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 80,
+          scale: 0.96,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 1.4,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="
+          relative
+
+          w-full
+          max-w-6xl
+
+          rounded-[42px]
+          overflow-hidden
+
+          shadow-[0_60px_140px_rgba(0,0,0,0.18)]
+        "
+      >
+
+        {/* IMAGE */}
+        <img
+          src={bg4}
+          alt="wellness"
+          className="
+            w-full
+
+            h-[320px]
+            md:h-[720px]
+
+            object-cover
+          "
+        />
+
+        {/* GREEN → BLUE OVERLAY */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top right, rgba(30,122,58,0.72), rgba(23,78,166,0.58), rgba(0,0,0,0.08))",
+          }}
+        />
+
+        {/* PREMIUM LIGHT */}
+        <div className="absolute inset-0 ring-1 ring-white/10 rounded-[42px]" />
+
+        {/* EDGE GLOW */}
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[70%] h-24 bg-blue-900/20 blur-[100px]" />
+
+      </motion.div>
+
+    </div>
+
+    {/* STORY CONTENT */}
+    <div className="max-w-4xl mx-auto space-y-32">
+
+      {PHILOSOPHY_DATA.map((item, i) => (
+
+        <motion.div
+          key={i}
+          initial={{
+            opacity: 0,
+            y: 80,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: false,
+            amount: 0.25,
+          }}
+          transition={{
+            duration: 1,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="relative"
+        >
+
+          {/* LARGE BACKGROUND NUMBER */}
+          <div
+            className="
+              absolute
+              -left-8
+              -top-12
+
+              text-[80px]
+              md:text-[140px]
+
+              font-serif
+
+              text-[#174ea6]/[0.05]
+
+              pointer-events-none
+            "
+          >
+            0{i + 1}
+          </div>
+
+          {/* TAG */}
+          <p className="text-xs tracking-[4px] text-yellow-700 mb-6 uppercase relative z-10">
+            {item.tag}
           </p>
 
-          <h2
-            className="text-[42px] md:text-[72px] font-serif leading-tight"
+          {/* TITLE */}
+          <h3
+            className="
+              text-3xl
+              md:text-6xl
+
+              leading-[1.08]
+
+              font-serif
+
+              mb-10
+
+              relative z-10
+            "
             style={{ color: brandGreen }}
           >
-            Reclaiming Sovereignty
-          </h2>
-        </div>
+            {item.title}
+          </h3>
 
-        {/* STICKY + SCROLL SYSTEM */}
-        <div className="relative">
-          {/* THIS CREATES SCROLL LENGTH */}
-          <div className="grid md:grid-cols-2 gap-20">
-            {/* LEFT: STICKY IMAGE */}
-            <div className="h-[120vh] md:h-[200vh] relative">
-              <div className="sticky top-24">
-                <div className="rounded-[40px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] group">
-                  <img
-                    src={bg4}
-                    alt="wellness"
-                    className="w-full h-[300px] md:h-[650px] object-cover transition-all duration-[1200ms] group-hover:scale-110"
-                  />
+          {/* TEXT */}
+          <p
+            className="
+              text-lg
+              md:text-xl
 
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(30,122,58,0.85), rgba(30,122,58,0.4), transparent)",
-                    }}
-                  />
-                </div>
-              </div>
+              leading-[2.1]
+
+              text-[#1E7A3A]/75
+
+              border-l
+              border-blue-700/20
+
+              pl-8
+
+              italic
+
+              relative z-10
+            "
+          >
+            {item.text}
+          </p>
+
+          {/* FINAL QUOTE */}
+          {i === PHILOSOPHY_DATA.length - 1 && (
+
+            <div className="pt-16 border-t border-[#174ea6]/10 mt-16">
+
+              <p className="text-2xl italic text-yellow-700 mb-4">
+                "This is not an escape from life."
+              </p>
+
+              <p
+                className="
+                  text-3xl
+                  md:text-5xl
+
+                  font-serif
+                  italic
+
+                  leading-tight
+                "
+                style={{
+                  color: "rgba(30,122,58,0.9)",
+                }}
+              >
+                This is the mastery of it.
+              </p>
+
             </div>
 
-            {/* RIGHT: SCROLLING TEXT */}
-            <div className="space-y-40">
-              {PHILOSOPHY_DATA.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 80 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ margin: "-20% 0px -20% 0px" }}
-                  transition={{ duration: 1 }}
-                >
-                  <p className="text-xs tracking-[4px] text-yellow-700 mb-3">
-                    {item.tag}
-                  </p>
+          )}
 
-                  <h3
-                    className="text-3xl md:text-5xl font-serif mb-6"
-                    style={{ color: brandGreen }}
-                  >
-                    {item.title}
-                  </h3>
+        </motion.div>
 
-                  <p className="text-lg italic text-[#1E7A3A]/70 border-l pl-6 border-yellow-700/30">
-                    {item.text}
-                  </p>
+      ))}
 
-                  {/* LAST QUOTE */}
-                  {i === PHILOSOPHY_DATA.length - 1 && (
-                    <div className="pt-12 border-t border-[#1E7A3A]/20 mt-12">
-                      <p className="text-lg italic text-yellow-700">
-                        "This is not an escape from life."
-                      </p>
-                      <p
-                        className="text-lg italic"
-                        style={{ color: brandGreen }}
-                      >
-                        This is the mastery of it.
-                      </p>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+    </div>
+
+  </div>
+
+</section>
 
       {/* BRAIN TRUST */}
       <section className="max-w-7xl mx-auto px-6 py-24">
@@ -204,7 +363,7 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
               {/* IMAGE CARD (unchanged effect) */}
               <div className="rounded-[40px] overflow-hidden relative shadow-xl">
                 <img
-                  src={person.name === "Veekshitha V" ? ceo : doctor}
+                  src={person.name === "Veekshitha V" ? ceo1 : doctor}
                   alt={person.name}
                   className="w-full h-[900px] object-cover group-hover:scale-110 transition-all duration-[1200ms]"
                 />
@@ -217,7 +376,7 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
   "
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(30,100,58,0.9), transparent)",
+                      "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), transparent)",
                   }}
                 />
 

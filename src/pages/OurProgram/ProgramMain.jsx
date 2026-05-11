@@ -1,10 +1,13 @@
 import React from "react";
 import GeoWellnessCenter from "./GeoWellnessCenter";
 import { Link, useParams } from "react-router-dom";
-import treatment1 from "@/assets/images/Treatment1.png";
-import treatment2 from "@/assets/images/Treatment2.png";
-import treatment3 from "@/assets/images/Treatment3.png";
-import treatment4 from "@/assets/images/Treatment4.png";
+import treatment1 from "@/assets/images/Treatment7.png";
+import treatment2 from "@/assets/images/Treatment6.png";
+import treatment3 from "@/assets/images/Treatment9.png";
+import treatment4 from "@/assets/images/Treatment8.png";
+import hero from "@/assets/images/MainImg.png";
+
+const brandGreen = "#1E7A3A";
 
 const ProgramMain = () => {
   const [activeProgram, setActiveProgram] = React.useState(null);
@@ -18,16 +21,18 @@ const ProgramMain = () => {
   return (
     <div className="w-full">
       {/* ================= HERO ================= */}
-      <section className="relative h-[600px] w-full">
+      <section className="relative h-[60vh] flex items-center justify-center text-center overflow-hidden">
         {/* Background */}
         <img
-          src="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
+          src={hero}
           alt="wellness"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-green-900/80"></div>
+         <div
+          className="absolute inset-0"
+          style={{ backgroundColor: brandGreen, opacity: 0.75 }}
+        />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
@@ -81,14 +86,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+           
 
             {/* OPTIONAL DARK DEPTH */}
             <div
@@ -259,14 +257,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+            
 
             {/* OPTIONAL DARK DEPTH */}
             <div
@@ -310,14 +301,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+           
 
             {/* OPTIONAL DARK DEPTH */}
             <div
@@ -426,12 +410,12 @@ const ProgramMain = () => {
 
             {/* Subtitle */}
             <p className="text-yellow-700 italic text-lg mb-2">
-              Strength & Flow
+              Signature Wellness Journeys
             </p>
 
             {/* Title */}
             <h2 className="text-4xl md:text-6xl font-serif text-green-800 leading-tight mb-6">
-              Darshai Body Conditioning
+             Darshai Personalised Journey
             </h2>
 
             {/* Quote */}
@@ -458,11 +442,11 @@ const ProgramMain = () => {
             <button
               onClick={() =>
                 setActiveProgram({
-                  title: "Darshai Body Conditioning",
-                  label: "DARSHAI BODY CONDITIONING",
-                  subtitle: "Strength & Flow",
+                  title: "Darshai Personalised Journey",
+                  label: "DARSHAI PERSONALISED JOURNEY",
+                  subtitle: "Signature Wellness Journeys",
                   quote:
-                    "Build strength, stamina, and confidence with tailored workouts.",
+                    "Designed around your unique needs for holistic transformation.",
                   image: treatment4,
                   description:
                     "Personalised Wellness Programmes provide a comprehensive, data-driven approach to health optimisation by tailoring interventions to each individual’s unique profile.",
@@ -493,14 +477,7 @@ const ProgramMain = () => {
             />
 
             {/* GREEN TEXTURE OVERLAY */}
-            <div
-              className="
-      absolute inset-0
-      bg-gradient-to-t from-green-900/70 via-green-800/30 to-transparent
-      opacity-0 group-hover:opacity-100
-      transition duration-700
-    "
-            />
+            
 
             {/* OPTIONAL DARK DEPTH */}
             <div
