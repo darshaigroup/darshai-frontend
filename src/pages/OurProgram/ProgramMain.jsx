@@ -1,10 +1,10 @@
 import React from "react";
 import GeoWellnessCenter from "./GeoWellnessCenter";
 import { Link, useParams } from "react-router-dom";
-import treatment1 from "@/assets/images/Treatment1.png";
-import treatment2 from "@/assets/images/Treatment2.png";
-import treatment3 from "@/assets/images/Treatment5.png";
-import treatment4 from "@/assets/images/Treatment4.png";
+import treatment1 from "@/assets/images/Treatment7.png";
+import treatment2 from "@/assets/images/Treatment6.png";
+import treatment3 from "@/assets/images/Treatment9.png";
+import treatment4 from "@/assets/images/Treatment8.png";
 import hero from "@/assets/images/MainImg.png";
 
 const brandGreen = "#1E7A3A";

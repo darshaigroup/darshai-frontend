@@ -1,5 +1,5 @@
 import book from "@/assets/images/books.png";
-
+import blog from "@/assets/images/blog1.png";
 export const blogData = [
   {
     id: 1,
@@ -199,7 +199,7 @@ export const blogData = [
   desc:
     "Leveraging proprietary AI models, multi-modal biomarkers, and Geo-Wellness intelligence for precision health outcomes.",
 
-  img: book,
+  img: blog,
 
   intro:
     "'' Clinical Intelligence is only as precise as the data it draws upon – and only as meaningful as the model that interprets it. This article examines how proprietary AI architectures, built on multi-modal data fusion and continuously validated against real – world longitudinal cohorts, are transforming the diagnostic journey from population-level probability estimates into individualised biological intelligence. At the centre of this transformation is DARSHAI's Geo-Wellness framework – a system that does not merely analyse physiology, but situates it within the living environment of each person it serves ''",

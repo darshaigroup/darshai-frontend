@@ -1,6 +1,6 @@
 import { Shield, Users, Activity, Zap, Globe, Check } from "lucide-react";
-import sover from "@/assets/images/sover.png";
-import corporate from "@/assets/images/corporate.png";
+import sover from "@/assets/images/health.jpeg";
+import corporate from "@/assets/images/nature.jpeg";
 import maintenance from "@/assets/images/maintenance.png";
 import prepkit from "@/assets/images/prepkit.png";
 import precision from "@/assets/images/precision.png";
@@ -127,7 +127,7 @@ export default function ProtocolPreview() {
 
           {/* DESCRIPTION */}
           <p
-            className="text-[20px] leading-[1.8] text-[#174EA6]/75 italic border-l border-[#174EA6]/20 pl-6 mb-8 max-w-xl"
+            className="text-[20px] leading-[1.8] text-yellow-700 italic border-l border-[#174EA6]/20 pl-6 mb-8 max-w-xl"
           >
             {item.desc}
           </p>

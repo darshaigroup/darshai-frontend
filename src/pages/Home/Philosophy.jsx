@@ -26,7 +26,7 @@ const slides = [
     icon: Mountain,
     title: "The DARSHAI Solution: Precision Longevity Interventions",
     content: [
-      "DARSHAI is India;s first AI-Native, IP-Driven Travel & Health-Tech Group. We are entirely disrupting the global wellness market by shifting the focus from generic hospitality to engineered human performance.",
+      "DARSHAI is India's first AI-Native, IP-Driven Travel & Health-Tech Group. We are entirely disrupting the global wellness market by shifting the focus from generic hospitality to engineered human performance.",
       "Rather than operating a mass-market app or standard tour agency, we function on an elite Concierge Model, processing deep-tech biological data to deliver hyper-personalized interventions.",
     ],
   },
@@ -66,145 +66,235 @@ export default function DarshaiGreenLuxurySlideshow() {
   const current = slides[active];
   const Icons = current.icons || [current.icon];
 
+  const brandGreen = "#1E7A3A";
+const brandGold = "#C9A75B";
+const softCream = "#F6F3EF";
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-green-950 via-green-800 to-green-600 text-white">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%)]" />
-        <div className="absolute inset-0 bg-[radial_gradient(circle_at_bottom_left,rgba(255,255,255,0.08),transparent_35%)]" />
-        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:40px_40px]" />
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#14532D] via-[#1E7A3A] to-[#2E8B57] text-white">
+
+    {/* PREMIUM BACKGROUND */}
+    <div className="absolute inset-0 overflow-hidden">
+
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_28%)]" />
+
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(201,167,91,0.10),transparent_32%)]" />
+
+      <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(135deg,rgba(255,255,255,0.14)_1px,transparent_1px)] bg-[size:42px_42px]" />
+
+      {/* FLOATING GLOW */}
+      <motion.div
+        animate={{
+          y: [0, -30, 0],
+          x: [0, 20, 0],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+        }}
+        className="absolute top-20 right-20 w-80 h-80 bg-[#C9A75B]/10 rounded-full blur-3xl"
+      />
+
+      <motion.div
+        animate={{
+          y: [0, 40, 0],
+          x: [0, -20, 0],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+        }}
+        className="absolute bottom-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+      />
+
+    </div>
+
+    {/* MAIN SECTION */}
+    <div className="relative z-10 min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 py-28">
+
+      <AnimatePresence mode="wait">
 
         <motion.div
-          animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-          className="absolute top-20 right-20 w-72 h-72 bg-green-300/10 rounded-full blur-3xl"
-        />
+          key={current.id}
+          initial={{
+            opacity: 0,
+            y: 60,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          exit={{
+            opacity: 0,
+            y: -40,
+          }}
+          transition={{
+            duration: 1,
+          }}
+          className="w-full max-w-7xl grid lg:grid-cols-2 gap-20 items-center"
+        >
 
-        <motion.div
-          animate={{ y: [0, 40, 0], x: [0, -20, 0] }}
-          transition={{ duration: 15, repeat: Infinity }}
-          className="absolute bottom-20 left-20 w-96 h-96 bg-emerald-200/10 rounded-full blur-3xl"
-        />
-      </div>
+          {/* LEFT SIDE */}
+          <div className="space-y-10">
 
-      {/* Navbar */}
-      
+            {/* CATEGORY */}
+            <motion.p
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              className="text-[11px] uppercase tracking-[0.45em] text-[#E8D7A5]"
+            >
+              {current.category}
+            </motion.p>
 
-      {/* Main Slideshow */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 pt-36">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 1 }}
-            className="w-full max-w-7xl grid lg:grid-cols-2 gap-14 items-center"
-          >
-            {/* Left Side */}
-            <div className="space-y-10">
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm uppercase text-green-100/80 tracking-[0.4em]"
-              >
-                {current.category}
-              </motion.p>
+            {/* ICONS */}
+            <div className="flex gap-5">
 
-              <div className="flex gap-3">
-                {current.subSections ? (
-                  current.subSections.map((_, idx) => {
+              {current.subSections
+                ? current.subSections.map((_, idx) => {
                     const Icon = Icons[idx];
+
                     return (
                       <div
                         key={idx}
-                        className="w-16 h-16 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg flex items-center justify-center shadow-2xl"
+                        className="w-18 h-18 rounded-[22px] bg-white/10 border border-white/10 backdrop-blur-2xl flex items-center justify-center shadow-[0_25px_70px_rgba(0,0,0,0.18)]"
                       >
-                        <Icon className="w-8 h-8 text-white" />
+                        <Icon
+                          className="w-8 h-8"
+                          style={{
+                            color: brandGold,
+                          }}
+                        />
                       </div>
                     );
                   })
-                ) : (
-                  Icons.map((Icon, idx) => (
+                : Icons.map((Icon, idx) => (
                     <div
                       key={idx}
-                      className="w-16 h-16 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg flex items-center justify-center shadow-2xl"
+                      className="w-18 h-18 rounded-[22px] bg-white/10 border border-white/10 backdrop-blur-2xl flex items-center justify-center shadow-[0_25px_70px_rgba(0,0,0,0.18)]"
                     >
-                      <Icon className="w-8 h-8 text-white" />
+                      <Icon
+                        className="w-8 h-8"
+                        style={{
+                          color: brandGold,
+                        }}
+                      />
                     </div>
-                  ))
-                )}
-              </div>
+                  ))}
 
-              <motion.h1
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-3xl md:text-4xl lg:text-5xl font-extralight leading-[1.05]"
-              >
-                {current.title}
-              </motion.h1>
-
-              <div className="w-40 h-[2px] bg-white/40" />
             </div>
 
-            {/* Right Side */}
-            <div className="space-y-5">
-              {current.subSections ? (
-                current.subSections.map((section, index) => (
+            {/* TITLE */}
+            <motion.h1
+              initial={{
+                opacity: 0,
+                x: -30,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              className="text-4xl md:text-5xl lg:text-7xl font-serif font-light leading-[0.98] tracking-[-0.05em]"
+            >
+              {current.title}
+            </motion.h1>
+
+            {/* DIVIDER */}
+            <div className="w-44 h-[2px] bg-gradient-to-r from-[#C9A75B] via-[#E8D7A5] to-transparent rounded-full" />
+
+          </div>
+
+          {/* RIGHT SIDE */}
+          <div className="space-y-6">
+
+            {current.subSections
+              ? current.subSections.map((section, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                    className="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-6 shadow-2xl hover:bg-white/15 transition-all duration-500"
+                    initial={{
+                      opacity: 0,
+                      x: 40,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                    }}
+                    transition={{
+                      delay: index * 0.2,
+                    }}
+                    className="rounded-[30px] border border-white/10 bg-white/8 backdrop-blur-2xl p-8 shadow-[0_30px_90px_rgba(0,0,0,0.20)] transition-all duration-700 hover:-translate-y-2 hover:bg-white/12"
                   >
-                    <h3 className="text-lg font-semibold text-white mb-2">
+
+                    <h3
+                      className="text-2xl md:text-3xl font-serif mb-5"
+                      style={{
+                        color: softCream,
+                      }}
+                    >
                       {section.heading}
                     </h3>
-                    <p className="text-base md:text-lg font-light leading-relaxed text-white/90">
+
+                    <p className="text-[17px] leading-[1.95] text-white/80 font-light">
                       {section.description}
                     </p>
+
                   </motion.div>
                 ))
-              ) : (
-                current.content.map((paragraph, index) => (
+              : current.content.map((paragraph, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                    className="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-6 shadow-2xl hover:bg-white/15 transition-all duration-500"
+                    initial={{
+                      opacity: 0,
+                      x: 40,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                    }}
+                    transition={{
+                      delay: index * 0.2,
+                    }}
+                    className="rounded-[30px] border border-white/10 bg-white/8 backdrop-blur-2xl p-8 shadow-[0_30px_90px_rgba(0,0,0,0.20)] transition-all duration-700 hover:-translate-y-2 hover:bg-white/12"
                   >
-                    <p className="text-base md:text-lg font-light leading-relaxed text-white/90">
+
+                    <p className="text-[17px] leading-[2] text-white/80 font-light">
                       {paragraph}
                     </p>
+
                   </motion.div>
-                ))
-              )}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                ))}
+
+          </div>
+
+        </motion.div>
+
+      </AnimatePresence>
+
+    </div>
+
+    {/* BOTTOM NAVIGATION */}
+    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
+
+      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-2xl border border-white/10 rounded-full px-4 py-3 shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+
+        {slides.map((slide, index) => (
+          <button
+            key={slide.id}
+            onClick={() => setActive(index)}
+            className={`transition-all duration-500 ${
+              active === index
+                ? "w-10 h-2 rounded-full bg-[#C9A75B]"
+                : "w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/70"
+            }`}
+          />
+        ))}
+
       </div>
 
-      {/* Bottom Navigation - Only dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
-        <div className="flex items-center gap-4">
-          {/* Dot Indicators */}
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-full px-4 py-3 shadow-2xl">
-            {slides.map((slide, index) => (
-              <button
-                key={slide.id}
-                onClick={() => setActive(index)}
-                className={`transition-all duration-500 ${
-                  active === index
-                    ? "w-10 h-2 rounded-full bg-white"
-                    : "w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/70"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
+
+  </section>
   );
 }
