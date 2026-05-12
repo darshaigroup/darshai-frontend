@@ -362,11 +362,7 @@ export default function GeoWellnessCenter() {
             ))}
           </div>
         </div>
-      </div>
-
-      <p className="mt-6 text-green-700 italic">
-        A vertical sanctuary optimized for circadian spectral light and high-altitude recovery.
-      </p>
+      </section>
     </div>
   );
 }
