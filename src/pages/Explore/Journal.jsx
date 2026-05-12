@@ -1,4 +1,4 @@
-import imageImg from "@/assets/images/logos.png";
+import imageImg from "@/assets/images/Journal.png";
 
 export const journalData = [
   {
