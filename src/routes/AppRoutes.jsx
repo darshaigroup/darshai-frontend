@@ -16,6 +16,7 @@ import GeoWellnessCenter, { GeoWellnessCategory } from "@/pages/OurProgram/GeoWe
 import Explore from "@/pages/Explore/ExploreMain";
 import BlogArticle from "@/pages/Explore/BlogArticle";
 import FlipBookPage from "@/components/Explore/FlipBookPage";
+import ComingSoon from "@/components/Explore/ComingSoon";
 import ContactUs from "@/pages/Contact/ContactMain";
 import PrivacyPolicy from "@/pages/LegalFile/PrivacyPolicy";
 import TermsConditions from "@/pages/LegalFile/TermsConditions";
@@ -58,6 +59,7 @@ const AppRoutes = () => {
           <Route path="/explore/:category" element={<Explore />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/pdf/:file" element={<FlipBookPage />} />
+          <Route path="/coming-soon/:type" element={<ComingSoon />}/>
 
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />

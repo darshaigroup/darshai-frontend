@@ -1,5 +1,9 @@
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Forest from "@/assets/images/Forest.png";
+import Coastal from "@/assets/images/Coastal.png";
+import Mountain from "@/assets/images/Mountain.png";
+import hero from "@/assets/images/MainImg.png";
 
 // ----------------------------- FOREST CENTRES (with shortDescription for card) ---------------------------------
 const forestCentres = [
@@ -212,19 +216,19 @@ const categoryMeta = {
     
     heroDescription: "Explore forest geography with Ayurvedic centres designed for detoxification, immune resilience, and herbal restoration.",
     pageTitle: "FOREST",
-    image: "/src/assets/images/herbs.jpg"
+    image: { src: Forest, alt: "Forest Wellness Centre" }
   },
   coastal: {
     title: "Coastal Wellness Centres",
     heroDescription: "Discover coastal sanctuaries where marine air and Ayurveda combine for radiant skin, respiratory strength, and deep relaxation.",
     pageTitle: "COASTAL",
-    image: "/src/assets/images/Ecology.jpg"
+    image: { src: Coastal, alt: "Coastal Wellness Centre" }
   },
   mountain: {
     title: "Mountain Wellness Centres",
     heroDescription: "Find mountain retreats that support oxygen-rich breathing, nervous system reset, and lasting clarity.",
     pageTitle: "MOUNTAIN",
-    image: "/src/assets/images/Protocols.jpg"
+    image: { src: Mountain, alt: "Mountain Wellness Centre" }
   }
 };
 
@@ -235,7 +239,7 @@ const categoryCards = [
     title: "FOREST",
     
     gradient: "from-green-900/80 to-black/60",
-    image: "/src/assets/images/herbs.jpg",
+    image:Forest,
     
   },
   {
@@ -243,7 +247,7 @@ const categoryCards = [
     title: "COASTAL",
     
     gradient: "from-blue-900/80 to-black/60",
-    image: "/src/assets/images/Ecology.jpg",
+    image: Coastal,
     
   },
   {
@@ -251,7 +255,7 @@ const categoryCards = [
     title: "MOUNTAIN",
     
     gradient: "from-emerald-900/80 to-black/60",
-    image: "/src/assets/images/Protocols.jpg",
+    image: Mountain,
 
   }
 ];
@@ -314,9 +318,9 @@ export default function GeoWellnessCenter() {
 
   return (
     <div className="w-full">
-      <section className="relative h-[70vh] md:h-[80vh] w-full overflow-hidden">
+      <section className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/src/assets/images/DoctorHomepage.jpg" alt="Geo Wellness Hero" className="w-full h-full object-cover" />
+          <img src={hero} alt="Geo Wellness Hero" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-green-900/70 via-green-800/80 to-black/50" />
         </div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6 lg:px-20 pt-32 md:pt-40 pb-20">
