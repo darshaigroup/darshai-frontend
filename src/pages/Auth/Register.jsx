@@ -248,6 +248,12 @@ export default function Register() {
                 >
                   {loading ? "PROCESSING..." : "JOIN WAITLIST →"}
                 </button>
+                <p className="text-xs text-center text-gray-400 mt-6">
+              Already registered?{" "}
+              <Link to="/login" className="text-[#1E7A3A] hover:underline">
+                Login
+              </Link>
+            </p>
               </div>
             </>
           )}

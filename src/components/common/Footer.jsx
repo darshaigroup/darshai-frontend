@@ -5,6 +5,7 @@ import {
   FaFacebookF,
   FaTwitter,
   FaArrowUp,
+  FaWhatsapp,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -65,10 +66,10 @@ const Footer = () => {
 
   {/* PHONE (CLICKABLE) */}
   <a
-    href="tel:+917349171511"
+    href="tel:+918088171511"
     className="text-sm block hover:text-[#C6A75E]"
   >
-    +91-7349171511
+    +91-8088171511
   </a>
 
   {/* SOCIAL */}
@@ -148,14 +149,32 @@ const Footer = () => {
       </div>
 
       {/* 🔺 SCROLL TOP */}
-      <motion.button
-        onClick={scrollTop}
-        whileHover={{ scale: 1.15 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-[#1E7A3A] text-white flex items-center justify-center shadow-lg"
-      >
-        <FaArrowUp />
-      </motion.button>
+    
+<div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
+
+  {/* WHATSAPP */}
+  <motion.a
+    href="https://wa.me/918088171511"
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ scale: 1.12 }}
+    whileTap={{ scale: 0.92 }}
+    className="w-10 h-10 rounded-full bg-[#1E7A3A] text-white flex items-center justify-center shadow-[0_15px_40px_rgba(37,211,102,0.35)] transition-all duration-300"
+  >
+    <FaWhatsapp size={26} />
+  </motion.a>
+
+  {/* SCROLL TOP */}
+  <motion.button
+    onClick={scrollTop}
+    whileHover={{ scale: 1.12 }}
+    whileTap={{ scale: 0.92 }}
+    className="w-10 h-10 rounded-full bg-[#1E7A3A] text-white flex items-center justify-center shadow-[0_15px_40px_rgba(30,122,58,0.35)] transition-all duration-300"
+  >
+    <FaArrowUp size={18} />
+  </motion.button>
+
+</div>
     </footer>
   );
 };
