@@ -3,8 +3,8 @@ import imageImg from "@/assets/images/logos.png";
 export const imageData = [
   {
     id: 1,
-    title: "Bio-Luxury Retreat",
+    title: "Darshai Image",
     img: imageImg,
-    desc: "Visual highlights.",
+    desc: "Images Lauching soon...",
   },
 ];

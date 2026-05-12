@@ -7,6 +7,23 @@ export default function ExploreCard({
   const navigate = useNavigate();
 
   const handleClick = () => {
+
+    /*
+    ✅ VIDEO PAGE
+    */
+    if (category === "video") {
+      navigate("/coming-soon/video");
+      return;
+    }
+
+    /*
+    ✅ IMAGE PAGE
+    */
+    if (category === "image") {
+      navigate("/coming-soon/image");
+      return;
+    }
+
     /*
     ✅ BLOG → ARTICLE PAGE
     */
@@ -55,6 +72,7 @@ export default function ExploreCard({
         cursor-pointer
       "
     >
+
       {/* IMAGE */}
       <img
         src={item.img}
@@ -72,17 +90,19 @@ export default function ExploreCard({
         "
       />
 
-      {/* BLUE PREMIUM OVERLAY */}
+      {/* PREMIUM OVERLAY */}
       <div
         className="
           absolute inset-0
+
           opacity-0
           group-hover:opacity-100
+
           transition duration-700
         "
         style={{
           background:
-            "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), transparent)",
+            "linear-gradient(to top,rgba(23,78,166,0.92),rgba(23,78,166,0.45),transparent)",
         }}
       />
 
@@ -101,6 +121,7 @@ export default function ExploreCard({
           duration-700
         "
       >
+
         <p className="text-[11px] tracking-[0.3em] uppercase text-[#C9A75B] mb-2">
           DARSHAI Archive
         </p>
@@ -112,7 +133,9 @@ export default function ExploreCard({
         <p className="text-white/80 text-sm max-w-sm leading-relaxed">
           {item.desc}
         </p>
+
       </div>
+
     </div>
   );
 }

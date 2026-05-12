@@ -30,6 +30,7 @@ export default {
         blob: 'blob 7s infinite',
         float: 'float 6s ease-in-out infinite',
         'spin-slow': 'spin-slow 20s linear infinite',
+        'heroZoom': 'heroZoom 20s ease-in-out infinite',
 
         /* Loader animation */
         loading: 'loading 1.5s infinite linear',
@@ -52,6 +53,12 @@ export default {
         'spin-slow': {
           from: { transform: 'rotate(0deg)' },
           to: { transform: 'rotate(360deg)' },
+        },
+
+        heroZoom: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+          '100%': { transform: 'scale(1)' },
         },
 
         /* 🔥 Loader progress */

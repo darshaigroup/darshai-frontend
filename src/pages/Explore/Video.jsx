@@ -3,8 +3,8 @@ import videoImg from "@/assets/images/logoEffect.gif";
 export const videoData = [
   {
     id: 1,
-    title: "Digital Brain",
+    title: "Darshai Video",
     img: videoImg,
-    desc: "AI monitoring biomarkers.",
+    desc: "Video Lauching soon...",
   },
 ];
