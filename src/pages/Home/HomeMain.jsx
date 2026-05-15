@@ -66,7 +66,7 @@ const scrollRight = () => {
 };
   return (
     <div>
-      {/* HERO SECTION */}
+      
       <section className="relative h-screen w-full overflow-hidden">
         {/* 🎬 BACKGROUND IMAGE */}
         <AnimatePresence mode="wait">
@@ -144,7 +144,7 @@ const scrollRight = () => {
         </div>
       </section>
 
-      {/* GREEN SECTION */}
+     
       <section className="relative w-full py-24 md:py-32 bg-green-700 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-16 grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT CONTENT */}

@@ -212,51 +212,47 @@ const mountainCentres = [
 // ----------------------------- CATEGORY META (complete with all fields) ---------------------------------
 const categoryMeta = {
   forest: {
-    title: "Forest Wellness Centres",
+    title: "Neuro Regenerative Terrain",
     
-    heroDescription: "Explore forest geography with Ayurvedic centres designed for detoxification, immune resilience, and herbal restoration.",
-    pageTitle: "FOREST",
+    
     image: { src: Forest, alt: "Forest Wellness Centre" }
   },
   coastal: {
-    title: "Coastal Wellness Centres",
-    heroDescription: "Discover coastal sanctuaries where marine air and Ayurveda combine for radiant skin, respiratory strength, and deep relaxation.",
-    pageTitle: "COASTAL",
+    title: "Circadian Restoration Terrain",
+    
+    
     image: { src: Coastal, alt: "Coastal Wellness Centre" }
   },
   mountain: {
-    title: "Mountain Wellness Centres",
-    heroDescription: "Find mountain retreats that support oxygen-rich breathing, nervous system reset, and lasting clarity.",
-    pageTitle: "MOUNTAIN",
+    title: "Metabolic Adaptation Terrain",
+    
+  
     image: { src: Mountain, alt: "Mountain Wellness Centre" }
   }
 };
 
-// ----------------------------- CATEGORY CARDS (main page with all fields) ---------------------------------
+// ----------------------------- CATEGORY CARDS (main page with updated titles, paragraphs, and comfortable font) ---------------------------------
 const categoryCards = [
   {
     id: "forest",
-    title: "FOREST",
-    
+    title: " Neuro Regenerative Terrain", 
+    paragraph: "Forest environments like the Western Ghats offer fresh, oxygen-rich air, diverse medicinal plants, and a naturally calming climate that can support Ayurvedic treatments such as Panchakarma and pranayama. Spending time in these forest settings is known to reduce stress, improve immunity, and promote deep relaxation through nature exposure and reduced urban distractions. The cool, humid microclimate also makes long detox therapies more comfortable. In addition, some centres integrate traditional tribal knowledge and rare forest-based remedies, offering a more natural and holistic healing experience than typical urban wellness facilities.",
     gradient: "from-green-900/80 to-black/60",
-    image:Forest,
-    
+    image: Forest,
   },
   {
     id: "coastal",
-    title: "COASTAL",
-    
+    title: "Circadian Restoration Terrain",
+    paragraph: "Coastal regions in South India offer a healing environment with salt-rich sea air that may support breathing, reduce inflammation, and enhance Ayurvedic therapies like Nasya and steam treatments. The humid coastal climate also helps keep skin hydrated, improving the effectiveness of herbal oils for conditions like eczema and for skin rejuvenation. The sound of ocean waves is known to reduce stress and support better sleep by calming brain activity. Warm and stable coastal weather further supports Panchakarma therapies by improving comfort and helping the body respond well to detox treatments. In addition, some coastal wellness centres are located in culturally and spiritually significant areas, adding a deeper sense of relaxation and meaning to the healing experience.",
     gradient: "from-blue-900/80 to-black/60",
     image: Coastal,
-    
   },
   {
     id: "mountain",
-    title: "MOUNTAIN",
-    
+    title: "Metabolic Adaptation Terrain",
+    paragraph: "Mountain regions in South India like Kodaikanal and the Nilgiris offer a cooler, high-altitude environment that may support better respiratory and cardiovascular function due to cleaner air and natural acclimatisation effects. This can enhance breathing practices like pranayama and improve overall yoga and meditation outcomes. The pollution-free environment also supports the body's natural detox and repair processes, making therapies like Panchakarma more effective. These regions also have unique high-altitude medicinal plants that may improve the quality of Ayurvedic formulations. In addition, the cool climate promotes deeper and better-quality sleep, which helps in recovery, stress reduction, and overall healing.",
     gradient: "from-emerald-900/80 to-black/60",
     image: Mountain,
-
   }
 ];
 
@@ -344,16 +340,20 @@ export default function GeoWellnessCenter() {
             {categoryCards.map((card, index) => (
               <div
                 key={card.id}
-                className={`relative h-[450px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 ease-out transform ${
+                className={`relative h-[500px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 ease-out transform ${
                   pageLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                 }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <img src={card.image} alt={card.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className={`absolute inset-0 bg-gradient-to-t ${card.gradient}`} />
-                <div className="absolute inset-0 flex flex-col justify-between p-8">
+                <div className="absolute inset-0 flex flex-col justify-between p-6 md:p-8">
                   <div>
-                    <h3 className="text-5xl font-serif text-white mb-2 uppercase tracking-wider">{card.title}</h3>
+                    {/* Comfortable font size - not too big */}
+                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-medium text-white leading-tight tracking-wide drop-shadow-md">
+  {card.title}
+</h3>
+         
                     {card.caption && <p className="text-sm uppercase tracking-[0.4em] text-yellow-700 mb-4">{card.caption}</p>}
                   </div>
                   <div className="flex justify-center">
@@ -409,20 +409,26 @@ export function GeoWellnessCategory() {
 
   return (
     <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative min-h-screen w-full overflow-hidden">
+      {/* Hero Section - now displays the terrain title and its description */}
+      <section className="relative min-h-[70vh] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img src={categoryCard.image} alt={`${categoryCard.title} Hero`} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-green-900/70 via-green-800/80 to-black/50" />
+          <img src={meta.image.src} alt={meta.image.alt} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-green-900/70 via-green-800/80 to-black/60" />
         </div>
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white px-6 lg:px-20 pt-40 pb-20">
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-[70vh] text-center text-white px-6 lg:px-20 py-20 pt-32 md:pt-40">
           <div className={`transition-all duration-700 ease-out transform ${pageLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif tracking-wide mb-8">{categoryCard.title}</h1>
-            <h2 className="text-xl md:text-3xl lg:text-4xl font-light leading-snug mb-8 max-w-4xl mx-auto">{categoryCard.caption}</h2>
-            <p className="text-sm md:text-lg leading-relaxed max-w-5xl mx-auto text-white/90">{categoryCard.description}</p>
+            {/* Terrain Title */}
+     <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif tracking-wide mb-6 drop-shadow-lg">
+  {categoryCard.title}
+</h1>      {/* Description under the title */}
+            {categoryCard.paragraph && (
+              <p className="text-sm md:text-base lg:text-lg leading-relaxed max-w-4xl mx-auto text-white/90 mb-8">
+                {categoryCard.paragraph}
+              </p>
+            )}
             <button
               onClick={() => navigate("/program/geo-wellness")}
-              className="mt-10 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition hover:bg-yellow-500 hover:text-white"
+              className="inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition hover:bg-yellow-500 hover:text-white"
             >
               Back to Geo Wellness
             </button>
@@ -436,7 +442,7 @@ export function GeoWellnessCategory() {
           <div className="mb-12 text-center">
             <p className="text-xs tracking-[0.35em] text-yellow-700 uppercase mb-3">{meta.pageTitle}</p>
             <h2 className="text-4xl md:text-5xl font-serif text-green-800">{meta.title}</h2>
-            <p className="mt-4 text-green-700/80 max-w-3xl mx-auto">{meta.subtitle}</p>
+            <p className="mt-4 text-green-700/80 max-w-3xl mx-auto">{meta.heroDescription}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
