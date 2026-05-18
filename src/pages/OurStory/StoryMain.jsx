@@ -70,7 +70,10 @@ const OurStory = () => {
         {/* OVERLAY */}
         <div
           className="absolute inset-0"
-          style={{ backgroundColor: brandGreen, opacity: 0.75 }}
+          style={{
+            background:
+              "linear-gradient(to top right, rgba(30,122,58,0.82), rgba(23,78,166,0.55), rgba(0,0,0,0.45))",
+          }}
         />
 
         {/* CONTENT */}
