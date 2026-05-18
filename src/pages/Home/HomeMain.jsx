@@ -20,18 +20,18 @@ import yoga from "@/assets/images/yoga1.png";
 const SLIDES = [
   {
     image: bg2,
-    title: "The Transition to Strategic Health Autonomy.",
-    desc: "Predictive Longevity. We map your biological data to South India’s most potent healing coordinates to reverse your chronological age.",
+    title: "The Transition to Strategic Health Autonomy",
+    desc: "Predictive Longevity. We map your biological data to South India’s most potent healing coordinates to reverse your chronological age",
   },
   {
     image: bg7,
-    title: "From Health Management to Biological Mastery.",
-    desc: "Stop guessing and start governing your biology. We synchronize your real-time biomarkers with the Earth’s most potent healing coordinates to engineer a younger, more resilient version of you.",
+    title: "From Health Management to Biological Mastery",
+    desc: "Stop guessing and start governing your biology. We synchronize your real-time biomarkers with the Earth’s most potent healing coordinates to engineer a younger, more resilient version of you",
   },
   {
     image: bg8,
-    title: "Your DNA is the Map. Geo-Wellness is the Destination.",
-    desc: "We’ve decoded the synergy between human physiology and geography. By matching your unique bio-profile to specific South Indian landscapes, we turn every mile travelled into a calculated strike against aging.",
+    title: "Your DNA is the Map. Geo-Wellness is the Destination",
+    desc: "We’ve decoded the synergy between human physiology and geography. By matching your unique bio-profile to specific South Indian landscapes, we turn every mile travelled into a calculated strike against aging",
   },
 ];
 
@@ -179,24 +179,93 @@ const scrollRight = () => {
           </motion.div>
 
           {/* RIGHT SMALL IMAGE */}
-          <motion.div
-            initial={{ opacity: 0, scale: 1.05 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-            className="flex justify-center lg:justify-end relative"
-          >
-            <div className="relative w-[280px] md:w-[360px] h-[360px] md:h-[460px] rounded-[30px] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.3)]">
-              <img
-                src={bg3}
-                alt="Geo Wellness"
-                className="w-full h-full object-cover transition-transform duration-[1200ms] hover:scale-110"
-              />
+         <motion.div
+  initial={{ opacity: 0, scale: 1.05 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+  className="flex justify-center lg:justify-end relative"
+>
 
-              {/* subtle overlay */}
-              <div className="absolute inset-0 bg-black/10" />
-            </div>
-          </motion.div>
+  <div
+    className="
+      group
+      relative
+
+      w-[280px]
+      md:w-[360px]
+
+      h-[360px]
+      md:h-[460px]
+
+      rounded-[30px]
+      overflow-hidden
+
+      shadow-[0_30px_80px_rgba(0,0,0,0.3)]
+    "
+  >
+
+    {/* IMAGE */}
+    <img
+      src={bg3}
+      alt="Geo Wellness"
+      className="
+        w-full
+        h-full
+
+        object-cover
+
+        transition-transform
+        duration-[1200ms]
+
+        group-hover:scale-110
+      "
+    />
+
+    {/* BLUE PREMIUM OVERLAY */}
+    <div
+      className="
+        absolute
+        inset-0
+
+        opacity-0
+        group-hover:opacity-100
+
+        transition-all
+        duration-700
+      "
+      style={{
+        background:
+          "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), rgba(0,0,0,0.08), transparent)",
+      }}
+    />
+
+    {/* BLUE GLOW */}
+    <div
+      className="
+        absolute
+        -bottom-20
+        left-1/2
+        -translate-x-1/2
+
+        w-[70%]
+        h-24
+
+        bg-[#174EA6]/35
+
+        blur-[90px]
+
+        opacity-0
+        group-hover:opacity-100
+
+        transition-all
+        duration-700
+      "
+    />
+
+  </div>
+
+</motion.div>
         </div>
       </section>
       <section className="bg-[#f3efe8] py-24 overflow-hidden">
@@ -679,7 +748,7 @@ const scrollRight = () => {
 
       px-6
 
-      mt-12
+      mb-14
     "
   >
 
@@ -706,7 +775,7 @@ const scrollRight = () => {
         leading-tight
       "
     >
-      The End of Reactive Health.
+      The End of Reactive Health
     </motion.h2>
 
     {/* SUBTEXT */}
@@ -720,11 +789,11 @@ const scrollRight = () => {
       }}
       className="
         text-lg
-        md:text-xl
+        md:text-l
 
         text-white/80
 
-        mb-10
+        mb-8
 
         max-w-2xl
         mx-auto
@@ -735,7 +804,7 @@ const scrollRight = () => {
       Reclaim your 168. Join an elite group of founders and
       leaders in our 2026 Sovereign Pilot. We map your data
       to South India's most potent coordinates to reverse
-      your biological age.
+      your biological age
     </motion.p>
 
     {/* BUTTON */}

@@ -104,9 +104,12 @@ export default function ContactUs() {
           animate={{ scale: 1 }}
           transition={{ duration: 2, ease: easing }}
         />
-        <div
+         <div
           className="absolute inset-0"
-          style={{ backgroundColor: "#1E7A3A", opacity: 0.75 }}
+          style={{
+            background:
+              "linear-gradient(to top right, rgba(30,122,58,0.82), rgba(23,78,166,0.55), rgba(0,0,0,0.45))",
+          }}
         />
         <motion.div
           className="relative z-10 text-white max-w-4xl px-6 text-center mx-auto"

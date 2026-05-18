@@ -21,9 +21,12 @@ export default function TermsConditions() {
         />
 
         {/* GREEN OVERLAY */}
-        <div
+         <div
           className="absolute inset-0"
-          style={{ backgroundColor: "#1E7A3A", opacity: 0.75 }}
+          style={{
+            background:
+              "linear-gradient(to top right, rgba(30,122,58,0.82), rgba(23,78,166,0.55), rgba(0,0,0,0.45))",
+          }}
         />
 
         {/* CONTENT */}
@@ -124,10 +127,10 @@ export default function TermsConditions() {
               <Phone className="w-5 h-5 text-[#1F4D3E]" />
 
               <a
-                href="tel:+917349171511"
+                href="tel:+918088171511"
                 className="text-[#1F4D3E]/70 hover:text-[#C6A75E] transition"
               >
-                +91-7349171511
+                +91-8088171511
               </a>
             </div>
           </div>

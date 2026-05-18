@@ -12,6 +12,7 @@ import Home from "@/pages/Home/HomeMain";
 import Philosophy from "@/pages/Home/Philosophy";
 import OurStory from "@/pages/OurStory/StoryMain";
 import OurProgram from "@/pages/OurProgram/ProgramMain";
+import ProgramDetail from "@/pages/OurProgram/ProgramDetail";
 import GeoWellnessCenter, { GeoWellnessCategory } from "@/pages/OurProgram/GeoWellnessCenter";
 import Explore from "@/pages/Explore/ExploreMain";
 import BlogArticle from "@/pages/Explore/BlogArticle";
@@ -51,15 +52,19 @@ const AppRoutes = () => {
           <Route path="/contact" element={<ContactUs />} />
 
           <Route path="/program" element={<OurProgram />} />
-          <Route path="/program/:category" element={<OurProgram />} />
-         <Route path="/program/geo-wellness" element={<GeoWellnessCenter />} />
-        <Route path="/program/geo-wellness/:category" element={<GeoWellnessCategory />} />
+
+          <Route
+            path="/program/:slug"
+            element={<ProgramDetail />}
+          />
+          <Route path="/program/geo-wellness-center" element={<GeoWellnessCenter />} />
+          <Route path="/program/geo-wellness-center/:category" element={<GeoWellnessCategory />} />
 
           <Route path="/explore" element={<Explore />} />
           <Route path="/explore/:category" element={<Explore />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/pdf/:file" element={<FlipBookPage />} />
-          <Route path="/coming-soon/:type" element={<ComingSoon />}/>
+          <Route path="/coming-soon/:type" element={<ComingSoon />} />
 
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
@@ -67,21 +72,21 @@ const AppRoutes = () => {
       </Route>
 
       {/* 🔐 PROTECTED DASHBOARD */}
-<Route element={<ProtectedRoute />}>
-  <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<DashboardLayout />}>
 
-    <Route element={<RouteLoader />}>
-      <Route index element={<Overview />} />
-      <Route path="analysis" element={<Analysis />} />
-      <Route path="patients" element={<Patients />} />
-      <Route path="patients/:id" element={<PatientProfile />} />
-      <Route path="reports" element={<Reports />} />
-      <Route path="geowellness" element={<GeoWellness />} />
-      <Route path="questionnaires" element={<Questionnaires />} />
-    </Route>
+          <Route element={<RouteLoader />}>
+            <Route index element={<Overview />} />
+            <Route path="analysis" element={<Analysis />} />
+            <Route path="patients" element={<Patients />} />
+            <Route path="patients/:id" element={<PatientProfile />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="geowellness" element={<GeoWellness />} />
+            <Route path="questionnaires" element={<Questionnaires />} />
+          </Route>
 
-  </Route>
-</Route>
+        </Route>
+      </Route>
 
     </Routes>
   );

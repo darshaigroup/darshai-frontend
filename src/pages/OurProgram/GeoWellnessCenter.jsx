@@ -200,10 +200,10 @@ const mountainCentres = [
     website: "https://www.anandaspa.com/"
   },
   {
-    name: "Zacs Valley Resort & Wellness Retreat",
+    name: "Zacs Valley & Wellness Retreat",
     location: "Kodaikanal, Tamil Nadu",
     geoTag: "Nature/Mountain (2100m)",
-    shortDescription: "Kodaikanal – a beautiful hill station of the southern Indian state, Tamilnadu. Set amidst the forested valleys, lakes, waterfalls, granite cliffs & grassy hills, this beautiful town is situated 2,000 meters above the sea level.",
+    shortDescription: "Kodaikanal – a beautiful hill station of the southern Indian state, Tamilnadu. Set amidst the forested valleys, lakes, waterfalls, granite cliffs, this beautiful town is situated 2,000 meters above the sea level.",
     overview: "A peaceful wellness retreat at 2,100 metres amid Kodaikanal’s cool pine and shola forests, offering classical Panchakarma, pain management, and detoxification within an unspoiled mountain environment. The high-altitude, naturally pollution-free Kodaikanal setting accelerates cellular rejuvenation and makes yoga and pranayama profoundly more effective than at lower elevations. Ideal for guests seeking a long-stay programme combining clinical Ayurvedic depth with the restorative quiet of South India’s most beloved hill station.",
     website: "https://www.zacsvalley.com/"
   }
@@ -304,7 +304,7 @@ export default function GeoWellnessCenter() {
   const navigate = useNavigate();
   const [pageLoaded, setPageLoaded] = useState(false);
   const goToCategoryPage = (categoryId) => {
-    navigate(`/program/geo-wellness/${categoryId}`);
+    navigate(`/program/geo-wellness-center/${categoryId}`);
   };
 
   useEffect(() => {
@@ -394,7 +394,7 @@ export function GeoWellnessCategory() {
   }, []);
 
   if (!meta || !categoryCard) {
-    return <Navigate to="/program/geo-wellness" replace />;
+    return <Navigate to="/program/geo-wellness-center" replace />;
   }
 
   const openModal = (centre) => {
@@ -427,7 +427,7 @@ export function GeoWellnessCategory() {
               </p>
             )}
             <button
-              onClick={() => navigate("/program/geo-wellness")}
+              onClick={() => navigate("/program/geo-wellness-center")}
               className="inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition hover:bg-yellow-500 hover:text-white"
             >
               Back to Geo Wellness
