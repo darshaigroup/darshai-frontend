@@ -625,9 +625,14 @@ export default function ProgramMain() {
         {/* CONTENT */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
 
-          <p className="text-[11px] tracking-[0.4em] uppercase text-[#C9A75B] mb-6">
-            DARSHAI PROGRAMMES
-          </p>
+         <div className="mb-6 flex justify-center">
+
+    <span className=" text-[11px] tracking-[4px] text-[#d1c957] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(255,255,255,0.08)]"
+    >
+      DARSHAI PROGRAMMES
+    </span>
+
+  </div>
 
           <h1 className="text-[48px] md:text-[90px] leading-[0.95] tracking-[-0.04em] font-serif mb-8">
             Wellness Programmes

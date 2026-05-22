@@ -179,7 +179,7 @@ const OurStory = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top right, rgba(30,122,58,0.72), rgba(23,78,166,0.58), rgba(0,0,0,0.08))",
+              "linear-gradient(to top right, rgba(23,78,166,0.92), rgba(23,78,166,0.68), rgba(8,15,35,0.58), rgba(0,0,0,0.38))",
           }}
         />
 
