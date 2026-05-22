@@ -321,6 +321,14 @@ export default function GeoWellnessCenter() {
         </div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6 lg:px-20 pt-32 md:pt-40 pb-20">
           <div className={`transition-all duration-700 ease-out transform ${pageLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="mb-6 flex justify-center">
+
+    <span className=" text-[11px] tracking-[4px] text-[#d1c957] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(255,255,255,0.08)]"
+    >
+              DARSHAI PROGRAM CENTER
+    </span>
+
+  </div>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif tracking-wide mb-6 drop-shadow-2xl">
               GEO-WELLNESS CENTERS
             </h1>

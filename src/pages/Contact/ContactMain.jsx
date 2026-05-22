@@ -193,14 +193,14 @@ export default function ContactUs() {
                     Location
                   </h4>
                   <a
-                    href="https://maps.google.com/?q=K-tech Innovation Hub Mangalore"
+                    href="https://maps.app.goo.gl/PXvRtH1gMRRHHEtV6"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#1F4D3E]/50 hover:text-[#C6A75E] transition"
                   >
-                    K-tech Innovation Hub, (CIF), 3rd Floor, Plama Center, Bejai
-                    - Kapikad Rd, near Jayalakshmi Silks, Lalbagh, Mangaluru,
-                    Karnataka 575004
+                   MILESTONE25, 5th Floor
+                   Shop No. 514, Door No. 15-5-223/140, Collectors Gate Junction
+                   Balmatta, Mangalore-575 001
                   </a>
                 </div>
               </div>
@@ -343,7 +343,7 @@ export default function ContactUs() {
       <section className="px-6 md:px-20 pb-20 max-w-7xl mx-auto">
         <div className="rounded-[40px] overflow-hidden shadow-xl border border-[#1F4D3E]/10">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.3143477900458!2d74.83868647683381!3d12.887497216713085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba35a682812e959%3A0x7600d08ed0eb0778!2sK-tech%20Innovation%20Hub%2C(CIF)%20Mangalore!5e0!3m2!1sen!2sin!4v1776771992219!5m2!1sen!2sin"
+            src="https://www.google.com/maps?q=MILESTONE25,+5th+Floor,+Shop+No.+514,+Door+No.+15-5-223/140,+Collectors+Gate+Junction,+Balmatta,+Mangalore-575001&output=embed"
             width="100%"
             height="450"
             style={{ border: 0 }}
