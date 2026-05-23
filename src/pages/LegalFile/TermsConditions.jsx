@@ -21,7 +21,7 @@ export default function TermsConditions() {
         />
 
         {/* GREEN OVERLAY */}
-         <div
+        <div
           className="absolute inset-0"
           style={{
             background:
@@ -88,7 +88,7 @@ export default function TermsConditions() {
             To Know More
           </h3>
 
-         <p className="text-[#5F756B] max-w-xl mx-auto leading-relaxed">
+          <p className="text-[#5F756B] max-w-xl mx-auto leading-relaxed">
             For any questions regarding these terms, please contact our team at
             DARSHAI Group.
           </p>

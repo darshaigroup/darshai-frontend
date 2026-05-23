@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import hero from "@/assets/images/MainImg.png";
-
+//login page for both doctor and patient, backend will handle the redirect based on role
 export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
