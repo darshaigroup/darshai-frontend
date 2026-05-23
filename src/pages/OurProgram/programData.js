@@ -17,7 +17,7 @@ export const programData = [
       "Restore vitality and renew your energy through regenerative Ayurvedic longevity protocols engineered for deep systemic renewal.",
 
     quote:
-      "Restore vitality and renew your energy for a balanced life.",
+      "Restore your energy and life.",
 
     content: `
       The Rejuvenation Programme is a restorative wellness experience designed to revitalise the body, calm the mind, and improve overall vitality. It focuses on reducing physical fatigue, mental exhaustion, and the effects of stress through a combination of healing therapies, guided relaxation, nourishing nutrition, and lifestyle support. The programme helps improve energy levels, enhance recovery, strengthen immunity, and promote deep relaxation. 
@@ -48,7 +48,7 @@ export const programData = [
       "Cultivate emotional resilience, mental clarity, and cognitive calm through precision-guided mindfulness experiences.",
 
     quote:
-      "Cultivate calm, clarity, and inner peace through guided practices.",
+      "Find peace, clarity, and calmness.",
 
     content: `
       The Mindfulness Programme is designed to create mental clarity, emotional balance, and inner calm through structured awareness practices. It helps individuals manage stress, improve focus, regulate emotions, and reconnect with themselves through mindful living techniques. The programme integrates meditation, breathing exercises, relaxation methods, and guided practices to support emotional wellbeing and mental resilience.
@@ -78,7 +78,7 @@ export const programData = [
       "Cleanse internal systems and optimise metabolic efficiency through targeted detoxification and restorative therapies.",
 
     quote:
-      "Cleanse your system and refresh your body from within.",
+      "Cleanse your body and refresh.",
 
     content: `
      The Detox Programme is a structured cleansing experience aimed at supporting the body’s natural detoxification systems and restoring internal balance. Through cleansing therapies, nutrition planning, hydration support, and wellness treatments, the programme helps remove accumulated toxins, improve digestion, and refresh the body from within.
@@ -110,7 +110,7 @@ export const programData = [
       "A completely personalised longevity programme designed around your biology, lifestyle, environment, and wellness goals.",
 
     quote:
-      "Designed around your unique needs for holistic transformation.",
+      "Designed uniquely for your transformation.",
 
     content: `
      Experience a wellness journey designed entirely around your unique body, lifestyle, and wellbeing goals. Combining holistic assessments, personalised therapies, nutrition, movement, and recovery practices, this programme provides a customised approach to long-term health and balance.

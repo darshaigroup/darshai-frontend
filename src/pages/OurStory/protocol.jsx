@@ -74,95 +74,83 @@ export default function ProtocolPreview() {
         </h2>
       </div>
 
-     <div className="max-w-7xl mx-auto space-y-32">
-  {protocols.map((item, i) => (
-    <div
-      key={i}
-      className={`flex flex-col ${
-        i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-      } items-center gap-16`}
-    >
-      {/* PREMIUM TEXT SECTION */}
-      <div className="flex-1 relative">
-        {/* BACKGROUND NUMBER */}
-        <div
-          className="absolute -top-10 -left-2 text-[120px] md:text-[180px] font-serif leading-none text-[#1E7A3A]/5 pointer-events-none select-none"
-        >
-          0{i + 1}
-        </div>
+      <div className="max-w-7xl mx-auto space-y-32">
+        {protocols.map((item, i) => (
+          <div
+            key={i}
+            className={`flex flex-col ${
+              i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+            } items-center gap-16`}
+          >
+            {/* PREMIUM TEXT SECTION */}
+            <div className="flex-1 relative">
+              {/* BACKGROUND NUMBER */}
+              <div className="absolute -top-10 -left-2 text-[120px] md:text-[180px] font-serif leading-none text-[#1E7A3A]/5 pointer-events-none select-none">
+                0{i + 1}
+              </div>
 
-        <div className="relative z-10 max-w-2xl">
-          {/* ICON + GEAR */}
-          <div className="flex items-center gap-5 mb-8">
-            {/* ICON */}
-            <div
-              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1E7A3A] to-[#174EA6] flex items-center justify-center shadow-[0_15px_40px_rgba(23,78,166,0.25)] border border-white/10"
-            >
-              <item.icon
-                className="text-white"
-                size={28}
-                strokeWidth={1.8}
-              />
+              <div className="relative z-10 max-w-2xl">
+                {/* ICON + GEAR */}
+                <div className="flex items-center gap-5 mb-8">
+                  {/* ICON */}
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1E7A3A] to-[#174EA6] flex items-center justify-center shadow-[0_15px_40px_rgba(23,78,166,0.25)] border border-white/10">
+                    <item.icon
+                      className="text-white"
+                      size={28}
+                      strokeWidth={1.8}
+                    />
+                  </div>
+
+                  {/* GEAR LABEL */}
+                  <div>
+                    <span className="text-sm tracking-[0.28em] uppercase text-[#174EA6]/75">
+                      {item.gear}
+                    </span>
+                  </div>
+                </div>
+
+                {/* TITLE */}
+                <h2
+                  className="text-[42px] md:text-[68px] leading-[1.02] tracking-[-0.03em] font-serif mb-8"
+                  style={{ color: brandGreen }}
+                >
+                  {item.title}
+                </h2>
+
+                {/* DESCRIPTION */}
+                <p className="text-[20px] leading-[1.8] text-yellow-700 italic border-l border-[#174EA6]/20 pl-6 mb-8 max-w-xl">
+                  {item.desc}
+                </p>
+
+                {/* CONTENT */}
+                <p className="text-[16px] md:text-[18px] leading-[2] text-[#1E7A3A]/75 max-w-2xl text-justify">
+                  {item.content}
+                </p>
+              </div>
             </div>
 
-            {/* GEAR LABEL */}
-            <div>
-              
+            {/* IMAGE */}
+            <div className="flex-1">
+              <div className="relative rounded-[40px] overflow-hidden group shadow-[0_40px_100px_rgba(0,0,0,0.18)]">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-[700px] object-cover transition duration-[1400ms] group-hover:scale-105"
+                />
 
-              <span
-                className="text-sm tracking-[0.28em] uppercase text-[#174EA6]/75"
-              >
-                {item.gear}
-              </span>
+                {/* BLUE PREMIUM OVERLAY */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), transparent)",
+                  }}
+                />
+              </div>
             </div>
           </div>
-
-          {/* TITLE */}
-          <h2
-            className="text-[42px] md:text-[68px] leading-[1.02] tracking-[-0.03em] font-serif mb-8"
-            style={{ color: brandGreen }}
-          >
-            {item.title}
-          </h2>
-
-          {/* DESCRIPTION */}
-          <p
-            className="text-[20px] leading-[1.8] text-yellow-700 italic border-l border-[#174EA6]/20 pl-6 mb-8 max-w-xl"
-          >
-            {item.desc}
-          </p>
-
-          {/* CONTENT */}
-          <p
-            className="text-[16px] md:text-[18px] leading-[2] text-[#1E7A3A]/75 max-w-2xl text-justify"
-          >
-            {item.content}
-          </p>
-        </div>
+        ))}
       </div>
-
-      {/* IMAGE */}
-      <div className="flex-1">
-        <div className="relative rounded-[40px] overflow-hidden group shadow-[0_40px_100px_rgba(0,0,0,0.18)]">
-          <img
-            src={item.img}
-            alt={item.title}
-            className="w-full h-[700px] object-cover transition duration-[1400ms] group-hover:scale-105"
-          />
-
-          {/* BLUE PREMIUM OVERLAY */}
-          <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), transparent)",
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
     </section>
   );
 }

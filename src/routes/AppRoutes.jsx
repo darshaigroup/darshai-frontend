@@ -39,11 +39,11 @@ const AppRoutes = () => {
   return (
     <Routes>
 
-      {/* 🔐 AUTH */}
+      {/* AUTH */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* 🌐 PUBLIC */}
+      {/* PUBLIC */}
       <Route element={<MainLayout />}>
         <Route element={<RouteLoader />}>
           <Route path="/" element={<Home />} />
@@ -71,7 +71,7 @@ const AppRoutes = () => {
         </Route>
       </Route>
 
-      {/* 🔐 PROTECTED DASHBOARD */}
+      {/* PROTECTED DASHBOARD */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
 

@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
         />
 
         {/* GREEN OVERLAY */}
-         <div
+        <div
           className="absolute inset-0"
           style={{
             background:
