@@ -48,9 +48,7 @@ export default function ProgramDetail() {
           <h1 className="text-[48px] md:text-[90px] leading-[0.95] tracking-[-0.04em] font-serif mb-8 max-w-6xl">
             {program.title}
           </h1>
-          <h1 className="text-[48px] md:text-[90px] leading-[0.95] tracking-[-0.04em] font-serif mb-8 max-w-6xl">
-            {program.title}
-          </h1>
+          
 
           <p className="text-lg md:text-2xl text-white/80 leading-[1.9] max-w-4xl">
             {program.description}
