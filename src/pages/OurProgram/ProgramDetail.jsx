@@ -4,11 +4,13 @@ import { programData } from "./programData";
 
 export default function ProgramDetail() {
   const { slug } = useParams();
+ 
 
   const program = programData.find(
     (item) => item.slug === slug
   );
 
+  if (!program) return null;
   if (!program) return null;
 
   return (
@@ -43,6 +45,9 @@ export default function ProgramDetail() {
 
           </div>
 
+          <h1 className="text-[48px] md:text-[90px] leading-[0.95] tracking-[-0.04em] font-serif mb-8 max-w-6xl">
+            {program.title}
+          </h1>
           <h1 className="text-[48px] md:text-[90px] leading-[0.95] tracking-[-0.04em] font-serif mb-8 max-w-6xl">
             {program.title}
           </h1>

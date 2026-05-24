@@ -36,7 +36,6 @@ const PHILOSOPHY_DATA = [
 ];
 
 const OurStory = () => {
- 
   const sectionRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -45,17 +44,9 @@ const OurStory = () => {
   });
 
   // IMAGE PARALLAX
-  const imageScale = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [1.1, 1]
-  );
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
 
-  const imageY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, -80]
-  );
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   return (
     <div className="bg-[#f6f3ef] text-gray-800 overflow-hidden">
       {/* HERO SECTION */}
@@ -96,19 +87,16 @@ const OurStory = () => {
 
       {/* PHILOSOPHY */}
       <section className="relative bg-[#f6f3ef] overflow-hidden">
+        {/* WRAPPER */}
+        <div className="max-w-7xl mx-auto px-6 py-32">
+          {/* HEADER */}
+          <div className="text-center mb-24">
+            <p className="text-xs tracking-[4px] text-yellow-700 mb-5 uppercase">
+              THE PHILOSOPHY
+            </p>
 
-  {/* WRAPPER */}
-  <div className="max-w-7xl mx-auto px-6 py-32">
-
-    {/* HEADER */}
-    <div className="text-center mb-24">
-
-      <p className="text-xs tracking-[4px] text-yellow-700 mb-5 uppercase">
-        THE PHILOSOPHY
-      </p>
-
-      <h2
-        className="
+            <h2
+              className="
           text-[42px]
           md:text-[72px]
 
@@ -118,36 +106,34 @@ const OurStory = () => {
           max-w-5xl
           mx-auto
         "
-        style={{ color: brandGreen }}
-      >
-        Reclaiming Sovereignty
-      </h2>
+              style={{ color: brandGreen }}
+            >
+              Reclaiming Sovereignty
+            </h2>
+          </div>
 
-    </div>
+          {/* PREMIUM HERO IMAGE */}
+          <div className="relative flex justify-center mb-32">
+            {/* GLOW */}
+            <div className="absolute w-[70%] h-[70%] bg-blue-900/10 blur-[140px] rounded-full" />
 
-    {/* PREMIUM HERO IMAGE */}
-    <div className="relative flex justify-center mb-32">
-
-      {/* GLOW */}
-      <div className="absolute w-[70%] h-[70%] bg-blue-900/10 blur-[140px] rounded-full" />
-
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 80,
-          scale: 0.96,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-          scale: 1,
-        }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 1.4,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 80,
+                scale: 0.96,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 1.4,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="
           relative
 
           w-full
@@ -158,13 +144,12 @@ const OurStory = () => {
 
           shadow-[0_60px_140px_rgba(0,0,0,0.18)]
         "
-      >
-
-        {/* IMAGE */}
-        <img
-          src={bg4}
-          alt="wellness"
-          className="
+            >
+              {/* IMAGE */}
+              <img
+                src={bg4}
+                alt="wellness"
+                className="
             w-full
 
             h-[320px]
@@ -172,56 +157,51 @@ const OurStory = () => {
 
             object-cover
           "
-        />
+              />
 
-        {/* GREEN → BLUE OVERLAY */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top right, rgba(30,122,58,0.72), rgba(23,78,166,0.58), rgba(0,0,0,0.08))",
-          }}
-        />
+              {/* GREEN → BLUE OVERLAY */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top right, rgba(23,78,166,0.92), rgba(23,78,166,0.68), rgba(8,15,35,0.58), rgba(0,0,0,0.38))",
+                }}
+              />
 
-        {/* PREMIUM LIGHT */}
-        <div className="absolute inset-0 ring-1 ring-white/10 rounded-[42px]" />
+              {/* PREMIUM LIGHT */}
+              <div className="absolute inset-0 ring-1 ring-white/10 rounded-[42px]" />
 
-        {/* EDGE GLOW */}
-        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[70%] h-24 bg-blue-900/20 blur-[100px]" />
+              {/* EDGE GLOW */}
+              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[70%] h-24 bg-blue-900/20 blur-[100px]" />
+            </motion.div>
+          </div>
 
-      </motion.div>
-
-    </div>
-
-    {/* STORY CONTENT */}
-    <div className="max-w-4xl mx-auto space-y-32">
-
-      {PHILOSOPHY_DATA.map((item, i) => (
-
-        <motion.div
-          key={i}
-          initial={{
-            opacity: 0,
-            y: 80,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: false,
-            amount: 0.25,
-          }}
-          transition={{
-            duration: 1,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="relative"
-        >
-
-          {/* LARGE BACKGROUND NUMBER */}
-          <div
-            className="
+          {/* STORY CONTENT */}
+          <div className="max-w-4xl mx-auto space-y-32">
+            {PHILOSOPHY_DATA.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{
+                  opacity: 0,
+                  y: 80,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: false,
+                  amount: 0.25,
+                }}
+                transition={{
+                  duration: 1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="relative"
+              >
+                {/* LARGE BACKGROUND NUMBER */}
+                <div
+                  className="
               absolute
               -left-8
               -top-12
@@ -235,18 +215,18 @@ const OurStory = () => {
 
               pointer-events-none
             "
-          >
-            0{i + 1}
-          </div>
+                >
+                  0{i + 1}
+                </div>
 
-          {/* TAG */}
-          <p className="text-xs tracking-[4px] text-yellow-700 mb-6 uppercase relative z-10">
-            {item.tag}
-          </p>
+                {/* TAG */}
+                <p className="text-xs tracking-[4px] text-yellow-700 mb-6 uppercase relative z-10">
+                  {item.tag}
+                </p>
 
-          {/* TITLE */}
-          <h3
-            className="
+                {/* TITLE */}
+                <h3
+                  className="
               text-3xl
               md:text-6xl
 
@@ -258,14 +238,14 @@ const OurStory = () => {
 
               relative z-10
             "
-            style={{ color: brandGreen }}
-          >
-            {item.title}
-          </h3>
+                  style={{ color: brandGreen }}
+                >
+                  {item.title}
+                </h3>
 
-          {/* TEXT */}
-          <p
-            className="
+                {/* TEXT */}
+                <p
+                  className="
               text-lg
               md:text-xl
 
@@ -282,21 +262,19 @@ const OurStory = () => {
 
               relative z-10
             "
-          >
-            {item.text}
-          </p>
+                >
+                  {item.text}
+                </p>
 
-          {/* FINAL QUOTE */}
-          {i === PHILOSOPHY_DATA.length - 1 && (
+                {/* FINAL QUOTE */}
+                {i === PHILOSOPHY_DATA.length - 1 && (
+                  <div className="pt-16 border-t border-[#174ea6]/10 mt-16">
+                    <p className="text-2xl italic text-yellow-700 mb-4">
+                      "This is not an escape from life."
+                    </p>
 
-            <div className="pt-16 border-t border-[#174ea6]/10 mt-16">
-
-              <p className="text-2xl italic text-yellow-700 mb-4">
-                "This is not an escape from life."
-              </p>
-
-              <p
-                className="
+                    <p
+                      className="
                   text-3xl
                   md:text-5xl
 
@@ -305,26 +283,19 @@ const OurStory = () => {
 
                   leading-tight
                 "
-                style={{
-                  color: "rgba(30,122,58,0.9)",
-                }}
-              >
-                This is the mastery of it.
-              </p>
-
-            </div>
-
-          )}
-
-        </motion.div>
-
-      ))}
-
-    </div>
-
-  </div>
-
-</section>
+                      style={{
+                        color: "rgba(30,122,58,0.9)",
+                      }}
+                    >
+                      This is the mastery of it.
+                    </p>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* BRAIN TRUST */}
       <section className="max-w-7xl mx-auto px-6 py-24">

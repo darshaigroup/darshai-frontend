@@ -89,7 +89,6 @@
 //             />
 
 //             {/* GREEN TEXTURE OVERLAY */}
-           
 
 //             {/* OPTIONAL DARK DEPTH */}
 //             <div
@@ -260,7 +259,6 @@
 //             />
 
 //             {/* GREEN TEXTURE OVERLAY */}
-            
 
 //             {/* OPTIONAL DARK DEPTH */}
 //             <div
@@ -304,7 +302,6 @@
 //             />
 
 //             {/* GREEN TEXTURE OVERLAY */}
-           
 
 //             {/* OPTIONAL DARK DEPTH */}
 //             <div
@@ -480,7 +477,6 @@
 //             />
 
 //             {/* GREEN TEXTURE OVERLAY */}
-            
 
 //             {/* OPTIONAL DARK DEPTH */}
 //             <div
@@ -590,7 +586,6 @@
 // };
 // export default ProgramMain;
 
-
 import { useNavigate } from "react-router-dom";
 
 import hero from "@/assets/images/MainImg.png";
@@ -602,10 +597,8 @@ export default function ProgramMain() {
 
   return (
     <div className="bg-[#f6f3ef] min-h-screen overflow-hidden">
-
       {/* HERO */}
       <section className="relative h-[65vh] overflow-hidden">
-
         {/* IMAGE */}
         <img
           src={hero}
@@ -624,26 +617,25 @@ export default function ProgramMain() {
 
         {/* CONTENT */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
-
-          <p className="text-[11px] tracking-[0.4em] uppercase text-[#C9A75B] mb-6">
-            DARSHAI PROGRAMMES
-          </p>
+          <div className="mb-6 flex justify-center">
+            <span className=" text-[11px] tracking-[4px] text-[#d1c957] px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(255,255,255,0.08)]">
+              DARSHAI PROGRAMMES
+            </span>
+          </div>
 
           <h1 className="text-[48px] md:text-[90px] leading-[0.95] tracking-[-0.04em] font-serif mb-8">
             Wellness Programmes
           </h1>
 
           <p className="text-lg md:text-2xl text-white/80 leading-[1.9] max-w-4xl">
-            Precision longevity interventions engineered for biological restoration.
+            Precision longevity interventions engineered for biological
+            restoration.
           </p>
-
         </div>
-
       </section>
 
       {/* INTRO */}
       <section className="py-28 px-6 text-center">
-
         <p className="text-[11px] tracking-[0.35em] uppercase text-[#C9A75B] mb-6">
           THE DARSHAI METHOD
         </p>
@@ -655,20 +647,16 @@ export default function ProgramMain() {
         </h2>
 
         <p className="max-w-4xl mx-auto text-lg md:text-2xl leading-[1.9] text-[#1E7A3A]/75">
-          We bridge modern clinical precision with ancestral wellness intelligence
-          to architect restorative programmes that recalibrate biology,
-          resilience, and long-term vitality.
+          We bridge modern clinical precision with ancestral wellness
+          intelligence to architect restorative programmes that recalibrate
+          biology, resilience, and long-term vitality.
         </p>
-
       </section>
 
       {/* PROGRAM CARDS */}
       <section className="max-w-7xl mx-auto px-6 pb-32">
-
         <div className="grid md:grid-cols-2 gap-10">
-
           {programData.map((item, i) => (
-
             <div
               key={i}
               className="
@@ -687,7 +675,6 @@ export default function ProgramMain() {
                 cursor-pointer
               "
             >
-
               {/* IMAGE */}
               <img
                 src={item.image}
@@ -771,11 +758,9 @@ export default function ProgramMain() {
                   duration-700
                 "
               >
-
                 <p className="text-[10px] tracking-[0.35em] uppercase text-[#C9A75B]">
                   {item.tag}
                 </p>
-
               </div>
 
               {/* CONTENT */}
@@ -796,7 +781,6 @@ export default function ProgramMain() {
                   px-10
                 "
               >
-
                 <div
                   className="
                     max-w-2xl
@@ -814,7 +798,6 @@ export default function ProgramMain() {
                     ease-out
                   "
                 >
-
                   {/* TITLE */}
                   <h2
                     className="
@@ -853,7 +836,6 @@ export default function ProgramMain() {
 
                   {/* BUTTON */}
                   <div className="flex justify-center">
-
                     <button
                       onClick={() => navigate(`/program/${item.slug}`)}
                       className="
@@ -889,7 +871,6 @@ export default function ProgramMain() {
                         font-medium
                       "
                     >
-
                       {/* GOLD GLOW */}
                       <div
                         className="
@@ -907,16 +888,10 @@ export default function ProgramMain() {
                       />
 
                       {/* TEXT */}
-                      <span className="relative z-10">
-                        Discover Protocol
-                      </span>
-
+                      <span className="relative z-10">Discover Protocol</span>
                     </button>
-
                   </div>
-
                 </div>
-
               </div>
 
               {/* GLOW */}
@@ -941,15 +916,10 @@ export default function ProgramMain() {
                   duration-700
                 "
               />
-
             </div>
-
           ))}
-
         </div>
-
       </section>
-
     </div>
   );
 }

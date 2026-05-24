@@ -16,7 +16,6 @@ import environment from "@/assets/images/environment.png";
 import ceo from "@/assets/images/ceo.webp";
 import yoga from "@/assets/images/yoga1.png";
 
-
 const SLIDES = [
   {
     image: bg2,
@@ -49,24 +48,21 @@ function HomeMain() {
   }, []);
   const sliderRef = useRef(null);
 
-const scrollLeft = () => {
+  const scrollLeft = () => {
+    sliderRef.current?.scrollBy({
+      left: -420,
+      behavior: "smooth",
+    });
+  };
 
-  sliderRef.current?.scrollBy({
-    left: -420,
-    behavior: "smooth",
-  });
-};
-
-const scrollRight = () => {
-
-  sliderRef.current?.scrollBy({
-    left: 420,
-    behavior: "smooth",
-  });
-};
+  const scrollRight = () => {
+    sliderRef.current?.scrollBy({
+      left: 420,
+      behavior: "smooth",
+    });
+  };
   return (
     <div>
-      
       <section className="relative h-screen w-full overflow-hidden">
         {/* 🎬 BACKGROUND IMAGE */}
         <AnimatePresence mode="wait">
@@ -144,7 +140,6 @@ const scrollRight = () => {
         </div>
       </section>
 
-     
       <section className="relative w-full py-24 md:py-32 bg-green-700 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-16 grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT CONTENT */}
@@ -179,16 +174,15 @@ const scrollRight = () => {
           </motion.div>
 
           {/* RIGHT SMALL IMAGE */}
-         <motion.div
-  initial={{ opacity: 0, scale: 1.05 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  viewport={{ once: true }}
-  transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-  className="flex justify-center lg:justify-end relative"
->
-
-  <div
-    className="
+          <motion.div
+            initial={{ opacity: 0, scale: 1.05 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+            className="flex justify-center lg:justify-end relative"
+          >
+            <div
+              className="
       group
       relative
 
@@ -203,13 +197,12 @@ const scrollRight = () => {
 
       shadow-[0_30px_80px_rgba(0,0,0,0.3)]
     "
-  >
-
-    {/* IMAGE */}
-    <img
-      src={bg3}
-      alt="Geo Wellness"
-      className="
+            >
+              {/* IMAGE */}
+              <img
+                src={bg3}
+                alt="Geo Wellness"
+                className="
         w-full
         h-full
 
@@ -220,11 +213,11 @@ const scrollRight = () => {
 
         group-hover:scale-110
       "
-    />
+              />
 
-    {/* BLUE PREMIUM OVERLAY */}
-    <div
-      className="
+              {/* BLUE PREMIUM OVERLAY */}
+              <div
+                className="
         absolute
         inset-0
 
@@ -234,15 +227,15 @@ const scrollRight = () => {
         transition-all
         duration-700
       "
-      style={{
-        background:
-          "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), rgba(0,0,0,0.08), transparent)",
-      }}
-    />
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(23,78,166,0.92), rgba(23,78,166,0.45), rgba(0,0,0,0.08), transparent)",
+                }}
+              />
 
-    {/* BLUE GLOW */}
-    <div
-      className="
+              {/* BLUE GLOW */}
+              <div
+                className="
         absolute
         -bottom-20
         left-1/2
@@ -261,11 +254,9 @@ const scrollRight = () => {
         transition-all
         duration-700
       "
-    />
-
-  </div>
-
-</motion.div>
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
       <section className="bg-[#f3efe8] py-24 overflow-hidden">
@@ -295,13 +286,11 @@ const scrollRight = () => {
           </motion.div>
         </div>
 
-        
-<div className="relative w-full">
-
-  {/* LEFT ARROW */}
-  <button
-    onClick={scrollLeft}
-    className="
+        <div className="relative w-full">
+          {/* LEFT ARROW */}
+          <button
+            onClick={scrollLeft}
+            className="
       hidden lg:flex
       absolute left-4 top-1/2 -translate-y-1/2
       z-30
@@ -322,14 +311,14 @@ const scrollRight = () => {
 
       transition-all duration-500
     "
-  >
-    <ChevronLeft size={28} />
-  </button>
+          >
+            <ChevronLeft size={28} />
+          </button>
 
-  {/* RIGHT ARROW */}
-  <button
-    onClick={scrollRight}
-    className="
+          {/* RIGHT ARROW */}
+          <button
+            onClick={scrollRight}
+            className="
       hidden lg:flex
       absolute right-4 top-1/2 -translate-y-1/2
       z-30
@@ -350,14 +339,14 @@ const scrollRight = () => {
 
       transition-all duration-500
     "
-  >
-    <ChevronRight size={28} />
-  </button>
+          >
+            <ChevronRight size={28} />
+          </button>
 
-  {/* SLIDER */}
-  <div
-    ref={sliderRef}
-    className="
+          {/* SLIDER */}
+          <div
+            ref={sliderRef}
+            className="
       w-full
       overflow-x-auto
       scroll-smooth
@@ -365,10 +354,9 @@ const scrollRight = () => {
 
       lg:overflow-hidden
     "
-  >
-
-    <div
-      className="
+          >
+            <div
+              className="
         flex
         gap-8
         px-6
@@ -381,56 +369,54 @@ const scrollRight = () => {
 
         pb-4
       "
-    >
-
-      {[
-        {
-          gear: "GEAR 1",
-          title: "Sovereign Protocols",
-          desc: "7-Day Luxury Geo-Wellness Interventions",
-          img: sover,
-          delay: 1.4,
-        },
-        {
-          gear: "GEAR 2",
-          title: "Corporate Ecology",
-          desc: "5-Day Executive Reset for B2B",
-          img: corporate,
-          delay: 1.6,
-        },
-        {
-          gear: "GEAR 3",
-          title: "Maintenance Modules",
-          desc: "Habit Tracking & Video Library",
-          img: maintenance,
-          delay: 1.8,
-        },
-        {
-          gear: "GEAR 4",
-          title: "Longevity Prep-Kits",
-          desc: "Waitlist / Coming Soon",
-          img: prepkit,
-          delay: 2,
-        },
-        {
-          gear: "GEAR 5",
-          title: "Precision Tech Events",
-          desc: "Bio-hacking Workshops / Hackathons",
-          img: precision,
-          delay: 2.2,
-        },
-        {
-          gear: "GEAR 6",
-          title: "Precision Ecology & Corporate Auditing",
-          desc: "Office Auditing",
-          img: environment,
-          delay: 2.4,
-        },
-      ].map((item, i) => (
-
-        <motion.div
-          key={i}
-          className="
+            >
+              {[
+                {
+                  gear: "GEAR 1",
+                  title: "Sovereign Protocols",
+                  desc: "7-Day Luxury Geo-Wellness Interventions",
+                  img: sover,
+                  delay: 1.4,
+                },
+                {
+                  gear: "GEAR 2",
+                  title: "Corporate Ecology",
+                  desc: "5-Day Executive Reset for B2B",
+                  img: corporate,
+                  delay: 1.6,
+                },
+                {
+                  gear: "GEAR 3",
+                  title: "Maintenance Modules",
+                  desc: "Habit Tracking & Video Library",
+                  img: maintenance,
+                  delay: 1.8,
+                },
+                {
+                  gear: "GEAR 4",
+                  title: "Longevity Prep-Kits",
+                  desc: "Waitlist / Coming Soon",
+                  img: prepkit,
+                  delay: 2,
+                },
+                {
+                  gear: "GEAR 5",
+                  title: "Precision Tech Events",
+                  desc: "Bio-hacking Workshops / Hackathons",
+                  img: precision,
+                  delay: 2.2,
+                },
+                {
+                  gear: "GEAR 6",
+                  title: "Precision Ecology & Corporate Auditing",
+                  desc: "Office Auditing",
+                  img: environment,
+                  delay: 2.4,
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="
             group
 
             min-w-[320px]
@@ -457,25 +443,24 @@ const scrollRight = () => {
 
             hover:scale-[1.03]
           "
-          initial={{
-            opacity: 0,
-            y: 30,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: item.delay,
-          }}
-        >
-
-          {/* IMAGE */}
-          <motion.img
-            src={item.img}
-            alt={item.title}
-            className="
+                  initial={{
+                    opacity: 0,
+                    y: 30,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    delay: item.delay,
+                  }}
+                >
+                  {/* IMAGE */}
+                  <motion.img
+                    src={item.img}
+                    alt={item.title}
+                    className="
               w-[400px]
               h-full
               object-cover
@@ -486,21 +471,21 @@ const scrollRight = () => {
 
               group-hover:scale-110
             "
-            initial={{
-              scale: 1.05,
-            }}
-            animate={{
-              scale: 1,
-            }}
-            transition={{
-              duration: 1,
-              delay: item.delay,
-            }}
-          />
+                    initial={{
+                      scale: 1.05,
+                    }}
+                    animate={{
+                      scale: 1,
+                    }}
+                    transition={{
+                      duration: 1,
+                      delay: item.delay,
+                    }}
+                  />
 
-          {/* OVERLAY */}
-          <div
-            className="
+                  {/* OVERLAY */}
+                  <div
+                    className="
               absolute inset-0
 
               bg-gradient-to-t
@@ -514,11 +499,11 @@ const scrollRight = () => {
               transition-all
               duration-700
             "
-          />
+                  />
 
-          {/* TEXT */}
-          <div
-            className="
+                  {/* TEXT */}
+                  <div
+                    className="
               absolute inset-0
 
               flex flex-col justify-end
@@ -534,10 +519,9 @@ const scrollRight = () => {
               transition-all
               duration-700
             "
-          >
-
-            <p
-              className="
+                  >
+                    <p
+                      className="
                 text-xs
                 tracking-widest
                 text-blue-200
@@ -548,23 +532,23 @@ const scrollRight = () => {
 
                 transition duration-500
               "
-            >
-              {item.gear}
-            </p>
+                    >
+                      {item.gear}
+                    </p>
 
-            <h3
-              className="
+                    <h3
+                      className="
                 text-3xl
                 font-serif
                 text-white
                 mb-3
               "
-            >
-              {item.title}
-            </h3>
+                    >
+                      {item.title}
+                    </h3>
 
-            <p
-              className="
+                    <p
+                      className="
                 text-sm
                 text-blue-100/80
                 leading-7
@@ -574,21 +558,15 @@ const scrollRight = () => {
 
                 transition duration-700 delay-150
               "
-            >
-              {item.desc}
-            </p>
-
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-
-        </motion.div>
-
-      ))}
-
-    </div>
-
-  </div>
-
-</div>
+        </div>
       </section>
 
       {/* VISIONARY, CTA, FOOTER remain SAME (no structural issues) */}
@@ -672,7 +650,7 @@ const scrollRight = () => {
 
       {/* CTA SECTION */}
       <section
-  className="
+        className="
     relative
 
     w-full
@@ -689,17 +667,17 @@ const scrollRight = () => {
 
     bg-black
   "
->
-  {/* BACKGROUND IMAGE */}
-  <motion.div
-    initial={{ opacity: 0, scale: 1.05 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{
-      duration: 1.5,
-      ease: [0.19, 1, 0.22, 1],
-      delay: 0.5,
-    }}
-    className="
+      >
+        {/* BACKGROUND IMAGE */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 1.5,
+            ease: [0.19, 1, 0.22, 1],
+            delay: 0.5,
+          }}
+          className="
       absolute
       inset-0
 
@@ -707,13 +685,12 @@ const scrollRight = () => {
       items-center
       justify-center
     "
-  >
-
-    {/* IMAGE */}
-    <img
-      src={yoga}
-      alt="Meditation"
-      className="
+        >
+          {/* IMAGE */}
+          <img
+            src={yoga}
+            alt="Meditation"
+            className="
         w-full
         h-full
 
@@ -722,11 +699,11 @@ const scrollRight = () => {
 
         object-center
       "
-    />
+          />
 
-    {/* CINEMATIC OVERLAY */}
-    <div
-      className="
+          {/* CINEMATIC OVERLAY */}
+          <div
+            className="
         absolute
         inset-0
 
@@ -734,13 +711,12 @@ const scrollRight = () => {
 
         shadow-[0_50px_120px_rgba(0,0,0,0.4)]
       "
-    />
+          />
+        </motion.div>
 
-  </motion.div>
-
-  {/* CONTENT */}
-  <div
-    className="
+        {/* CONTENT */}
+        <div
+          className="
       relative
       z-10
 
@@ -750,18 +726,17 @@ const scrollRight = () => {
 
       mb-14
     "
-  >
-
-    {/* HEADING */}
-    <motion.h2
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 1,
-        ease: [0.19, 1, 0.22, 1],
-        delay: 0.8,
-      }}
-      className="
+        >
+          {/* HEADING */}
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              ease: [0.19, 1, 0.22, 1],
+              delay: 0.8,
+            }}
+            className="
         text-4xl
         md:text-6xl
         lg:text-7xl
@@ -774,20 +749,20 @@ const scrollRight = () => {
 
         leading-tight
       "
-    >
-      The End of Reactive Health
-    </motion.h2>
+          >
+            The End of Reactive Health
+          </motion.h2>
 
-    {/* SUBTEXT */}
-    <motion.p
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 1,
-        ease: [0.19, 1, 0.22, 1],
-        delay: 1.1,
-      }}
-      className="
+          {/* SUBTEXT */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              ease: [0.19, 1, 0.22, 1],
+              delay: 1.1,
+            }}
+            className="
         text-lg
         md:text-l
 
@@ -800,24 +775,23 @@ const scrollRight = () => {
 
         leading-relaxed
       "
-    >
-      Reclaim your 168. Join an elite group of founders and
-      leaders in our 2026 Sovereign Pilot. We map your data
-      to South India's most potent coordinates to reverse
-      your biological age
-    </motion.p>
+          >
+            Reclaim your 168. Join an elite group of founders and leaders in our
+            2026 Sovereign Pilot. We map your data to South India's most potent
+            coordinates to reverse your biological age
+          </motion.p>
 
-    {/* BUTTON */}
-    <Link to="/register">
-      <motion.button
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 1,
-          ease: [0.19, 1, 0.22, 1],
-          delay: 1.4,
-        }}
-        className="
+          {/* BUTTON */}
+          <Link to="/register">
+            <motion.button
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1,
+                ease: [0.19, 1, 0.22, 1],
+                delay: 1.4,
+              }}
+              className="
           px-12
           py-5
 
@@ -838,16 +812,15 @@ const scrollRight = () => {
 
           shadow-xl
         "
-      >
-        Apply for the Sovereign 168
-      </motion.button>
-    </Link>
+            >
+              Apply for the Sovereign 168
+            </motion.button>
+          </Link>
+        </div>
 
-  </div>
-
-  {/* FOOTER BLEND */}
-  <div
-    className="
+        {/* FOOTER BLEND */}
+        <div
+          className="
       absolute
       bottom-0
       left-0
@@ -859,9 +832,8 @@ const scrollRight = () => {
       from-transparent
       to-[#f3efe8]
     "
-  />
-
-</section>
+        />
+      </section>
 
       {/* FOOTER QUOTE SECTION */}
       <section className="bg-[#f3efe8] py-16">

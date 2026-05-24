@@ -21,7 +21,7 @@ export default function TermsConditions() {
         />
 
         {/* GREEN OVERLAY */}
-         <div
+        <div
           className="absolute inset-0"
           style={{
             background:
@@ -88,7 +88,7 @@ export default function TermsConditions() {
             To Know More
           </h3>
 
-         <p className="text-[#5F756B] max-w-xl mx-auto leading-relaxed">
+          <p className="text-[#5F756B] max-w-xl mx-auto leading-relaxed">
             For any questions regarding these terms, please contact our team at
             DARSHAI Group.
           </p>
@@ -99,14 +99,14 @@ export default function TermsConditions() {
               <MapPin className="w-5 h-5 text-[#1F4D3E]" />
 
               <a
-                href="https://maps.google.com/?q=K-tech Innovation Hub Mangalore"
+                href="https://maps.app.goo.gl/PXvRtH1gMRRHHEtV6"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#1F4D3E]/70 hover:text-[#C6A75E] transition leading-relaxed"
               >
-                K-tech Innovation Hub, (CIF), 3rd Floor, Plama Center, Bejai -
-                Kapikad Rd, near Jayalakshmi Silks, Lalbagh, Mangaluru,
-                Karnataka 575004
+                MILESTONE25, 5th Floor
+                Shop No. 514, Door No. 15-5-223/140, Collectors Gate Junction
+                Balmatta, Mangalore-575 001
               </a>
             </div>
 

@@ -47,13 +47,14 @@ const Footer = () => {
   </h2>
   {/* LOCATION (CLICKABLE → MAPS) */}
   <a
-    href="https://maps.google.com/?q=K-tech Innovation Hub Mangalore"
+    href="https://maps.app.goo.gl/PXvRtH1gMRRHHEtV6"
     target="_blank"
     rel="noopener noreferrer"
     className="text-sm text-[#5F756B] block hover:text-[#1E7A3A]"
   >
-    K-tech Innovation Hub, (CIF), 3rd Floor, Plama Center, Bejai - Kapikad Rd,
-      near Jayalakshmi Silks, Lalbagh, Mangaluru, Karnataka 575004
+   MILESTONE25, 5th Floor
+Shop No. 514, Door No. 15-5-223/140, Collectors Gate Junction
+Balmatta, Mangalore-575 001
   </a>
 
   {/* EMAIL (CLICKABLE) */}
