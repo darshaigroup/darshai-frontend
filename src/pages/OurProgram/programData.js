@@ -14,24 +14,32 @@ export const programData = [
     image: treatment1,
 
     description:
-      "Restore vitality and renew your energy through regenerative Ayurvedic longevity protocols engineered for deep systemic renewal.",
+      "Restore vitality and renew your energy through regenerative wellness therapies engineered for deep restoration.",
 
     quote:
-      "Restore vitality and renew your energy for a balanced life.",
+      "Restore vitality and renew your energy",
 
     content: `
-      The Rejuvenation Programme is a structured therapeutic pathway designed to restore vitality, resilience, and systemic balance through the integration of Ayurvedic rasāyana principles and modern wellness science.
-
-      This programme focuses on cellular restoration, immune resilience, nervous system regulation, and long-term biological optimisation using personalised therapies, restorative treatments, and longevity-oriented nutritional interventions.
-
-      Through clinically guided wellness architecture, the programme works to improve energy levels, reduce burnout, support sleep quality, and restore physiological harmony for individuals experiencing chronic stress, fatigue, or age-related decline.
+      The Rejuvenation Programme is a restorative wellness experience designed to revitalise the body, calm the mind, and improve overall vitality. It focuses on reducing physical fatigue, mental exhaustion, and the effects of stress through a combination of healing therapies, guided relaxation, nourishing nutrition, and lifestyle support. The programme helps improve energy levels, enhance recovery, strengthen immunity, and promote deep relaxation.
     `,
 
-    features: [
-      "Personalised Ayurvedic Rasāyana Protocols",
-      "Cellular Recovery & Vitality Restoration",
-      "Immune & Hormonal Balance Optimisation",
-      "Stress Recovery & Nervous System Regulation",
+    programmeIncludes: [
+      "Personal wellness consultation",
+      "Rejuvenation therapies and body treatments",
+      "Relaxation and stress-relief sessions",
+      "Restorative massage therapies",
+      "Sleep and recovery support",
+      "Gentle movement and stretching sessions",
+      "Breathwork and guided relaxation practices",
+      "Lifestyle and wellbeing guidance",
+    ],
+
+    benefits: [
+      "Improved energy and vitality",
+      "Reduced stress and fatigue",
+      "Better sleep quality",
+      "Enhanced physical and mental recovery",
+      "Increased balance and wellbeing",
     ],
   },
 
@@ -45,24 +53,34 @@ export const programData = [
     image: treatment2,
 
     description:
-      "Cultivate emotional resilience, mental clarity, and cognitive calm through precision-guided mindfulness experiences.",
+      "Cultivate emotional balance, mental clarity, and inner calm through precision-guided mindfulness practices.",
 
     quote:
-      "Cultivate calm, clarity, and inner peace through guided practices.",
+      "Find peace, clarity, and calmness",
 
     content: `
-      The Mindfulness Programme is designed to cultivate mental clarity, emotional regulation, and cognitive resilience through evidence-informed therapeutic practices including meditation, breathwork, nervous system balancing, and awareness training.
-
-      The programme helps reduce stress reactivity, optimise focus, regulate emotional responses, and improve mental performance through structured mind-body interventions.
-
-      Participants experience measurable improvements in sleep quality, emotional stability, cognitive recovery, and sustained attention while learning practical techniques for long-term mental wellbeing.
+      The Mindfulness Programme is designed to create mental clarity, emotional balance, and inner calm through structured awareness practices. It helps individuals manage stress, improve focus, regulate emotions, and reconnect with themselves through mindful living techniques. The programme integrates meditation, breathing exercises, relaxation methods, and guided practices to support emotional wellbeing and mental resilience.
+      
     `,
 
-    features: [
-      "Guided Meditation & Breathwork",
-      "Emotional Regulation Practices",
-      "Stress & Anxiety Recovery",
-      "Cognitive Performance Optimisation",
+    programmeIncludes: [
+      "Guided meditation sessions",
+      "Breathwork and pranayama practices",
+      "Mindfulness and awareness training",
+      "Stress management techniques",
+      "Relaxation and grounding practices",
+      "Digital detox and reflective sessions",
+      "Emotional wellbeing guidance and Personal mindfulness",
+      "Nature-based mindfulness activities",
+    
+    ],
+
+    benefits: [
+      "Reduced stress and anxiety",
+      "Improved focus and clarity",
+      "Enhanced emotional balance",
+      "Better sleep and relaxation",
+      "Greater inner calm and awareness",
     ],
   },
 
@@ -76,24 +94,32 @@ export const programData = [
     image: treatment3,
 
     description:
-      "Cleanse internal systems and optimise metabolic efficiency through targeted detoxification and restorative therapies.",
+      "Cleanse internal systems and restore metabolic balance through structured detoxification therapies.",
 
     quote:
-      "Cleanse your system and refresh your body from within.",
+      "Cleanse your body and refresh",
 
     content: `
-      The Detox Programme is a precision wellness intervention focused on improving metabolism, eliminating biological burden, and restoring systemic efficiency through Ayurvedic detoxification protocols and modern nutritional science.
-
-      This programme strengthens digestive fire, supports natural detoxification pathways, and improves metabolic adaptability using personalised dietary interventions, therapeutic fasting, sweating therapies, and herbal formulations.
-
-      It is ideal for individuals dealing with inflammation, digestive imbalance, low energy, skin issues, or lifestyle-related metabolic stress.
+     The Detox Programme is a structured cleansing experience aimed at supporting the body’s natural detoxification systems and restoring internal balance. Through cleansing therapies, nutrition planning, hydration support, and wellness treatments, the programme helps remove accumulated toxins, improve digestion, and refresh the body from within. The programme is designed to reset unhealthy lifestyle patterns and promote metabolic balance, leaving participants feeling lighter, refreshed, and more energised.
     `,
 
-    features: [
-      "Metabolic Reset Protocols",
-      "Digestive & Gut Health Optimisation",
-      "Herbal Detoxification Therapies",
-      "Inflammation & Toxin Reduction",
+    programmeIncludes: [
+      "Wellness and body assessment",
+      "Detox therapies and cleansing treatments",
+      "Nutritional detox meal plans and Digestive wellness support",
+      "Herbal and hydration support",
+      "Guided movement and light exercise",
+      "Sweating and purification therapies",
+      "Relaxation and recovery sessions",
+      "Lifestyle and wellness counselling",
+    ],
+
+    benefits: [
+      "Improved digestion and metabolism",
+      "Increased energy levels",
+      "Better skin and vitality",
+      "Reduced bloating and heaviness",
+      "Enhanced internal balance",
     ],
   },
 
@@ -107,24 +133,27 @@ export const programData = [
     image: treatment4,
 
     description:
-      "A completely personalised longevity programme designed around your biology, lifestyle, environment, and wellness goals.",
+      "A fully personalised wellness programme designed around your biology, lifestyle, and long-term wellbeing goals.",
 
     quote:
-      "Designed around your unique needs for holistic transformation.",
+      "Designed uniquely for your transformation",
 
     content: `
-      Personalised Wellness Programmes provide a fully adaptive, data-driven framework for long-term health optimisation through individualised interventions tailored to each person's biological profile and lifestyle patterns.
-
-      By integrating biomarker intelligence, Ayurvedic diagnostics, behavioural analysis, stress mapping, nutrition planning, and recovery optimisation, the programme continuously evolves according to measurable progress.
-
-      This creates a dynamic precision-health experience capable of supporting resilience, longevity, recovery, performance enhancement, and sustainable wellbeing across every dimension of life.
+Experience a wellness journey designed entirely around your unique body, lifestyle, and wellbeing goals. Combining holistic assessments, personalised therapies, nutrition, movement, and recovery practices, this programme provides a customised approach to long-term health and balance. Each programme is carefully curated to support physical vitality, mental wellbeing, and sustainable lifestyle transformation through targeted wellness strategies and expert guidance.
     `,
 
-    features: [
-      "Precision Biomarker Mapping",
-      "Lifestyle & Recovery Intelligence",
-      "Adaptive Wellness Architecture",
-      "Longitudinal Longevity Optimisation",
+    programmeIncludes: [
+      "Personalised wellness consultation",
+      "Tailored therapy and treatment plans",
+      "Individual nutrition and lifestyle guidance",
+      "Custom fitness and movement sessions",
+      "Stress management and recovery support",
+      "Holistic wellbeing recommendations and ongoing wellness monitoring",
+    ],
+
+    benefits: [
+      "Optimised health and vitality",
+      "Improved mental and physical balance",
     ],
   },
 ];
