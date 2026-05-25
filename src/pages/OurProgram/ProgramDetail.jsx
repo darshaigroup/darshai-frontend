@@ -146,67 +146,208 @@ export default function ProgramDetail() {
 
         </div>
 
-        {/* BENEFITS */}
-        <div className="mt-28">
+   {/* BENEFITS */}
+<div className="mt-32">
 
-          <div className="flex items-center justify-center mb-6">
+  {/* TAG */}
+  <div className="flex items-center justify-center mb-6">
 
-            <span className="text-[11px] tracking-[0.38em] uppercase text-[#C9A75B] px-6 py-2 rounded-full bg-[#1E7A3A]/5 border border-[#1E7A3A]/10">
-              Benefits
-            </span>
+    <span className="text-[11px] tracking-[0.38em] uppercase text-[#C9A75B] px-6 py-2 rounded-full bg-[#1E7A3A]/5 border border-[#1E7A3A]/10">
+      Benefits
+    </span>
+
+  </div>
+
+  {/* TITLE */}
+  <h3 className="text-3xl md:text-5xl font-serif text-[#1E7A3A] text-center leading-tight mb-20">
+    Measurable
+    <br />
+    Biological Outcomes
+  </h3>
+
+  {/* BENEFIT TIMELINE */}
+  <div className="relative max-w-5xl mx-auto">
+
+    {/* CENTER LINE */}
+    <div className="absolute left-[27px] top-0 bottom-0 w-px bg-gradient-to-b from-[#C9A75B] via-[#1E7A3A]/20 to-transparent" />
+
+    <div className="space-y-10">
+
+      {program.benefits.map((benefit, i) => (
+
+        <div
+          key={i}
+          className="group relative flex items-start gap-8"
+        >
+
+          {/* PREMIUM GLOW ICON */}
+          <div
+            className="
+              relative
+              z-10
+
+              min-w-[56px]
+              w-14
+              h-14
+
+              rounded-full
+
+              bg-white
+
+              border
+              border-[#1E7A3A]/10
+
+              shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+
+              flex
+              items-center
+              justify-center
+            "
+          >
+
+            {/* INNER GLOW */}
+            <div
+              className="
+                absolute
+                inset-2
+
+                rounded-full
+
+                bg-gradient-to-br
+                from-[#1E7A3A]
+                via-[#174EA6]
+                to-[#C9A75B]
+
+                opacity-90
+
+                blur-[2px]
+
+                transition-all
+                duration-700
+
+                group-hover:scale-[1.8]
+                group-hover:opacity-40
+              "
+            />
+
+            {/* CENTER CORE */}
+            <div
+              className="
+                relative
+                z-10
+
+                w-4
+                h-4
+
+                rounded-full
+
+                bg-white
+
+                shadow-[0_0_20px_rgba(255,255,255,0.95)]
+
+                transition-all
+                duration-700
+
+                group-hover:scale-125
+              "
+            />
+
+            {/* OUTER GLOW */}
+            <div
+              className="
+                absolute
+                inset-0
+
+                rounded-full
+
+                bg-[#174EA6]/20
+
+                blur-xl
+
+                opacity-0
+
+                transition-all
+                duration-700
+
+                group-hover:opacity-100
+                group-hover:scale-[2]
+              "
+            />
 
           </div>
 
-          <h3 className="text-3xl md:text-5xl font-serif text-[#1E7A3A] text-center leading-tight mb-14">
-            Measurable
-            <br />
-            Biological Outcomes
-          </h3>
+          {/* CONTENT CARD */}
+          <div
+            className="
+              relative
+              overflow-hidden
 
-          <div className="grid md:grid-cols-2 gap-6">
+              flex-1
 
-            {program.benefits.map((benefit, i) => (
+              rounded-[32px]
 
-              <div
-                key={i}
-                className="group relative overflow-hidden rounded-[30px] bg-white border border-[#1E7A3A]/10 p-8 shadow-[0_15px_50px_rgba(0,0,0,0.05)]"
-              >
+              bg-white/80
+              backdrop-blur-xl
 
-                {/* PREMIUM OVERLAY */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700"
-                  style={{
-                    background:
-                      "linear-gradient(to top right, rgba(30,122,58,0.82), rgba(23,78,166,0.55), rgba(0,0,0,0.18))",
-                  }}
-                />
+              border
+              border-white/60
 
-                {/* CONTENT */}
-                <div className="relative z-10 flex items-start gap-5">
+              shadow-[0_25px_70px_rgba(0,0,0,0.06)]
 
-                  {/* ICON */}
-                  <div className="w-14 h-14 rounded-2xl bg-[#1E7A3A] flex items-center justify-center text-white text-xl shadow-[0_10px_30px_rgba(30,122,58,0.22)] group-hover:bg-white group-hover:text-[#174EA6] transition-all duration-500">
-                    ✦
-                  </div>
+              p-8
+            "
+          >
 
-                  {/* TEXT */}
-                  <div>
+            {/* PREMIUM GRADIENT */}
+            <div
+              className="
+                absolute
+                inset-0
 
-                    <p className="text-[#1E7A3A] text-lg leading-[1.8] group-hover:text-white transition-all duration-500">
-                      {benefit}
-                    </p>
+                opacity-0
+                group-hover:opacity-100
 
-                  </div>
+                transition-all
+                duration-700
+              "
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(30,122,58,0.08), rgba(23,78,166,0.08), transparent)",
+              }}
+            />
 
-                </div>
+            {/* NUMBER */}
+            <div className="absolute top-6 left-8">
 
-              </div>
+              <span className="text-[58px] md:text-[72px] font-serif text-[#1E7A3A]/8 leading-none">
+                0{i + 1}
+              </span>
 
-            ))}
+            </div>
+
+            {/* TEXT */}
+            <div className="relative z-10 pl-24">
+
+              <p className="text-[20px] md:text-[24px] leading-[1.8] font-serif text-[#1E7A3A]">
+                {benefit}
+              </p>
+
+              {/* LINE */}
+              <div className="mt-5 w-24 h-px bg-gradient-to-r from-[#C9A75B] to-transparent" />
+
+            </div>
 
           </div>
 
         </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</div>
 
         {/* BUTTONS */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-24">
