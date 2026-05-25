@@ -60,12 +60,6 @@ export const blogData = [
           "What this means in plain language: a dip in your HRV on a Monday morning might be your body's way of flagging that an infection, a crash in immune function, or a spike in inflammation is coming days before you reach for any medication.",
         ],
 
-        // list: [
-        //   "Detects autonomic nervous system stress",
-        //   "Predicts recovery capacity",
-        //   "Measures resilience to environmental pressure",
-        //   "Tracks inflammation before symptoms appear",
-        // ],
       },
 
       {
