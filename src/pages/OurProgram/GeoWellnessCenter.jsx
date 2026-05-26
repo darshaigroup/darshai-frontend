@@ -293,7 +293,7 @@ const categoryCards = [
     title: "Coastal Sleep & Wellness Retreat",
     paragraph:
       "Coastal environments offer fresh sea air, calming sounds, and peaceful surroundings that may help the body relax and recharge. The natural rhythm of ocean environments can support better sleep, stress recovery, breathing comfort, and overall wellness. Combined with guided wellness practices, these experiences are designed to help you feel refreshed, balanced, and restored.",
-    gradient: "from-blue-900/80 to-black/60",
+    gradient: "from-green-900/80 to-black/60",
     image: Coastal,
   },
   {
