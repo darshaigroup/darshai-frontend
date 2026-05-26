@@ -408,7 +408,7 @@ function HomeMain() {
                 },
                 {
                   gear: "GEAR 6",
-                  title: "Precision Ecology & Corporate Auditing",
+                  title: "Corporate Wellness Optimization",
                   desc: "Office Auditing",
                   img: environment,
                   delay: 2.4,
