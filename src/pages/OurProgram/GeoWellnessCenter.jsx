@@ -262,17 +262,17 @@ const mountainCentres = [
 // ----------------------------- CATEGORY META (complete with all fields) ---------------------------------
 const categoryMeta = {
   forest: {
-    title: "Neuro Regenerative Terrain",
+    title: "Brain & Stress Recovery ",
 
     image: { src: Forest, alt: "Forest Wellness Centre" },
   },
   coastal: {
-    title: "Circadian Restoration Terrain",
+    title: "Coastal Sleep & Wellness Retreat",
 
     image: { src: Coastal, alt: "Coastal Wellness Centre" },
   },
   mountain: {
-    title: "Metabolic Adaptation Terrain",
+    title: "Mountain Recovery & Wellness Retreat",
 
     image: { src: Mountain, alt: "Mountain Wellness Centre" },
   },
@@ -282,7 +282,7 @@ const categoryMeta = {
 const categoryCards = [
   {
     id: "forest",
-    title: " Neuro Regenerative Terrain",
+    title: " Brain & Stress Recovery ",
     paragraph:
       "Forest environments like the Western Ghats offer fresh, oxygen-rich air, diverse medicinal plants, and a naturally calming climate that can support Ayurvedic treatments such as Panchakarma and pranayama. Spending time in these forest settings is known to reduce stress, improve immunity, and promote deep relaxation through nature exposure and reduced urban distractions. The cool, humid microclimate also makes long detox therapies more comfortable. In addition, some centres integrate traditional tribal knowledge and rare forest-based remedies, offering a more natural and holistic healing experience than typical urban wellness facilities.",
     gradient: "from-green-900/80 to-black/60",
@@ -290,17 +290,17 @@ const categoryCards = [
   },
   {
     id: "coastal",
-    title: "Circadian Restoration Terrain",
+    title: "Coastal Sleep & Wellness Retreat",
     paragraph:
-      "Coastal regions in South India offer a healing environment with salt-rich sea air that may support breathing, reduce inflammation, and enhance Ayurvedic therapies like Nasya and steam treatments. The humid coastal climate also helps keep skin hydrated, improving the effectiveness of herbal oils for conditions like eczema and for skin rejuvenation. The sound of ocean waves is known to reduce stress and support better sleep by calming brain activity. Warm and stable coastal weather further supports Panchakarma therapies by improving comfort and helping the body respond well to detox treatments. In addition, some coastal wellness centres are located in culturally and spiritually significant areas, adding a deeper sense of relaxation and meaning to the healing experience.",
+      "Coastal environments offer fresh sea air, calming sounds, and peaceful surroundings that may help the body relax and recharge. The natural rhythm of ocean environments can support better sleep, stress recovery, breathing comfort, and overall wellness. Combined with guided wellness practices, these experiences are designed to help you feel refreshed, balanced, and restored.",
     gradient: "from-blue-900/80 to-black/60",
     image: Coastal,
   },
   {
     id: "mountain",
-    title: "Metabolic Adaptation Terrain",
+    title: "Mountain Recovery & Wellness Retreat",
     paragraph:
-      "Mountain regions in South India like Kodaikanal and the Nilgiris offer a cooler, high-altitude environment that may support better respiratory and cardiovascular function due to cleaner air and natural acclimatisation effects. This can enhance breathing practices like pranayama and improve overall yoga and meditation outcomes. The pollution-free environment also supports the body's natural detox and repair processes, making therapies like Panchakarma more effective. These regions also have unique high-altitude medicinal plants that may improve the quality of Ayurvedic formulations. In addition, the cool climate promotes deeper and better-quality sleep, which helps in recovery, stress reduction, and overall healing.",
+      "Mountain environments offer fresh air, peaceful surroundings, and cooler climates that may help the body relax and recharge. Natural settings can support better rest, stress recovery, breathing comfort, and overall wellbeing. Combined with guided wellness practices, these experiences are designed to help you feel refreshed, balanced, and restored.",
     gradient: "from-emerald-900/80 to-black/60",
     image: Mountain,
   },
@@ -530,7 +530,7 @@ export function GeoWellnessCategory() {
             alt={meta.image.alt}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-green-900/70 via-green-800/80 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-green-900/90 via-green-800/45 to-black/60" />
         </div>
         <div className="relative z-10 flex flex-col items-center justify-center min-h-[70vh] text-center text-white px-6 lg:px-20 py-20 pt-32 md:pt-40">
           <div
