@@ -63,7 +63,7 @@ export default function BlogArticle() {
     {/* INTRO */}
     <div className="mb-28 text-center">
       <p
-        className="text-[24px] md:text-[34px] leading-[1.9] font-light max-w-4xl mx-auto"
+        className="text-[9px] md:text-[12px] leading-[1.9] font-light max-w-4xl mx-auto"
         style={{ color: "#1E7A3A" }}
       >
         {article.intro}

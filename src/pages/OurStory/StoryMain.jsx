@@ -14,24 +14,24 @@ import { motion } from "framer-motion";
 const PHILOSOPHY_DATA = [
   {
     tag: "THE DISCONNECTION",
-    title: "The Paradox of Modern Progress",
-    text: "We live in the most 'connected' era in human history, yet we have never been more disconnected from our own biological foundations. In the pursuit of high performance, themodern leader has treated the body as a machine to be pushed, rather than an ecosystem to be nurtured. We have traded seasonal rhythms for artificial light, and intuitive Longevity for chronic burnout.",
+    title: "The Reality of Modern Living",
+    text: "In today’s fast-moving world, many people struggle with stress, poor lifestyle habits, burnout, and health challenges. Modern routines often disconnect us from healthy living and personal well-being. DARSHAI aims to help individuals restore balance through wellness guidance, healthier habits, and personalized support.",
   },
   {
     tag: "THE SYNTHESIS",
-    title: "The New Standard of Optimization",
-    text: "DARSHAI was born from a singular realization - True longevity is not found in a laboratory, nor is it found solely in a forest. It is found at the intersection of both. We bridge 5,000 years of Ayurvedic intelligence with the relentless precision of AI-driven biomarker monitoring. We don't believe in &quot;generic wellness; We believe in Biological Sovereignty—the right to own your health data, understand your unique metabolic fire (Agni), and master your environment.",
+    title: "A Smarter Way to Wellness",
+    text: "DARSHAI was created with a simple belief - true wellness comes from balancing modern science with natural healing. We combine wellness guidance, technology, and personalized support to help people improve their health, lifestyle, and overall well-being. Our goal is to help you understand your body better and build healthier habits for long-term wellness.",
   },
   {
     tag: "THE GEO-BIOTIC MAP",
-    title: "Geography as Medicine",
-    text: "At DARSHAI, we understand that a human being is not a static entity; we are a reflection of our surroundings. Our philosophy is rooted in Geo-Wellness. We map your internal clinical data (CGM, BIA, and Blood Biomarkers) to the specific healing frequencies of South India’s most potent landscapes. Whether it is the mineral-rich air of the Coastal Sanctuaries, the phytoncide-dense Forest Deep, or the high-altitude Mountain Silence, we prescribe the exact coordinate your cells need to reset.",
+    title: "Healing Through Environment",
+    text: "At DARSHAI, we believe our surroundings play an important role in health and well-being. We combine wellness insights, health data, and natural environments to help people feel healthier, calmer, and more balanced. From peaceful forests to coastal environments and mountain spaces, we guide individuals toward experiences that support better physical and mental wellness.",
   },
 
   {
     tag: "THE SOVEREIGN PROTOCOLS",
-    title: "The Covenant",
-    text: "We do not offer 'retreats'. We engineer Precision Longevity Interventions. Through our Sovereign Protocols, we provide the data, the environment, and the clinical mastery required to reverse your biological age and reclaim your vitality.",
+    title: "Our Wellness Approach",
+    text: "At DARSHAI, we go beyond traditional wellness experiences. We combine health insights, personalized guidance, and wellness programs to help individuals improve their lifestyle, energy, and overall well-being. Our goal is to support healthier living through a balanced and personalized approach.",
   },
 ];
 
@@ -307,7 +307,7 @@ const OurStory = () => {
           className="text-[42px] md:text-[72px] font-serif text-center mb-20"
           style={{ color: brandGreen }}
         >
-          The Synergy of Intelligence & Clinical Mastery.
+         The Minds Behind DARSHAI
         </h2>
 
         <div className="grid md:grid-cols-2 gap-16">
@@ -397,16 +397,12 @@ By distilling complex ancient sciences into actionable, data-backed protocols, D
             </div>
             <h2 className="text-[32px] md:text-[64px] font-serif leading-[1.1] max-w-4xl">
               {" "}
-              To reset a baseline is to architect a legacy{" "}
-              <span className="italic">
-                {" "}
-                that outlives the chronological clock.{" "}
-              </span>{" "}
+             Helping people overcome burnout and improve long-term well-being through personalized wellness and recovery{" "}
+              
             </h2>
             <p className="mt-6 text-sm md:text-lg text-white/80 max-w-2xl">
               {" "}
-              We solve the crisis of modern burnout by recalibrating the human
-              system at its architectural foundation.{" "}
+              We combine wellness knowledge, personalized care, and modern insights to help you restore balance, energy, and healthier living.{" "}
             </p>
           </div>
         </div>
