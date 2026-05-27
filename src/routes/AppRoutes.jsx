@@ -30,6 +30,7 @@ import GeoWellness from "@/features/dashboard/pages/GeoWellness";
 import Reports from "@/features/dashboard/pages/Reports";
 import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
+import Assessment from "@/features/dashboard/assessments/pages/Assessment";
 
 // Auth
 import Login from "@/pages/Auth/Login";
@@ -83,6 +84,7 @@ const AppRoutes = () => {
             <Route path="reports" element={<Reports />} />
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
+            <Route path="/dashboard/assessments" element={<Assessment />} />
           </Route>
 
         </Route>
