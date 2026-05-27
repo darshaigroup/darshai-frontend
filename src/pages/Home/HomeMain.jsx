@@ -19,18 +19,18 @@ import yoga from "@/assets/images/yoga1.png";
 const SLIDES = [
   {
     image: bg2,
-    title: "The Transition to Strategic Health Autonomy",
-    desc: "Predictive Longevity. We map your biological data to South India’s most potent healing coordinates to reverse your chronological age",
+    title: "Your Journey to Strategic Health Autonomy",
+    desc: "We combine biology, wellness, and environment to create personalized experiences that support recovery, balance, and long-term wellbeing",
   },
   {
     image: bg7,
-    title: "From Health Management to Biological Mastery",
-    desc: "Stop guessing and start governing your biology. We synchronize your real-time biomarkers with the Earth’s most potent healing coordinates to engineer a younger, more resilient version of you",
+    title: "From Health Management to Biological Wellness",
+    desc: "Move beyond guesswork with personalised wellness insights that align your health, environment, and recovery journey",
   },
   {
     image: bg8,
-    title: "Your DNA is the Map. Geo-Wellness is the Destination",
-    desc: "We’ve decoded the synergy between human physiology and geography. By matching your unique bio-profile to specific South Indian landscapes, we turn every mile travelled into a calculated strike against aging",
+    title: "Personalized Wellness Guided by Biology and Environment",
+    desc: "We combine biological insights and environmental wellness to help individuals improve recovery, resilience, and long-term wellbeing through personalized wellness experiences",
   },
 ];
 

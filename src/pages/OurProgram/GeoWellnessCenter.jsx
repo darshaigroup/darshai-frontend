@@ -421,11 +421,7 @@ export default function GeoWellnessCenter() {
               Environmental Correction.
             </h2>
             <p className="text-sm md:text-base leading-relaxed max-w-3xl mx-auto text-white/90">
-              At DARSHAI, we believe that geography is a clinical variable. We
-              do not own resorts; we certify Curated Sanctuaries. Each location
-              is a white-labelled partner site that has undergone a rigorous
-              DARSHAI audit to ensure it meets our standards for atmospheric
-              purity, light spectrum, and geological frequency.
+              At DARSHAI, we view geography as a wellness factor and partner with curated locations that meet our standards for environmental quality, recovery, and wellbeing.
             </p>
           </div>
         </div>
