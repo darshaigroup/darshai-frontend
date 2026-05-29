@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import {addPatient} from "../services/patientService";
+
 const AddPatientModal = ({ onClose }) => {
   const navigate = useNavigate();
 
@@ -24,27 +26,51 @@ const AddPatientModal = ({ onClose }) => {
   };
 
   /* SUBMIT */
-  const handleSubmit = () => {
-    if (
-      !formData.name ||
-      !formData.phone ||
-      !formData.email ||
-      !formData.gender
-    ) {
-      alert("Please fill all required fields");
+  const handleSubmit =
+  async () => {
 
-      return;
+    try {
+
+      if (
+        !formData.name ||
+        !formData.phone ||
+        !formData.gender
+      ) {
+        alert(
+          "Please fill all required fields"
+        );
+
+        return;
+      }
+
+      const response =
+        await addPatient(
+          formData
+        );
+
+      const patient =
+        response.patient;
+
+      navigate(
+        "/dashboard/assessments",
+        {
+          state: {
+            patient,
+          },
+        }
+      );
+
+      onClose();
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        error.message
+      );
     }
-
-    /* NAVIGATE TO ASSESSMENT */
-    navigate("/dashboard/assessments", {
-      state: {
-        patient: formData,
-      },
-    });
-
-    onClose();
-  };
+};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-4">

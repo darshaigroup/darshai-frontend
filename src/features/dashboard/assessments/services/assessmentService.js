@@ -6,24 +6,28 @@ export const submitAssessment =
 
     try {
 
-      const response = await fetch(
-        `${API_URL}/api/assessments/submit`,
-        {
-          method: "POST",
+      const response =
+        await fetch(
+          `${API_URL}/api/assessments/submit`,
+          {
+            method: "POST",
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
 
-          body: JSON.stringify(payload),
-        }
-      );
+            body: JSON.stringify(
+              payload
+            ),
+          }
+        );
 
       const data =
         await response.json();
 
       if (!response.ok) {
+
         throw new Error(
           data.message ||
           "Assessment submission failed"

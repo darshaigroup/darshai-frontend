@@ -271,12 +271,15 @@
 
 import { useState } from "react";
 
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 import AssessmentLayout from "../layouts/AssessmentLayout";
 
-/* INTRO */
 import FlowIntro from "./FlowIntro";
 
-/* BEFORE CONSULTATION */
 import BurnoutAssessment from "../sections/beforeConsultation/burnout/BurnoutAssessment";
 
 import CardiovascularAssessment from "../sections/beforeConsultation/cardiovascular/CardiovascularAssessment";
@@ -293,24 +296,38 @@ import MetabolicAssessment from "../sections/beforeConsultation/metabolic/Metabo
 
 import NervousAssessment from "../sections/beforeConsultation/nervous/NervousAssessment";
 
-/* FINAL */
-import ConsultationReady from "./ConsultationReady";
+import { submitAssessment }
+  from "../services/assessmentService";
 
 const Assessment = () => {
-  /* STEP */
-  const [step, setStep] = useState(0);
 
-  /* GLOBAL DATA */
-  const [data, setData] = useState({});
+  const navigate =
+    useNavigate();
 
-  /* ACTIVE SECTION */
-  const [activeSection, setActiveSection] = useState("burnout");
+  const location =
+    useLocation();
 
-  /* ACTIVE QUESTION */
-  const [activeQuestion, setActiveQuestion] = useState(null);
+  const patient =
+    location.state?.patient;
 
-  /* FLOW */
+  const [step, setStep] =
+    useState(0);
+
+  const [data, setData] =
+    useState({
+      patient,
+    });
+
+  const [activeSection,
+    setActiveSection] =
+      useState("burnout");
+
+  const [activeQuestion,
+    setActiveQuestion] =
+      useState(null);
+
   const steps = [
+
     {
       component: FlowIntro,
       key: "flowIntro",
@@ -318,112 +335,251 @@ const Assessment = () => {
     },
 
     {
-      component: BurnoutAssessment,
+      component:
+        BurnoutAssessment,
       key: "burnout",
       sectionId: "burnout",
     },
 
     {
-      component: MetabolicAssessment,
+      component:
+        MetabolicAssessment,
       key: "metabolic",
       sectionId: "metabolic",
     },
 
     {
-      component: DigestiveAssessment,
+      component:
+        DigestiveAssessment,
       key: "digestive",
       sectionId: "digestive",
     },
 
     {
-      component: CardiovascularAssessment,
+      component:
+        CardiovascularAssessment,
       key: "cardiovascular",
-      sectionId: "cardiovascular",
+      sectionId:
+        "cardiovascular",
     },
 
     {
-      component: NervousAssessment,
+      component:
+        NervousAssessment,
       key: "nervous",
       sectionId: "nervous",
     },
 
     {
-      component: InflammationAssessment,
+      component:
+        InflammationAssessment,
       key: "inflammation",
-      sectionId: "inflammation",
+      sectionId:
+        "inflammation",
     },
 
     {
-      component: LifestyleHabits,
-      key: "lifestyleHabits",
-      sectionId: "lifestyleHabits",
+      component:
+        LifestyleHabits,
+      key: "lifestyle",
+      sectionId:
+        "lifestyle",
     },
 
-     {
-      component: EnvironmentAssessment,
+    {
+      component:
+        EnvironmentAssessment,
       key: "environment",
-      sectionId: "environment",
-    },
-
-    {
-      component: ConsultationReady,
-      key: "consultationReady",
-      sectionId: "consultationReady",
+      sectionId:
+        "environment",
     },
   ];
 
-  /* CURRENT STEP */
-  const currentStep = steps[step];
+  const currentStep =
+    steps[step];
 
-  /* NEXT STEP */
-  const next = (key, values) => {
-    if (key) {
-      setData((prev) => ({
-        ...prev,
+  const next =
+    async (
+      key,
+      values
+    ) => {
+
+      const updatedData = {
+
+        ...data,
+
         [key]: values,
-      }));
-    }
+      };
 
-    const nextStep = step + 1;
+      setData(
+        updatedData
+      );
 
-    if (steps[nextStep]) {
-      setActiveSection(steps[nextStep].sectionId);
-    }
+      // FINAL SUBMIT
 
-    setStep(nextStep);
-  };
+      if (
+        currentStep.key ===
+        "environment"
+      ) {
 
-  /* SIDEBAR NAVIGATION */
-  const handleSidebarNavigate = (
-    questionId,
-    sectionId
-  ) => {
-    setActiveQuestion(questionId);
+        try {
 
-    setActiveSection(sectionId);
+          const payload = {
 
-    const sectionStep = steps.findIndex(
-      (item) => item.sectionId === sectionId
-    );
+            patientId:
+              updatedData
+                .patient.id,
 
-    if (sectionStep !== -1) {
-      setStep(sectionStep);
-    }
-  };
+            patientName:
+              updatedData
+                .patient.name,
 
-  /* CURRENT COMPONENT */
-  const CurrentComponent = currentStep.component;
+            answers: {
+
+              burnout:
+                updatedData
+                  .burnout,
+
+              metabolic:
+                updatedData
+                  .metabolic,
+
+              digestive:
+                updatedData
+                  .digestive,
+
+              cardiovascular:
+                updatedData
+                  .cardiovascular,
+
+              nervous:
+                updatedData
+                  .nervous,
+
+              inflammation:
+                updatedData
+                  .inflammation,
+
+              lifestyle:
+                updatedData
+                  .lifestyle,
+
+              environment:
+                updatedData
+                  .environment,
+            },
+          };
+
+          console.log(
+            "ASSESSMENT PAYLOAD"
+          );
+
+          console.log(
+            payload
+          );
+
+          const result =
+            await submitAssessment(
+              payload
+            );
+
+          navigate(
+            "/dashboard/result",
+            {
+              state: result,
+            }
+          );
+
+          return;
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+          alert(
+            error.message
+          );
+
+          return;
+        }
+      }
+
+      const nextStep =
+        step + 1;
+
+      if (
+        steps[nextStep]
+      ) {
+
+        setActiveSection(
+          steps[nextStep]
+            .sectionId
+        );
+      }
+
+      setStep(
+        nextStep
+      );
+    };
+
+  const handleSidebarNavigate =
+    (
+      questionId,
+      sectionId
+    ) => {
+
+      setActiveQuestion(
+        questionId
+      );
+
+      setActiveSection(
+        sectionId
+      );
+
+      const sectionStep =
+        steps.findIndex(
+          (item) =>
+            item.sectionId ===
+            sectionId
+        );
+
+      if (
+        sectionStep !== -1
+      ) {
+
+        setStep(
+          sectionStep
+        );
+      }
+    };
+
+  const CurrentComponent =
+    currentStep.component;
 
   return (
+
     <AssessmentLayout>
 
       <CurrentComponent
         data={data}
-        activeSection={activeSection}
-        activeQuestion={activeQuestion}
-        onNavigate={handleSidebarNavigate}
-        onComplete={(values) =>
-          next(currentStep.key, values)
+        activeSection={
+          activeSection
+        }
+        activeQuestion={
+          activeQuestion
+        }
+        onNavigate={
+          handleSidebarNavigate
+        }
+        onComplete={(
+          values
+        ) =>
+          next(
+            currentStep.key,
+            values
+          )
         }
       />
 
