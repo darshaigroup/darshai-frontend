@@ -6,24 +6,36 @@ export const submitAssessment =
 
     try {
 
-      const response = await fetch(
-        `${API_URL}/api/assessments/submit`,
-        {
-          method: "POST",
+      const token =
+        localStorage.getItem(
+          "token"
+        );
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
+      const response =
+        await fetch(
+          `${API_URL}/api/assessments/submit`,
+          {
+            method: "POST",
 
-          body: JSON.stringify(payload),
-        }
-      );
+            headers: {
+              "Content-Type":
+                "application/json",
+
+              Authorization:
+                `Bearer ${token}`,
+            },
+
+            body: JSON.stringify(
+              payload
+            ),
+          }
+        );
 
       const data =
         await response.json();
 
       if (!response.ok) {
+
         throw new Error(
           data.message ||
           "Assessment submission failed"

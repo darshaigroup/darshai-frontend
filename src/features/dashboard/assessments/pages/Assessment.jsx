@@ -1,275 +1,9 @@
-// import { useState } from "react";
-
-// import AssessmentLayout from "../layouts/AssessmentLayout";
-
-// import FlowIntro from "./FlowIntro";
-
-// /* PATIENT FLOW */
-// import BasicDetails from "../sections/afterLogin/BasicDetails";
-
-// import BurnoutAssessment from "../sections/beforeConsultation/burnout/BurnoutAssessment";
-
-// import CardiovascularAssessment from "../sections/beforeConsultation/cardiovascular/CardiovascularAssessment";
-
-// import DigestiveAssessment from "../sections/beforeConsultation/digestive/DigestiveAssessment";
-
-// import MetabolicAssessment from "../sections/beforeConsultation/metabolic/MetabolicAssessment";
-
-// import NervousAssessment from "../sections/beforeConsultation/nervous/NervousAssessment";
-
-// import EnvironmentAssessment from "../sections/beforeConsultation/environment/EnvironmentAssessment";
-
-// import SelfAssessment from "../sections/beforeConsultation/selfAssessment/SelfAssessment";
-
-// import LifestyleHabits from "../sections/beforeConsultation/LifestyleHabits/LifestyleHabits";
-
-// import MentalEmotional from "../sections/beforeConsultation/mentalEmotional/MentalEmotional";
-
-// import InflammationAssessment from "../sections/beforeConsultation/inflammation/InflammationAssessment";
-
-// import Readiness from "../sections/beforeConsultation/readiness/Readiness";
-
-// import ConsultationReady from "../pages/ConsultationReady";
-
-// /* DOCTOR FLOW */
-// import Prakriti from "../sections/prakriti/Prakriti";
-
-// import Vikriti from "../sections/vikriti/Vikriti";
-
-// import Agni from "../sections/agni/Agni";
-
-// import Ama from "../sections/ama/Ama";
-
-// import AyurvedicResult from "../sections/duringConsultation/ayurvedicResult/AyurvedicResult";
-
-// import ClinicalData from "../sections/duringConsultation/clinicalData/ClinicalData";
-
-// import LabReports from "../sections/duringConsultation/labReports/LabReports";
-
-// import ConsultationResult from "../sections/duringConsultation/consultationResult/ConsultationResult";
-
-// import DoctorNotes from "../sections/duringConsultation/doctorNotes/DoctorNotes";
-
-// /* FINAL */
-// import FinalSummary from "../sections/afterConsultation/FinalSummary";
-
-// import FinalResult from "./FinalResult";
-
-// const Assessment = () => {
-//   /* MAIN STEP */
-//   const [step, setStep] = useState(0);
-
-//   /* GLOBAL DATA */
-//   const [data, setData] = useState({});
-
-//   /* GLOBAL SIDEBAR NAVIGATION */
-//   const [activeQuestion, setActiveQuestion] = useState(null);
-
-//   const [activeSection, setActiveSection] = useState("selfAssessment");
-
-//   /* ALL STEPS */
-//   const steps = [
-//     {
-//       component: FlowIntro,
-//       key: "flowIntro",
-//       sectionId: "intro",
-//     },
-//     {
-//       component: BasicDetails,
-//       key: "basicDetails",
-//       sectionId: "basicDetails",
-//     },
-
-//     {
-//       component: BurnoutAssessment,
-//       key: "burnoutAssessment",
-//       sectionId: "burnoutAssessment",
-//     },
-
-//     {
-//       component: CardiovascularAssessment,
-//       key: "cardiovascular",
-//       sectionId: "cardiovascular",
-//     },
-    
-//     {
-//       component: DigestiveAssessment,
-//       key: "digestive",
-//       sectionId: "digestive",
-//     },
-//     {
-//       component: InflammationAssessment,
-//       key: "inflammation",
-//       sectionId: "inflammation",
-//     },
-//     {
-//       component: MetabolicAssessment,
-//       key: "metabolic",
-//       sectionId: "metabolic",
-//     },
-
-//     {
-//       component: NervousAssessment,
-//       key: "nervous",
-//       sectionId: "nervous",
-//     },
-    
-//     {
-//   component: EnvironmentAssessment,
-//   key: "environment",
-//   sectionId: "environment",
-// },
-
-//     {
-//       component: SelfAssessment,
-//       key: "selfAssessment",
-//       sectionId: "selfAssessment",
-//     },
-    
-
-//     {
-//       component: LifestyleHabits,
-//       key: "lifestyleHabits",
-//       sectionId: "lifestyle",
-//     },
-
-//   {
-//   component: MentalEmotional,
-//   key: "mentalEmotional",
-//   sectionId: "mentalEmotional",
-// },
-
-//     {
-//       component: Readiness,
-//       key: "readiness",
-//       sectionId: "readiness",
-//     },
-
-//     {
-//       component: ConsultationReady,
-//       key: "consultationReady",
-//       sectionId: "consultationReady",
-//     },
-
-//     {
-//       component: Prakriti,
-//       key: "prakriti",
-//       sectionId: "prakriti",
-//     },
-
-//     {
-//       component: Vikriti,
-//       key: "vikriti",
-//       sectionId: "vikriti",
-//     },
-
-//     {
-//       component: Agni,
-//       key: "agni",
-//       sectionId: "agni",
-//     },
-
-//     {
-//       component: Ama,
-//       key: "ama",
-//       sectionId: "ama",
-//     },
-
-//     {
-//       component: AyurvedicResult,
-//       key: "ayurvedicResult",
-//       sectionId: "ayurvedicResult",
-//     },
-
-//     {
-//       component: ClinicalData,
-//       key: "clinicalData",
-//       sectionId: "clinical",
-//     },
-
-//     {
-//       component: LabReports,
-//       key: "labReports",
-//       sectionId: "labs",
-//     },
-
-//     {
-//       component: ConsultationResult,
-//       key: "consultationResult",
-//       sectionId: "consultationResult",
-//     },
-//    {
-//       component: DoctorNotes,
-//       key: "doctorNotes",
-//       sectionId: "doctorNotes",
-//    },
-
-//     {
-//       component: FinalSummary,
-//       key: "finalSummary",
-//       sectionId: "summary",
-//     },
-    
-
-//     {
-//       component: FinalResult,
-//       key: "finalResult",
-//       sectionId: "finalResult",
-//     },
-//   ];
-
-//   const currentStep = steps[step];
-
-//   /* NEXT */
-//   const next = (key, values) => {
-//     if (key) {
-//       setData((prev) => ({
-//         ...prev,
-//         [key]: values,
-//       }));
-//     }
-
-//     const nextStep = step + 1;
-
-//     if (steps[nextStep]) {
-//       setActiveSection(steps[nextStep].sectionId);
-//     }
-
-//     setStep(nextStep);
-//   };
-
-//   /* SIDEBAR NAVIGATION */
-//   const handleSidebarNavigate = (questionId, sectionId) => {
-//     setActiveQuestion(questionId);
-
-//     setActiveSection(sectionId);
-
-//     const sectionStep = steps.findIndex((s) => s.sectionId === sectionId);
-
-//     if (sectionStep !== -1) {
-//       setStep(sectionStep);
-//     }
-//   };
-
-//   const CurrentComponent = currentStep.component;
-
-//   return (
-//     <AssessmentLayout>
-//       <CurrentComponent
-//         data={data}
-//         activeSection={activeSection}
-//         activeQuestion={activeQuestion}
-//         onNavigate={handleSidebarNavigate}
-//         onComplete={(values) => next(currentStep.key, values)}
-//       />
-//     </AssessmentLayout>
-//   );
-// };
-
-// export default Assessment;
-
-
 import { useState } from "react";
+
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import AssessmentLayout from "../layouts/AssessmentLayout";
 
@@ -293,23 +27,38 @@ import MetabolicAssessment from "../sections/beforeConsultation/metabolic/Metabo
 
 import NervousAssessment from "../sections/beforeConsultation/nervous/NervousAssessment";
 
-/* FINAL */
-import ConsultationReady from "./ConsultationReady";
+/* SERVICES */
+import {
+  submitAssessment,
+} from "../services/assessmentService";
 
 const Assessment = () => {
-  /* STEP */
-  const [step, setStep] = useState(0);
 
-  /* GLOBAL DATA */
-  const [data, setData] = useState({});
+  const navigate =
+    useNavigate();
 
-  /* ACTIVE SECTION */
-  const [activeSection, setActiveSection] = useState("burnout");
+  const location =
+    useLocation();
 
-  /* ACTIVE QUESTION */
-  const [activeQuestion, setActiveQuestion] = useState(null);
+  const patient =
+    location.state?.patient;
 
-  /* FLOW */
+  const [step, setStep] =
+    useState(0);
+
+  const [data, setData] =
+    useState({
+      patient,
+    });
+
+  const [activeSection,
+    setActiveSection] =
+      useState("burnout");
+
+  const [activeQuestion,
+    setActiveQuestion] =
+      useState(null);
+
   const steps = [
     {
       component: FlowIntro,
@@ -318,112 +67,482 @@ const Assessment = () => {
     },
 
     {
-      component: BurnoutAssessment,
+      component:
+        BurnoutAssessment,
       key: "burnout",
       sectionId: "burnout",
     },
 
     {
-      component: MetabolicAssessment,
+      component:
+        MetabolicAssessment,
       key: "metabolic",
       sectionId: "metabolic",
     },
 
     {
-      component: DigestiveAssessment,
+      component:
+        DigestiveAssessment,
       key: "digestive",
       sectionId: "digestive",
     },
 
     {
-      component: CardiovascularAssessment,
+      component:
+        CardiovascularAssessment,
       key: "cardiovascular",
-      sectionId: "cardiovascular",
+      sectionId:
+        "cardiovascular",
     },
 
     {
-      component: NervousAssessment,
+      component:
+        NervousAssessment,
       key: "nervous",
       sectionId: "nervous",
     },
 
     {
-      component: InflammationAssessment,
+      component:
+        InflammationAssessment,
       key: "inflammation",
-      sectionId: "inflammation",
+      sectionId:
+        "inflammation",
     },
 
     {
-      component: LifestyleHabits,
+      component:
+        LifestyleHabits,
       key: "lifestyleHabits",
-      sectionId: "lifestyleHabits",
-    },
-
-     {
-      component: EnvironmentAssessment,
-      key: "environment",
-      sectionId: "environment",
+      sectionId:
+        "lifestyleHabits",
     },
 
     {
-      component: ConsultationReady,
-      key: "consultationReady",
-      sectionId: "consultationReady",
+      component:
+        EnvironmentAssessment,
+      key: "environment",
+      sectionId:
+        "environment",
     },
   ];
 
-  /* CURRENT STEP */
-  const currentStep = steps[step];
+  const currentStep =
+    steps[step];
 
-  /* NEXT STEP */
-  const next = (key, values) => {
-    if (key) {
-      setData((prev) => ({
-        ...prev,
+  const next =
+    async (
+      key,
+      values
+    ) => {
+
+      const updatedData = {
+
+        ...data,
+
         [key]: values,
-      }));
-    }
+      };
 
-    const nextStep = step + 1;
+      setData(
+        updatedData
+      );
 
-    if (steps[nextStep]) {
-      setActiveSection(steps[nextStep].sectionId);
-    }
+      // ======================
+      // FINAL SUBMIT
+      // ======================
 
-    setStep(nextStep);
-  };
+      if (
+        currentStep.key ===
+        "environment"
+      ) {
 
-  /* SIDEBAR NAVIGATION */
-  const handleSidebarNavigate = (
-    questionId,
-    sectionId
-  ) => {
-    setActiveQuestion(questionId);
+        try {
 
-    setActiveSection(sectionId);
+          const payload = {
 
-    const sectionStep = steps.findIndex(
-      (item) => item.sectionId === sectionId
-    );
+            patientId:
+              updatedData
+                .patient.id,
 
-    if (sectionStep !== -1) {
-      setStep(sectionStep);
-    }
-  };
+            patientName:
+              updatedData
+                .patient.name,
 
-  /* CURRENT COMPONENT */
-  const CurrentComponent = currentStep.component;
+            answers: {
+
+              burnout: {
+                sleep:
+                  updatedData
+                    .burnout
+                    ?.sleep?.level,
+
+                hrv:
+                  updatedData
+                    .burnout
+                    ?.hrv?.level,
+
+                rhr:
+                  updatedData
+                    .burnout
+                    ?.rhr?.level,
+
+                stress:
+                  updatedData
+                    .burnout
+                    ?.stress?.level,
+
+                energy:
+                  updatedData
+                    .burnout
+                    ?.energy?.level,
+
+                mood:
+                  updatedData
+                    .burnout
+                    ?.mood?.level,
+              },
+
+              metabolic: {
+                hba1c:
+                  updatedData
+                    .metabolic
+                    ?.hba1c?.level,
+
+                glucose:
+                  updatedData
+                    .metabolic
+                    ?.glucose?.level,
+
+                activity:
+                  updatedData
+                    .metabolic
+                    ?.activity?.level,
+
+                lipids:
+                  updatedData
+                    .metabolic
+                    ?.lipids?.level,
+
+                postMeal:
+                  updatedData
+                    .metabolic
+                    ?.postMeal?.level,
+
+                bmi:
+                  updatedData
+                    .metabolic
+                    ?.bmi?.level,
+              },
+
+              digestive: {
+                appetite:
+                  updatedData
+                    .digestive
+                    ?.appetite?.level,
+
+                bloating:
+                  updatedData
+                    .digestive
+                    ?.bloating?.level,
+
+                mealTolerance:
+                  updatedData
+                    .digestive
+                    ?.mealTolerance?.level,
+
+                acidReflux:
+                  updatedData
+                    .digestive
+                    ?.acidReflux?.level,
+
+                bowelMovement:
+                  updatedData
+                    .digestive
+                    ?.bowelMovement?.level,
+
+                postMealEnergy:
+                  updatedData
+                    .digestive
+                    ?.postMealEnergy?.level,
+              },
+
+              cardiovascular: {
+                bp:
+                  updatedData
+                    .cardiovascular
+                    ?.bp?.level,
+
+                hrv:
+                  updatedData
+                    .cardiovascular
+                    ?.hrv?.level,
+
+                rhr:
+                  updatedData
+                    .cardiovascular
+                    ?.rhr?.level,
+
+                lipids:
+                  updatedData
+                    .cardiovascular
+                    ?.lipids?.level,
+
+                activity:
+                  updatedData
+                    .cardiovascular
+                    ?.activity?.level,
+
+                stress:
+                  updatedData
+                    .cardiovascular
+                    ?.stress?.level,
+              },
+
+              nervous_system: {
+                daytimeState:
+                  updatedData
+                    .nervous
+                    ?.daytimeState
+                    ?.level,
+
+                sleepQuality:
+                  updatedData
+                    .nervous
+                    ?.sleepQuality
+                    ?.level,
+
+                wakeFeeling:
+                  updatedData
+                    .nervous
+                    ?.wakeFeeling
+                    ?.level,
+
+                stressResponse:
+                  updatedData
+                    .nervous
+                    ?.stressResponse
+                    ?.level,
+
+                fatiguePattern:
+                  updatedData
+                    .nervous
+                    ?.fatiguePattern
+                    ?.level,
+              },
+
+              inflammation: {
+                bodyPain:
+                  updatedData
+                    .inflammation
+                    ?.bodyPain
+                    ?.level,
+
+                fatigue:
+                  updatedData
+                    .inflammation
+                    ?.fatigue
+                    ?.level,
+
+                foodSensitivity:
+                  updatedData
+                    .inflammation
+                    ?.foodSensitivity
+                    ?.level,
+
+                allergies:
+                  updatedData
+                    .inflammation
+                    ?.allergies
+                    ?.level,
+
+                recoverySpeed:
+                  updatedData
+                    .inflammation
+                    ?.recoverySpeed
+                    ?.level,
+              },
+
+              lifestyle: {
+                routine:
+                  updatedData
+                    .lifestyleHabits
+                    ?.routine
+                    ?.level,
+
+                workload:
+                  updatedData
+                    .lifestyleHabits
+                    ?.workload
+                    ?.level,
+
+                protocol:
+                  updatedData
+                    .lifestyleHabits
+                    ?.protocol
+                    ?.level,
+
+                travel:
+                  updatedData
+                    .lifestyleHabits
+                    ?.travel
+                    ?.level,
+
+                support:
+                  updatedData
+                    .lifestyleHabits
+                    ?.support
+                    ?.level,
+              },
+
+              environment: {
+                climate:
+                  updatedData
+                    .environment
+                    ?.climate
+                    ?.level,
+
+                living:
+                  updatedData
+                    .environment
+                    ?.living
+                    ?.level,
+
+                outdoor:
+                  updatedData
+                    .environment
+                    ?.outdoor
+                    ?.level,
+
+                screenTime:
+                  updatedData
+                    .environment
+                    ?.screenTime
+                    ?.level,
+
+                impact:
+                  updatedData
+                    .environment
+                    ?.impact
+                    ?.level,
+              },
+            },
+          };
+
+          console.log(
+            "ASSESSMENT PAYLOAD"
+          );
+
+          console.log(
+            JSON.stringify(
+              payload,
+              null,
+              2
+            )
+          );
+
+          const result =
+            await submitAssessment(
+              payload
+            );
+
+          navigate(
+            "/dashboard/result",
+            {
+              state: result,
+            }
+          );
+
+          return;
+
+        } catch (error) {
+
+          console.error(
+            "SUBMIT ERROR:",
+            error
+          );
+
+          alert(
+            error.message
+          );
+
+          return;
+        }
+      }
+
+      const nextStep =
+        step + 1;
+
+      if (
+        steps[nextStep]
+      ) {
+
+        setActiveSection(
+          steps[nextStep]
+            .sectionId
+        );
+      }
+
+      setStep(
+        nextStep
+      );
+    };
+
+  const handleSidebarNavigate =
+    (
+      questionId,
+      sectionId
+    ) => {
+
+      setActiveQuestion(
+        questionId
+      );
+
+      setActiveSection(
+        sectionId
+      );
+
+      const sectionStep =
+        steps.findIndex(
+          (item) =>
+            item.sectionId ===
+            sectionId
+        );
+
+      if (
+        sectionStep !== -1
+      ) {
+
+        setStep(
+          sectionStep
+        );
+      }
+    };
+
+  const CurrentComponent =
+    currentStep.component;
 
   return (
+
     <AssessmentLayout>
 
       <CurrentComponent
         data={data}
-        activeSection={activeSection}
-        activeQuestion={activeQuestion}
-        onNavigate={handleSidebarNavigate}
-        onComplete={(values) =>
-          next(currentStep.key, values)
+        activeSection={
+          activeSection
+        }
+        activeQuestion={
+          activeQuestion
+        }
+        onNavigate={
+          handleSidebarNavigate
+        }
+        onComplete={(
+          values
+        ) =>
+          next(
+            currentStep.key,
+            values
+          )
         }
       />
 
