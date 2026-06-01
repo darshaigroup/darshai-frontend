@@ -2,6 +2,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
+//Raw Results Page for displaying assessment results that can be changes
 const Result = () => {
 
   const location =
