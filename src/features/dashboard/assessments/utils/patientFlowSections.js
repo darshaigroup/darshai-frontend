@@ -12,7 +12,7 @@ import { nervousSections } from "../sections/beforeConsultation/nervous/nervousD
 
 import { inflammationSections } from "../sections/beforeConsultation/inflammation/inflammationData";  
 
-import { lifestyleHabitSections } from "../sections/beforeConsultation/LifestyleHabits/lifestyleHabitsData";
+import { lifestyleHabitSections } from "../sections/beforeConsultation/lifestyleHabits/lifestyleHabitsData"
 
 import {environmentSections} from "../sections/beforeConsultation/environment/environmentData";
 
