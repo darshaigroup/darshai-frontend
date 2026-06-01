@@ -6,10 +6,7 @@ import {
 } from "react-router-dom";
 
 import AssessmentLayout from "../layouts/AssessmentLayout";
-
-/* INTRO */
 import FlowIntro from "./FlowIntro";
-
 /* BEFORE CONSULTATION */
 import BurnoutAssessment from "../sections/beforeConsultation/burnout/BurnoutAssessment";
 
