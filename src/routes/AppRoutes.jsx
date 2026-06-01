@@ -26,10 +26,12 @@ import TermsConditions from "@/pages/LegalFile/TermsConditions";
 import Overview from "@/features/dashboard/pages/Overview";
 import Analysis from "@/features/dashboard/pages/Analysis";
 import Patients from "@/features/dashboard/pages/Patients";
+import Result from "@/features/dashboard/assessments/pages/Result";
 import GeoWellness from "@/features/dashboard/pages/GeoWellness";
 import Reports from "@/features/dashboard/pages/Reports";
 import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
+import Assessment from "@/features/dashboard/assessments/pages/Assessment";
 
 // Auth
 import Login from "@/pages/Auth/Login";
@@ -83,6 +85,9 @@ const AppRoutes = () => {
             <Route path="reports" element={<Reports />} />
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
+            <Route path="assessments" element={<Assessment />} />
+             <Route path="result" element={<Result />} />
+            
           </Route>
 
         </Route>
