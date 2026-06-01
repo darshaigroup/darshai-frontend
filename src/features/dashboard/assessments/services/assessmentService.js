@@ -6,6 +6,22 @@ export const submitAssessment =
 
     try {
 
+      console.log(
+        "submitAssessment() called"
+      );
+
+      const token =
+        localStorage.getItem(
+          "token"
+        );
+
+      if (!token) {
+
+        throw new Error(
+          "No token found"
+        );
+      }
+
       const response =
         await fetch(
           `${API_URL}/api/assessments/submit`,
@@ -15,6 +31,9 @@ export const submitAssessment =
             headers: {
               "Content-Type":
                 "application/json",
+
+              Authorization:
+                `Bearer ${token}`,
             },
 
             body: JSON.stringify(
@@ -22,6 +41,11 @@ export const submitAssessment =
             ),
           }
         );
+
+      console.log(
+        "API Response Status:",
+        response.status
+      );
 
       const data =
         await response.json();

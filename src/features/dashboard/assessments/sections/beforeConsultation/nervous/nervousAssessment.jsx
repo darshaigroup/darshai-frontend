@@ -40,53 +40,55 @@ const NervousAssessment = ({
 
   }, [activeQuestion]);
 
-  const handleSelect = (
-    questionId,
-    option
-  ) => {
+ const handleSelect = (
+  questionId,
+  option
+) => {
 
-    const updated = {
-      ...answers,
+  const updated = {
+    ...answers,
 
-      [questionId]: {
-        label: option.label,
-        score: option.score,
-        weight:
-          section.questions.find(
-            (q) =>
-              q.id === questionId
-          )?.weight,
-      },
-    };
+    [questionId]: {
+      level: option.level,
 
-    setAnswers(updated);
+      label: option.label,
 
-    const currentIndex =
-      section.questions.findIndex(
-        (q) =>
-          q.id === questionId
+      weight:
+        section.questions.find(
+          (q) =>
+            q.id === questionId
+        )?.weight,
+    },
+  };
+
+  setAnswers(updated);
+
+  const currentIndex =
+    section.questions.findIndex(
+      (q) =>
+        q.id === questionId
+    );
+
+  const nextQuestion =
+    section.questions[
+      currentIndex + 1
+    ];
+
+  setTimeout(() => {
+
+    if (nextQuestion) {
+
+      setOpenQuestion(
+        nextQuestion.id
       );
 
-    const nextQuestion =
-      section.questions[
-        currentIndex + 1
-      ];
+    } else {
 
-    setTimeout(() => {
+      setOpenQuestion(null);
+    }
 
-      if (nextQuestion) {
-
-        setOpenQuestion(
-          nextQuestion.id
-        );
-
-      } else {
-
-        setOpenQuestion(null);
-      }
-
-    }, 300);
-  };
+  }, 300);
+};
 
   return (
 

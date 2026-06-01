@@ -1,5 +1,3 @@
-// EnvironmentAssessment.jsx
-
 import {
   useState,
   useEffect,
@@ -21,6 +19,7 @@ const EnvironmentAssessment = ({
   onComplete,
   activeQuestion,
   onNavigate,
+  isSubmitting,
 }) => {
 
   const section =
@@ -55,8 +54,10 @@ const EnvironmentAssessment = ({
       ...answers,
 
       [questionId]: {
+        level: option.level,
+
         label: option.label,
-        score: option.score,
+
         weight:
           section.questions.find(
             (q) =>
@@ -92,6 +93,7 @@ const EnvironmentAssessment = ({
       }
 
     }, 300);
+
   };
 
   return (
@@ -115,41 +117,54 @@ const EnvironmentAssessment = ({
 
         <div className="space-y-5">
 
-          {section.questions.map((q) => (
+          {section.questions.map(
+            (q) => (
 
-            <ExpandableQuestion
-              key={q.id}
-              icon={q.icon}
-              question={q.question}
-              options={q.options}
-              selected={answers[q.id]}
-              isOpen={openQuestion === q.id}
-              onOpen={() =>
-                setOpenQuestion(q.id)
-              }
-              onSelect={(option) =>
-                handleSelect(
-                  q.id,
-                  option
-                )
-              }
-            />
-          ))}
+              <ExpandableQuestion
+                key={q.id}
+                icon={q.icon}
+                question={q.question}
+                options={q.options}
+                selected={answers[q.id]}
+                isOpen={
+                  openQuestion === q.id
+                }
+                onOpen={() =>
+                  setOpenQuestion(q.id)
+                }
+                onSelect={(option) =>
+                  handleSelect(
+                    q.id,
+                    option
+                  )
+                }
+              />
+
+            )
+          )}
 
         </div>
 
         <button
+          disabled={isSubmitting}
           onClick={() =>
             onComplete?.(answers)
           }
-          className="w-full mt-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg shadow-green-200 hover:scale-[1.01] transition-all"
+          className="w-full mt-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg shadow-green-200 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Continue
+
+          {
+            isSubmitting
+              ? "Submitting..."
+              : "Submit Assessment"
+          }
+
         </button>
 
       </WellnessSectionCard>
 
     </AssessmentLayout>
+
   );
 };
 
