@@ -27,7 +27,6 @@ import MetabolicAssessment from "../sections/beforeConsultation/metabolic/Metabo
 
 import NervousAssessment from "../sections/beforeConsultation/nervous/NervousAssessment";
 
-/* SERVICES */
 import {
   submitAssessment,
 } from "../services/assessmentService";
