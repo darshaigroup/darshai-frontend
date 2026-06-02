@@ -85,20 +85,20 @@ We match your specific biological deficit to the exact geographical coordinate â
   },
 
   {
-    tag: "THE EVIDENCE",
+  tag: "THE OUTCOME",
 
-    icon: ShieldCheck,
+  icon: ShieldCheck,
 
-    title: "The Protocol Efficacy Score (PES)",
+  title: "The Outcome: Health Sovereignty",
 
-    text: `
-We believe in absolute scientific proof.
+  text: `
+DARSHAI is not about temporary wellness; it is about lasting transformation.
 
-To guarantee an ROI on your health, our system generates a quantifiable PES.
+Our goal is to help individuals regain control over their biology through measurable interventions and evidence-based longevity strategies.
 
-We don't just tell you that you feel better; we show you the exact data proving how our localized therapies, diets, and environments are actively reversing burnout and lowering your biological age.
-    `,
-  },
+By combining environmental intelligence, clinical data, and personalized protocols, we empower you to build resilience, enhance performance, and achieve long-term health sovereignty.
+  `,
+},
 ];
 
 export default function Philosophy() {
