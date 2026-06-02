@@ -73,6 +73,18 @@ We don't just tell you that you feel better; we show you the exact data proving 
   },
 
   {
+    tag: "THE PROTOCOLS",
+
+    icon: Compass,
+
+    title: "The Sovereign Protocols",
+
+    text: `
+We match your specific biological deficit to the exact geographical coordinate — Coast, Forest, or Mountain — and Ayurvedic intervention required to heal it.
+    `,
+  },
+
+  {
   tag: "THE OUTCOME",
 
   icon: ShieldCheck,
@@ -87,18 +99,6 @@ Our goal is to help individuals regain control over their biology through measur
 By combining environmental intelligence, clinical data, and personalized protocols, we empower you to build resilience, enhance performance, and achieve long-term health sovereignty.
   `,
 },
-
-  {
-    tag: "THE PROTOCOLS",
-
-    icon: Compass,
-
-    title: "The Sovereign Protocols",
-
-    text: `
-We match your specific biological deficit to the exact geographical coordinate — Coast, Forest, or Mountain — and Ayurvedic intervention required to heal it.
-    `,
-  },
 ];
 
 export default function Philosophy() {
