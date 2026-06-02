@@ -73,6 +73,22 @@ We don't just tell you that you feel better; we show you the exact data proving 
   },
 
   {
+  tag: "THE OUTCOME",
+
+  icon: ShieldCheck,
+
+  title: "The Outcome: Health Sovereignty",
+
+  text: `
+DARSHAI is not about temporary wellness; it is about lasting transformation.
+
+Our goal is to help individuals regain control over their biology through measurable interventions and evidence-based longevity strategies.
+
+By combining environmental intelligence, clinical data, and personalized protocols, we empower you to build resilience, enhance performance, and achieve long-term health sovereignty.
+  `,
+},
+
+  {
     tag: "THE PROTOCOLS",
 
     icon: Compass,
@@ -81,22 +97,6 @@ We don't just tell you that you feel better; we show you the exact data proving 
 
     text: `
 We match your specific biological deficit to the exact geographical coordinate — Coast, Forest, or Mountain — and Ayurvedic intervention required to heal it.
-    `,
-  },
-
-  {
-    tag: "THE EVIDENCE",
-
-    icon: ShieldCheck,
-
-    title: "The Protocol Efficacy Score (PES)",
-
-    text: `
-We believe in absolute scientific proof.
-
-To guarantee an ROI on your health, our system generates a quantifiable PES.
-
-We don't just tell you that you feel better; we show you the exact data proving how our localized therapies, diets, and environments are actively reversing burnout and lowering your biological age.
     `,
   },
 ];
