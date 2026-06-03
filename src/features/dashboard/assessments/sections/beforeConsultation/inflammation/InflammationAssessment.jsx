@@ -16,6 +16,7 @@ import { inflammationSections } from "./inflammationData";
 import { patientFlowSections } from "../../../utils/patientFlowSections";
 
 const InflammationAssessment = ({
+  data,
   onComplete,
   activeQuestion,
   onNavigate,
@@ -40,59 +41,76 @@ const InflammationAssessment = ({
       setOpenQuestion(
         activeQuestion
       );
+
     }
 
   }, [activeQuestion]);
 
-  const handleSelect = (
-  questionId,
-  option
-) => {
+  useEffect(() => {
 
-  const updated = {
-    ...answers,
+    if (data?.inflammation) {
 
-    [questionId]: {
-      level: option.level,
-
-      label: option.label,
-
-      weight:
-        section.questions.find(
-          (q) =>
-            q.id === questionId
-        )?.weight,
-    },
-  };
-
-  setAnswers(updated);
-
-  const currentIndex =
-    section.questions.findIndex(
-      (q) =>
-        q.id === questionId
-    );
-
-  const nextQuestion =
-    section.questions[
-      currentIndex + 1
-    ];
-
-  setTimeout(() => {
-
-    if (nextQuestion) {
-
-      setOpenQuestion(
-        nextQuestion.id
+      setAnswers(
+        data.inflammation
       );
 
-    } else {
-
-      setOpenQuestion(null);
     }
 
-  }, 300);
-};
+  }, [data]);
+
+  const handleSelect = (
+    questionId,
+    option
+  ) => {
+
+    const updated = {
+      ...answers,
+
+      [questionId]: {
+        level: option.level,
+
+        label: option.label,
+
+        weight:
+          section.questions.find(
+            (q) =>
+              q.id === questionId
+          )?.weight,
+      },
+    };
+
+    setAnswers(updated);
+
+    const currentIndex =
+      section.questions.findIndex(
+        (q) =>
+          q.id === questionId
+      );
+
+    const nextQuestion =
+      section.questions[
+        currentIndex + 1
+      ];
+
+    setTimeout(() => {
+
+      if (nextQuestion) {
+
+        setOpenQuestion(
+          nextQuestion.id
+        );
+
+      } else {
+
+        setOpenQuestion(
+          null
+        );
+
+      }
+
+    }, 300);
+
+  };
 
   return (
 
@@ -102,7 +120,7 @@ const InflammationAssessment = ({
           sections={patientFlowSections}
           activeSection="inflammation"
           activeQuestion={openQuestion}
-          answers={answers}
+          answers={data}
           onNavigate={onNavigate}
         />
       }
@@ -115,42 +133,72 @@ const InflammationAssessment = ({
 
         <div className="space-y-5">
 
-          {section.questions.map((q) => (
+          {section.questions.map(
+            (q) => (
 
-            <ExpandableQuestion
-              key={q.id}
-              icon={q.icon}
-              question={q.question}
-              options={q.options}
-              selected={answers[q.id]}
-              isOpen={openQuestion === q.id}
-              onOpen={() =>
-                setOpenQuestion(q.id)
-              }
-              onSelect={(option) =>
-                handleSelect(
-                  q.id,
-                  option
-                )
-              }
-            />
-          ))}
+              <ExpandableQuestion
+                key={q.id}
+                icon={q.icon}
+                question={q.question}
+                options={q.options}
+                selected={answers[q.id]}
+                isOpen={
+                  openQuestion === q.id
+                }
+                onOpen={() =>
+                  setOpenQuestion(
+                    q.id
+                  )
+                }
+                onSelect={(option) =>
+                  handleSelect(
+                    q.id,
+                    option
+                  )
+                }
+              />
+
+            )
+          )}
 
         </div>
 
         <button
-          onClick={() =>
-            onComplete?.(answers)
-          }
+          onClick={() => {
+
+            console.log(
+              "INFLAMMATION ANSWERS",
+              answers
+            );
+
+            console.log(
+              "TOTAL QUESTIONS",
+              section.questions.length
+            );
+
+            console.log(
+              "ANSWERED",
+              Object.keys(
+                answers
+              ).length
+            );
+
+            onComplete?.(
+              answers
+            );
+
+          }}
           className="w-full mt-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg shadow-green-200 hover:scale-[1.01] transition-all"
         >
-          Continue
+          Save and Continue
         </button>
 
       </WellnessSectionCard>
 
     </AssessmentLayout>
+
   );
+
 };
 
 export default InflammationAssessment;

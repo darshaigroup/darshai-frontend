@@ -16,6 +16,7 @@ import { burnoutSections } from "./burnoutData";
 import { patientFlowSections } from "../../../utils/patientFlowSections";
 
 const BurnoutAssessment = ({
+  data,
   onComplete,
   activeQuestion,
   onNavigate,
@@ -40,59 +41,86 @@ const BurnoutAssessment = ({
       setOpenQuestion(
         activeQuestion
       );
+
     }
 
   }, [activeQuestion]);
 
- const handleSelect = (
-  questionId,
-  option
-) => {
+  useEffect(() => {
 
-  const updated = {
-    ...answers,
+  if (data?.burnout) {
 
-    [questionId]: {
-      level: option.level,
-
-      label: option.label,
-
-      weight:
-        section.questions.find(
-          (q) =>
-            q.id === questionId
-        )?.weight,
-    },
-  };
-
-  setAnswers(updated);
-
-  const currentIndex =
-    section.questions.findIndex(
-      (q) =>
-        q.id === questionId
+    setAnswers(
+      data.burnout
     );
 
-  const nextQuestion =
-    section.questions[
-      currentIndex + 1
-    ];
-
-  setTimeout(() => {
-
-    if (nextQuestion) {
-
-      setOpenQuestion(
-        nextQuestion.id
+    const unanswered =
+      section.questions.find(
+        q =>
+          !data.burnout[q.id]
       );
 
-    } else {
+    setOpenQuestion(
+      unanswered
+        ? unanswered.id
+        : section.questions[0].id
+    );
 
-      setOpenQuestion(null);
-    }
+  }
 
-  }, 300);
-};
+}, [data]);
+
+  const handleSelect = (
+    questionId,
+    option
+  ) => {
+
+    const updated = {
+      ...answers,
+
+      [questionId]: {
+        level: option.level,
+
+        label: option.label,
+
+        weight:
+          section.questions.find(
+            (q) =>
+              q.id === questionId
+          )?.weight,
+      },
+    };
+
+    setAnswers(updated);
+
+    const currentIndex =
+      section.questions.findIndex(
+        (q) =>
+          q.id === questionId
+      );
+
+    const nextQuestion =
+      section.questions[
+        currentIndex + 1
+      ];
+
+    setTimeout(() => {
+
+      if (nextQuestion) {
+
+        setOpenQuestion(
+          nextQuestion.id
+        );
+
+      } else {
+
+        setOpenQuestion(null);
+
+      }
+
+    }, 300);
+
+  };
 
   return (
 
@@ -102,7 +130,7 @@ const BurnoutAssessment = ({
           sections={patientFlowSections}
           activeSection="burnout"
           activeQuestion={openQuestion}
-          answers={answers}
+          answers={data}
           onNavigate={onNavigate}
         />
       }
@@ -137,24 +165,48 @@ const BurnoutAssessment = ({
                   )
                 }
               />
+
             )
           )}
 
         </div>
 
         <button
-          onClick={() =>
-            onComplete?.(answers)
-          }
+          onClick={() => {
+
+            console.log(
+              "BURNOUT ANSWERS",
+              answers
+            );
+
+            console.log(
+              "TOTAL QUESTIONS",
+              section.questions.length
+            );
+
+            console.log(
+              "ANSWERED",
+              Object.keys(
+                answers
+              ).length
+            );
+
+            onComplete?.(
+              answers
+            );
+
+          }}
           className="w-full mt-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg shadow-green-200 hover:scale-[1.01] transition-all"
         >
-          Continue
+          Save and Continue
         </button>
 
       </WellnessSectionCard>
 
     </AssessmentLayout>
+
   );
+
 };
 
 export default BurnoutAssessment;
