@@ -72,6 +72,15 @@ Balmatta, Mangalore-575 001
   >
     +91-8088171511
   </a>
+  <a
+  href="https://wa.me/918088171511"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-3 inline-flex items-center gap-2 text-sm text-[#1E7A3A] font-medium hover:text-[#C6A75E] transition"
+>
+  <FaWhatsapp />
+  Connect with a Darshai Specialist
+</a>
 
   {/* SOCIAL */}
   <div className="flex gap-3 mt-5">
@@ -151,26 +160,65 @@ Balmatta, Mangalore-575 001
 
       {/* 🔺 SCROLL TOP */}
     
-<div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
+<div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
 
-  {/* WHATSAPP */}
+  {/* PREMIUM WHATSAPP */}
+<div className="flex flex-col items-end gap-3">
+
+  <motion.div
+  animate={{ opacity: [0.95, 1, 0.95], y: [0, -4, 0] }}
+  transition={{ duration: 3, repeat: Infinity }}
+  className="relative w-[130px] rounded-[22px] rounded-br-md bg-white border border-[#C6A75E]/20 shadow-[0_20px_60px_rgba(0,0,0,0.12)] px-5 py-5 text-center"
+>
+
+  {/* GOLD BADGE */}
+  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#C6A75E] text-white text-[9px] uppercase tracking-[0.25em] shadow-[0_8px_20px_rgba(198,167,94,0.35)]">
+    Live
+  </div>
+
+  {/* CHAT TAIL */}
+  <div className="absolute -bottom-2 right-5 w-4 h-4 bg-white border-r border-b border-[#C6A75E]/20 rotate-45" />
+
+  <p className="mt-2 text-[#C6A75E] text-[10px] tracking-[0.22em] uppercase">
+    Concierge Desk
+  </p>
+
+  <p className="mt-3 text-[#1E7A3A] font-semibold text-sm leading-relaxed">
+    Talk to Our Expert 
+  </p>
+
+ 
+
+</motion.div>
+
   <motion.a
     href="https://wa.me/918088171511"
     target="_blank"
     rel="noopener noreferrer"
-    whileHover={{ scale: 1.12 }}
-    whileTap={{ scale: 0.92 }}
-    className="w-10 h-10 rounded-full bg-[#1E7A3A] text-white flex items-center justify-center shadow-[0_15px_40px_rgba(37,211,102,0.35)] transition-all duration-300"
+    animate={{
+      boxShadow: [
+        "0 0 0 rgba(37,211,102,0.25)",
+        "0 0 35px rgba(37,211,102,0.55)",
+        "0 0 0 rgba(37,211,102,0.25)",
+      ],
+    }}
+    transition={{ duration: 2.5, repeat: Infinity }}
+    whileHover={{ scale: 1.08 }}
+    whileTap={{ scale: 0.95 }}
+    className="relative w-16 h-16 rounded-full bg-gradient-to-br from-[#25D366] to-[#1E7A3A] text-white flex items-center justify-center shadow-[0_20px_50px_rgba(37,211,102,0.35)]"
   >
-    <FaWhatsapp size={26} />
+    <span className="absolute inset-0 rounded-full border border-white/20" />
+    <FaWhatsapp size={30} />
   </motion.a>
+
+</div>
 
   {/* SCROLL TOP */}
   <motion.button
     onClick={scrollTop}
     whileHover={{ scale: 1.12 }}
     whileTap={{ scale: 0.92 }}
-    className="w-10 h-10 rounded-full bg-[#1E7A3A] text-white flex items-center justify-center shadow-[0_15px_40px_rgba(30,122,58,0.35)] transition-all duration-300"
+    className="w-12 h-12 rounded-full bg-[#1E7A3A] text-white flex items-center justify-center shadow-[0_15px_40px_rgba(30,122,58,0.35)] transition-all duration-300"
   >
     <FaArrowUp size={18} />
   </motion.button>
