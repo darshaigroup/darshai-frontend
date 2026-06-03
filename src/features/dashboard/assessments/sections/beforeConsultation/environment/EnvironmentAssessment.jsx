@@ -16,6 +16,7 @@ import { environmentSections } from "./environmentData";
 import { patientFlowSections } from "../../../utils/patientFlowSections";
 
 const EnvironmentAssessment = ({
+  data,
   onComplete,
   activeQuestion,
   onNavigate,
@@ -41,9 +42,22 @@ const EnvironmentAssessment = ({
       setOpenQuestion(
         activeQuestion
       );
+
     }
 
   }, [activeQuestion]);
+
+  useEffect(() => {
+
+    if (data?.environment) {
+
+      setAnswers(
+        data.environment
+      );
+
+    }
+
+  }, [data]);
 
   const handleSelect = (
     questionId,
@@ -89,7 +103,10 @@ const EnvironmentAssessment = ({
 
       } else {
 
-        setOpenQuestion(null);
+        setOpenQuestion(
+          null
+        );
+
       }
 
     }, 300);
@@ -104,7 +121,7 @@ const EnvironmentAssessment = ({
           sections={patientFlowSections}
           activeSection="environment"
           activeQuestion={openQuestion}
-          answers={answers}
+          answers={data}
           onNavigate={onNavigate}
         />
       }
@@ -130,7 +147,9 @@ const EnvironmentAssessment = ({
                   openQuestion === q.id
                 }
                 onOpen={() =>
-                  setOpenQuestion(q.id)
+                  setOpenQuestion(
+                    q.id
+                  )
                 }
                 onSelect={(option) =>
                   handleSelect(
@@ -147,9 +166,30 @@ const EnvironmentAssessment = ({
 
         <button
           disabled={isSubmitting}
-          onClick={() =>
-            onComplete?.(answers)
-          }
+          onClick={() => {
+
+            console.log(
+              "ENVIRONMENT ANSWERS",
+              answers
+            );
+
+            console.log(
+              "TOTAL QUESTIONS",
+              section.questions.length
+            );
+
+            console.log(
+              "ANSWERED",
+              Object.keys(
+                answers
+              ).length
+            );
+
+            onComplete?.(
+              answers
+            );
+
+          }}
           className="w-full mt-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg shadow-green-200 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
 
@@ -166,6 +206,7 @@ const EnvironmentAssessment = ({
     </AssessmentLayout>
 
   );
+
 };
 
 export default EnvironmentAssessment;

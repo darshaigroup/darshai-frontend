@@ -32,7 +32,7 @@ export const patientFlowSections = [
   //       .questions,
   // },
 {
-    id: "burnoutAssessment",
+    id: "burnout",
 
     title: "Burnout Assessment",  
 
@@ -92,7 +92,7 @@ export const patientFlowSections = [
   },
 
   {
-    id: "lifestyle",
+    id: "lifestyleHabits",
 
     title:
       "Lifestyle & Habits",
