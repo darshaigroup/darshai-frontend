@@ -161,25 +161,7 @@ const NervousAssessment = ({
 
         <button
           onClick={() => {
-
-            console.log(
-              "NERVOUS ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
-            onComplete?.(
+              onComplete?.(
               answers
             );
 

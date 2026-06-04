@@ -183,24 +183,6 @@ useEffect(() => {
 
         <button
           onClick={() => {
-
-            console.log(
-              "LIFESTYLE ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
             onComplete?.(
               answers
             );

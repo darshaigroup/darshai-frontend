@@ -167,24 +167,6 @@ const MetabolicAssessment = ({
 
         <button
           onClick={() => {
-
-            console.log(
-              "METABOLIC ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
             onComplete?.(
               answers
             );

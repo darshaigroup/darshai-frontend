@@ -105,10 +105,10 @@ const AddPatientModal = ({
             formData
           );
 
-        console.log(
-          "PATIENT CREATED:",
-          response
-        );
+        // console.log(
+        //   "PATIENT CREATED:",
+        //   response
+        // );
 
         navigate(
           "/dashboard/assessments",

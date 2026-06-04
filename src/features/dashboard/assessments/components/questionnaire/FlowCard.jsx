@@ -13,6 +13,48 @@ const FlowCard = ({
   onNext,
 }) => {
 
+  const assessmentBlocks = [
+  {
+    id: "burnout",
+    title: "Burnout & Recovery",
+    color: "from-violet-500 to-fuchsia-500",
+  },
+  {
+    id: "metabolic",
+    title: "Metabolic Health",
+    color: "from-orange-500 to-amber-500",
+  },
+  {
+    id: "digestive",
+    title: "Digestive Wellness",
+    color: "from-emerald-500 to-green-600",
+  },
+  {
+    id: "cardiovascular",
+    title: "Cardiovascular Health",
+    color: "from-red-500 to-rose-600",
+  },
+  {
+    id: "nervous",
+    title: "Nervous System Balance",
+    color: "from-sky-500 to-cyan-500",
+  },
+  {
+    id: "inflammation",
+    title: "Inflammation Risk",
+    color: "from-yellow-500 to-orange-500",
+  },
+  {
+    id: "lifestyleHabits",
+    title: "Lifestyle Habits",
+    color: "from-green-500 to-emerald-500",
+  },
+  {
+    id: "environment",
+    title: "Environmental Wellness",
+    color: "from-teal-500 to-cyan-600",
+  },
+];
   return (
 
     <div
@@ -219,352 +261,48 @@ const FlowCard = ({
 
           </div>
 
-          {/* STEPS */}
-          {/* STEPS */}
+         {/* ASSESSMENT BLOCKS */}
+
 <div className="space-y-5">
 
-  {/* SELF ASSESSMENT */}
-  <div
-    className="
-      group
-      relative
-      overflow-hidden
-      flex
-      items-center
-      gap-5
-      rounded-[28px]
-      border border-gray-100
-      bg-white
-      p-6
-      shadow-[0_10px_30px_rgba(0,0,0,0.04)]
-      transition-all
-      hover:scale-[1.02]
-      hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]
-    "
-  >
+  {assessmentBlocks.map((block) => (
 
-    {/* GLOW */}
-    <div
-      className="
-        absolute
-        top-[-50px]
-        right-[-40px]
-        w-[120px]
-        h-[120px]
-        rounded-full
-        bg-green-100/40
-        blur-[50px]
-      "
-    />
-
-    {/* ICON */}
-    <div
-      className="
-        relative
-        z-10
-        w-16
-        h-16
-        rounded-3xl
-        bg-gradient-to-br
-        from-green-500
-        to-emerald-600
-        flex
-        items-center
-        justify-center
-        shadow-lg
-      "
+    <motion.div
+      key={block.id}
+      whileHover={{ y: -4 }}
+      className="group relative overflow-hidden flex items-center gap-5 rounded-[28px] border border-gray-100 bg-white p-6 shadow-[0_10px_30px_rgba(0,0,0,0.04)] transition-all hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]"
     >
 
-      <Sparkles
-        size={30}
-        className="text-white"
-      />
+      <div className="absolute top-[-50px] right-[-40px] w-[120px] h-[120px] rounded-full bg-gray-100/40 blur-[50px]" />
 
-    </div>
+      <div className={`relative z-10 w-16 h-16 rounded-3xl bg-gradient-to-br ${block.color} flex items-center justify-center shadow-lg`}>
 
-    {/* CONTENT */}
-    <div className="relative z-10">
+        <span className="text-white text-xl font-bold">
+          {block.title.charAt(0)}
+        </span> 
 
-      <h3
-        className="
-          text-xl
-          font-bold
-          text-[#1D1D1F]
-        "
-      >
-        Self Assessment
-      </h3>
+      </div>
 
-      <p
-        className="
-          mt-2
-          text-gray-500
-          leading-7
-        "
-      >
-        Share your wellness goals,
-        lifestyle priorities, and
-        overall health expectations.
-      </p>
+      <div className="relative z-10 flex-1">
 
-    </div>
+        <h3 className="text-xl font-bold text-[#1D1D1F]">
+          {block.title}
+        </h3>
 
-  </div>
+        <p className="mt-2 text-gray-500 text-sm">
+          Assessment Domain
+        </p>
 
-  {/* LIFESTYLE */}
-  <div
-    className="
-      group
-      relative
-      overflow-hidden
-      flex
-      items-center
-      gap-5
-      rounded-[28px]
-      border border-gray-100
-      bg-white
-      p-6
-      shadow-[0_10px_30px_rgba(0,0,0,0.04)]
-      transition-all
-      hover:scale-[1.02]
-      hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]
-    "
-  >
-
-    <div
-      className="
-        absolute
-        top-[-50px]
-        right-[-40px]
-        w-[120px]
-        h-[120px]
-        rounded-full
-        bg-blue-100/40
-        blur-[50px]
-      "
-    />
-
-    <div
-      className="
-        relative
-        z-10
-        w-16
-        h-16
-        rounded-3xl
-        bg-gradient-to-br
-        from-sky-500
-        to-cyan-500
-        flex
-        items-center
-        justify-center
-        shadow-lg
-      "
-    >
-
-      <Leaf
-        size={30}
-        className="text-white"
-      />
-
-    </div>
-
-    <div className="relative z-10">
-
-      <h3
-        className="
-          text-xl
-          font-bold
-          text-[#1D1D1F]
-        "
-      >
-        Lifestyle Routine
-      </h3>
-
-      <p
-        className="
-          mt-2
-          text-gray-500
-          leading-7
-        "
-      >
-        Understand your sleep,
-        food habits, hydration,
-        movement, and daily routine.
-      </p>
-
-    </div>
-
-  </div>
-
-  {/* MENTAL & EMOTIONAL */}
-  <div
-    className="
-      group
-      relative
-      overflow-hidden
-      flex
-      items-center
-      gap-5
-      rounded-[28px]
-      border border-gray-100
-      bg-white
-      p-6
-      shadow-[0_10px_30px_rgba(0,0,0,0.04)]
-      transition-all
-      hover:scale-[1.02]
-      hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]
-    "
-  >
-
-    <div
-      className="
-        absolute
-        top-[-50px]
-        right-[-40px]
-        w-[120px]
-        h-[120px]
-        rounded-full
-        bg-purple-100/40
-        blur-[50px]
-      "
-    />
-
-    <div
-      className="
-        relative
-        z-10
-        w-16
-        h-16
-        rounded-3xl
-        bg-gradient-to-br
-        from-violet-500
-        to-fuchsia-500
-        flex
-        items-center
-        justify-center
-        shadow-lg
-      "
-    >
-
-      <HeartHandshake
-        size={30}
-        className="text-white"
-      />
-
-    </div>
-
-    <div className="relative z-10">
-
-      <h3
-        className="
-          text-xl
-          font-bold
-          text-[#1D1D1F]
-        "
-      >
-        Mental & Emotional
-      </h3>
-
-      <p
-        className="
-          mt-2
-          text-gray-500
-          leading-7
-        "
-      >
-        Explore emotional wellbeing,
-        stress patterns, environment,
-        and mental balance.
-      </p>
-
-    </div>
-
-  </div>
-
-  {/* READINESS */}
-  <div
-    className="
-      group
-      relative
-      overflow-hidden
-      flex
-      items-center
-      gap-5
-      rounded-[28px]
-      border border-gray-100
-      bg-white
-      p-6
-      shadow-[0_10px_30px_rgba(0,0,0,0.04)]
-      transition-all
-      hover:scale-[1.02]
-      hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]
-    "
-  >
-
-    <div
-      className="
-        absolute
-        top-[-50px]
-        right-[-40px]
-        w-[120px]
-        h-[120px]
-        rounded-full
-        bg-amber-100/40
-        blur-[50px]
-      "
-    />
-
-    <div
-      className="
-        relative
-        z-10
-        w-16
-        h-16
-        rounded-3xl
-        bg-gradient-to-br
-        from-amber-500
-        to-orange-500
-        flex
-        items-center
-        justify-center
-        shadow-lg
-      "
-    >
+      </div>
 
       <ChevronRight
-        size={30}
-        className="text-white"
+        size={22}
+        className="text-gray-300 transition-transform group-hover:translate-x-1"
       />
 
-    </div>
+    </motion.div>
 
-    <div className="relative z-10">
-
-      <h3
-        className="
-          text-xl
-          font-bold
-          text-[#1D1D1F]
-        "
-      >
-        Readiness Assessment
-      </h3>
-
-      <p
-        className="
-          mt-2
-          text-gray-500
-          leading-7
-        "
-      >
-        Evaluate your commitment,
-        motivation, and readiness
-        for wellness transformation.
-      </p>
-
-    </div>
-
-  </div>
+  ))}
 
 </div>
 

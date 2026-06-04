@@ -173,24 +173,6 @@ const BurnoutAssessment = ({
 
         <button
           onClick={() => {
-
-            console.log(
-              "BURNOUT ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
             onComplete?.(
               answers
             );

@@ -230,9 +230,9 @@ const Assessment = () => {
           },
         };
 
-        console.log("ASSESSMENT PAYLOAD");
+        // console.log("ASSESSMENT PAYLOAD");
 
-        console.log(JSON.stringify(payload, null, 2));
+        // console.log(JSON.stringify(payload, null, 2));
 
         const result = await submitAssessment(payload);
 
