@@ -161,24 +161,6 @@ const CardiovascularAssessment = ({
 
         <button
           onClick={() => {
-
-            console.log(
-              "CARDIOVASCULAR ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
             onComplete?.(
               answers
             );

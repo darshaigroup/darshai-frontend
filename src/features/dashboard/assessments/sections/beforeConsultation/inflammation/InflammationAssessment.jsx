@@ -165,24 +165,6 @@ const InflammationAssessment = ({
 
         <button
           onClick={() => {
-
-            console.log(
-              "INFLAMMATION ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
             onComplete?.(
               answers
             );

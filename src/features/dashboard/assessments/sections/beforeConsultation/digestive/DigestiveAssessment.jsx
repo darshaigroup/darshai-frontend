@@ -164,24 +164,6 @@ const DigestiveAssessment = ({
 
         <button
           onClick={() => {
-
-            console.log(
-              "DIGESTIVE ANSWERS",
-              answers
-            );
-
-            console.log(
-              "TOTAL QUESTIONS",
-              section.questions.length
-            );
-
-            console.log(
-              "ANSWERED",
-              Object.keys(
-                answers
-              ).length
-            );
-
             onComplete?.(
               answers
             );

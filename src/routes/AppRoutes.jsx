@@ -32,6 +32,8 @@ import Reports from "@/features/dashboard/pages/Reports";
 import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
 import Assessment from "@/features/dashboard/assessments/pages/Assessment";
+import AyurvedaAssessment from "@/features/dashboard/assessments/pages/AyurvedaAssessment";
+import AyurvedaResult from "@/features/dashboard/assessments/pages/AyurvedaResult";
 
 // Auth
 import Login from "@/pages/Auth/Login";
@@ -87,6 +89,8 @@ const AppRoutes = () => {
             <Route path="questionnaires" element={<Questionnaires />} />
             <Route path="assessments" element={<Assessment />} />
              <Route path="result" element={<Result />} />
+             <Route path="ayurveda-assessment" element={<AyurvedaAssessment />} />
+             <Route path="ayurveda-result" element={ <AyurvedaResult />}/>
             
           </Route>
 

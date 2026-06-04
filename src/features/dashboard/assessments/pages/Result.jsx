@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation ,useNavigate,} from "react-router-dom";
 import { useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,12 +11,13 @@ import "react-circular-progressbar/dist/styles.css";
 
 const Result = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
 
   const data = state?.data || state;
 
   const [openBlock, setOpenBlock] = useState(null);
 
-  console.log("RESULT DATA", JSON.stringify(data, null, 2));
+  //console.log("RESULT DATA", JSON.stringify(data, null, 2));
 
   if (!data) {
     return (
@@ -323,6 +324,41 @@ const Result = () => {
             </div>
           </div>
         )}
+        {/* CONTINUE AYURVEDIC ASSESSMENT */}
+
+<div className="bg-white rounded-[32px] shadow-xl p-8">
+
+  <div className="text-center">
+
+    <h2 className="text-3xl font-bold text-[#1D1D1F] mb-3">
+      Continue Consultation
+    </h2>
+
+    <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
+      Your wellness risk assessment is complete.
+      Continue with the Ayurvedic consultation to evaluate
+      Prakriti, Vikriti, Agni and Ama.
+    </p>
+
+    <button
+      onClick={() =>
+        navigate(
+          "/dashboard/ayurveda-assessment",
+          {
+            state: {
+              assessmentResult: data,
+            },
+          }
+        )
+      }
+      className="px-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white shadow-lg hover:scale-[1.02] transition-all"
+    >
+      Continue Ayurvedic Assessment
+    </button>
+
+  </div>
+
+</div>
       </div>
     </div>
   );
