@@ -1,10 +1,14 @@
 const API_URL =
   import.meta.env.VITE_API_URL;
 
-export const generateAyurvedaReport =
+export const submitAssessment =
   async (payload) => {
 
     try {
+
+      console.log(
+        "submitAssessment() called"
+      );
 
       const token =
         localStorage.getItem(
@@ -16,35 +20,32 @@ export const generateAyurvedaReport =
         throw new Error(
           "No token found"
         );
-
       }
 
       const response =
         await fetch(
-
-          `${API_URL}/api/ayurveda/submit`,
-
+          `${API_URL}/api/assessments/submit`,
           {
-
             method: "POST",
 
             headers: {
-
               "Content-Type":
                 "application/json",
 
               Authorization:
                 `Bearer ${token}`,
-
             },
 
             body: JSON.stringify(
               payload
             ),
-
           }
-
         );
+
+      console.log(
+        "API Response Status:",
+        response.status
+      );
 
       const data =
         await response.json();
@@ -52,13 +53,9 @@ export const generateAyurvedaReport =
       if (!response.ok) {
 
         throw new Error(
-
           data.message ||
-
-          "Ayurveda assessment submission failed"
-
+          "Assessment submission failed"
         );
-
       }
 
       return data;
@@ -66,15 +63,10 @@ export const generateAyurvedaReport =
     } catch (error) {
 
       console.error(
-
-        "AYURVEDA ERROR:",
-
+        "ASSESSMENT ERROR:",
         error
-
       );
 
       throw error;
-
     }
-
-  };
+};

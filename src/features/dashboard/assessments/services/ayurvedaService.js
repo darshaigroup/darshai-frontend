@@ -1,59 +1,80 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL;
+const API_URL =
+  import.meta.env.VITE_API_URL;
 
 export const generateAyurvedaReport =
-  async ({
-    patientName,
-    prakritiAnswers,
-    vikritiAnswers,
-    agniAnswers,
-    amaAnswers,
-  }) => {
+  async (payload) => {
 
-    const response =
-      await fetch(
-        `${API_BASE_URL}/assess/full`,
-        {
-          method: "POST",
+    try {
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
+      const token =
+        localStorage.getItem(
+          "token"
+        );
 
-          body: JSON.stringify({
+      if (!token) {
 
-            patient_name:
-              patientName,
+        throw new Error(
+          "No token found"
+        );
 
-            prakriti_answers:
-              prakritiAnswers,
+      }
 
-            vikriti_answers:
-              vikritiAnswers,
+      const response =
+        await fetch(
 
-            agni_answers:
-              agniAnswers,
+          `${API_URL}/api/ayurveda/submit`,
 
-            ama_answers:
-              amaAnswers,
+          {
 
-          }),
-        }
-      );
+            method: "POST",
 
-    if (!response.ok) {
+            headers: {
 
-      const error =
+              "Content-Type":
+                "application/json",
+
+              Authorization:
+                `Bearer ${token}`,
+
+            },
+
+            body: JSON.stringify(
+              payload
+            ),
+
+          }
+
+        );
+
+      const data =
         await response.json();
 
-      throw new Error(
-        error.detail ||
-          "Failed to generate report"
+      if (!response.ok) {
+
+        throw new Error(
+
+          data.message ||
+
+          "Ayurveda assessment submission failed"
+
+        );
+
+      }
+
+      return data;
+
+    } catch (error) {
+
+      console.error(
+
+        "AYURVEDA ERROR:",
+
+        error
+
       );
 
-    }
+      throw error;
 
-    return response.json();
+    }
 
   };
