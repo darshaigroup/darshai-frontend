@@ -1,4 +1,11 @@
-import { Search, Settings, Bell } from "lucide-react";
+import { Search, Settings, Bell, LogOut } from "lucide-react";
+
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+
+  window.location.href = "/login";
+};
 
 const TopNavbar = ({ openModal }) => {
   return (
@@ -18,22 +25,56 @@ const TopNavbar = ({ openModal }) => {
       {/* RIGHT */}
       <div className="flex items-center gap-4">
 
-        {/* 🔥 BUTTON FIXED */}
-        <button
-          onClick={openModal}
-          className="bg-[#8BC34A] text-white px-5 py-2 rounded-full shadow hover:bg-[#7CB342]"
-        >
-          + Add Patient
-        </button>
+  <button
+    onClick={openModal}
+    className="
+      bg-[#8BC34A]
+      text-white
+      px-5 py-2
+      rounded-full
+      shadow
+      hover:bg-[#7CB342]
+    "
+  >
+    + Add Patient
+  </button>
 
-        <Settings size={18} className="text-gray-500" />
-        <Bell size={18} className="text-gray-500" />
+  <Settings
+    size={18}
+    className="text-gray-500"
+  />
 
-        <img
-          src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150"
-          className="w-10 h-10 rounded-full"
-        />
-      </div>
+  <Bell
+    size={18}
+    className="text-gray-500"
+  />
+
+  <button
+    onClick={handleLogout}
+    className="
+      flex items-center gap-2
+      px-4 py-2
+      rounded-full
+      border border-red-200
+      text-red-600
+      hover:bg-red-50
+      transition
+    "
+  >
+    <LogOut size={16} />
+
+    <span className="text-sm">
+      Logout
+    </span>
+  </button>
+
+  <img
+    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150"
+    alt="Profile"
+    className="w-10 h-10 rounded-full"
+  />
+
+</div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useLocation ,useNavigate,} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +13,13 @@ const Result = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const data = state?.data || state;
+  const data = state?.data?.data || state?.data || {};
+
+  const patient = state?.patient;
+
+  console.log("RESULT STATE", state);
+  console.log("PATIENT", patient);
+  console.log("DATA", data);
 
   const [openBlock, setOpenBlock] = useState(null);
 
@@ -35,9 +41,17 @@ const Result = () => {
     return "#22C55E";
   };
 
-  const criticalBlocks = (data.blocks || []).filter(
-    (block) => block.score >= 80 || block.is_critical,
-  );
+  const blocks = data?.blocks || [];
+
+  const alertBlocks = blocks.filter((block) => {
+    const riskLevel = block.risk_level?.toLowerCase();
+
+    return (
+      riskLevel === "high" ||
+      riskLevel === "critical" ||
+      riskLevel === "moderate"
+    );
+  });
 
   return (
     <div className="min-h-screen bg-[#F5F7F4] px-4 md:px-8 py-8">
@@ -85,30 +99,141 @@ const Result = () => {
         </div>
 
         {/* CRITICAL FINDINGS */}
+        {alertBlocks.length > 0 && (
+          <div className="bg-white rounded-[36px] shadow-xl p-10">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900">
+                  Risk Band Alerts
+                </h2>
 
-        {criticalBlocks.length > 0 && (
-          <div className="bg-white rounded-[32px] shadow-xl p-8">
-            <h2 className="text-2xl font-bold mb-6">Critical Findings</h2>
+                <p className="text-slate-500 mt-2">
+                  Wellness domains requiring clinical monitoring and
+                  intervention
+                </p>
+              </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              {criticalBlocks.map((block) => (
-                <div
-                  key={block.id}
-                  className="flex items-center gap-3 bg-red-50 border border-red-100 rounded-2xl p-4"
-                >
-                  <AlertTriangle className="text-red-500" />
+              <div className="px-5 py-3 rounded-full bg-red-50 border border-red-200 text-red-700 font-semibold">
+                🚨 {alertBlocks.length} Active Alerts
+              </div>
+            </div>
 
-                  <div>
-                    <div className="font-semibold">
-                      {block.block_title || block.title || block.id}
-                    </div>
+            <div className="grid lg:grid-cols-2 gap-6">
+              {alertBlocks.map((block) => {
+                const percentage = block.completion_pct || 0;
 
-                    <div className="text-red-600 text-sm">
-                      Score: {block.score}
+                const isHigh = block.risk_level?.toLowerCase() === "high";
+
+                const severity = isHigh
+                  ? {
+                      bg: "from-red-500 to-rose-600",
+                      border: "border-red-200",
+                      text: "text-red-700",
+                      badge: "High Risk",
+                      badgeBg: "bg-red-100 text-red-700",
+                      iconBg: "bg-red-500",
+                      message: "Immediate attention recommended",
+                    }
+                  : {
+                      bg: "from-amber-500 to-orange-500",
+                      border: "border-amber-200",
+                      text: "text-amber-700",
+                      badge: "Moderate Risk",
+                      badgeBg: "bg-amber-100 text-amber-700",
+                      iconBg: "bg-amber-500",
+                      message: "Monitor and address proactively",
+                    };
+
+                return (
+                  <div
+                    key={block.id}
+                    className={`relative overflow-hidden rounded-[30px] border ${severity.border} bg-white shadow-lg hover:shadow-2xl transition-all duration-300`}
+                  >
+                    <div
+                      className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${severity.bg}`}
+                    />
+
+                    <div className="p-8">
+                      <div className="flex justify-between items-start">
+                        <div className="flex gap-4">
+                          <div
+                            className={`w-14 h-14 rounded-2xl ${severity.iconBg} flex items-center justify-center shadow-lg`}
+                          >
+                            <AlertTriangle className="text-white" size={24} />
+                          </div>
+
+                          <div>
+                            <h3 className="text-xl font-bold text-slate-900">
+                              {block.block_title || block.title || block.id}
+                            </h3>
+
+                            <p className="text-slate-500 text-sm mt-1">
+                              Wellness Domain
+                            </p>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`px-4 py-2 rounded-full text-sm font-semibold ${severity.badgeBg}`}
+                        >
+                          {severity.badge}
+                        </div>
+                      </div>
+
+                      <div className="mt-8">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-slate-500">
+                            Risk Band
+                          </span>
+
+                          <span className={`font-bold ${severity.text}`}>
+                            {percentage}%
+                          </span>
+                        </div>
+
+                        <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full bg-gradient-to-r ${severity.bg}`}
+                            style={{
+                              width: `${percentage}%`,
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 mt-8">
+                        <div className="bg-slate-50 rounded-2xl p-4">
+                          <p className="text-xs uppercase tracking-wider text-slate-500">
+                            Score
+                          </p>
+
+                          <p className="text-2xl font-bold text-slate-900 mt-1">
+                            {block.score}
+                          </p>
+                        </div>
+
+                        <div className="bg-slate-50 rounded-2xl p-4">
+                          <p className="text-xs uppercase tracking-wider text-slate-500">
+                            Max Score
+                          </p>
+
+                          <p className="text-2xl font-bold text-slate-900 mt-1">
+                            {block.max_score}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        className={`mt-6 rounded-2xl p-4 ${isHigh ? "bg-red-50" : "bg-amber-50"}`}
+                      >
+                        <p className={`font-semibold ${severity.text}`}>
+                          {severity.message}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
@@ -182,39 +307,7 @@ const Result = () => {
                     }}
                     className="px-8 pb-8"
                   >
-                    <div className="grid md:grid-cols-4 gap-4 mb-8">
-                      <div className="bg-gray-50 rounded-2xl p-4">
-                        <div className="text-xs text-gray-500">Risk Level</div>
-
-                        <div className="font-bold mt-1">
-                          {block.risk_level || block.risk_band}
-                        </div>
-                      </div>
-
-                      <div className="bg-gray-50 rounded-2xl p-4">
-                        <div className="text-xs text-gray-500">Completion</div>
-
-                        <div className="font-bold mt-1">
-                          {block.answered || 0}/{block.total || 0}
-                        </div>
-                      </div>
-
-                      <div className="bg-gray-50 rounded-2xl p-4">
-                        <div className="text-xs text-gray-500">Weight</div>
-
-                        <div className="font-bold mt-1">
-                          {block.composite_weight || 0}
-                        </div>
-                      </div>
-
-                      <div className="bg-gray-50 rounded-2xl p-4">
-                        <div className="text-xs text-gray-500">Safety Flag</div>
-
-                        <div className="font-bold mt-1">
-                          {block.safety_flag ? "Yes" : "No"}
-                        </div>
-                      </div>
-                    </div>
+                    
 
                     <div className="flex items-center justify-between mb-5">
                       <h4 className="text-xl font-bold text-[#1D1D1F]">
@@ -245,10 +338,16 @@ const Result = () => {
                               }}
                               className="bg-gray-50 border border-gray-100 rounded-3xl p-5"
                             >
-                              <div className="flex items-center justify-between mb-4">
-                                <h4 className="font-semibold text-lg text-[#1D1D1F]">
-                                  {parameter.label}
-                                </h4>
+                              <div className="flex items-start justify-between mb-4">
+                                <div>
+                                  <p className="text-xs uppercase tracking-wider text-slate-400 mb-1">
+                                    Question
+                                  </p>
+
+                                  <h4 className="font-semibold text-lg text-[#1D1D1F]">
+                                    {parameter.label}
+                                  </h4>
+                                </div>
 
                                 <span
                                   className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -257,49 +356,42 @@ const Result = () => {
                                       : "bg-green-100 text-green-600"
                                   }`}
                                 >
-                                  {affected ? "Affected" : "Healthy"}
+                                  {affected ? "Critical" : "Healthy"}
                                 </span>
                               </div>
 
-                              <div className="space-y-2 text-sm text-gray-600">
-                                <div>
-                                  <strong>Selected:</strong> {parameter.option}
+                              <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm text-slate-500">
+                                    Status
+                                  </span>
                                 </div>
 
                                 <div>
-                                  <strong>Level:</strong> {parameter.selected}
-                                </div>
+                                  <div className="flex justify-between text-sm mb-2">
+                                    <span className="text-slate-500">
+                                      Risk Contribution
+                                    </span>
 
-                                <div>
-                                  <strong>Weight:</strong> {parameter.weight}
-                                </div>
+                                    <span className="font-semibold">
+                                      {Math.round(percent)}%
+                                    </span>
+                                  </div>
 
-                                <div>
-                                  <strong>Impact:</strong> {parameter.score}/
-                                  {parameter.max_score}
-                                </div>
-                              </div>
-
-                              <div className="mt-5">
-                                <div className="flex justify-between text-xs text-gray-500 mb-2">
-                                  <span>Risk Contribution</span>
-
-                                  <span>{Math.round(percent)}%</span>
-                                </div>
-
-                                <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
-                                  <div
-                                    className={`h-full rounded-full transition-all duration-700 ${
-                                      percent >= 70
-                                        ? "bg-red-500"
-                                        : percent >= 40
-                                          ? "bg-yellow-500"
-                                          : "bg-green-500"
-                                    }`}
-                                    style={{
-                                      width: `${percent}%`,
-                                    }}
-                                  />
+                                  <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+                                    <div
+                                      className={`h-full rounded-full transition-all duration-700 ${
+                                        percent >= 70
+                                          ? "bg-red-500"
+                                          : percent >= 40
+                                            ? "bg-amber-500"
+                                            : "bg-green-500"
+                                      }`}
+                                      style={{
+                                        width: `${percent}%`,
+                                      }}
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </motion.div>
@@ -326,39 +418,33 @@ const Result = () => {
         )}
         {/* CONTINUE AYURVEDIC ASSESSMENT */}
 
-<div className="bg-white rounded-[32px] shadow-xl p-8">
+        <div className="bg-white rounded-[32px] shadow-xl p-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-[#1D1D1F] mb-3">
+              Continue Consultation
+            </h2>
 
-  <div className="text-center">
+            <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
+              Your wellness risk assessment is complete. Continue with the
+              Ayurvedic consultation to evaluate Prakriti, Vikriti, Agni and
+              Ama.
+            </p>
 
-    <h2 className="text-3xl font-bold text-[#1D1D1F] mb-3">
-      Continue Consultation
-    </h2>
-
-    <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
-      Your wellness risk assessment is complete.
-      Continue with the Ayurvedic consultation to evaluate
-      Prakriti, Vikriti, Agni and Ama.
-    </p>
-
-    <button
-      onClick={() =>
-        navigate(
-          "/dashboard/ayurveda-assessment",
-          {
-            state: {
-              assessmentResult: data,
-            },
-          }
-        )
-      }
-      className="px-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white shadow-lg hover:scale-[1.02] transition-all"
-    >
-      Continue Ayurvedic Assessment
-    </button>
-
-  </div>
-
-</div>
+            <button
+              onClick={() =>
+                navigate("/dashboard/result", {
+                  state: {
+                    patient: updatedData.patient,
+                    data: result,
+                  },
+                })
+              }
+              className="px-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white shadow-lg hover:scale-[1.02] transition-all"
+            >
+              Continue Ayurvedic Assessment
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
