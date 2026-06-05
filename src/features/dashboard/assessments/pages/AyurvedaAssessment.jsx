@@ -75,7 +75,7 @@ const AyurvedaAssessment = () => {
 
         amaAnswers: answers.ama,
       });
-
+       
       navigate(
         "/dashboard/ayurveda-result",
 
@@ -85,7 +85,7 @@ const AyurvedaAssessment = () => {
 
             riskReport,
 
-            report,
+            report: response.data,
           },
         },
       );

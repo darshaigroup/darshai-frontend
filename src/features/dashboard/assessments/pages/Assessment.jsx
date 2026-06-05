@@ -237,7 +237,10 @@ const Assessment = () => {
         const result = await submitAssessment(payload);
 
         navigate("/dashboard/result", {
-          state: result,
+          state: {
+            patient: updatedData.patient,
+            data: result,
+          },
         });
 
         return;
