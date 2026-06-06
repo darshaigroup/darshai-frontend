@@ -276,7 +276,7 @@ const ClinicalDataSection = ({
 
                   )}
 
-                  {/* NUMBER */}
+                 
 
                   {q.type ===
                     "number" && (
