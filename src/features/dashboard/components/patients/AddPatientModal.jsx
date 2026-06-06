@@ -242,10 +242,6 @@ const AddPatientModal = ({
                 Female
               </option>
 
-              <option value="Other">
-                Other
-              </option>
-
             </select>
 
           </div>

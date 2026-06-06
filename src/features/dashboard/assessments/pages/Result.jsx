@@ -34,7 +34,7 @@ const Result = () => {
   }
 
   const getRiskColor = (score = 0) => {
-    if (score >= 80) return "#EF4444";
+    if (score >= 66) return "#EF4444";
 
     if (score >= 50) return "#F59E0B";
 
@@ -44,13 +44,10 @@ const Result = () => {
   const blocks = data?.blocks || [];
 
   const alertBlocks = blocks.filter((block) => {
-    const riskLevel = block.risk_level?.toLowerCase();
+    const risk =
+      block.risk_level?.toLowerCase() || block.risk_band?.toLowerCase();
 
-    return (
-      riskLevel === "high" ||
-      riskLevel === "critical" ||
-      riskLevel === "moderate"
-    );
+    return risk === "high";
   });
 
   return (
@@ -84,7 +81,7 @@ const Result = () => {
               <div className="text-center mt-4">
                 <span
                   className={`px-5 py-2 rounded-full font-semibold ${
-                    data.compositeScore >= 80
+                    data.compositeScore >= 66
                       ? "bg-red-100 text-red-700"
                       : data.compositeScore >= 50
                         ? "bg-yellow-100 text-yellow-700"
@@ -119,121 +116,44 @@ const Result = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-6">
-              {alertBlocks.map((block) => {
-                const percentage = block.completion_pct || 0;
+              {alertBlocks.map((block) => (
+                <div
+                  key={block.id}
+                  className="relative overflow-hidden rounded-[30px] border border-red-200 bg-white shadow-lg hover:shadow-2xl transition-all duration-300"
+                >
+                  <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-red-500 to-rose-600" />
 
-                const isHigh = block.risk_level?.toLowerCase() === "high";
-
-                const severity = isHigh
-                  ? {
-                      bg: "from-red-500 to-rose-600",
-                      border: "border-red-200",
-                      text: "text-red-700",
-                      badge: "High Risk",
-                      badgeBg: "bg-red-100 text-red-700",
-                      iconBg: "bg-red-500",
-                      message: "Immediate attention recommended",
-                    }
-                  : {
-                      bg: "from-amber-500 to-orange-500",
-                      border: "border-amber-200",
-                      text: "text-amber-700",
-                      badge: "Moderate Risk",
-                      badgeBg: "bg-amber-100 text-amber-700",
-                      iconBg: "bg-amber-500",
-                      message: "Monitor and address proactively",
-                    };
-
-                return (
-                  <div
-                    key={block.id}
-                    className={`relative overflow-hidden rounded-[30px] border ${severity.border} bg-white shadow-lg hover:shadow-2xl transition-all duration-300`}
-                  >
-                    <div
-                      className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${severity.bg}`}
-                    />
-
-                    <div className="p-8">
-                      <div className="flex justify-between items-start">
-                        <div className="flex gap-4">
-                          <div
-                            className={`w-14 h-14 rounded-2xl ${severity.iconBg} flex items-center justify-center shadow-lg`}
-                          >
-                            <AlertTriangle className="text-white" size={24} />
-                          </div>
-
-                          <div>
-                            <h3 className="text-xl font-bold text-slate-900">
-                              {block.block_title || block.title || block.id}
-                            </h3>
-
-                            <p className="text-slate-500 text-sm mt-1">
-                              Wellness Domain
-                            </p>
-                          </div>
+                  <div className="p-8">
+                    <div className="flex justify-between items-start">
+                      <div className="flex gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-red-500 flex items-center justify-center shadow-lg">
+                          <AlertTriangle className="text-white" size={24} />
                         </div>
 
-                        <div
-                          className={`px-4 py-2 rounded-full text-sm font-semibold ${severity.badgeBg}`}
-                        >
-                          {severity.badge}
-                        </div>
-                      </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-slate-900">
+                            {block.block_title || block.title || block.id}
+                          </h3>
 
-                      <div className="mt-8">
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm text-slate-500">
-                            Risk Band
-                          </span>
-
-                          <span className={`font-bold ${severity.text}`}>
-                            {percentage}%
-                          </span>
-                        </div>
-
-                        <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full bg-gradient-to-r ${severity.bg}`}
-                            style={{
-                              width: `${percentage}%`,
-                            }}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4 mt-8">
-                        <div className="bg-slate-50 rounded-2xl p-4">
-                          <p className="text-xs uppercase tracking-wider text-slate-500">
-                            Score
-                          </p>
-
-                          <p className="text-2xl font-bold text-slate-900 mt-1">
-                            {block.score}
-                          </p>
-                        </div>
-
-                        <div className="bg-slate-50 rounded-2xl p-4">
-                          <p className="text-xs uppercase tracking-wider text-slate-500">
-                            Max Score
-                          </p>
-
-                          <p className="text-2xl font-bold text-slate-900 mt-1">
-                            {block.max_score}
+                          <p className="text-slate-500 text-sm mt-1">
+                            Wellness Domain
                           </p>
                         </div>
                       </div>
 
-                      <div
-                        className={`mt-6 rounded-2xl p-4 ${isHigh ? "bg-red-50" : "bg-amber-50"}`}
-                      >
-                        <p className={`font-semibold ${severity.text}`}>
-                          {severity.message}
-                        </p>
+                      <div className="px-4 py-2 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                        High Risk
                       </div>
                     </div>
+
+                    <div className="mt-6 rounded-2xl p-4 bg-red-50">
+                      <p className="font-semibold text-red-700">
+                        Immediate attention recommended
+                      </p>
+                    </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -307,8 +227,6 @@ const Result = () => {
                     }}
                     className="px-8 pb-8"
                   >
-                    
-
                     <div className="flex items-center justify-between mb-5">
                       <h4 className="text-xl font-bold text-[#1D1D1F]">
                         Parameters Affecting This Score
@@ -351,12 +269,18 @@ const Result = () => {
 
                                 <span
                                   className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                    affected
+                                    percent >= 70
                                       ? "bg-red-100 text-red-600"
-                                      : "bg-green-100 text-green-600"
+                                      : percent >= 40
+                                        ? "bg-amber-100 text-amber-600"
+                                        : "bg-green-100 text-green-600"
                                   }`}
                                 >
-                                  {affected ? "Critical" : "Healthy"}
+                                  {percent >= 70
+                                    ? "Critical"
+                                    : percent >= 40
+                                      ? "Normal"
+                                      : "Healthy"}
                                 </span>
                               </div>
 
@@ -432,10 +356,10 @@ const Result = () => {
 
             <button
               onClick={() =>
-                navigate("/dashboard/result", {
+                navigate("/dashboard/ayurveda-assessment", {
                   state: {
-                    patient: updatedData.patient,
-                    data: result,
+                     patient,
+                     riskReport: data,
                   },
                 })
               }

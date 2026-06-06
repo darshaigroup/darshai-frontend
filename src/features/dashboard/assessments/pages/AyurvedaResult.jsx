@@ -1,11 +1,12 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AyurvedaResult = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const patient = location.state?.patient;
   const riskReport = location.state?.riskReport;
-
+ 
   const report =
     location.state?.report?.data ||
     location.state?.report ||
@@ -419,7 +420,45 @@ const AyurvedaResult = () => {
   )}
 
 </Section>
+<div className="bg-white rounded-[32px] shadow-xl p-10">
 
+  <div className="text-center">
+
+    <h2 className="text-3xl font-bold text-slate-900 mb-3">
+      Continue Clinical Assessment
+    </h2>
+
+    <p className="text-slate-500 mb-8">
+      Complete medical history, medications,
+      measurements and wellness goals.
+    </p>
+
+    <button
+      onClick={() =>
+        navigate(
+          "/dashboard/clinical-data-assessment",
+          {
+            state: {
+
+              patient,
+
+              riskReport,
+
+              ayurvedaReport:
+                report,
+
+            },
+          }
+        )
+      }
+      className="px-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white shadow-lg hover:scale-[1.02] transition-all"
+    >
+      Continue Clinical Assessment
+    </button>
+
+  </div>
+
+</div>
      
     </div>
   );
