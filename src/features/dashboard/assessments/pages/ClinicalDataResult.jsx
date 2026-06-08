@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import {supabase} from "../../lib/supabase"
 const ClinicalDataResult = () => {
 
   
@@ -35,21 +36,83 @@ const ClinicalDataResult = () => {
   practitionerSignature: "",
 });
 
-const handleLabUpload = (
-  event
-) => {
+const [signatures,setSignatures] = useState([]);
 
-  const files =
-    Array.from(
-      event.target.files
-    );
+const [selectedSignature,setSelectedSignature] = useState(null);
 
-  setLabFiles(
-    (prev) => [
-      ...prev,
-      ...files,
-    ]
+const [isUploadingReports,setIsUploadingReports] = useState(false);
+
+const [isGeneratingSummary,setIsGeneratingSummary] = useState(false);
+
+const [dragActive,setDragActive] = useState(false);
+
+useEffect(() => {
+
+  loadSignatures();
+
+}, []);
+
+const loadSignatures =
+  async () => {
+
+    const {
+      data,
+      error,
+    } = await supabase
+
+      .from(
+        "practitioner_signatures"
+      )
+
+      .select("*")
+
+      .eq(
+        "is_active",
+        true
+      );
+
+    if (!error) {
+
+      setSignatures(
+        data
+      );
+
+    }
+
+  };
+const handleLabUpload = (event) => {
+
+  const files = Array.from(event.target.files || []);
+
+  setLabFiles((prev) => [...prev,...files]);
+
+};
+
+const handleDrop = (event) => {
+
+  event.preventDefault();
+
+  setDragActive(false);
+
+  const files = Array.from(
+    event.dataTransfer.files || []
   );
+
+  setLabFiles((prev) => [...prev,...files]);
+
+};
+
+const handleDragOver = (event) => {
+
+  event.preventDefault();
+
+  setDragActive(true);
+
+};
+
+const handleDragLeave = () => {
+
+  setDragActive(false);
 
 };
 
@@ -69,15 +132,216 @@ const handleDoctorNoteChange = (
   }));
 
 };
+const uploadLabReports = async () => {
 
+  if (!labFiles.length)
+    return [];
+
+  try {
+
+    setIsUploadingReports(true);
+
+    const uploadedReports = [];
+
+    for (const file of labFiles) {
+
+      const filePath =
+        `${patient.id}/${Date.now()}-${file.name}`;
+
+      const { error: uploadError } =
+        await supabase.storage
+
+          .from("lab-reports")
+
+          .upload(
+            filePath,
+            file
+          );
+
+      if (uploadError)
+        throw uploadError;
+
+      const { data } =
+        await supabase
+
+          .from(
+            "patient_lab_reports"
+          )
+
+          .insert({
+            patient_id:
+              patient.id,
+
+            report_name:
+              file.name,
+
+            file_path:
+              filePath,
+
+            file_size:
+              file.size,
+
+            file_type:
+              file.type,
+          })
+
+          .select()
+
+          .single();
+
+      uploadedReports.push(data);
+
+    }
+
+    return uploadedReports;
+
+  } finally {
+
+    setIsUploadingReports(false);
+
+  }
+
+};
 const saveDoctorNotes = async () => {
 
-  console.log(
-    "DOCTOR NOTES",
-    doctorNotes
-  );
+  try {
 
-  // later call API here
+    const payload = {
+
+      patient_id:
+        patient.id,
+
+      primary_diagnosis:
+        doctorNotes.primaryDiagnosis,
+
+      secondary_contributors:
+        doctorNotes.secondaryContributors,
+
+      dosha_imbalance:
+        doctorNotes.doshaImbalance,
+
+      samprapti_stage:
+        doctorNotes.sampraptiStage,
+
+      root_cause:
+        doctorNotes.rootCause,
+
+      priority_intervention:
+        doctorNotes.priorityIntervention,
+
+      protocol_tier:
+        doctorNotes.protocolTier,
+
+      follow_up_timeline:
+        doctorNotes.followUpTimeline,
+
+      practitioner_signature:
+        doctorNotes.practitionerSignature || null,
+
+    };
+
+    console.log(
+      "DOCTOR NOTE PAYLOAD",
+      payload
+    );
+
+    const {
+      data,
+      error,
+    } = await supabase
+
+      .from(
+        "clinical_doctor_notes"
+      )
+
+      .insert(payload)
+
+      .select();
+
+    console.log(
+      "DATA",
+      data
+    );
+
+    console.log(
+      "ERROR",
+      error
+    );
+
+    if (error)
+      throw error;
+
+    alert(
+      "Doctor notes saved successfully"
+    );
+
+  } catch (error) {
+
+    console.error(
+      "SAVE ERROR",
+      error
+    );
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+
+const generateFinalSummary = async () => {
+
+  try {
+
+    setIsGeneratingSummary(true);
+
+    const uploadedReports =
+      await uploadLabReports();
+
+    const finalPayload = {
+
+      patient,
+
+      riskReport,
+
+      ayurvedaReport,
+
+      clinicalReport,
+
+      doctorNotes,
+
+      uploadedReports,
+
+    };
+
+    console.log(
+      "FINAL SUMMARY PAYLOAD",
+      finalPayload
+    );
+
+    // API call later
+
+    await new Promise(
+      (resolve) =>
+        setTimeout(resolve,2000)
+    );
+
+    alert(
+      "Final Summary Generated"
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(error.message);
+
+  } finally {
+
+    setIsGeneratingSummary(false);
+
+  }
 
 };
   
@@ -91,6 +355,8 @@ const saveDoctorNotes = async () => {
     );
 
   }
+  
+
 
   return (
 
@@ -512,7 +778,7 @@ const saveDoctorNotes = async () => {
           />
 
           <MetricCard
-            title="Details"
+            title="Hair/Skin issue"
             value={
               answers.hairSkinDetails ||
               "-"
@@ -555,12 +821,6 @@ const saveDoctorNotes = async () => {
       Practitioner Notes
     </h2>
 
-    <button
-      onClick={saveDoctorNotes}
-      className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold shadow-md"
-    >
-      Save Notes
-    </button>
 
   </div>
 
@@ -658,20 +918,120 @@ const saveDoctorNotes = async () => {
           }
         />
 
-        <EditableDoctorRow
-          label="Practitioner Signature"
-          value={doctorNotes.practitionerSignature}
-          onChange={(value) =>
-            handleDoctorNoteChange(
-              "practitionerSignature",
-              value
-            )
+        <tr>
+
+  <td className="w-[320px] p-5 font-semibold bg-slate-50">
+
+    Practitioner Signature
+
+  </td>
+
+  <td className="p-5">
+
+    <select
+
+      value={
+        doctorNotes.practitionerSignature
+      }
+
+      onChange={(e) => {
+
+        const selected =
+          signatures.find(
+            (item) =>
+              item.id ===
+              e.target.value
+          );
+
+        handleDoctorNoteChange(
+          "practitionerSignature",
+          e.target.value
+        );
+
+        setSelectedSignature(
+          selected
+        );
+
+      }}
+
+      className="w-full border rounded-xl p-3"
+
+    >
+
+      <option value="">
+
+        Select Practitioner Signature
+
+      </option>
+
+      {signatures.map(
+        (item) => (
+
+          <option
+            key={item.id}
+            value={item.id}
+          >
+
+            {
+              item.practitioner_name
+            }
+
+          </option>
+
+        )
+      )}
+
+    </select>
+
+    {selectedSignature && (
+
+      <div className="mt-5">
+
+        <img
+          src={
+            selectedSignature.signature_url
           }
+          alt="signature"
+          className="h-24 object-contain"
         />
+
+        <p className="mt-2 text-sm text-slate-500">
+
+          {
+            selectedSignature.practitioner_name
+          }
+
+          {" • "}
+
+          {
+            selectedSignature.designation
+          }
+
+        </p>
+
+      </div>
+
+    )}
+
+  </td>
+
+</tr>
 
       </tbody>
 
     </table>
+    <div className="flex justify-end mt-8">
+
+  <button
+    onClick={saveDoctorNotes}
+    className="px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold shadow-md"
+  >
+
+    Save Practitioner Notes
+
+  </button>
+
+</div>
 
   </div>
 
@@ -681,155 +1041,81 @@ const saveDoctorNotes = async () => {
 
 <SectionCard title="Laboratory Reports">
 
-  <div className="space-y-6">
+ <div
+  onDrop={handleDrop}
+  onDragOver={handleDragOver}
+  onDragLeave={handleDragLeave}
+  className={`border-2 border-dashed rounded-3xl p-10 text-center transition-all ${
+    dragActive
+      ? "border-[#14B8A6] bg-teal-50"
+      : "border-slate-300 bg-gradient-to-br from-slate-50 to-white"
+  }`}
+>
 
-    <div className="bg-slate-50 rounded-2xl p-6">
+  <input
+    type="file"
+    multiple
+    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+    onChange={handleLabUpload}
+    className="hidden"
+    id="lab-upload"
+  />
 
-      <h3 className="text-lg font-semibold text-slate-800">
+  <label
+    htmlFor="lab-upload"
+    className="cursor-pointer block"
+  >
 
-        Do you have any laboratory reports?
-
-      </h3>
-
-      <p className="text-slate-500 mt-2">
-
-        Upload blood work, imaging reports,
-        diagnostic reports or any recent
-        medical investigations.
-
-      </p>
-
-      <div className="flex gap-4 mt-5">
-
-        <button
-          type="button"
-          onClick={() =>
-            setHasLabReport(true)
-          }
-          className={`px-6 py-3 rounded-xl font-medium ${
-            hasLabReport
-              ? "bg-teal-600 text-white"
-              : "bg-white border"
-          }`}
-        >
-
-          Yes
-
-        </button>
-
-        <button
-          type="button"
-          onClick={() =>
-            setHasLabReport(false)
-          }
-          className={`px-6 py-3 rounded-xl font-medium ${
-            !hasLabReport
-              ? "bg-slate-700 text-white"
-              : "bg-white border"
-          }`}
-        >
-
-          No
-
-        </button>
-
-      </div>
-
+    <div className="text-6xl">
+      📄
     </div>
 
-    {hasLabReport && (
+    <h3 className="mt-5 text-xl font-bold text-slate-800">
+      Drag & Drop Lab Reports
+    </h3>
 
-      <div className="border-2 border-dashed border-slate-300 rounded-3xl p-10 text-center bg-gradient-to-br from-slate-50 to-white">
+    <p className="mt-2 text-slate-500">
+      PDF, JPG, PNG, DOC, DOCX
+    </p>
 
-        <input
-          type="file"
-          multiple
-          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-          onChange={handleLabUpload}
-          className="hidden"
-          id="lab-upload"
-        />
+    <button
+      type="button"
+      className="mt-6 px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold"
+    >
+      Browse Files
+    </button>
 
-        <label
-          htmlFor="lab-upload"
-          className="cursor-pointer"
-        >
+  </label>
 
-          <div className="text-5xl">
-
-            📄
-
-          </div>
-
-          <h3 className="mt-4 text-xl font-bold text-slate-800">
-
-            Drag & Drop or Upload Lab Reports
-
-          </h3>
-
-          <p className="mt-2 text-slate-500">
-
-            PDF, JPG, PNG, DOC, DOCX
-
-          </p>
-
-          <button
-            type="button"
-            className="mt-5 px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold"
-          >
-
-            Select Files
-
-          </button>
-
-        </label>
-
-      </div>
-
-    )}
-
-    {labFiles.length > 0 && (
-
-      <div className="grid md:grid-cols-2 gap-4">
-
-        {labFiles.map(
-          (file, index) => (
-
-            <div
-              key={index}
-              className="border rounded-2xl p-4 bg-slate-50"
-            >
-
-              <p className="font-semibold text-slate-800">
-
-                {file.name}
-
-              </p>
-
-              <p className="text-sm text-slate-500">
-
-                {(
-                  file.size /
-                  1024 /
-                  1024
-                ).toFixed(2)}
-                {" "}
-                MB
-
-              </p>
-
-            </div>
-
-          )
-        )}
-
-      </div>
-
-    )}
-
-  </div>
+</div>
 
 </SectionCard>
+<div className="sticky bottom-0 bg-white border-t border-slate-200 p-6 rounded-t-[32px] shadow-2xl">
+
+  <button
+
+    type="button"
+
+    disabled={
+      isGeneratingSummary ||
+      isUploadingReports
+    }
+
+    onClick={
+      generateFinalSummary
+    }
+
+    className="w-full py-5 rounded-2xl text-lg font-bold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white disabled:opacity-50"
+
+  >
+
+    {isGeneratingSummary
+      ? "Generating Final Summary..."
+      : "Generate Final Summary"}
+
+  </button>
+
+</div>
     </div>
 
   );

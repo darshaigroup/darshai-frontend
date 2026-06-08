@@ -40,6 +40,8 @@ const Assessment = () => {
 
   const [activeQuestion, setActiveQuestion] = useState(null);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const steps = [
     {
       component: FlowIntro,
@@ -112,6 +114,7 @@ const Assessment = () => {
     // ======================
 
     if (currentStep.key === "environment") {
+      setIsSubmitting(true);
       try {
         const payload = {
           patientId: updatedData.patient.id,
@@ -283,6 +286,7 @@ const Assessment = () => {
         activeSection={activeSection}
         activeQuestion={activeQuestion}
         onNavigate={handleSidebarNavigate}
+        isSubmitting={isSubmitting}
         onComplete={(values) => next(currentStep.key, values)}
       />
     </AssessmentLayout>

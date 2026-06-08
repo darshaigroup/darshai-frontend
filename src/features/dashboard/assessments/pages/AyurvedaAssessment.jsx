@@ -25,9 +25,9 @@ const AyurvedaAssessment = () => {
 
   const riskReport = location.state?.riskReport;
 
-  console.log("PATIENT", patient);
+  // console.log("PATIENT", patient);
 
-  console.log("RISK REPORT", riskReport);
+  // console.log("RISK REPORT", riskReport);
 
   const [openSection, setOpenSection] = useState("prakriti");
 
