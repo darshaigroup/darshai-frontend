@@ -38,11 +38,11 @@ const AgniSection = ({
         questionId
       ] || {
 
-        vishama: 0,
+        vishama: null,
 
-        tikshna: 0,
+        tikshna: null,
 
-        manda: 0,
+        manda: null,
 
       };
 

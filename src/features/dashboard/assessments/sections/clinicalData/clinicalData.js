@@ -12,7 +12,7 @@ export const clinicalDataSections = [
         type: "multiSelect",
 
         question:
-          "Have you ever been diagnosed with any of the following conditions?",
+          "Have you ever been diagnosed with any of the following conditions?(select all that apply)",
 
         options: [
           "Diabetes",
