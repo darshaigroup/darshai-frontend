@@ -1,29 +1,26 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import { useState,useEffect } from "react";
-import {supabase} from "../../lib/supabase"
+import {uploadLabReport,deleteLabReport} from "../services/labReportService";
+import {getSignatures,getPatientNotes,savePractitionerNotes} from "../services/practitionerService";
 const ClinicalDataResult = () => {
+  const navigate = useNavigate();
 
-  
+ 
 
-  const location = useLocation();
+ const location = useLocation();
 
-  const patient =
-    location.state?.patient;
+const patient = location.state?.patient;
+const riskReport = location.state?.riskReport;
+const ayurvedaReport = location.state?.ayurvedaReport;
 
-  const riskReport =
-    location.state?.riskReport;
+const clinicalReport =
+  location.state?.clinicalData ||
+  location.state?.clinicalReport;
 
+const answers =
+  clinicalReport?.clinical_answers || {};
 
-  const ayurvedaReport =
-    location.state?.ayurvedaReport;
-
-  const clinicalReport =
-    location.state?.clinicalData ||
-    location.state?.clinicalReport;
-
-  const answers =
-    clinicalReport?.clinical_answers || {};
-    const [doctorNotes, setDoctorNotes] = useState({
+const [doctorNotes, setDoctorNotes] = useState({
   primaryDiagnosis: "",
   secondaryContributors: "",
   doshaImbalance:
@@ -36,102 +33,313 @@ const ClinicalDataResult = () => {
   practitionerSignature: "",
 });
 
-const [signatures,setSignatures] = useState([]);
+const [signatures, setSignatures] = useState([]);
+const [selectedSignature, setSelectedSignature] = useState(null);
+const [labFiles, setLabFiles] = useState([]);
+const [uploadedReports, setUploadedReports] = useState([]);
+const [dragActive, setDragActive] = useState(false);
+const [uploadSuccess, setUploadSuccess] = useState(false);
+const [uploadedReportsCount, setUploadedReportsCount] = useState(0);
+const [isUploadingReports, setIsUploadingReports] = useState(false);
+const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
 
-const [selectedSignature,setSelectedSignature] = useState(null);
-
-const [isUploadingReports,setIsUploadingReports] = useState(false);
-
-const [isGeneratingSummary,setIsGeneratingSummary] = useState(false);
-
-const [dragActive,setDragActive] = useState(false);
+/* =========================
+   LOAD DATA
+========================= */
 
 useEffect(() => {
-
   loadSignatures();
-
 }, []);
 
-const loadSignatures =
-  async () => {
+useEffect(() => {
+  if (
+    patient?.id &&
+    signatures.length
+  ) {
+    loadPatientNotes();
+  }
+}, [patient?.id, signatures]);
 
-    const {
-      data,
-      error,
-    } = await supabase
+const loadSignatures = async () => {
+  try {
+    const data =
+      await getSignatures();
 
-      .from(
-        "practitioner_signatures"
-      )
+    setSignatures(data || []);
+  } catch (error) {
+    console.error(
+      "LOAD SIGNATURE ERROR",
+      error
+    );
+  }
+};
 
-      .select("*")
-
-      .eq(
-        "is_active",
-        true
+const loadPatientNotes = async () => {
+  try {
+    const note =
+      await getPatientNotes(
+        patient.id
       );
 
-    if (!error) {
+    if (!note) return;
 
-      setSignatures(
-        data
+    setDoctorNotes({
+      primaryDiagnosis:
+        note.primary_diagnosis || "",
+      secondaryContributors:
+        note.secondary_contributors || "",
+      doshaImbalance:
+        note.dosha_imbalance || "",
+      sampraptiStage:
+        note.samprapti_stage || "",
+      rootCause:
+        note.root_cause || "",
+      priorityIntervention:
+        note.priority_intervention || "",
+      protocolTier:
+        note.protocol_tier || "",
+      followUpTimeline:
+        note.follow_up_timeline || "",
+      practitionerSignature:
+        note.practitioner_signature || "",
+    });
+
+    const selected =
+      signatures.find(
+        (item) =>
+          String(item.id) ===
+          String(
+            note.practitioner_signature
+          )
       );
 
+    if (selected) {
+      setSelectedSignature(
+        selected
+      );
     }
-
-  };
-const handleLabUpload = (event) => {
-
-  const files = Array.from(event.target.files || []);
-
-  setLabFiles((prev) => [...prev,...files]);
-
+  } catch (error) {
+    console.error(
+      "LOAD NOTES ERROR",
+      error
+    );
+  }
 };
 
-const handleDrop = (event) => {
+/* =========================
+   HANDLERS
+========================= */
 
-  event.preventDefault();
-
-  setDragActive(false);
-
-  const files = Array.from(
-    event.dataTransfer.files || []
-  );
-
-  setLabFiles((prev) => [...prev,...files]);
-
-};
-
-const handleDragOver = (event) => {
-
-  event.preventDefault();
-
-  setDragActive(true);
-
-};
-
-const handleDragLeave = () => {
-
-  setDragActive(false);
-
-};
-
-const [hasLabReport, setHasLabReport] =
-  useState(false);
-
-const [labFiles, setLabFiles] =
-  useState([]);
 const handleDoctorNoteChange = (
   field,
   value
-) => {
-
+) =>
   setDoctorNotes((prev) => ({
     ...prev,
     [field]: value,
   }));
 
+const handleLabUpload = async (
+  e
+) => {
+
+  const files =
+    Array.from(
+      e.target.files || []
+    );
+
+  setLabFiles(files);
+
+  try {
+
+    setIsUploadingReports(true);
+
+    const uploadedReports = [];
+
+    for (const file of files) {
+
+      const report =
+        await uploadLabReport(
+          patient.id,
+          file
+        );
+
+      uploadedReports.push(report);
+      setUploadedReports(uploadedReports);
+
+    }
+
+    setUploadedReportsCount(
+      uploadedReports.length
+    );
+
+    setUploadSuccess(true);
+
+  } catch (error) {
+
+    alert(error.message);
+
+  } finally {
+
+    setIsUploadingReports(false);
+
+  }
+
 };
+
+const handleDrop = async (e) => {
+
+  e.preventDefault();
+
+  setDragActive(false);
+
+  const files = Array.from(
+    e.dataTransfer.files || []
+  );
+
+  setLabFiles(files);
+
+  try {
+
+    setIsUploadingReports(true);
+
+    const uploadedReports = [];
+
+    for (const file of files) {
+
+      const report =
+        await uploadLabReport(
+          patient.id,
+          file
+        );
+
+      uploadedReports.push(report);
+      setUploadedReports(uploadedReports);
+
+    }
+
+    setUploadedReportsCount(
+      uploadedReports.length
+    );
+
+    setUploadSuccess(true);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(error.message);
+
+  } finally {
+
+    setIsUploadingReports(false);
+
+  }
+
+};
+const removeLabFile = async (
+  indexToRemove
+) => {
+
+  try {
+
+    const report =
+      uploadedReports[
+        indexToRemove
+      ];
+
+    if (report?.id) {
+
+      await deleteLabReport(
+        report.id
+      );
+
+    }
+
+    setLabFiles((prev) =>
+      prev.filter(
+        (_, index) =>
+          index !==
+          indexToRemove
+      )
+    );
+
+    setUploadedReports(
+      (prev) =>
+        prev.filter(
+          (_, index) =>
+            index !==
+            indexToRemove
+        )
+    );
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      error.message
+    );
+
+  }
+
+};
+const handleDragOver = (e) => {
+  e.preventDefault();
+  setDragActive(true);
+};
+
+const handleDragLeave = () =>
+  setDragActive(false);
+
+/* =========================
+   SAVE NOTES
+========================= */
+
+const saveDoctorNotes = async () => {
+  try {
+    await savePractitionerNotes({
+      patient_id: patient.id,
+      primary_diagnosis:
+        doctorNotes.primaryDiagnosis,
+      secondary_contributors:
+        doctorNotes.secondaryContributors,
+      dosha_imbalance:
+        doctorNotes.doshaImbalance,
+      samprapti_stage:
+        doctorNotes.sampraptiStage,
+      root_cause:
+        doctorNotes.rootCause,
+      priority_intervention:
+        doctorNotes.priorityIntervention,
+      protocol_tier:
+        doctorNotes.protocolTier,
+      follow_up_timeline:
+        doctorNotes.followUpTimeline,
+      practitioner_signature:
+        doctorNotes.practitionerSignature ||
+        null,
+    });
+
+    alert(
+      "Practitioner Notes Saved Successfully"
+    );
+  } catch (error) {
+    console.error(
+      "SAVE ERROR",
+      error
+    );
+
+    alert(error.message);
+  }
+};
+
+/* =========================
+   LAB REPORTS
+========================= */
+
 const uploadLabReports = async () => {
 
   if (!labFiles.length)
@@ -145,55 +353,29 @@ const uploadLabReports = async () => {
 
     for (const file of labFiles) {
 
-      const filePath =
-        `${patient.id}/${Date.now()}-${file.name}`;
+      const report =
+        await uploadLabReport(
+          patient.id,
+          file
+        );
 
-      const { error: uploadError } =
-        await supabase.storage
-
-          .from("lab-reports")
-
-          .upload(
-            filePath,
-            file
-          );
-
-      if (uploadError)
-        throw uploadError;
-
-      const { data } =
-        await supabase
-
-          .from(
-            "patient_lab_reports"
-          )
-
-          .insert({
-            patient_id:
-              patient.id,
-
-            report_name:
-              file.name,
-
-            file_path:
-              filePath,
-
-            file_size:
-              file.size,
-
-            file_type:
-              file.type,
-          })
-
-          .select()
-
-          .single();
-
-      uploadedReports.push(data);
+      uploadedReports.push(report);
 
     }
 
+    setUploadedReportsCount(
+      uploadedReports.length
+    );
+
+    setUploadSuccess(true);
+
     return uploadedReports;
+
+  } catch (error) {
+
+    setUploadSuccess(false);
+
+    throw error;
 
   } finally {
 
@@ -202,160 +384,61 @@ const uploadLabReports = async () => {
   }
 
 };
-const saveDoctorNotes = async () => {
 
-  try {
-
-    const payload = {
-
-      patient_id:
-        patient.id,
-
-      primary_diagnosis:
-        doctorNotes.primaryDiagnosis,
-
-      secondary_contributors:
-        doctorNotes.secondaryContributors,
-
-      dosha_imbalance:
-        doctorNotes.doshaImbalance,
-
-      samprapti_stage:
-        doctorNotes.sampraptiStage,
-
-      root_cause:
-        doctorNotes.rootCause,
-
-      priority_intervention:
-        doctorNotes.priorityIntervention,
-
-      protocol_tier:
-        doctorNotes.protocolTier,
-
-      follow_up_timeline:
-        doctorNotes.followUpTimeline,
-
-      practitioner_signature:
-        doctorNotes.practitionerSignature || null,
-
-    };
-
-    console.log(
-      "DOCTOR NOTE PAYLOAD",
-      payload
-    );
-
-    const {
-      data,
-      error,
-    } = await supabase
-
-      .from(
-        "clinical_doctor_notes"
-      )
-
-      .insert(payload)
-
-      .select();
-
-    console.log(
-      "DATA",
-      data
-    );
-
-    console.log(
-      "ERROR",
-      error
-    );
-
-    if (error)
-      throw error;
-
-    alert(
-      "Doctor notes saved successfully"
-    );
-
-  } catch (error) {
-
-    console.error(
-      "SAVE ERROR",
-      error
-    );
-
-    alert(
-      error.message
-    );
-
-  }
-
-};
+/* =========================
+   FINAL SUMMARY
+========================= */
 
 const generateFinalSummary = async () => {
-
   try {
-
     setIsGeneratingSummary(true);
 
-    const uploadedReports =
-      await uploadLabReports();
+    
 
     const finalPayload = {
-
       patient,
-
       riskReport,
-
       ayurvedaReport,
-
       clinicalReport,
-
       doctorNotes,
-
-      uploadedReports,
-
+     
     };
 
     console.log(
-      "FINAL SUMMARY PAYLOAD",
+      "FINAL SUMMARY",
       finalPayload
     );
 
-    // API call later
-
-    await new Promise(
-      (resolve) =>
-        setTimeout(resolve,2000)
-    );
-
-    alert(
-      "Final Summary Generated"
-    );
-
+   navigate(
+  "/dashboard/result-summary",
+  {
+    state: {
+      patient,
+      riskReport,
+      ayurvedaReport,
+      clinicalReport,
+      doctorNotes,
+      selectedSignature,
+      uploadedReports,
+    },
+  }
+);
   } catch (error) {
-
     console.error(error);
 
     alert(error.message);
-
   } finally {
-
     setIsGeneratingSummary(false);
-
   }
-
 };
-  
-   
-  if (!clinicalReport) {
 
-    return (
-      <div className="p-10 text-center text-xl font-semibold">
-        No Clinical Report Found
-      </div>
-    );
-
-  }
-  
+if (!clinicalReport) {
+  return (
+    <div className="p-10 text-center text-xl font-semibold">
+      No Clinical Report Found
+    </div>
+  );
+}
 
 
   return (
@@ -1088,7 +1171,59 @@ const generateFinalSummary = async () => {
   </label>
 
 </div>
+{uploadSuccess && (
 
+  <div className="mt-6 rounded-2xl bg-green-50 border border-green-200 p-4">
+
+    <p className="font-semibold text-green-700">
+
+      ✅ {uploadedReportsCount} Lab Report(s) Uploaded Successfully
+
+    </p>
+
+  </div>
+
+)}
+{labFiles.map(
+  (file,index) => (
+
+    <div
+      key={index}
+      className="flex justify-between items-center bg-slate-50 rounded-xl p-4 border border-slate-200"
+    >
+
+      <div>
+
+        <p className="font-medium">
+          {file.name}
+        </p>
+
+        <p className="text-sm text-slate-500">
+
+          {(file.size / 1024).toFixed(1)}
+          {" "}
+          KB
+
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        onClick={() =>
+          removeLabFile(index)
+        }
+        className="w-8 h-8 rounded-full bg-red-100 text-red-600 font-bold hover:bg-red-200 transition"
+      >
+
+        ✕
+
+      </button>
+
+    </div>
+
+  )
+)}
 </SectionCard>
 <div className="sticky bottom-0 bg-white border-t border-slate-200 p-6 rounded-t-[32px] shadow-2xl">
 

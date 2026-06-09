@@ -1,59 +1,117 @@
-// services/labReportService.js
+const API_URL =
+  import.meta.env.VITE_API_URL;
 
-import { supabase } from "../../lib/supabase";
+/* =========================
+   UPLOAD LAB REPORT
+========================= */
 
 export const uploadLabReport = async (
   patientId,
   file
 ) => {
 
-  const fileName =
-    `${patientId}/${Date.now()}-${file.name}`;
+  if (
+    file.type !==
+    "application/pdf"
+  ) {
+    throw new Error(
+      "Only PDF files are allowed"
+    );
+  }
 
-  const { error: uploadError } =
-    await supabase.storage
+  if (
+    file.size >
+    1024 * 1024
+  ) {
+    throw new Error(
+      "File size must be less than 1 MB"
+    );
+  }
 
-      .from("lab-reports")
+  const formData =
+    new FormData();
 
-      .upload(
-        fileName,
-        file
-      );
+  formData.append(
+    "patient_id",
+    patientId
+  );
 
-  if (uploadError)
-    throw uploadError;
+  formData.append(
+    "report",
+    file
+  );
 
-  const { data, error } =
-    await supabase
+  const response =
+    await fetch(
+      `${API_URL}/api/lab-reports/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
-      .from(
-        "patient_lab_reports"
-      )
+  const result =
+    await response.json();
 
-      .insert({
-        patient_id:
-          patientId,
+  if (!response.ok) {
+    throw new Error(
+      result.message
+    );
+  }
 
-        report_name:
-          file.name,
-
-        file_path:
-          fileName,
-
-        file_size:
-          file.size,
-
-        file_type:
-          file.type,
-      })
-
-      .select()
-
-      .single();
-
-  if (error)
-    throw error;
-
-  return data;
+  return result.data;
 
 };
+
+/* =========================
+   GET PATIENT REPORTS
+========================= */
+
+export const getPatientReports =
+  async (patientId) => {
+
+    const response =
+      await fetch(
+        `${API_URL}/api/lab-reports/patient/${patientId}`
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.message
+      );
+    }
+
+    return result.data;
+
+  };
+
+/* =========================
+   DELETE REPORT
+========================= */
+
+export const deleteLabReport =
+  async (reportId) => {
+
+    const response =
+      await fetch(
+        `${API_URL}/api/lab-reports/${reportId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.message
+      );
+    }
+
+    return result.data;
+
+  };

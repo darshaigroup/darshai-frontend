@@ -32,10 +32,13 @@ import Reports from "@/features/dashboard/pages/Reports";
 import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
 import Assessment from "@/features/dashboard/assessments/pages/Assessment";
+import LifestyleMatrixAssessment from "@/features/dashboard/assessments/pages/LifestyleMatrixAssessment";
 import AyurvedaAssessment from "@/features/dashboard/assessments/pages/AyurvedaAssessment";
 import AyurvedaResult from "@/features/dashboard/assessments/pages/AyurvedaResult";
 import ClinicalDataAssessment from "@/features/dashboard/assessments/pages/ClinicalDataAssessment";
 import ClinicalDataResult from "@/features/dashboard/assessments/pages/ClinicalDataResult";
+import ResultSummary from "@/features/dashboard/assessments/pages/ResultSummary";
+import LabReportViewer from "@/features/dashboard/assessments/pages/LabReportViewer";
 
 // Auth
 import Login from "@/pages/Auth/Login";
@@ -89,13 +92,15 @@ const AppRoutes = () => {
             <Route path="reports" element={<Reports />} />
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
+            <Route path="lifestyle-matrix-assessment" element={<LifestyleMatrixAssessment />} />
             <Route path="assessments" element={<Assessment />} />
              <Route path="result" element={<Result />} />
              <Route path="ayurveda-assessment" element={<AyurvedaAssessment />} />
              <Route path="ayurveda-result" element={ <AyurvedaResult />}/>
              <Route path="clinical-data-assessment" element={<ClinicalDataAssessment />} />
              <Route path="clinical-data-result" element={<ClinicalDataResult />} />
-
+             <Route path="result-summary" element={<ResultSummary />} />
+             <Route path="lab-reports/:id" element={<LabReportViewer />}/>
           </Route>
 
         </Route>
