@@ -113,6 +113,8 @@ const EnvironmentAssessment = ({
 
   };
 
+  
+
   return (
 
     <AssessmentLayout
@@ -175,11 +177,14 @@ const EnvironmentAssessment = ({
           className="w-full mt-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg shadow-green-200 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
 
-          {
-            isSubmitting
-              ? "Submitting..."
-              : "Submit Assessment"
-          }
+          {isSubmitting ? (
+  <div className="flex items-center justify-center gap-3">
+    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+    <span>Submitting...</span>
+  </div>
+) : (
+  "Submit Assessment"
+)}
 
         </button>
 

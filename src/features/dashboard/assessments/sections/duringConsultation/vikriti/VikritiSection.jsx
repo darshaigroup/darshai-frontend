@@ -32,7 +32,7 @@ const VikritiSection = ({
     const existing =
       answers[
         questionId
-      ] || [1, 1, 1];
+      ] || [null, null, null];
 
     const updated =
       [...existing];

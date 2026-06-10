@@ -25,9 +25,9 @@ const AyurvedaAssessment = () => {
 
   const riskReport = location.state?.riskReport;
 
-  console.log("PATIENT", patient);
+  // console.log("PATIENT", patient);
 
-  console.log("RISK REPORT", riskReport);
+  // console.log("RISK REPORT", riskReport);
 
   const [openSection, setOpenSection] = useState("prakriti");
 
@@ -42,6 +42,48 @@ const AyurvedaAssessment = () => {
 
     ama: {},
   });
+
+  const normalizeVikriti = (data) => {
+
+    const normalized = {};
+
+    Object.keys(data).forEach((key) => {
+
+      normalized[key] =
+        data[key].map(
+          (value) => value ?? 1
+        );
+
+    });
+
+    return normalized;
+
+  };
+
+  const normalizeAgni = (data) => {
+
+    const normalized = {};
+
+    Object.keys(data).forEach((key) => {
+
+      normalized[key] = {
+
+        vishama:
+          data[key]?.vishama ?? 0,
+
+        tikshna:
+          data[key]?.tikshna ?? 0,
+
+        manda:
+          data[key]?.manda ?? 0,
+
+      };
+
+    });
+
+    return normalized;
+
+  };
 
   const handleGenerateReport = async () => {
     if (isGenerating) return;
@@ -67,15 +109,22 @@ const AyurvedaAssessment = () => {
 
         gapHours: 24,
 
-        prakritiAnswers: answers.prakriti,
+        prakritiAnswers:
+          answers.prakriti,
 
-        vikritiAnswers: answers.vikriti,
+        vikritiAnswers:
+          normalizeVikriti(
+            answers.vikriti
+          ),
 
-        agniAnswers: answers.agni,
+        agniAnswers:
+          normalizeAgni(
+            answers.agni
+          ),
 
-        amaAnswers: answers.ama,
+        amaAnswers:
+          answers.ama,
       });
-       
       navigate(
         "/dashboard/ayurveda-result",
 
@@ -233,10 +282,9 @@ const AyurvedaAssessment = () => {
 
               transition-all
 
-              ${
-                isGenerating
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-[#0F766E] to-[#14B8A6] hover:scale-[1.01]"
+              ${isGenerating
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-[#0F766E] to-[#14B8A6] hover:scale-[1.01]"
               }
 
             `}

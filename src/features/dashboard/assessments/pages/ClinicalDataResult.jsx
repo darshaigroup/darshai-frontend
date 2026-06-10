@@ -1,28 +1,26 @@
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate} from "react-router-dom";
+import { useState,useEffect } from "react";
+import {uploadLabReport,deleteLabReport} from "../services/labReportService";
+import {getSignatures,getPatientNotes,savePractitionerNotes} from "../services/practitionerService";
 const ClinicalDataResult = () => {
+  const navigate = useNavigate();
 
-  
+ 
 
-  const location = useLocation();
+ const location = useLocation();
 
-  const patient =
-    location.state?.patient;
+const patient = location.state?.patient;
+const riskReport = location.state?.riskReport;
+const ayurvedaReport = location.state?.ayurvedaReport;
 
-  const riskReport =
-    location.state?.riskReport;
+const clinicalReport =
+  location.state?.clinicalData ||
+  location.state?.clinicalReport;
 
+const answers =
+  clinicalReport?.clinical_answers || {};
 
-  const ayurvedaReport =
-    location.state?.ayurvedaReport;
-
-  const clinicalReport =
-    location.state?.clinicalData ||
-    location.state?.clinicalReport;
-
-  const answers =
-    clinicalReport?.clinical_answers || {};
-    const [doctorNotes, setDoctorNotes] = useState({
+const [doctorNotes, setDoctorNotes] = useState({
   primaryDiagnosis: "",
   secondaryContributors: "",
   doshaImbalance:
@@ -35,62 +33,413 @@ const ClinicalDataResult = () => {
   practitionerSignature: "",
 });
 
-const handleLabUpload = (
-  event
-) => {
+const [signatures, setSignatures] = useState([]);
+const [selectedSignature, setSelectedSignature] = useState(null);
+const [labFiles, setLabFiles] = useState([]);
+const [uploadedReports, setUploadedReports] = useState([]);
+const [dragActive, setDragActive] = useState(false);
+const [uploadSuccess, setUploadSuccess] = useState(false);
+const [uploadedReportsCount, setUploadedReportsCount] = useState(0);
+const [isUploadingReports, setIsUploadingReports] = useState(false);
+const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
 
-  const files =
-    Array.from(
-      event.target.files
+/* =========================
+   LOAD DATA
+========================= */
+
+useEffect(() => {
+  loadSignatures();
+}, []);
+
+useEffect(() => {
+  if (
+    patient?.id &&
+    signatures.length
+  ) {
+    loadPatientNotes();
+  }
+}, [patient?.id, signatures]);
+
+const loadSignatures = async () => {
+  try {
+    const data =
+      await getSignatures();
+
+    setSignatures(data || []);
+  } catch (error) {
+    console.error(
+      "LOAD SIGNATURE ERROR",
+      error
     );
-
-  setLabFiles(
-    (prev) => [
-      ...prev,
-      ...files,
-    ]
-  );
-
+  }
 };
 
-const [hasLabReport, setHasLabReport] =
-  useState(false);
+const loadPatientNotes = async () => {
+  try {
+    const note =
+      await getPatientNotes(
+        patient.id
+      );
 
-const [labFiles, setLabFiles] =
-  useState([]);
+    if (!note) return;
+
+    setDoctorNotes({
+      primaryDiagnosis:
+        note.primary_diagnosis || "",
+      secondaryContributors:
+        note.secondary_contributors || "",
+      doshaImbalance:
+        note.dosha_imbalance || "",
+      sampraptiStage:
+        note.samprapti_stage || "",
+      rootCause:
+        note.root_cause || "",
+      priorityIntervention:
+        note.priority_intervention || "",
+      protocolTier:
+        note.protocol_tier || "",
+      followUpTimeline:
+        note.follow_up_timeline || "",
+      practitionerSignature:
+        note.practitioner_signature || "",
+    });
+
+    const selected =
+      signatures.find(
+        (item) =>
+          String(item.id) ===
+          String(
+            note.practitioner_signature
+          )
+      );
+
+    if (selected) {
+      setSelectedSignature(
+        selected
+      );
+    }
+  } catch (error) {
+    console.error(
+      "LOAD NOTES ERROR",
+      error
+    );
+  }
+};
+
+/* =========================
+   HANDLERS
+========================= */
+
 const handleDoctorNoteChange = (
   field,
   value
-) => {
-
+) =>
   setDoctorNotes((prev) => ({
     ...prev,
     [field]: value,
   }));
 
+const handleLabUpload = async (
+  e
+) => {
+
+  const files =
+    Array.from(
+      e.target.files || []
+    );
+
+  setLabFiles(files);
+
+  try {
+
+    setIsUploadingReports(true);
+
+    const uploadedReports = [];
+
+    for (const file of files) {
+
+      const report =
+        await uploadLabReport(
+          patient.id,
+          file
+        );
+
+      uploadedReports.push(report);
+      setUploadedReports(uploadedReports);
+
+    }
+
+    setUploadedReportsCount(
+      uploadedReports.length
+    );
+
+    setUploadSuccess(true);
+
+  } catch (error) {
+
+    alert(error.message);
+
+  } finally {
+
+    setIsUploadingReports(false);
+
+  }
+
 };
 
-const saveDoctorNotes = async () => {
+const handleDrop = async (e) => {
 
-  console.log(
-    "DOCTOR NOTES",
-    doctorNotes
+  e.preventDefault();
+
+  setDragActive(false);
+
+  const files = Array.from(
+    e.dataTransfer.files || []
   );
 
-  // later call API here
+  setLabFiles(files);
+
+  try {
+
+    setIsUploadingReports(true);
+
+    const uploadedReports = [];
+
+    for (const file of files) {
+
+      const report =
+        await uploadLabReport(
+          patient.id,
+          file
+        );
+
+      uploadedReports.push(report);
+      setUploadedReports(uploadedReports);
+
+    }
+
+    setUploadedReportsCount(
+      uploadedReports.length
+    );
+
+    setUploadSuccess(true);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(error.message);
+
+  } finally {
+
+    setIsUploadingReports(false);
+
+  }
 
 };
-  
-   
-  if (!clinicalReport) {
+const removeLabFile = async (
+  indexToRemove
+) => {
 
-    return (
-      <div className="p-10 text-center text-xl font-semibold">
-        No Clinical Report Found
-      </div>
+  try {
+
+    const report =
+      uploadedReports[
+        indexToRemove
+      ];
+
+    if (report?.id) {
+
+      await deleteLabReport(
+        report.id
+      );
+
+    }
+
+    setLabFiles((prev) =>
+      prev.filter(
+        (_, index) =>
+          index !==
+          indexToRemove
+      )
+    );
+
+    setUploadedReports(
+      (prev) =>
+        prev.filter(
+          (_, index) =>
+            index !==
+            indexToRemove
+        )
+    );
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      error.message
     );
 
   }
+
+};
+const handleDragOver = (e) => {
+  e.preventDefault();
+  setDragActive(true);
+};
+
+const handleDragLeave = () =>
+  setDragActive(false);
+
+/* =========================
+   SAVE NOTES
+========================= */
+
+const saveDoctorNotes = async () => {
+  try {
+    await savePractitionerNotes({
+      patient_id: patient.id,
+      primary_diagnosis:
+        doctorNotes.primaryDiagnosis,
+      secondary_contributors:
+        doctorNotes.secondaryContributors,
+      dosha_imbalance:
+        doctorNotes.doshaImbalance,
+      samprapti_stage:
+        doctorNotes.sampraptiStage,
+      root_cause:
+        doctorNotes.rootCause,
+      priority_intervention:
+        doctorNotes.priorityIntervention,
+      protocol_tier:
+        doctorNotes.protocolTier,
+      follow_up_timeline:
+        doctorNotes.followUpTimeline,
+      practitioner_signature:
+        doctorNotes.practitionerSignature ||
+        null,
+    });
+
+    alert(
+      "Practitioner Notes Saved Successfully"
+    );
+  } catch (error) {
+    console.error(
+      "SAVE ERROR",
+      error
+    );
+
+    alert(error.message);
+  }
+};
+
+/* =========================
+   LAB REPORTS
+========================= */
+
+const uploadLabReports = async () => {
+
+  if (!labFiles.length)
+    return [];
+
+  try {
+
+    setIsUploadingReports(true);
+
+    const uploadedReports = [];
+
+    for (const file of labFiles) {
+
+      const report =
+        await uploadLabReport(
+          patient.id,
+          file
+        );
+
+      uploadedReports.push(report);
+
+    }
+
+    setUploadedReportsCount(
+      uploadedReports.length
+    );
+
+    setUploadSuccess(true);
+
+    return uploadedReports;
+
+  } catch (error) {
+
+    setUploadSuccess(false);
+
+    throw error;
+
+  } finally {
+
+    setIsUploadingReports(false);
+
+  }
+
+};
+
+/* =========================
+   FINAL SUMMARY
+========================= */
+
+const generateFinalSummary = async () => {
+  try {
+    setIsGeneratingSummary(true);
+
+    
+
+    const finalPayload = {
+      patient,
+      riskReport,
+      ayurvedaReport,
+      clinicalReport,
+      doctorNotes,
+     
+    };
+
+    console.log(
+      "FINAL SUMMARY",
+      finalPayload
+    );
+
+   navigate(
+  "/dashboard/result-summary",
+  {
+    state: {
+      patient,
+      riskReport,
+      ayurvedaReport,
+      clinicalReport,
+      doctorNotes,
+      selectedSignature,
+      uploadedReports,
+    },
+  }
+);
+  } catch (error) {
+    console.error(error);
+
+    alert(error.message);
+  } finally {
+    setIsGeneratingSummary(false);
+  }
+};
+
+if (!clinicalReport) {
+  return (
+    <div className="p-10 text-center text-xl font-semibold">
+      No Clinical Report Found
+    </div>
+  );
+}
+
 
   return (
 
@@ -512,7 +861,7 @@ const saveDoctorNotes = async () => {
           />
 
           <MetricCard
-            title="Details"
+            title="Hair/Skin issue"
             value={
               answers.hairSkinDetails ||
               "-"
@@ -555,12 +904,6 @@ const saveDoctorNotes = async () => {
       Practitioner Notes
     </h2>
 
-    <button
-      onClick={saveDoctorNotes}
-      className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold shadow-md"
-    >
-      Save Notes
-    </button>
 
   </div>
 
@@ -658,20 +1001,120 @@ const saveDoctorNotes = async () => {
           }
         />
 
-        <EditableDoctorRow
-          label="Practitioner Signature"
-          value={doctorNotes.practitionerSignature}
-          onChange={(value) =>
-            handleDoctorNoteChange(
-              "practitionerSignature",
-              value
-            )
+        <tr>
+
+  <td className="w-[320px] p-5 font-semibold bg-slate-50">
+
+    Practitioner Signature
+
+  </td>
+
+  <td className="p-5">
+
+    <select
+
+      value={
+        doctorNotes.practitionerSignature
+      }
+
+      onChange={(e) => {
+
+        const selected =
+          signatures.find(
+            (item) =>
+              item.id ===
+              e.target.value
+          );
+
+        handleDoctorNoteChange(
+          "practitionerSignature",
+          e.target.value
+        );
+
+        setSelectedSignature(
+          selected
+        );
+
+      }}
+
+      className="w-full border rounded-xl p-3"
+
+    >
+
+      <option value="">
+
+        Select Practitioner Signature
+
+      </option>
+
+      {signatures.map(
+        (item) => (
+
+          <option
+            key={item.id}
+            value={item.id}
+          >
+
+            {
+              item.practitioner_name
+            }
+
+          </option>
+
+        )
+      )}
+
+    </select>
+
+    {selectedSignature && (
+
+      <div className="mt-5">
+
+        <img
+          src={
+            selectedSignature.signature_url
           }
+          alt="signature"
+          className="h-24 object-contain"
         />
+
+        <p className="mt-2 text-sm text-slate-500">
+
+          {
+            selectedSignature.practitioner_name
+          }
+
+          {" • "}
+
+          {
+            selectedSignature.designation
+          }
+
+        </p>
+
+      </div>
+
+    )}
+
+  </td>
+
+</tr>
 
       </tbody>
 
     </table>
+    <div className="flex justify-end mt-8">
+
+  <button
+    onClick={saveDoctorNotes}
+    className="px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold shadow-md"
+  >
+
+    Save Practitioner Notes
+
+  </button>
+
+</div>
 
   </div>
 
@@ -681,155 +1124,133 @@ const saveDoctorNotes = async () => {
 
 <SectionCard title="Laboratory Reports">
 
-  <div className="space-y-6">
+ <div
+  onDrop={handleDrop}
+  onDragOver={handleDragOver}
+  onDragLeave={handleDragLeave}
+  className={`border-2 border-dashed rounded-3xl p-10 text-center transition-all ${
+    dragActive
+      ? "border-[#14B8A6] bg-teal-50"
+      : "border-slate-300 bg-gradient-to-br from-slate-50 to-white"
+  }`}
+>
 
-    <div className="bg-slate-50 rounded-2xl p-6">
+  <input
+    type="file"
+    multiple
+    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+    onChange={handleLabUpload}
+    className="hidden"
+    id="lab-upload"
+  />
 
-      <h3 className="text-lg font-semibold text-slate-800">
+  <label
+    htmlFor="lab-upload"
+    className="cursor-pointer block"
+  >
 
-        Do you have any laboratory reports?
-
-      </h3>
-
-      <p className="text-slate-500 mt-2">
-
-        Upload blood work, imaging reports,
-        diagnostic reports or any recent
-        medical investigations.
-
-      </p>
-
-      <div className="flex gap-4 mt-5">
-
-        <button
-          type="button"
-          onClick={() =>
-            setHasLabReport(true)
-          }
-          className={`px-6 py-3 rounded-xl font-medium ${
-            hasLabReport
-              ? "bg-teal-600 text-white"
-              : "bg-white border"
-          }`}
-        >
-
-          Yes
-
-        </button>
-
-        <button
-          type="button"
-          onClick={() =>
-            setHasLabReport(false)
-          }
-          className={`px-6 py-3 rounded-xl font-medium ${
-            !hasLabReport
-              ? "bg-slate-700 text-white"
-              : "bg-white border"
-          }`}
-        >
-
-          No
-
-        </button>
-
-      </div>
-
+    <div className="text-6xl">
+      📄
     </div>
 
-    {hasLabReport && (
+    <h3 className="mt-5 text-xl font-bold text-slate-800">
+      Drag & Drop Lab Reports
+    </h3>
 
-      <div className="border-2 border-dashed border-slate-300 rounded-3xl p-10 text-center bg-gradient-to-br from-slate-50 to-white">
+    <p className="mt-2 text-slate-500">
+      PDF, JPG, PNG, DOC, DOCX
+    </p>
 
-        <input
-          type="file"
-          multiple
-          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-          onChange={handleLabUpload}
-          className="hidden"
-          id="lab-upload"
-        />
+    <button
+      type="button"
+      className="mt-6 px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold"
+    >
+      Browse Files
+    </button>
 
-        <label
-          htmlFor="lab-upload"
-          className="cursor-pointer"
-        >
+  </label>
 
-          <div className="text-5xl">
+</div>
+{uploadSuccess && (
 
-            📄
+  <div className="mt-6 rounded-2xl bg-green-50 border border-green-200 p-4">
 
-          </div>
+    <p className="font-semibold text-green-700">
 
-          <h3 className="mt-4 text-xl font-bold text-slate-800">
+      ✅ {uploadedReportsCount} Lab Report(s) Uploaded Successfully
 
-            Drag & Drop or Upload Lab Reports
-
-          </h3>
-
-          <p className="mt-2 text-slate-500">
-
-            PDF, JPG, PNG, DOC, DOCX
-
-          </p>
-
-          <button
-            type="button"
-            className="mt-5 px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold"
-          >
-
-            Select Files
-
-          </button>
-
-        </label>
-
-      </div>
-
-    )}
-
-    {labFiles.length > 0 && (
-
-      <div className="grid md:grid-cols-2 gap-4">
-
-        {labFiles.map(
-          (file, index) => (
-
-            <div
-              key={index}
-              className="border rounded-2xl p-4 bg-slate-50"
-            >
-
-              <p className="font-semibold text-slate-800">
-
-                {file.name}
-
-              </p>
-
-              <p className="text-sm text-slate-500">
-
-                {(
-                  file.size /
-                  1024 /
-                  1024
-                ).toFixed(2)}
-                {" "}
-                MB
-
-              </p>
-
-            </div>
-
-          )
-        )}
-
-      </div>
-
-    )}
+    </p>
 
   </div>
 
+)}
+{labFiles.map(
+  (file,index) => (
+
+    <div
+      key={index}
+      className="flex justify-between items-center bg-slate-50 rounded-xl p-4 border border-slate-200"
+    >
+
+      <div>
+
+        <p className="font-medium">
+          {file.name}
+        </p>
+
+        <p className="text-sm text-slate-500">
+
+          {(file.size / 1024).toFixed(1)}
+          {" "}
+          KB
+
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        onClick={() =>
+          removeLabFile(index)
+        }
+        className="w-8 h-8 rounded-full bg-red-100 text-red-600 font-bold hover:bg-red-200 transition"
+      >
+
+        ✕
+
+      </button>
+
+    </div>
+
+  )
+)}
 </SectionCard>
+<div className="sticky bottom-0 bg-white border-t border-slate-200 p-6 rounded-t-[32px] shadow-2xl">
+
+  <button
+
+    type="button"
+
+    disabled={
+      isGeneratingSummary ||
+      isUploadingReports
+    }
+
+    onClick={
+      generateFinalSummary
+    }
+
+    className="w-full py-5 rounded-2xl text-lg font-bold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white disabled:opacity-50"
+
+  >
+
+    {isGeneratingSummary
+      ? "Generating Final Summary..."
+      : "Generate Final Summary"}
+
+  </button>
+
+</div>
     </div>
 
   );
