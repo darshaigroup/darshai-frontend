@@ -25,9 +25,13 @@ const AyurvedaAssessment = () => {
 
   const riskReport = location.state?.riskReport;
 
-  // console.log("PATIENT", patient);
+  const  lifestyleMatrix=location.state?.lifestyleMatrix;
 
-  // console.log("RISK REPORT", riskReport);
+  console.log("PATIENT", patient);
+
+  console.log("RISK REPORT", riskReport);
+
+  console.log("LIFESTYLE MATRIX", lifestyleMatrix);
 
   const [openSection, setOpenSection] = useState("prakriti");
 
@@ -135,6 +139,8 @@ const AyurvedaAssessment = () => {
             riskReport,
 
             report: response.data,
+
+            lifestyleMatrix,
           },
         },
       );

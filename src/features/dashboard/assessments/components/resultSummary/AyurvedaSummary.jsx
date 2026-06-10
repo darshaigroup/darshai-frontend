@@ -153,7 +153,7 @@ const AyurvedaSummary = ({
 
       {/* Key Interpretation */}
 
-      <div className="grid lg:grid-cols-2 gap-6 mb-8">
+      {/* <div className="grid lg:grid-cols-2 gap-6 mb-8">
 
         <div className="bg-blue-50 rounded-3xl p-6">
 
@@ -215,11 +215,11 @@ const AyurvedaSummary = ({
 
         </div>
 
-      </div>
+      </div> */}
 
       {/* Highlighted Summary */}
 
-      <div className="bg-gradient-to-r from-[#173C68] to-[#245A98] rounded-3xl p-8 text-white">
+      {/* <div className="bg-gradient-to-r from-[#173C68] to-[#245A98] rounded-3xl p-8 text-white">
 
         <h3 className="font-bold text-xl mb-4">
 
@@ -252,7 +252,7 @@ const AyurvedaSummary = ({
 
         </p>
 
-      </div>
+      </div> */}
 
     </div>
 

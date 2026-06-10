@@ -47,28 +47,6 @@ const SummaryHeader = ({
 
         </div>
 
-        {/* Right Section */}
-
-        <div className="flex items-center gap-3 lg:self-center">
-
-          <button
-            onClick={onDownload}
-            className="h-11 px-4 rounded-xl bg-[#173C68] text-white text-sm font-medium flex items-center gap-2 hover:bg-[#0F2D50] transition"
-          >
-            <Download size={16} />
-            PDF
-          </button>
-
-          <button
-            onClick={onPrint}
-            className="h-11 px-4 rounded-xl bg-slate-700 text-white text-sm font-medium flex items-center gap-2 hover:bg-slate-800 transition"
-          >
-            <Printer size={16} />
-            Print
-          </button>
-
-        </div>
-
       </div>
 
     </div>

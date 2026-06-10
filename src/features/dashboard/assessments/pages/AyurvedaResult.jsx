@@ -6,16 +6,14 @@ const AyurvedaResult = () => {
 
   const patient = location.state?.patient;
   const riskReport = location.state?.riskReport;
- 
-  const report =
-    location.state?.report?.data ||
-    location.state?.report ||
-    {};
+  const lifestyleMatrix = location.state?.lifestyleMatrix;
+  const report = location.state?.report?.data || location.state?.report || {};
 
-  // console.log("LOCATION STATE", location.state);
-  // console.log("PATIENT", patient);
-  // console.log("RISK REPORT", riskReport);
-  // console.log("REPORT", report);
+  console.log("LOCATION STATE", location.state);
+  console.log("PATIENT", patient);
+  console.log("RISK REPORT", riskReport);
+  console.log("LIFESTYLE MATRIX", lifestyleMatrix);
+  console.log("REPORT", report);
 
   if (!report || !report.prakriti) {
     return (
@@ -27,15 +25,11 @@ const AyurvedaResult = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-8 space-y-8">
-
       {/* HEADER */}
 
       <div className="bg-white rounded-[36px] shadow-xl p-10">
-
         <div className="flex flex-col lg:flex-row justify-between gap-10">
-
           <div>
-
             <h1 className="text-5xl font-bold text-slate-900">
               Ayurveda Assessment Report
             </h1>
@@ -45,227 +39,213 @@ const AyurvedaResult = () => {
             </p>
 
             <div className="mt-8">
+              <h3 className="text-2xl font-semibold">{report.patient_name}</h3>
 
-              <h3 className="text-2xl font-semibold">
-                {report.patient_name}
-              </h3>
-
-              {patient && (
-                <p className="text-slate-500">
-                  {patient.gender}
-                </p>
-              )}
-
+              {patient && <p className="text-slate-500">{patient.gender}</p>}
             </div>
-
           </div>
 
           <div className="text-center">
 
-            <div className="w-56 h-56 rounded-full bg-gradient-to-br from-[#0F766E] to-[#14B8A6] flex items-center justify-center shadow-2xl">
+  <div
+    className={`w-56 h-56 rounded-full flex items-center justify-center shadow-2xl ${
+      report.risk_tier === "High"
+        ? "bg-gradient-to-br from-red-600 to-red-400"
+        : report.risk_tier === "Medium"
+        ? "bg-gradient-to-br from-amber-500 to-orange-400"
+        : "bg-gradient-to-br from-[#0F766E] to-[#14B8A6]"
+    }`}
+  >
 
-              <div className="w-44 h-44 bg-white rounded-full flex flex-col items-center justify-center">
+    <div className="w-44 h-44 bg-white rounded-full flex flex-col items-center justify-center">
 
-                <p className="text-3xl font-bold text-slate-900">
-                  {report.risk_tier}
-                </p>
+      <p
+        className={`text-3xl font-bold ${
+          report.risk_tier === "High"
+            ? "text-red-600"
+            : report.risk_tier === "Medium"
+            ? "text-amber-600"
+            : "text-emerald-600"
+        }`}
+      >
+        {report.risk_tier}
+      </p>
 
-                <p className="text-slate-500 text-sm">
-                  Risk Tier
-                </p>
+      <p className="text-slate-500 text-sm">
+        Risk Tier
+      </p>
 
-              </div>
+    </div>
 
-            </div>
+  </div>
 
-          </div>
-
+</div>
         </div>
-
       </div>
 
-    
       {/* PRAKRITI */}
 
-<div className="bg-white rounded-[32px] shadow-xl p-10">
+      <div className="bg-white rounded-[32px] shadow-xl p-10">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900">
+              Prakriti Constitution
+            </h2>
 
-  <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+            <p className="text-slate-500 mt-2">
+              Natural Ayurvedic body constitution
+            </p>
+          </div>
+
+          <div className="px-8 py-4 rounded-3xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-xl">
+            <p className="text-sm uppercase tracking-wider opacity-80">
+              Dominant Constitution
+            </p>
+
+            <p className="text-3xl font-bold mt-1">
+              {report?.prakriti?.prakriti_type || "-"}
+            </p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
+          <DoshaCard
+            title="Vata"
+            value={report?.prakriti?.vata_pct || 0}
+            color="violet"
+          />
+
+          <DoshaCard
+            title="Pitta"
+            value={report?.prakriti?.pitta_pct || 0}
+            color="red"
+          />
+
+          <DoshaCard
+            title="Kapha"
+            value={report?.prakriti?.kapha_pct || 0}
+            color="emerald"
+          />
+        </div>
+      </div>
+
+      {/* VIKRITI */}
+
+      <div className="bg-white rounded-[32px] shadow-xl p-10">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900">
+              Vikriti Analysis
+            </h2>
+
+            <p className="text-slate-500 mt-2">Current Dosha Distribution</p>
+          </div>
+
+          <div className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+            <p className="text-xs uppercase tracking-wider">Risk Tier</p>
+
+            <p className="text-xl font-bold">{report.risk_tier}</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          <InteractiveDoshaCard
+            title="Vata"
+            value={report.vikriti?.vata_pct}
+            highlight
+          />
+
+          <InteractiveDoshaCard
+            title="Pitta"
+            value={report.vikriti?.pitta_pct}
+            highlight
+          />
+
+          <InteractiveDoshaCard
+            title="Kapha"
+            value={report.vikriti?.kapha_pct}
+            highlight
+          />
+        </div>
+      </div>
+
+      {/* AGNI */}
+
+     <div className="bg-white rounded-[32px] shadow-xl p-10">
+
+  <div className="flex justify-between items-center mb-8">
 
     <div>
 
       <h2 className="text-3xl font-bold text-slate-900">
-        Prakriti Constitution
+        Agni Assessment
       </h2>
 
       <p className="text-slate-500 mt-2">
-        Natural Ayurvedic body constitution
+        Digestive Fire Analysis
       </p>
 
     </div>
 
-    <div className="px-8 py-4 rounded-3xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-xl">
+    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
 
-      <p className="text-sm uppercase tracking-wider opacity-80">
-        Dominant Constitution
-      </p>
-
-      <p className="text-3xl font-bold mt-1">
-        {report.prakriti.prakriti_type}
-      </p>
+      <span className="text-4xl">
+        🔥
+      </span>
 
     </div>
 
   </div>
 
-  <div className="grid md:grid-cols-3 gap-6 mt-10">
+  <div className="rounded-[28px] bg-gradient-to-r from-orange-500 to-red-500 p-10 text-center text-white shadow-lg">
 
-    <DoshaCard
-      title="Vata"
-      value={report.prakriti.vata_pct}
-      color="violet"
-    />
-
-    <DoshaCard
-      title="Pitta"
-      value={report.prakriti.pitta_pct}
-      color="red"
-    />
-
-    <DoshaCard
-      title="Kapha"
-      value={report.prakriti.kapha_pct}
-      color="emerald"
-    />
-
-  </div>
-
-</div>
-
-      {/* VIKRITI */}
-
-<div className="bg-white rounded-[32px] shadow-xl p-10">
-
-  <div className="mb-8">
-
-    <h2 className="text-3xl font-bold">
-      Vikriti Imbalance Analysis
-    </h2>
-
-    <p className="text-slate-500 mt-2">
-      Current dosha deviations from natural constitution
+    <p className="text-sm uppercase tracking-[0.25em] opacity-80">
+      Agni Type
     </p>
 
-  </div>
-
-  <div className="grid md:grid-cols-3 gap-8">
-
-    {Object.entries(report.vikriti?.deviations || {}).map(
-      ([dosha, item]) => (
-
-        <div
-          key={dosha}
-          className="relative overflow-hidden rounded-[32px] border border-slate-100 p-8 bg-gradient-to-br from-white to-slate-50 hover:shadow-2xl transition-all duration-500"
-        >
-
-          <div className={`inline-flex px-5 py-2 rounded-full text-sm font-semibold ${getDoshaBarColor(dosha)}`}>
-            {dosha}
-          </div>
-
-          <h3 className="mt-8 text-5xl font-bold text-slate-900">
-            {item.delta > 0 ? "+" : ""}
-            {item.delta}%
-          </h3>
-
-          <p className="mt-4 text-lg text-slate-600">
-            {item.level}
-          </p>
-
-          <div className="mt-8">
-
-            <div className="h-3 rounded-full bg-slate-200 overflow-hidden">
-
-              <div
-                className={`h-full rounded-full ${getDoshaBarColor(dosha)}`}
-                style={{
-                  width: `${Math.min(Math.abs(item.delta), 100)}%`,
-                }}
-              />
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )
-    )}
+    <h3 className="text-5xl font-bold mt-4">
+      {report.agni?.agni_type}
+    </h3>
 
   </div>
 
 </div>
+      {/* AMA */}
 
-      {/* AGNI */}
+      <div className="bg-white rounded-[32px] shadow-xl p-10">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900">
+              Ama Assessment
+            </h2>
 
-      <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-[32px] shadow-xl p-8">
+            <p className="text-slate-500 mt-2">Toxin Accumulation Status</p>
+          </div>
 
-        <h2 className="text-3xl font-bold">
-          🔥 Agni Assessment
-        </h2>
-
-        <h3 className="mt-6 text-4xl font-bold text-orange-600">
-          {report.agni?.agni_type}
-        </h3>
-
-        <p className="mt-4 text-lg text-slate-700">
-          {report.agni?.clinical_meaning}
-        </p>
-
-        <div className="mt-4 inline-flex px-5 py-2 rounded-full bg-orange-100 text-orange-700 font-medium">
-
-          Linked Dosha:
-          {" "}
-          {report.agni?.linked_dosha}
-
+          <div className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-red-500 text-white">
+           
+            <p className="text-xl font-bold">{report.ama?.severity}</p>
+          </div>
         </div>
 
+        <div className="grid md:grid-cols-2 gap-6">
+          <AmaInsightCard
+            title="Ama Burden"
+            value={`${report.ama?.percentage}%`}
+            description="Toxin accumulation level"
+          />
+
+          <AmaInsightCard
+            title="Severity"
+            value={report.ama?.severity}
+            description="Current Ama status"
+          />
+        </div>
       </div>
-
-     {/* AMA */}
-
-<div className="bg-white rounded-[32px] shadow-xl p-10">
-
-  <h2 className="text-3xl font-bold mb-8">
-    Ama Assessment
-  </h2>
-
-  <div className="h-5 bg-slate-200 rounded-full overflow-hidden">
-
-    <div
-      className="h-full bg-gradient-to-r from-amber-400 to-red-500 transition-all duration-1000"
-      style={{
-        width: `${report.ama?.percentage || 0}%`,
-      }}
-    />
-
-  </div>
-
-  <div className="mt-6 flex items-center justify-between">
-
-    <span className="text-xl font-semibold">
-      {report.ama?.severity}
-    </span>
-
-    <span className="text-slate-500">
-      Ama Burden
-    </span>
-
-  </div>
-
-</div>
 
       {/* CLINICAL SUMMARY */}
 
-     <Section title="Clinical Intelligence Summary" className="bg-gradient-to-br from-[#0F766E] via-[#11998E] to-[#14B8A6] text-white">
+      {/* <Section title="Clinical Intelligence Summary" className="bg-gradient-to-br from-[#0F766E] via-[#11998E] to-[#14B8A6] text-white">
 
   <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[32px] p-8">
 
@@ -419,56 +399,45 @@ const AyurvedaResult = () => {
 
   )}
 
-</Section>
-<div className="bg-white rounded-[32px] shadow-xl p-10">
+</Section> */}
+      <div className="bg-white rounded-[32px] shadow-xl p-10">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-slate-900 mb-3">
+            Continue Clinical Assessment
+          </h2>
 
-  <div className="text-center">
+          <p className="text-slate-500 mb-8">
+            Complete medical history, medications, measurements and wellness
+            goals.
+          </p>
 
-    <h2 className="text-3xl font-bold text-slate-900 mb-3">
-      Continue Clinical Assessment
-    </h2>
+          <button
+            onClick={() =>
+              navigate("/dashboard/clinical-data-assessment", {
+                state: {
+                  patient,
 
-    <p className="text-slate-500 mb-8">
-      Complete medical history, medications,
-      measurements and wellness goals.
-    </p>
+                  riskReport,
 
-    <button
-      onClick={() =>
-        navigate(
-          "/dashboard/clinical-data-assessment",
-          {
-            state: {
+                  lifestyleMatrix,
 
-              patient,
-
-              riskReport,
-
-              ayurvedaReport:
-                report,
-
-            },
-          }
-        )
-      }
-      className="px-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white shadow-lg hover:scale-[1.02] transition-all"
-    >
-      Continue Clinical Assessment
-    </button>
-
-  </div>
-
-</div>
-     
+                  ayurvedaReport: report,
+                },
+              })
+            }
+            className="px-10 py-5 rounded-2xl text-lg font-semibold bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white shadow-lg hover:scale-[1.02] transition-all"
+          >
+            Continue Clinical Assessment
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
 const Section = ({ title, children, className = "" }) => (
   <div className={`rounded-[32px] shadow-xl p-10 ${className}`}>
-    <h2 className="text-3xl font-bold mb-8">
-      {title}
-    </h2>
+    <h2 className="text-3xl font-bold mb-8">{title}</h2>
 
     {children}
   </div>
@@ -476,72 +445,113 @@ const Section = ({ title, children, className = "" }) => (
 
 const DoctorCard = ({ title, value }) => (
   <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
-    <h3 className="font-semibold text-lg">
-      {title}
-    </h3>
+    <h3 className="font-semibold text-lg">{title}</h3>
 
-    <p className="text-xl mt-2">
-      {value}
-    </p>
+    <p className="text-xl mt-2">{value}</p>
   </div>
 );
 
-const DoshaCard = ({ title, value, color }) => (
-  <div className="bg-slate-50 rounded-[28px] p-8">
+const DoshaCard = ({ title, value, color }) => {
+  const styles = {
+    violet: {
+      card: "from-violet-50 to-violet-100 border-violet-200",
+      bar: "from-violet-500 to-violet-700",
+      text: "text-violet-700",
+    },
 
-    <div className="flex justify-between items-center">
+    red: {
+      card: "from-red-50 to-red-100 border-red-200",
+      bar: "from-red-500 to-red-700",
+      text: "text-red-700",
+    },
 
-      <h3 className="text-xl font-bold">
-        {title}
-      </h3>
+    emerald: {
+      card: "from-emerald-50 to-emerald-100 border-emerald-200",
+      bar: "from-emerald-500 to-emerald-700",
+      text: "text-emerald-700",
+    },
+  };
 
-      <div className={`w-4 h-4 rounded-full ${getDotColor(color)}`} />
+  return (
+    <div
+      className={`
+        rounded-[28px]
+        border
+        bg-gradient-to-br
+        p-6
+        ${styles[color].card}
+      `}
+    >
+      <div className="flex justify-between items-center">
+        <h3
+          className={`
+            text-xl
+            font-bold
+            ${styles[color].text}
+          `}
+        >
+          {title}
+        </h3>
 
+        <span
+          className={`
+            text-3xl
+            font-bold
+            ${styles[color].text}
+          `}
+        >
+          {value}%
+        </span>
+      </div>
+
+      <div className="mt-5 h-4 bg-white rounded-full overflow-hidden">
+        <div
+          className={`
+            h-full
+            bg-gradient-to-r
+            ${styles[color].bar}
+          `}
+          style={{
+            width: `${value}%`,
+          }}
+        />
+      </div>
+
+      <p className="text-sm text-slate-500 mt-3">Constitutional Balance</p>
     </div>
+  );
+};
 
-    <div className="mt-8 h-4 bg-slate-200 rounded-full overflow-hidden">
+const InteractiveDoshaCard = ({ title, value, level, highlight = false }) => (
+  <div
+    className={`
+      rounded-[28px]
+      p-8
+      transition-all
+      duration-300
+      cursor-pointer
+      hover:-translate-y-1
+      hover:shadow-2xl
+      ${
+        highlight
+          ? "bg-gradient-to-br from-green-50 to-green-50 border-2 border-green-300"
+          : "bg-slate-50 border border-slate-200"
+      }
+    `}
+  >
+    <p className="text-slate-500 text-sm uppercase tracking-wider">{title}</p>
 
-      <div
-        className="h-full bg-gradient-to-r from-[#0F766E] to-[#14B8A6]"
-        style={{
-          width: `${value || 0}%`,
-        }}
-      />
-
-    </div>
-
+    <h3 className="text-5xl font-bold text-slate-900 mt-3">{value}%</h3>
   </div>
 );
 
-const getDotColor = (color) => {
-  switch (color) {
-    case "violet":
-      return "bg-violet-500";
+const AmaInsightCard = ({ title, value, description }) => (
+  <div className="rounded-[28px] p-8 bg-gradient-to-br from-amber-50 to-red-50 border border-amber-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <p className="text-sm uppercase tracking-wider text-slate-500">{title}</p>
 
-    case "red":
-      return "bg-red-500";
+    <h3 className="text-5xl font-bold text-slate-900 mt-3">{value}</h3>
 
-    case "emerald":
-      return "bg-emerald-500";
-
-    default:
-      return "bg-slate-500";
-  }
-};
-
-const getDoshaBarColor = (dosha) => {
-  switch (dosha?.toLowerCase()) {
-    case "vata":
-      return "bg-violet-500";
-
-    case "pitta":
-      return "bg-red-500";
-
-    case "kapha":
-      return "bg-emerald-500";
-
-    default:
-      return "bg-slate-500";
-  }
-};
+    <p className="text-slate-500 mt-3">{description}</p>
+  </div>
+);
 export default AyurvedaResult;

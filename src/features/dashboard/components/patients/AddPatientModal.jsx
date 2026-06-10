@@ -107,7 +107,7 @@ const AddPatientModal = ({
 
        
         navigate(
-          "/dashboard/assessments",
+          "/dashboard/lifestyle-matrix-assessment",
           {
             state: {
               patient:

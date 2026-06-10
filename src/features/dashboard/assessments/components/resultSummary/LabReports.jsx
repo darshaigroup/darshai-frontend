@@ -1,12 +1,25 @@
-import { FileText, Eye } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import {
+  FileText,
+  Eye,
+} from "lucide-react";
+
+const API_URL =
+  import.meta.env.VITE_API_URL;
 
 const LabReports = ({
   uploadedReports = [],
 }) => {
 
-  const navigate =
-    useNavigate();
+  const openReport =
+    (reportId) => {
+
+      window.open(
+        `${API_URL}/api/lab-reports/${reportId}/view`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+    };
 
   return (
 
@@ -19,7 +32,11 @@ const LabReports = ({
         </h2>
 
         <span className="text-sm text-slate-500">
-          {uploadedReports.length} Report(s)
+
+          {uploadedReports.length}
+          {" "}
+          Report(s)
+
         </span>
 
       </div>
@@ -27,7 +44,9 @@ const LabReports = ({
       {!uploadedReports.length ? (
 
         <div className="text-slate-500 text-center py-10">
+
           No reports uploaded
+
         </div>
 
       ) : (
@@ -40,8 +59,8 @@ const LabReports = ({
               <button
                 key={report.id}
                 onClick={() =>
-                  navigate(
-                    `/dashboard/lab-reports/${report.id}`
+                  openReport(
+                    report.id
                   )
                 }
                 className="w-full text-left flex items-center justify-between gap-4 bg-slate-50 hover:bg-slate-100 border border-transparent hover:border-[#173C68]/20 rounded-2xl p-5 transition-all duration-300"
@@ -61,7 +80,9 @@ const LabReports = ({
                   <div>
 
                     <div className="font-semibold text-slate-900">
+
                       {report.report_name}
+
                     </div>
 
                     <div className="text-sm text-slate-500">
@@ -69,14 +90,23 @@ const LabReports = ({
                       {report.file_type}
 
                       {report.file_size && (
+
                         <>
+
                           {" • "}
+
                           {(
                             report.file_size /
                             1024
-                          ).toFixed(1)}
+                          ).toFixed(
+                            1
+                          )}
+
+                          {" "}
                           KB
+
                         </>
+
                       )}
 
                     </div>
@@ -87,7 +117,9 @@ const LabReports = ({
 
                 <div className="flex items-center gap-2 text-[#173C68] font-medium">
 
-                  <Eye size={18} />
+                  <Eye
+                    size={18}
+                  />
 
                   View PDF
 

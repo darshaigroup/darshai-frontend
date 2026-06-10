@@ -33,6 +33,7 @@ import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
 import Assessment from "@/features/dashboard/assessments/pages/Assessment";
 import LifestyleMatrixAssessment from "@/features/dashboard/assessments/pages/LifestyleMatrixAssessment";
+import LifestyleMatrixResult from "@/features/dashboard/assessments/pages/LifestyleMatrixResult";
 import AyurvedaAssessment from "@/features/dashboard/assessments/pages/AyurvedaAssessment";
 import AyurvedaResult from "@/features/dashboard/assessments/pages/AyurvedaResult";
 import ClinicalDataAssessment from "@/features/dashboard/assessments/pages/ClinicalDataAssessment";
@@ -93,6 +94,7 @@ const AppRoutes = () => {
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
             <Route path="lifestyle-matrix-assessment" element={<LifestyleMatrixAssessment />} />
+            <Route path="lifestyle-matrix-result" element={<LifestyleMatrixResult />}/>
             <Route path="assessments" element={<Assessment />} />
              <Route path="result" element={<Result />} />
              <Route path="ayurveda-assessment" element={<AyurvedaAssessment />} />

@@ -1,47 +1,120 @@
+import {
+  useState,
+  useEffect,
+} from "react";
+
 import PatientCard from "../components/patients/PatientCard";
+
+import {getPatients} from "../Services/patientService";
 
 const Patients = () => {
 
-  const patients = [
-    {
-      id: "1",
-      name: "Aria Montgomery",
-      age: 28,
-      gender: "Female",
-      type: "VATA-PITTA",
-      email: "aria@email.com",
-      phone: "+91 98765 43210",
-      img: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=200",
-    },
-    {
-      id: "2",
-      name: "Julian Thorne",
-      age: 45,
-      gender: "Male",
-      type: "KAPHA",
-      email: "julian@email.com",
-      phone: "+91 99999 99999",
-      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
-    },
-  ];
+  const [
+    patients,
+    setPatients,
+  ] = useState([]);
 
-  return (
-    <div className="p-8 bg-[#F6F9F8] min-h-screen">
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
 
-      {/* HEADER */}
-      <h1 className="text-3xl font-semibold text-[#1E293B] mb-6">
-        Patient Directory
-      </h1>
+  const [showAll, setShowAll] =
+  useState(false);
 
-      {/* GRID */}
-      <div className="grid grid-cols-3 gap-6">
-        {patients.map((p) => (
-          <PatientCard key={p.id} patient={p} />
-        ))}
+  useEffect(() => {
+
+    loadPatients();
+
+  }, []);
+
+  const loadPatients =
+    async () => {
+
+      try {
+
+        const data =
+          await getPatients();
+
+        setPatients(data);
+
+      } catch (error) {
+
+        console.error(
+          "PATIENT LOAD ERROR",
+          error
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+  if (loading) {
+
+    return (
+      <div className="text-center py-10">
+        Loading Patients...
       </div>
+    );
+
+  }
+
+ return (
+
+  <div className="space-y-8">
+
+    <div className="grid md:grid-cols-3 gap-6">
+
+      {(showAll
+        ? patients
+        : patients.slice(
+            0,
+            6
+          )
+      ).map(
+        (patient) => (
+
+          <PatientCard
+            key={patient.id}
+            patient={patient}
+          />
+
+        )
+      )}
 
     </div>
-  );
+
+    {patients.length > 6 && (
+
+      <div className="flex justify-center">
+
+        <button
+          onClick={() =>
+            setShowAll(
+              !showAll
+            )
+          }
+          className="px-8 py-3 rounded-full bg-white border border-slate-200 hover:border-green-500 shadow-sm transition-all"
+        >
+
+          {showAll
+            ? "↑ Show Less"
+            : `↓ View All (${patients.length})`}
+
+        </button>
+
+      </div>
+
+    )}
+
+  </div>
+
+);
+
 };
 
 export default Patients;
