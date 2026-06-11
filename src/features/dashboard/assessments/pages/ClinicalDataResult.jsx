@@ -1,7 +1,8 @@
 import { useLocation, useNavigate} from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useRef } from "react";
 import {uploadLabReport,deleteLabReport} from "../services/labReportService";
 import {getSignatures,getPatientNotes,savePractitionerNotes} from "../services/practitionerService";
+import {lifestyleMatrixSections} from "../data/lifestyleMatrixData";
 const ClinicalDataResult = () => {
   const navigate = useNavigate();
 
@@ -12,6 +13,7 @@ const ClinicalDataResult = () => {
 const patient = location.state?.patient;
 const riskReport = location.state?.riskReport;
 const ayurvedaReport = location.state?.ayurvedaReport;
+const lifestyleMatrix = location.state?.lifestyleMatrix;
 
 const clinicalReport =
   location.state?.clinicalData ||
@@ -42,7 +44,7 @@ const [uploadSuccess, setUploadSuccess] = useState(false);
 const [uploadedReportsCount, setUploadedReportsCount] = useState(0);
 const [isUploadingReports, setIsUploadingReports] = useState(false);
 const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
-
+const [showLifestyleDetails,setShowLifestyleDetails] = useState(false);
 /* =========================
    LOAD DATA
 ========================= */
@@ -50,7 +52,7 @@ const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
 useEffect(() => {
   loadSignatures();
 }, []);
-
+const fileInputRef = useRef(null);
 useEffect(() => {
   if (
     patient?.id &&
@@ -415,6 +417,7 @@ const generateFinalSummary = async () => {
     state: {
       patient,
       riskReport,
+      lifestyleMatrix,
       ayurvedaReport,
       clinicalReport,
       doctorNotes,
@@ -484,6 +487,160 @@ if (!clinicalReport) {
       </div>
 
       {/* EXECUTIVE SUMMARY */}
+      {/* LIFESTYLE MATRIX SUMMARY */}
+
+{lifestyleMatrix?.matrix_answers && (
+
+  <SectionCard title="Lifestyle Matrix Assessment">
+
+    <div className="flex items-center justify-between">
+
+      <div>
+
+        <h3 className="text-xl font-bold text-slate-900">
+          Wellness & Retreat Preferences
+        </h3>
+
+        <p className="text-slate-500 mt-1">
+          Lifestyle assessment completed before consultation
+        </p>
+
+      </div>
+
+      <div className="flex items-center gap-4">
+
+        <div className="bg-gradient-to-r from-[#46C18D] to-[#53D7B3] text-white px-5 py-3 rounded-2xl">
+
+          <div className="text-xs uppercase tracking-wider">
+            Responses
+          </div>
+
+          <div className="text-2xl font-bold">
+            {
+              Object.keys(
+                lifestyleMatrix.matrix_answers
+              ).length
+            }
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {/* QUICK SUMMARY */}
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+
+      <LifestyleCard
+        title="Retreat Goal"
+        value={
+          lifestyleMatrix.matrix_answers
+            ?.retreat_goal
+        }
+      />
+
+      <LifestyleCard
+        title="Environment"
+        value={
+          lifestyleMatrix.matrix_answers
+            ?.natural_environment
+        }
+      />
+
+      <LifestyleCard
+        title="Food Style"
+        value={
+          lifestyleMatrix.matrix_answers
+            ?.food_style
+        }
+      />
+
+      <LifestyleCard
+        title="Activity"
+        value={
+          lifestyleMatrix.matrix_answers
+            ?.activity_level
+        }
+      />
+
+    </div>
+
+    {/* EXPAND BUTTON */}
+
+    <div className="flex justify-center mt-8">
+
+      <button
+        onClick={() =>
+          setShowLifestyleDetails(
+            !showLifestyleDetails
+          )
+        }
+        className="flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 hover:bg-slate-200 transition-all"
+      >
+
+        {showLifestyleDetails
+          ? "Hide Details ▲"
+          : "View Complete Assessment ▼"}
+
+      </button>
+
+    </div>
+
+    {/* COMPLETE DETAILS */}
+
+    {showLifestyleDetails && (
+
+      <div className="mt-10 space-y-8">
+
+        {lifestyleMatrixSections.map(
+          (section) => (
+
+            <div
+              key={section.id}
+              className="border border-slate-200 rounded-[28px] p-6"
+            >
+
+              <h4 className="text-lg font-bold text-[#173C68] mb-5">
+
+                {section.title}
+
+              </h4>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                {section.questions.map(
+                  (question) => (
+
+                    <LifestyleCard
+                      key={question.id}
+                      title={question.question}
+                      value={
+                        lifestyleMatrix
+                          .matrix_answers?.[
+                          question.id
+                        ] || "-"
+                      }
+                    />
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+          )
+        )}
+
+      </div>
+
+    )}
+
+  </SectionCard>
+
+)}
 
      <SectionCard title="Integrated Clinical Summary">
 
@@ -605,12 +762,6 @@ if (!clinicalReport) {
           {ayurvedaReport?.agni?.agni_type || "-"}
         </h4>
 
-        <p className="mt-2 text-slate-600">
-          Linked Dosha:
-          {" "}
-          {ayurvedaReport?.agni?.linked_dosha || "-"}
-        </p>
-
       </div>
 
       <div className="bg-cyan-50 border border-cyan-100 rounded-3xl p-6">
@@ -635,7 +786,7 @@ if (!clinicalReport) {
 
   {/* AYURVEDA SUMMARY */}
 
-  <div className="mt-10 border-t pt-8">
+  {/* <div className="mt-10 border-t pt-8">
 
     <h3 className="text-xl font-bold text-slate-900 mb-4">
       Ayurveda Clinical Summary
@@ -649,21 +800,19 @@ if (!clinicalReport) {
 
     </div>
 
-  </div>
+  </div> */}
 
   {/* WELLNESS GOAL */}
 
-  <div className="mt-10 border-t pt-8">
+  {/* <div className="mt-10 border-t pt-8">
 
     <h3 className="text-xl font-bold text-slate-900 mb-4">
       Patient Wellness Goal
     </h3>
 
-    <div className="bg-gradient-to-r from-[#0F766E] to-[#14B8A6] rounded-3xl p-8 text-white">
+    <div className="bg-gradient-to-r from-[#ffffff] to-[#fdffff] rounded-3xl p-8 text-black shadow-inner border border-slate-200">
 
-      <p className="text-sm uppercase tracking-wider opacity-80">
-        Primary Goal
-      </p>
+    
 
       <h2 className="text-3xl font-bold mt-2">
         {answers.primaryGoal || "-"}
@@ -679,7 +828,7 @@ if (!clinicalReport) {
 
     </div>
 
-  </div>
+  </div> */}
 
 </SectionCard>
 
@@ -1136,13 +1285,13 @@ if (!clinicalReport) {
 >
 
   <input
-    type="file"
-    multiple
-    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-    onChange={handleLabUpload}
-    className="hidden"
-    id="lab-upload"
-  />
+  ref={fileInputRef}
+  type="file"
+  multiple
+  accept=".pdf"
+  onChange={handleLabUpload}
+  className="hidden"
+/>
 
   <label
     htmlFor="lab-upload"
@@ -1158,15 +1307,18 @@ if (!clinicalReport) {
     </h3>
 
     <p className="mt-2 text-slate-500">
-      PDF, JPG, PNG, DOC, DOCX
+      PDF only. Max file size: 1MB.
     </p>
 
     <button
-      type="button"
-      className="mt-6 px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold"
-    >
-      Browse Files
-    </button>
+  type="button"
+  onClick={() =>
+    fileInputRef.current?.click()
+  }
+  className="mt-6 px-8 py-3 rounded-xl bg-gradient-to-r from-[#0F766E] to-[#14B8A6] text-white font-semibold"
+>
+  Browse Files
+</button>
 
   </label>
 
@@ -1300,6 +1452,29 @@ const Tag = ({ label, type }) => {
     </span>
   );
 };
+
+const LifestyleCard = ({
+  title,
+  value,
+}) => (
+
+  <div className="rounded-[18px] p-4 border border-[#46C18D]/15 bg-gradient-to-br from-[#F8FFFC] to-[#ECFFF7]">
+
+    <div className="text-xs text-slate-500 leading-relaxed">
+
+      {title}
+
+    </div>
+
+    <div className="font-semibold text-[#173C68] mt-2">
+
+      {value || "-"}
+
+    </div>
+
+  </div>
+
+);
 
 const EditableDoctorRow = ({
   label,

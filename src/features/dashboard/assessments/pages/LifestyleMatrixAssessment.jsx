@@ -1,168 +1,483 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useState,
+  useEffect,
+} from "react";
 
-import { lifestyleMatrixSections } from "../data/lifestyleMatrixData";
-import { saveLifestyleMatrix } from "../services/lifestyleMatrixService";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import {
+  lifestyleMatrixSections,
+} from "../data/lifestyleMatrixData";
+
+import {
+  saveLifestyleMatrix,
+  getLifestyleMatrix,
+} from "../services/lifestyleMatrixService";
 
 const LifestyleMatrixAssessment = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const patient = location.state?.patient;
+  const navigate =
+    useNavigate();
 
-  const [answers, setAnswers] = useState({});
-  const [currentSection, setCurrentSection] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const location =
+    useLocation();
 
-  const activeSection = lifestyleMatrixSections[currentSection];
+  const patient =
+    location.state?.patient;
 
-  const totalQuestions = lifestyleMatrixSections.reduce(
-    (sum, section) => sum + section.questions.length,
-    0
-  );
+  const [answers,
+    setAnswers] =
+      useState({});
 
-  const progress = Math.round(
-    (Object.keys(answers).length / totalQuestions) * 100
-  );
+  const [currentSection,
+    setCurrentSection] =
+      useState(0);
 
-  const handleAnswer = (questionId, value) =>
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
+  const [isSubmitting,
+    setIsSubmitting] =
+      useState(false);
 
-  const handleSubmit = async () => {
-    try {
-      setIsSubmitting(true);
+  useEffect(() => {
 
-      const report = await saveLifestyleMatrix({
-        patient_id: patient.id,
-        matrix_answers: answers,
-      });
+    if (patient?.id) {
 
-      navigate("/dashboard/lifestyle-matrix-result", {
-        state: {
-          patient,
-          report,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-      alert(error.message);
-    } finally {
-      setIsSubmitting(false);
+      loadLifestyleMatrix();
+
     }
-  };
 
-  return (
+  }, []);
+
+  const loadLifestyleMatrix =
+    async () => {
+
+      try {
+
+        const data =
+          await getLifestyleMatrix(
+            patient.id
+          );
+
+        if (
+          data?.matrix_answers
+        ) {
+
+          setAnswers(
+            data.matrix_answers
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "LOAD MATRIX ERROR",
+          error
+        );
+
+      }
+
+    };
+
+  const handleAnswer =
+    (
+      questionId,
+      value
+    ) => {
+
+      setAnswers((prev) => ({
+        ...prev,
+
+        [questionId]:
+          value,
+      }));
+
+    };
+
+  const handleNext =
+    () => {
+
+      if (
+        currentSection <
+        lifestyleMatrixSections.length - 1
+      ) {
+
+        setCurrentSection(
+          (prev) =>
+            prev + 1
+        );
+
+      }
+
+    };
+
+  const handlePrevious =
+    () => {
+
+      if (
+        currentSection > 0
+      ) {
+
+        setCurrentSection(
+          (prev) =>
+            prev - 1
+        );
+
+      }
+
+    };
+
+  const handleSubmit =
+    async () => {
+
+      try {
+
+        setIsSubmitting(
+          true
+        );
+
+        const report =
+          await saveLifestyleMatrix({
+            patient_id:
+              patient.id,
+
+            matrix_answers:
+              answers,
+          });
+
+        navigate(
+          "/dashboard/lifestyle-matrix-result",
+          {
+            state: {
+              patient,
+              report,
+            },
+          }
+        );
+
+      } catch (error) {
+
+        console.error(
+          "SAVE MATRIX ERROR",
+          error
+        );
+
+        alert(
+          error.message
+        );
+
+      } finally {
+
+        setIsSubmitting(
+          false
+        );
+
+      }
+
+    };
+
+  const activeSection =
+    lifestyleMatrixSections[
+      currentSection
+    ];
+
+  const totalQuestions =
+    lifestyleMatrixSections.reduce(
+      (sum, section) =>
+        sum +
+        section.questions.length,
+      0
+    );
+
+  const answeredQuestions =
+    Object.keys(
+      answers
+    ).length;
+
+  const progress =
+    Math.round(
+      (
+        answeredQuestions /
+        totalQuestions
+      ) * 100
+    );
+
+ return (
+
+  <div className="min-h-screen bg-gradient-to-br from-[#F6FFF8] via-white to-[#F0FFF4]">
+
     <div className="max-w-7xl mx-auto px-6 py-8">
+
+      {/* HEADER */}
+
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-[#173C68]">
+
+        <h1 className="text-4xl font-bold text-[#03a547]">
           Lifestyle Matrix Assessment
         </h1>
 
         <p className="text-slate-500 mt-2">
           Personalized wellness & retreat preference assessment.
         </p>
+
       </div>
 
-      <div className="bg-white rounded-3xl shadow-lg p-5 mb-8">
-        <div className="flex justify-between text-sm mb-2">
-          <span>Progress</span>
-          <span>{progress}%</span>
+      {/* PROGRESS */}
+
+      <div className="bg-gradient-to-r from-[#E8FFF1] to-[#F5FFF8] border border-[#C6F6D5] rounded-3xl shadow-lg p-6 mb-8">
+
+        <div className="flex justify-between text-sm font-medium text-slate-700 mb-3">
+
+          <span>
+            Overall Progress
+          </span>
+
+          <span>
+            {progress}%
+          </span>
+
         </div>
 
-        <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+        <div className="h-3 bg-white rounded-full overflow-hidden shadow-inner">
+
           <div
-            className="h-full bg-[#173C68]"
-            style={{ width: `${progress}%` }}
+            className="h-full bg-gradient-to-r from-[#00C853] to-[#1DB954] transition-all duration-500"
+            style={{
+              width: `${progress}%`,
+            }}
           />
+
         </div>
+
+        <p className="mt-3 text-sm text-slate-500">
+
+          {answeredQuestions} of {totalQuestions} questions completed
+
+        </p>
+
       </div>
+
+      {/* SECTION NAVIGATION */}
 
       <div className="flex flex-wrap gap-3 mb-8">
-        {lifestyleMatrixSections.map((section, index) => (
-          <button
-            key={section.id}
-            onClick={() => setCurrentSection(index)}
-            className={`px-4 py-2 rounded-full text-sm transition-all ${
-              currentSection === index
-                ? "bg-[#173C68] text-white"
-                : "bg-white border"
-            }`}
-          >
-            {section.title}
-          </button>
-        ))}
+
+        {lifestyleMatrixSections.map(
+          (
+            section,
+            index
+          ) => (
+
+            <button
+              key={section.id}
+              onClick={() =>
+                setCurrentSection(
+                  index
+                )
+              }
+              className={`
+
+                px-5
+
+                py-3
+
+                rounded-2xl
+
+                text-sm
+
+                font-medium
+
+                transition-all
+
+                ${
+                  currentSection === index
+                    ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white shadow-lg scale-[1.02]"
+                    : "bg-white border border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+                }
+
+              `}
+            >
+
+              {section.title}
+
+            </button>
+
+          )
+        )}
+
       </div>
 
-      <div className="bg-white rounded-[32px] shadow-xl p-8">
-        <h2 className="text-2xl font-bold mb-8">
-          {activeSection.title}
-        </h2>
+      {/* ACTIVE SECTION */}
+
+      <div className="bg-white rounded-[32px] border border-[#E5F7EC] shadow-xl p-8">
+
+        <div className="flex items-center justify-between mb-8">
+
+          <div>
+
+            <h2 className="text-3xl font-bold text-slate-900">
+
+              {activeSection.title}
+
+            </h2>
+
+            <p className="text-slate-500 mt-2">
+
+              Complete all questions in this section
+
+            </p>
+
+          </div>
+
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00C853] to-[#1DB954] flex items-center justify-center text-white text-xl font-bold">
+
+            {currentSection + 1}
+
+          </div>
+
+        </div>
 
         <div className="space-y-8">
-          {activeSection.questions.map((question) => (
-            <div key={question.id}>
-              <h3 className="font-semibold mb-4">
-                {question.question}
-              </h3>
 
-              <div className="flex flex-wrap gap-3">
-                {question.options.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() =>
-                      handleAnswer(question.id, option)
-                    }
-                    className={`px-5 py-3 rounded-full border transition-all ${
-                      answers[question.id] === option
-                        ? "bg-[#173C68] text-white border-[#173C68]"
-                        : "bg-white hover:bg-slate-50"
-                    }`}
-                  >
-                    {option}
-                  </button>
-                ))}
+          {activeSection.questions.map(
+            (
+              question
+            ) => (
+
+              <div
+                key={question.id}
+                className="border border-slate-100 rounded-3xl p-6 bg-slate-50/50"
+              >
+
+                <h3 className="text-lg font-semibold text-slate-800 mb-5">
+
+                  {question.question}
+
+                </h3>
+
+                <div className="flex flex-wrap gap-3">
+
+                  {question.options.map(
+                    (
+                      option
+                    ) => (
+
+                      <button
+                        key={option}
+                        onClick={() =>
+                          handleAnswer(
+                            question.id,
+                            option
+                          )
+                        }
+                        className={`
+
+                          px-5
+
+                          py-3
+
+                          rounded-2xl
+
+                          border
+
+                          font-medium
+
+                          transition-all
+
+                          ${
+                            answers[
+                              question.id
+                            ] === option
+
+                              ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
+
+                              : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+                          }
+
+                        `}
+                      >
+
+                        {option}
+
+                      </button>
+
+                    )
+                  )}
+
+                </div>
+
               </div>
-            </div>
-          ))}
+
+            )
+          )}
+
         </div>
+
       </div>
 
-      <div className="flex justify-between mt-8">
+      {/* FOOTER BUTTONS */}
+
+      <div className="flex justify-between items-center mt-10">
+
         <button
-          onClick={() =>
-            setCurrentSection((prev) => prev - 1)
+          onClick={
+            handlePrevious
           }
-          disabled={currentSection === 0}
-          className="px-6 py-3 rounded-xl border disabled:opacity-50"
+          disabled={
+            currentSection === 0
+          }
+          className="px-8 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
         >
+
           Previous
+
         </button>
 
         {currentSection ===
         lifestyleMatrixSections.length - 1 ? (
+
           <button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="px-8 py-3 rounded-xl bg-[#173C68] text-white"
-          >
-            {isSubmitting ? "Saving..." : "Generate Report"}
-          </button>
-        ) : (
-          <button
-            onClick={() =>
-              setCurrentSection((prev) => prev + 1)
+            onClick={
+              handleSubmit
             }
-            className="px-8 py-3 rounded-xl bg-[#173C68] text-white"
+            disabled={
+              isSubmitting
+            }
+            className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Next
+
+            {
+              isSubmitting
+                ? "Generating Report..."
+                : "Generate Report"
+            }
+
           </button>
+
+        ) : (
+
+          <button
+            onClick={
+              handleNext
+            }
+            className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all"
+          >
+
+            Next Section
+
+          </button>
+
         )}
+
       </div>
+
     </div>
-  );
+
+  </div>
+
+);
+
 };
 
 export default LifestyleMatrixAssessment;

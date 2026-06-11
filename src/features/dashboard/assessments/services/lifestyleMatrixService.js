@@ -1,6 +1,10 @@
 const API_URL =
   import.meta.env.VITE_API_URL;
 
+/* =========================
+   SAVE MATRIX
+========================= */
+
 export const saveLifestyleMatrix =
   async (payload) => {
 
@@ -32,7 +36,12 @@ export const saveLifestyleMatrix =
     }
 
     return result.data;
+
   };
+
+/* =========================
+   GET MATRIX
+========================= */
 
 export const getLifestyleMatrix =
   async (patientId) => {
@@ -52,4 +61,5 @@ export const getLifestyleMatrix =
     }
 
     return result.data;
+
   };

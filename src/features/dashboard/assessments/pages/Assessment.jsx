@@ -33,7 +33,7 @@ const Assessment = () => {
   const [step, setStep] = useState(0);
 
   const [data, setData] = useState({
-    patient,
+    patient,lifestyleMatrix:location.state ?.lifestyleMatrix,
   });
 
   const [activeSection, setActiveSection] = useState("burnout");
@@ -48,7 +48,6 @@ const Assessment = () => {
       key: "flowIntro",
       sectionId: "intro",
     },
-
     {
       component: BurnoutAssessment,
       key: "burnout",
@@ -243,6 +242,7 @@ const Assessment = () => {
           state: {
             patient: updatedData.patient,
             data: result,
+            lifestyleMatrix: updatedData.lifestyleMatrix,
           },
         });
 

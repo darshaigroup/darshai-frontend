@@ -17,9 +17,12 @@ const Result = () => {
 
   const patient = state?.patient;
 
+  const lifestyleMatrix = state?.lifestyleMatrix;
+
   console.log("RESULT STATE", state);
   console.log("PATIENT", patient);
   console.log("DATA", data);
+  console.log("LIFESTYLE MATRIX", lifestyleMatrix);
 
   const [openBlock, setOpenBlock] = useState(null);
 
@@ -360,6 +363,7 @@ const Result = () => {
                   state: {
                      patient,
                      riskReport: data,
+                     lifestyleMatrix,
                   },
                 })
               }
