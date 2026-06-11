@@ -16,42 +16,42 @@ const PractitionerNotes = ({
         <Field
           title="Primary Diagnosis"
           value={
-            doctorNotes?.primaryDiagnosis
+            doctorNotes?.primaryDiagnosis || "N/A"
           }
         />
 
         <Field
           title="Secondary Contributors"
           value={
-            doctorNotes?.secondaryContributors
+            doctorNotes?.secondaryContributors || "N/A"
           }
         />
 
         <Field
           title="Dosha Imbalance"
           value={
-            doctorNotes?.doshaImbalance
+            doctorNotes?.doshaImbalance || "N/A"
           }
         />
 
         <Field
           title="Root Cause"
           value={
-            doctorNotes?.rootCause
+            doctorNotes?.rootCause  || "N/A"
           }
         />
 
         <Field
           title="Priority Intervention"
           value={
-            doctorNotes?.priorityIntervention
+            doctorNotes?.priorityIntervention || "N/A"
           }
         />
 
         <Field
           title="Follow Up"
           value={
-            doctorNotes?.followUpTimeline
+            doctorNotes?.followUpTimeline || "N/A"
           }
         />
 
@@ -71,13 +71,13 @@ const PractitionerNotes = ({
 
           <div className="font-bold">
             {
-              selectedSignature.practitioner_name
+              selectedSignature.practitioner_name || "N/A"
             }
           </div>
 
           <div className="text-slate-500">
             {
-              selectedSignature.designation
+              selectedSignature.designation 
             }
           </div>
 

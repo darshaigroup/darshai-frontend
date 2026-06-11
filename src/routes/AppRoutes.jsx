@@ -29,6 +29,7 @@ import Patients from "@/features/dashboard/pages/Patients";
 import Result from "@/features/dashboard/assessments/pages/Result";
 import GeoWellness from "@/features/dashboard/pages/GeoWellness";
 import Reports from "@/features/dashboard/pages/Reports";
+import ReportDisplay from "@/features/dashboard/components/reports/ReportDisplay";
 import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
 import Assessment from "@/features/dashboard/assessments/pages/Assessment";
@@ -91,6 +92,7 @@ const AppRoutes = () => {
             <Route path="patients" element={<Patients />} />
             <Route path="patients/:id" element={<PatientProfile />} />
             <Route path="reports" element={<Reports />} />
+            <Route path="/dashboard/report-display/:patientId" element={<ReportDisplay />}/>
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
             <Route path="lifestyle-matrix-assessment" element={<LifestyleMatrixAssessment />} />
