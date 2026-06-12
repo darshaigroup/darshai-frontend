@@ -1,43 +1,72 @@
 export const lifestyleMatrixSections = [
 
-  {
-    id:"retreat_profile",
-    title:"Retreat Profile",
-    questions:[
-
-      {
-        id:"retreat_for",
-        question:"Who is this retreat for?",
-        options:[
-          "Solo",
-          "Couple",
-          "Family",
-          "Corporate",
-        
-        ]
-      },
-
-      {
-        id:"attendees_count",
-        question:"How many people attending?",
-        options:[]
-      },
+ {
+  id: "retreat_profile",
+  title: "Retreat Profile",
+  questions: [
 
     {
-  id:"retreat_goal",
-  question:"Primary retreat goal?",
-  multiple:true,
-  allowOther:true,
-  options:[
-    "Healing",
-    "Detox",
-    "Relaxation",
-    "Other"
-  ]
-}
+      id: "retreat_for",
+      question: "Who is this retreat for?",
+      options: [
+        "Solo",
+        "Couple",
+        "Family",
+        "Corporate",
+      ],
+    },
 
-    ]
-  },
+   {
+  id: "adult_count",
+  question: "Number of Adults",
+  type: "number",
+  min: 1,
+  max: 100,
+  visibleFor: [
+    "Family",
+    "Corporate",
+  ],
+},
+
+{
+  id: "children_count",
+  question: "Number of Children",
+  type: "number",
+  min: 0,
+  max: 20,
+  visibleFor: [
+    "Family",
+    "Corporate",
+  ],
+},
+
+{
+  id: "room_count",
+  question: "Number of Rooms",
+  type: "select",
+  max: 10,
+  visibleFor: [
+    "Family",
+    "Corporate",
+  ],
+},
+
+  
+    {
+      id: "retreat_goal",
+      question: "Primary retreat goal?",
+      multiple: true,
+      allowOther: true,
+      options: [
+        "Healing",
+        "Detox",
+        "Relaxation",
+        "Other",
+      ],
+    },
+
+  ],
+ },
 
   {
     id:"wellness_preferences",
