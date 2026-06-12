@@ -1,16 +1,8 @@
-import {
-  useState,
-  useEffect,
-} from "react";
+import { useState, useEffect } from "react";
 
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import {
-  lifestyleMatrixSections,
-} from "../data/lifestyleMatrixData";
+import { lifestyleMatrixSections } from "../data/lifestyleMatrixData";
 
 import {
   saveLifestyleMatrix,
@@ -18,264 +10,189 @@ import {
 } from "../services/lifestyleMatrixService";
 
 const LifestyleMatrixAssessment = () => {
+  const navigate = useNavigate();
 
-  const navigate =
-    useNavigate();
+  const location = useLocation();
 
-  const location =
-    useLocation();
+  const patient = location.state?.patient;
 
-  const patient =
-    location.state?.patient;
+  const [answers, setAnswers] = useState({});
 
-  const [answers,
-    setAnswers] =
-      useState({});
+  const [currentSection, setCurrentSection] = useState(0);
 
-  const [currentSection,
-    setCurrentSection] =
-      useState(0);
-
-  const [isSubmitting,
-    setIsSubmitting] =
-      useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-
     if (patient?.id) {
-
       loadLifestyleMatrix();
-
     }
-
   }, []);
 
-  const loadLifestyleMatrix =
-    async () => {
+  const loadLifestyleMatrix = async () => {
+    try {
+      const data = await getLifestyleMatrix(patient.id);
 
-      try {
-
-        const data =
-          await getLifestyleMatrix(
-            patient.id
-          );
-
-        if (
-          data?.matrix_answers
-        ) {
-
-          setAnswers(
-            data.matrix_answers
-          );
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          "LOAD MATRIX ERROR",
-          error
-        );
-
+      if (data?.matrix_answers) {
+        setAnswers(data.matrix_answers);
       }
+    } catch (error) {
+      console.error("LOAD MATRIX ERROR", error);
+    }
+  };
 
-    };
+  const multiSelectQuestions = [
+    "retreat_goal",
 
-  const handleAnswer =
-    (
-      questionId,
-      value
-    ) => {
+    "mind_body_practice",
 
-      setAnswers((prev) => ({
-        ...prev,
+    "therapeutic_experience",
 
-        [questionId]:
-          value,
-      }));
+    "creative_activity",
 
-    };
+    "wellness_learning",
 
-  const handleNext =
-    () => {
+    "retreat_experience",
 
-      if (
-        currentSection <
-        lifestyleMatrixSections.length - 1
-      ) {
+    "exercise_type",
+  ];
 
-        setCurrentSection(
-          (prev) =>
-            prev + 1
-        );
+  const handleAnswer = (
+    questionId,
 
-      }
+    value,
 
-    };
+    multiple = false,
+  ) => {
+    if (multiple) {
+      setAnswers((prev) => {
+        const existing = Array.isArray(prev[questionId])
+          ? prev[questionId]
+          : [];
 
-  const handlePrevious =
-    () => {
+        const updated = existing.includes(value)
+          ? existing.filter((item) => item !== value)
+          : [...existing, value];
 
-      if (
-        currentSection > 0
-      ) {
+        return {
+          ...prev,
 
-        setCurrentSection(
-          (prev) =>
-            prev - 1
-        );
+          [questionId]: updated,
+        };
+      });
 
-      }
+      return;
+    }
 
-    };
+    setAnswers((prev) => ({
+      ...prev,
 
-  const handleSubmit =
-    async () => {
+      [questionId]: value,
+    }));
+  };
 
-      try {
+  const handleNext = () => {
+    if (currentSection < lifestyleMatrixSections.length - 1) {
+      setCurrentSection((prev) => prev + 1);
+    }
+  };
 
-        setIsSubmitting(
-          true
-        );
+  const handlePrevious = () => {
+    if (currentSection > 0) {
+      setCurrentSection((prev) => prev - 1);
+    }
+  };
 
-        const report =
-          await saveLifestyleMatrix({
-            patient_id:
-              patient.id,
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true);
 
-            matrix_answers:
-              answers,
-          });
+      const report = await saveLifestyleMatrix({
+        patient_id: patient.id,
 
-        navigate(
-          "/dashboard/lifestyle-matrix-result",
-          {
-            state: {
-              patient,
-              report,
-            },
-          }
-        );
+        matrix_answers: answers,
+      });
 
-      } catch (error) {
+      navigate("/dashboard/lifestyle-matrix-result", {
+        state: {
+          patient,
+          report,
+        },
+      });
+    } catch (error) {
+      console.error("SAVE MATRIX ERROR", error);
 
-        console.error(
-          "SAVE MATRIX ERROR",
-          error
-        );
+      alert(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-        alert(
-          error.message
-        );
+  const activeSection = lifestyleMatrixSections[currentSection];
 
-      } finally {
+  const visibleQuestions = activeSection.questions.filter((question) => {
+    if (question.id !== "attendees_count") {
+      return true;
+    }
 
-        setIsSubmitting(
-          false
-        );
-
-      }
-
-    };
-
-  const activeSection =
-    lifestyleMatrixSections[
-      currentSection
-    ];
-
-  const totalQuestions =
-    lifestyleMatrixSections.reduce(
-      (sum, section) =>
-        sum +
-        section.questions.length,
-      0
+    return (
+      answers.retreat_for === "Family" || answers.retreat_for === "Corporate"
     );
+  });
 
-  const answeredQuestions =
-    Object.keys(
-      answers
-    ).length;
+  const totalQuestions = lifestyleMatrixSections.reduce(
+    (sum, section) => sum + section.questions.length,
+    0,
+  );
 
-  const progress =
-    Math.round(
-      (
-        answeredQuestions /
-        totalQuestions
-      ) * 100
-    );
+  const answeredQuestions = Object.keys(answers).length;
 
- return (
+  const progress = Math.round((answeredQuestions / totalQuestions) * 100);
 
-  <div className="min-h-screen bg-gradient-to-br from-[#F6FFF8] via-white to-[#F0FFF4]">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#F6FFF8] via-white to-[#F0FFF4]">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* HEADER */}
 
-    <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-[#03a547]">
+            Lifestyle Matrix Assessment
+          </h1>
 
-      {/* HEADER */}
-
-      <div className="mb-8">
-
-        <h1 className="text-4xl font-bold text-[#03a547]">
-          Lifestyle Matrix Assessment
-        </h1>
-
-        <p className="text-slate-500 mt-2">
-          Personalized wellness & retreat preference assessment.
-        </p>
-
-      </div>
-
-      {/* PROGRESS */}
-
-      <div className="bg-gradient-to-r from-[#E8FFF1] to-[#F5FFF8] border border-[#C6F6D5] rounded-3xl shadow-lg p-6 mb-8">
-
-        <div className="flex justify-between text-sm font-medium text-slate-700 mb-3">
-
-          <span>
-            Overall Progress
-          </span>
-
-          <span>
-            {progress}%
-          </span>
-
+          <p className="text-slate-500 mt-2">
+            Personalized wellness & retreat preference assessment.
+          </p>
         </div>
 
-        <div className="h-3 bg-white rounded-full overflow-hidden shadow-inner">
+        {/* PROGRESS */}
 
-          <div
-            className="h-full bg-gradient-to-r from-[#00C853] to-[#1DB954] transition-all duration-500"
-            style={{
-              width: `${progress}%`,
-            }}
-          />
+        <div className="bg-gradient-to-r from-[#E8FFF1] to-[#F5FFF8] border border-[#C6F6D5] rounded-3xl shadow-lg p-6 mb-8">
+          <div className="flex justify-between text-sm font-medium text-slate-700 mb-3">
+            <span>Overall Progress</span>
 
+            <span>{progress}%</span>
+          </div>
+
+          <div className="h-3 bg-white rounded-full overflow-hidden shadow-inner">
+            <div
+              className="h-full bg-gradient-to-r from-[#00C853] to-[#1DB954] transition-all duration-500"
+              style={{
+                width: `${progress}%`,
+              }}
+            />
+          </div>
+
+          <p className="mt-3 text-sm text-slate-500">
+            {answeredQuestions} of {totalQuestions} questions completed
+          </p>
         </div>
 
-        <p className="mt-3 text-sm text-slate-500">
+        {/* SECTION NAVIGATION */}
 
-          {answeredQuestions} of {totalQuestions} questions completed
-
-        </p>
-
-      </div>
-
-      {/* SECTION NAVIGATION */}
-
-      <div className="flex flex-wrap gap-3 mb-8">
-
-        {lifestyleMatrixSections.map(
-          (
-            section,
-            index
-          ) => (
-
+        <div className="flex flex-wrap gap-3 mb-8">
+          {lifestyleMatrixSections.map((section, index) => (
             <button
               key={section.id}
-              onClick={() =>
-                setCurrentSection(
-                  index
-                )
-              }
+              onClick={() => setCurrentSection(index)}
               className={`
 
                 px-5
@@ -298,186 +215,161 @@ const LifestyleMatrixAssessment = () => {
 
               `}
             >
-
               {section.title}
-
             </button>
-
-          )
-        )}
-
-      </div>
-
-      {/* ACTIVE SECTION */}
-
-      <div className="bg-white rounded-[32px] border border-[#E5F7EC] shadow-xl p-8">
-
-        <div className="flex items-center justify-between mb-8">
-
-          <div>
-
-            <h2 className="text-3xl font-bold text-slate-900">
-
-              {activeSection.title}
-
-            </h2>
-
-            <p className="text-slate-500 mt-2">
-
-              Complete all questions in this section
-
-            </p>
-
-          </div>
-
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00C853] to-[#1DB954] flex items-center justify-center text-white text-xl font-bold">
-
-            {currentSection + 1}
-
-          </div>
-
+          ))}
         </div>
 
-        <div className="space-y-8">
+        {/* ACTIVE SECTION */}
 
-          {activeSection.questions.map(
-            (
-              question
-            ) => (
+        <div className="bg-white rounded-[32px] border border-[#E5F7EC] shadow-xl p-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl font-bold text-slate-900">
+                {activeSection.title}
+              </h2>
 
+              <p className="text-slate-500 mt-2">
+                Complete all questions in this section
+              </p>
+            </div>
+
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00C853] to-[#1DB954] flex items-center justify-center text-white text-xl font-bold">
+              {currentSection + 1}
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            {visibleQuestions.map((question) => (
               <div
                 key={question.id}
                 className="border border-slate-100 rounded-3xl p-6 bg-slate-50/50"
               >
-
                 <h3 className="text-lg font-semibold text-slate-800 mb-5">
-
                   {question.question}
-
                 </h3>
 
-                <div className="flex flex-wrap gap-3">
+                {question.id === "attendees_count" ? (
+                  <input
+                    type="number"
+                    min="1"
+                    value={answers.attendees_count || ""}
+                    onChange={(e) =>
+                      handleAnswer("attendees_count", e.target.value)
+                    }
+                    placeholder="Enter number of attendees"
+                    className="w-full h-12 px-4 rounded-2xl border border-slate-200 outline-none focus:border-[#00C853]"
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-3">
+                    {question.options.map((option) => (
+                     <button
+  key={option}
+  onClick={() =>
+    handleAnswer(
+      question.id,
+      option,
+      question.multiple
+    )
+  }
+  className={`
 
-                  {question.options.map(
-                    (
-                      option
-                    ) => (
+    px-5
 
-                      <button
-                        key={option}
-                        onClick={() =>
-                          handleAnswer(
-                            question.id,
-                            option
-                          )
-                        }
-                        className={`
+    py-3
 
-                          px-5
+    rounded-2xl
 
-                          py-3
+    border
 
-                          rounded-2xl
+    font-medium
 
-                          border
+    transition-all
 
-                          font-medium
-
-                          transition-all
-
-                          ${
-                            answers[
-                              question.id
-                            ] === option
-
-                              ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
-
-                              : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
-                          }
-
-                        `}
-                      >
-
-                        {option}
-
-                      </button>
-
-                    )
-                  )}
-
-                </div>
-
-              </div>
-
+    ${
+      (
+        question.multiple
+          ? (
+              answers[
+                question.id
+              ] || []
+            ).includes(
+              option
             )
-          )}
+          : answers[
+              question.id
+            ] === option
+      )
+        ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
+        : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+    }
 
+  `}
+>
+
+  {option}
+
+</button>
+                    ))}
+                  </div>
+                )}
+
+                {question.allowOther &&
+                  question.multiple &&
+                  Array.isArray(answers[question.id]) &&
+                  answers[question.id].includes("Other") && (
+                    <div className="mt-4">
+                      <input
+                        type="text"
+                        value={answers[`${question.id}_other`] || ""}
+                        onChange={(e) =>
+                          setAnswers((prev) => ({
+                            ...prev,
+
+                            [`${question.id}_other`]: e.target.value,
+                          }))
+                        }
+                        placeholder="Please specify"
+                        className="w-full h-12 px-4 rounded-2xl border border-[#00C853] outline-none"
+                      />
+                    </div>
+                  )}
+              </div>
+            ))}
+          </div>
         </div>
 
-      </div>
+        {/* FOOTER BUTTONS */}
 
-      {/* FOOTER BUTTONS */}
-
-      <div className="flex justify-between items-center mt-10">
-
-        <button
-          onClick={
-            handlePrevious
-          }
-          disabled={
-            currentSection === 0
-          }
-          className="px-8 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
-        >
-
-          Previous
-
-        </button>
-
-        {currentSection ===
-        lifestyleMatrixSections.length - 1 ? (
-
+        <div className="flex justify-between items-center mt-10">
           <button
-            onClick={
-              handleSubmit
-            }
-            disabled={
-              isSubmitting
-            }
-            className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handlePrevious}
+            disabled={currentSection === 0}
+            className="px-8 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
           >
-
-            {
-              isSubmitting
-                ? "Generating Report..."
-                : "Generate Report"
-            }
-
+            Previous
           </button>
 
-        ) : (
-
-          <button
-            onClick={
-              handleNext
-            }
-            className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all"
-          >
-
-            Next Section
-
-          </button>
-
-        )}
-
+          {currentSection === lifestyleMatrixSections.length - 1 ? (
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "Generating Report..." : "Generate Report"}
+            </button>
+          ) : (
+            <button
+              onClick={handleNext}
+              className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all"
+            >
+              Next Section
+            </button>
+          )}
+        </div>
       </div>
-
     </div>
-
-  </div>
-
-);
-
+  );
 };
 
 export default LifestyleMatrixAssessment;

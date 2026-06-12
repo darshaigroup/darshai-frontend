@@ -29,6 +29,7 @@ import Patients from "@/features/dashboard/pages/Patients";
 import Result from "@/features/dashboard/assessments/pages/Result";
 import GeoWellness from "@/features/dashboard/pages/GeoWellness";
 import Reports from "@/features/dashboard/pages/Reports";
+import ReportDisplay from "@/features/dashboard/components/reports/ReportDisplay";
 import Questionnaires from "@/features/dashboard/pages/Questionnaires";
 import PatientProfile from "@/features/dashboard/pages/PatientProfile";
 import Assessment from "@/features/dashboard/assessments/pages/Assessment";
@@ -39,6 +40,7 @@ import AyurvedaResult from "@/features/dashboard/assessments/pages/AyurvedaResul
 import ClinicalDataAssessment from "@/features/dashboard/assessments/pages/ClinicalDataAssessment";
 import ClinicalDataResult from "@/features/dashboard/assessments/pages/ClinicalDataResult";
 import ResultSummary from "@/features/dashboard/assessments/pages/ResultSummary";
+import PatientReportSummary from "@/features/dashboard/pages/PatientReportSummary";
 import LabReportViewer from "@/features/dashboard/assessments/pages/LabReportViewer";
 
 // Auth
@@ -91,6 +93,8 @@ const AppRoutes = () => {
             <Route path="patients" element={<Patients />} />
             <Route path="patients/:id" element={<PatientProfile />} />
             <Route path="reports" element={<Reports />} />
+            <Route path="report-display/:patientId" element={<ReportDisplay />}/>
+            <Route path="patient-report-summary/:patientId" element={<PatientReportSummary />}/>
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
             <Route path="lifestyle-matrix-assessment" element={<LifestyleMatrixAssessment />} />
@@ -102,6 +106,7 @@ const AppRoutes = () => {
              <Route path="clinical-data-assessment" element={<ClinicalDataAssessment />} />
              <Route path="clinical-data-result" element={<ClinicalDataResult />} />
              <Route path="result-summary" element={<ResultSummary />} />
+             <Route path="result-summary/:patientId" element={<ResultSummary />}/>
              <Route path="lab-reports/:id" element={<LabReportViewer />}/>
           </Route>
 

@@ -620,7 +620,7 @@ if (!clinicalReport) {
                         lifestyleMatrix
                           .matrix_answers?.[
                           question.id
-                        ] || "-"
+                        ] || "N/A"
                       }
                     />
 
@@ -717,24 +717,24 @@ if (!clinicalReport) {
 
       <MetricCard
         title="Vata"
-        value={`${ayurvedaReport?.prakriti?.vata_pct || 0}%`}
+        value={`${ayurvedaReport?.prakriti?.vata_pct || "N/A"}%`}
       />
 
       <MetricCard
         title="Pitta"
-        value={`${ayurvedaReport?.prakriti?.pitta_pct || 0}%`}
+        value={`${ayurvedaReport?.prakriti?.pitta_pct || "N/A"}%`}
       />
 
       <MetricCard
         title="Kapha"
-        value={`${ayurvedaReport?.prakriti?.kapha_pct || 0}%`}
+        value={`${ayurvedaReport?.prakriti?.kapha_pct || "N/A"}%`}
       />
 
       <MetricCard
         title="Constitution Type"
         value={
           ayurvedaReport?.prakriti?.prakriti_type ||
-          "-"
+          "N/A"
         }
       />
 
@@ -759,7 +759,7 @@ if (!clinicalReport) {
         </p>
 
         <h4 className="text-2xl font-bold text-slate-900 mt-2">
-          {ayurvedaReport?.agni?.agni_type || "-"}
+          {ayurvedaReport?.agni?.agni_type || "N/A"}
         </h4>
 
       </div>
@@ -771,11 +771,11 @@ if (!clinicalReport) {
         </p>
 
         <h4 className="text-2xl font-bold text-slate-900 mt-2">
-          {ayurvedaReport?.ama?.severity || "-"}
+          {ayurvedaReport?.ama?.severity || "N/A"}
         </h4>
 
         <p className="mt-2 text-slate-600">
-          {ayurvedaReport?.ama?.percentage || 0}%
+          {ayurvedaReport?.ama?.percentage || "N/A"}%
         </p>
 
       </div>
@@ -1013,7 +1013,7 @@ if (!clinicalReport) {
             title="Hair/Skin issue"
             value={
               answers.hairSkinDetails ||
-              "-"
+              "N/A"
             }
           />
 
@@ -1030,7 +1030,7 @@ if (!clinicalReport) {
         </h2>
 
         <p className="text-4xl font-bold mt-4">
-          {answers.primaryGoal || "-"}
+          {answers.primaryGoal || "N/A"}
         </p>
 
         {answers.goalOther && (

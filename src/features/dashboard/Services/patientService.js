@@ -65,10 +65,10 @@ export const getPatientById =
     const result =
       await response.json();
 
-    console.log(
-      "PATIENT DETAIL RESPONSE:",
-      result
-    );
+    // console.log(
+    //   "PATIENT DETAIL RESPONSE:",
+    //   result
+    // );
 
     if (!response.ok) {
 
