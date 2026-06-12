@@ -1,16 +1,79 @@
 import { FaShieldAlt,FaHeartbeat,FaExclamationTriangle,FaLeaf,FaClipboardCheck,FaChartLine } from "react-icons/fa";
 import { useEffect,useState } from "react";
+import { getPatientReport } from "../../../Services/reportService";
 
-import {getPatientReport} from "../../../Services/reportService";
 const OverviewTab = ({ patient }) => {
 
   const [reportData,setReportData] =
-  useState(null);
+    useState(null);
 
   const [loading,setLoading] =
-  useState(true);
+    useState(true);
+
+ const loadReport =
+    async () => {
+
+      try {
+
+        const data =
+          await getPatientReport(
+            patient.id
+          );
+
+        console.log(
+          "REPORT RESPONSE:",
+          data
+        );
+
+        setReportData(
+          data.patient
+        );
+
+      } catch(error){
+
+        console.error(
+          error
+        );
+
+      } finally {
+
+        setLoading(
+          false
+        );
+
+      }
+
+    };
+  useEffect(() => {
+
+    if(patient?.id){
+
+      loadReport();
+
+    }
+
+  },[patient?.id]);
+
+  if(loading){
+
+    return (
+
+      <div className="bg-white rounded-[32px] p-8">
+
+        Loading Report...
+
+      </div>
+
+    );
+
+  }
+
+ 
+
+  
+
   const blocks =
-    patient?.ai_response?.blocks || [];
+    reportData?.ai_response?.blocks || [];
 
   const highestRisk =
     [...blocks].sort(
@@ -24,54 +87,16 @@ const OverviewTab = ({ patient }) => {
 
   const prakritiCount =
     Object.keys(
-      patient?.prakriti_answers || {}
+      reportData?.prakriti_answers || {}
     ).length;
 
   const lifestyleCount =
     Object.keys(
-      patient?.matrix_answers || {}
+      reportData?.matrix_answers || {}
     ).length;
-useEffect(() => {
 
-  if(
-    patient?.id
-  ){
 
-    loadReport();
 
-  }
-
-},[patient?.id]);
-
-const loadReport =
-  async () => {
-
-    try {
-
-      const data =
-        await getPatientReport(
-          patient.id
-        );
-
-      setReportData(
-        data.patient
-      );
-
-    } catch(error){
-
-      console.error(
-        error
-      );
-
-    } finally {
-
-      setLoading(
-        false
-      );
-
-    }
-
-  };
   return (
 
     <div className="grid grid-cols-12 gap-6">
@@ -83,22 +108,22 @@ const loadReport =
         <div className="grid grid-cols-3 gap-6">
 
           <PremiumCard
-            title="Overall Risk Score"
-            value={
-              patient?.ai_response?.composite_score || "-"
-            }
-            icon={<FaShieldAlt />}
-            color="from-red-500 to-orange-500"
-          />
+  title="Overall Risk Score"
+  value={
+    reportData?.composite_score || "-"
+  }
+  icon={<FaShieldAlt />}
+  color="from-red-500 to-orange-500"
+/>
 
-          <PremiumCard
-            title="Risk Band"
-            value={
-              patient?.risk_band || "-"
-            }
-            icon={<FaHeartbeat />}
-            color="from-amber-500 to-yellow-500"
-          />
+<PremiumCard
+  title="Risk Band"
+  value={
+    reportData?.risk_band || "-"
+  }
+  icon={<FaHeartbeat />}
+  color="from-amber-500 to-yellow-500"
+/>
 
           <PremiumCard
             title="Highest Risk Domain"
@@ -272,24 +297,24 @@ const loadReport =
 
             <div className="mt-5">
 
-              <span
-                className={`
-                  px-5
-                  py-2
-                  rounded-full
-                  text-sm
-                  font-semibold
-                  ${
-                    patient?.risk_band === "High"
-                      ? "bg-red-500"
-                      : patient?.risk_band === "Moderate"
-                      ? "bg-orange-500"
-                      : "bg-green-500"
-                  }
-                `}
-              >
-                {patient?.risk_band}
-              </span>
+             <span
+  className={`
+    px-5
+    py-2
+    rounded-full
+    text-sm
+    font-semibold
+    ${
+      reportData?.risk_band === "High"
+        ? "bg-red-500"
+        : reportData?.risk_band === "Moderate"
+        ? "bg-orange-500"
+        : "bg-green-500"
+    }
+  `}
+>
+  {reportData?.risk_band}
+</span>
 
             </div>
 
@@ -304,11 +329,11 @@ const loadReport =
               </span>
 
               <span>
-                {
-                  patient?.assessment_id
-                    ?.slice(0,8)
-                }
-              </span>
+  {
+    reportData?.assessment_id
+      ?.slice(0,8)
+  }
+</span>
 
             </div>
 
@@ -318,12 +343,12 @@ const loadReport =
                 Completion
               </span>
 
-              <span>
-                {
-                  patient?.ai_response
-                    ?.total_completion_pct
-                }%
-              </span>
+             <span>
+  {
+    reportData?.ai_response
+      ?.total_completion_pct || 0
+  }%
+</span>
 
             </div>
 
