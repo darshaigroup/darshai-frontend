@@ -173,7 +173,7 @@ export default function Register() {
                         try {
                           const res = await sendOtp(form.email);
 
-                          console.log("OTP RESPONSE:", res);
+                          // console.log("OTP RESPONSE:", res);
 
                           if (res?.success) {
                             setStep("otp");
@@ -223,11 +223,22 @@ export default function Register() {
                     try {
                       const res = await registerUser(form);
 
-                      console.log("REGISTER RESPONSE:", res);
+                      // console.log("REGISTER RESPONSE:", res);
 
                       if (res?.success) {
-                        setStep("success");
-                        setError("");
+                        localStorage.setItem(
+                          "patient",
+                          JSON.stringify(res.patient || form),
+                        );
+
+                        navigate("/lifestyle/welcome", {
+                          replace: true,
+                          state: {
+                            patient: res.patient || form,
+                          },
+                        });
+
+                        return;
                       } else {
                         setError(res?.message || "Registration failed");
                       }
@@ -249,11 +260,11 @@ export default function Register() {
                   {loading ? "PROCESSING..." : "JOIN WAITLIST →"}
                 </button>
                 <p className="text-xs text-center text-gray-400 mt-6">
-              Already registered?{" "}
-              <Link to="/login" className="text-[#1E7A3A] hover:underline">
-                Login
-              </Link>
-            </p>
+                  Already registered?{" "}
+                  <Link to="/login" className="text-[#1E7A3A] hover:underline">
+                    Login
+                  </Link>
+                </p>
               </div>
             </>
           )}
@@ -330,7 +341,7 @@ export default function Register() {
 
                     const res = await verifyOtp(form.email, code);
 
-                    console.log("VERIFY OTP RESPONSE:", res);
+                    // console.log("VERIFY OTP RESPONSE:", res);
 
                     if (res?.success) {
                       setVerified(true);
@@ -357,7 +368,7 @@ export default function Register() {
           )}
 
           {/* SUCCESS */}
-          {step === "success" && (
+          {/* {step === "success" && (
             <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="w-24 h-24 rounded-full border border-[#E6D3A3] flex items-center justify-center mb-6">
                 ✨
@@ -381,7 +392,7 @@ export default function Register() {
                 RETURN TO HOMEPAGE
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

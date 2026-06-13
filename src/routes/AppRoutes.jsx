@@ -21,6 +21,10 @@ import ComingSoon from "@/components/Explore/ComingSoon";
 import ContactUs from "@/pages/Contact/ContactMain";
 import PrivacyPolicy from "@/pages/LegalFile/PrivacyPolicy";
 import TermsConditions from "@/pages/LegalFile/TermsConditions";
+import Welcome from "@/pages/Lifestyle/Welcome";
+import OnboardingFlow from "@/pages/Lifestyle/OnboardingFlow";
+import Review from "@/pages/Lifestyle/Review";
+import WellnessBlueprint from "@/pages/Lifestyle/WellnessBlueprint";
 
 // Dashboard Pages
 import Overview from "@/features/dashboard/pages/Overview";
@@ -54,6 +58,10 @@ const AppRoutes = () => {
       {/* AUTH */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/lifestyle/welcome" element={<Welcome />} />
+      <Route path="/lifestyle/onboarding" element={<OnboardingFlow />} />
+      <Route path="/lifestyle/review" element={<Review />} />
+      <Route path="/lifestyle/blueprint" element={<WellnessBlueprint />} />
 
       {/* PUBLIC */}
       <Route element={<MainLayout />}>
