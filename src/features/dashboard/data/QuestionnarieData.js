@@ -1,30 +1,34 @@
 export const questionnaireData = [
   {
     id: 1,
-    title: "Initial Prakriti Analysis",
-    description: "Comprehensive body constitution assessment",
-    category: "Ayurvedic",
-    duration: "15 MINS",
+    title: "Risk Assessment",
+    description: "AI wellness risk scoring",
+    category: "Risk",
+    duration: "10 mins",
+    route: "/dashboard/assessments"
   },
   {
     id: 2,
-    title: "Sleep Quality Audit",
-    description: "Tracking circadian rhythm and sleep patterns",
-    category: "Lifestyle",
-    duration: "5 MINS",
+    title: "Ayurveda Assessment",
+    description: "Prakriti & Dosha evaluation",
+    category: "Ayurveda",
+    duration: "15 mins",
+    route: "/dashboard/ayurveda-assessment"
   },
   {
     id: 3,
-    title: "Biomarker Progress",
-    description: "Regular health metrics and vital signs",
+    title: "Clinical Assessment",
+    description: "Clinical & medical history",
     category: "Clinical",
-    duration: "10 MINS",
+    duration: "12 mins",
+    route: "/dashboard/clinical-data-assessment"
   },
   {
     id: 4,
-    title: "Mental Wellness Survey",
-    description: "Stress levels and cognitive health assessment",
-    category: "Psychological",
-    duration: "12 MINS",
-  },
+    title: "Lifestyle Assessment",
+    description: "Lifestyle matrix evaluation",
+    category: "Lifestyle",
+    duration: "10 mins",
+    route: "/dashboard/lifestyle-matrix-assessment"
+  }
 ];

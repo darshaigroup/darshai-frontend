@@ -29,72 +29,103 @@ const LifestyleMatrixResult = () => {
     {};
 
   const sections = [
-    {
-      title:
-        "Retreat Profile",
+  {
+    title: "Retreat Profile",
+    fields: [
+      "retreat_for",
+      "adult_count",
+      "children_count",
+      "room_count",
+      "retreat_goal",
+    ],
+  },
 
-      fields: [
-        "retreat_for",
-        "attendees_count",
-        "retreat_goal",
-      ],
-    },
+  {
+    title: "Wellness Preferences",
+    fields: [
+      "natural_environment",
+      "mind_body_practice",
+      "therapeutic_experience",
+      "creative_activity",
+      "activity_intensity",
+      "wellness_learning",
+    ],
+  },
 
-    {
-      title:
-        "Wellness Preferences",
+  {
+    title: "Food & Lifestyle",
+    fields: [
+      "food_style",
+      "retreat_experience",
+      "comfort_level",
+    ],
+  },
 
-      fields: [
-        "natural_environment",
-        "mind_body_practice",
-        "therapeutic_experience",
-        "creative_activity",
-        "activity_intensity",
-        "wellness_learning",
-      ],
-    },
+  {
+    title: "Environment & Exposure",
+    fields: [
+      "work_posture",
+      "alcohol_consumption",
+      "tobacco_use",
+      "living_environment",
+      "climate_type",
+      "terrain_type",
+      "sunlight_exposure",
+      "pollution_exposure",
+      "ac_dependency",
+      "travel_frequency",
+    ],
+  },
+];;
 
-    {
-      title:
-        "Food & Lifestyle",
+  const hasValue = (value) => {
 
-      fields: [
-        "food_style",
-        "retreat_experience",
-        "comfort_level",
-        "diet_pattern",
-        "meals_per_day",
-        "water_intake",
-      ],
-    },
+  if (Array.isArray(value))
+    return value.length > 0;
 
-    {
-      title:
-        "Environment & Exposure",
+  return (
+    value !== undefined &&
+    value !== null &&
+    value !== ""
+  );
 
-      fields: [
-        "living_environment",
-        "climate_type",
-        "terrain_type",
-        "sunlight_exposure",
-        "pollution_exposure",
-        "travel_frequency",
-      ],
-    },
-  ];
+};
 
-  const formatLabel =
-    (value) =>
-      value
-        .replaceAll(
-          "_",
-          " "
-        )
-        .replace(
-          /\b\w/g,
-          (char) =>
-            char.toUpperCase()
-        );
+const getDisplayValue = (field) => {
+
+  const value =
+    answers[field];
+
+  if (
+    Array.isArray(value)
+  ) {
+
+    const otherValue =
+      answers[
+        `${field}_other`
+      ];
+
+    return value
+      .map((item) =>
+        item === "Other" &&
+        otherValue
+          ? `Other (${otherValue})`
+          : item
+      )
+      .join(", ");
+
+  }
+
+  return value || "-";
+
+};
+
+const formatLabel = (value) =>
+  value
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (char) =>
+      char.toUpperCase()
+    );
 
   return (
 
@@ -229,36 +260,30 @@ const LifestyleMatrixResult = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
 
-              {section.fields.map(
-                (field) => (
+             {section.fields
+  .filter((field) =>
+    hasValue(
+      answers[field]
+    )
+  )
+  .map((field) => (
 
-                  <div
-                    key={field}
-                    className="rounded-[28px] p-5 border border-[#46C18D]/20 bg-gradient-to-br from-[#F8FFFC] to-[#ECFFF7]"
-                  >
+    <div
+      key={field}
+      className="rounded-[28px] p-5 border border-[#46C18D]/20 bg-gradient-to-br from-[#F8FFFC] to-[#ECFFF7]"
+    >
 
-                    <div className="text-sm text-slate-500">
+      <div className="text-sm text-slate-500">
+        {formatLabel(field)}
+      </div>
 
-                      {formatLabel(
-                        field
-                      )}
+      <div className="font-semibold text-lg text-[#173C68] mt-2">
+        {getDisplayValue(field)}
+      </div>
 
-                    </div>
+    </div>
 
-                    <div className="font-semibold text-lg text-[#173C68] mt-2">
-
-                      {
-                        answers[
-                          field
-                        ] || "-"
-                      }
-
-                    </div>
-
-                  </div>
-
-                )
-              )}
+))}
 
             </div>
 

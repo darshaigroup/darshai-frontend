@@ -111,7 +111,7 @@ const ReportsTable = () => {
 
             <th className="text-left pb-4">STATUS</th>
 
-            <th className="text-left pb-4">ACTION</th>
+            <th className="text-left pb-4">SUMMARY</th>
           </tr>
         </thead>
 
@@ -144,19 +144,7 @@ const ReportsTable = () => {
               <td>
              <div className="flex flex-wrap gap-2">
 
-  {(
-    Number(item.risk_report) > 0 ||
-    Number(item.ayurveda_report) > 0 ||
-    Number(item.clinical_report) > 0 ||
-    Number(item.lifestyle_report) > 0
-  ) && (
-    <ReportPill
-      label="Summary"
-      type="summary"
-      patientId={item.patient_id}
-      color="bg-[#173C68] text-white"
-    />
-  )}
+  
 
   {Number(item.risk_report) > 0 && (
     <ReportPill

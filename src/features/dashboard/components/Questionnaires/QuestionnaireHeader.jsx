@@ -20,9 +20,7 @@ const QuestionnaireHeader = () => {
           Questionnaires
         </button>
 
-        <button className="px-6 py-2 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#3BAA9D] text-white shadow">
-          + Create Template
-        </button>
+       
       </div>
 
     </div>

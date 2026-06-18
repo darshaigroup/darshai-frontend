@@ -22,6 +22,8 @@ const LifestyleMatrixAssessment = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const source = location.state?.source;
+
   useEffect(() => {
     if (patient?.id) {
       loadLifestyleMatrix();
@@ -112,12 +114,30 @@ const LifestyleMatrixAssessment = () => {
         matrix_answers: answers,
       });
 
-      navigate("/dashboard/lifestyle-matrix-result", {
-        state: {
-          patient,
-          report,
-        },
-      });
+     if (source === "questionnaire") {
+
+  navigate(
+    `/dashboard/report-display/${patient.id}`,
+    {
+      state: {
+        reportType: "lifestyle"
+      }
+    }
+  );
+
+} else {
+
+  navigate(
+    "/dashboard/lifestyle-matrix-result",
+    {
+      state: {
+        patient,
+        report
+      }
+    }
+  );
+
+}
     } catch (error) {
       console.error("SAVE MATRIX ERROR", error);
 
@@ -356,7 +376,7 @@ const LifestyleMatrixAssessment = () => {
               disabled={isSubmitting}
               className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Generating Report..." : "Generate Report"}
+              {isSubmitting ? "Generating Report..." : "View Report"}
             </button>
           ) : (
             <button

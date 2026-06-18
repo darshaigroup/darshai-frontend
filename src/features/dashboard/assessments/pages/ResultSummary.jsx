@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -15,6 +15,7 @@ import Watermark from "../components/resultSummary/Watermark";
 
 const ResultSummary = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const {
     patient,
@@ -27,6 +28,42 @@ const ResultSummary = () => {
     uploadedReports,
   } = location.state || {};
 
+  const hasValue = (value) => {
+    if (Array.isArray(value)) return value.length > 0;
+
+    return value !== undefined && value !== null && value !== "";
+  };
+
+  const getDisplayValue = (field, answers) => {
+    const value = answers?.[field];
+
+    if (Array.isArray(value)) {
+      const otherValue = answers?.[`${field}_other`];
+
+      return value
+        .map((item) =>
+          item === "Other" && otherValue ? `Other (${otherValue})` : item,
+        )
+        .join(", ");
+    }
+
+    return value || "-";
+  };
+  const filteredLifestyleMatrix = {
+    ...lifestyleMatrix,
+
+    matrix_answers: Object.entries(
+      lifestyleMatrix?.matrix_answers || {},
+    ).reduce((acc, [key, value]) => {
+      if (hasValue(value)) {
+        acc[key] = Array.isArray(value)
+          ? getDisplayValue(key, lifestyleMatrix.matrix_answers)
+          : value;
+      }
+
+      return acc;
+    }, {}),
+  };
   const downloadPDF = async () => {
     const report = document.getElementById("summary-report");
 
@@ -96,8 +133,10 @@ const ResultSummary = () => {
         />
 
         <PatientDetails patient={patient} />
-        
-        <LifestyleMatrixSummary lifestyleMatrixReport={lifestyleMatrix} />
+
+        <LifestyleMatrixSummary
+          lifestyleMatrixReport={filteredLifestyleMatrix}
+        />
 
         <RiskSummary riskReport={riskReport} />
 
@@ -111,19 +150,26 @@ const ResultSummary = () => {
           doctorNotes={doctorNotes}
           selectedSignature={selectedSignature}
         />
-        <div className="print-hidden max-w-7xl mx-auto px-4 mt-8">
-          <div className="bg-white rounded-[24px] shadow-xl p-6 flex justify-center items-center gap-4">
-            <button
-              onClick={downloadPDF}
-              className="h-12 px-8 rounded-xl bg-[#173C68] text-white font-medium hover:opacity-90 transition-all"
-            >
-              Download Report
-            </button>
-          </div>
-        </div>
-
-        <SummaryFooter />
       </div>
+      <div className="print-hidden max-w-7xl mx-auto px-4 mt-8">
+        <div className="bg-white rounded-[24px] shadow-xl p-6 flex justify-center items-center gap-4">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="h-12 px-8 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-all"
+          >
+            ← Back to Dashboard
+          </button>
+
+          <button
+            onClick={downloadPDF}
+            className="h-12 px-8 rounded-xl bg-[#173C68] text-white font-medium hover:opacity-90 transition-all"
+          >
+            Download Report
+          </button>
+        </div>
+      </div>
+
+      <SummaryFooter />
     </div>
   );
 };

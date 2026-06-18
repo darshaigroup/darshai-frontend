@@ -23,6 +23,8 @@ const ClinicalDataAssessment = () => {
 
   const lifestyleMatrix = location.state?.lifestyleMatrix;
 
+  const source = location.state?.source;
+
   const [answers, setAnswers] = useState({});
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,19 +43,33 @@ const ClinicalDataAssessment = () => {
 
       const response = await submitClinicalData(payload);
 
-      navigate("/dashboard/clinical-data-result", {
-        state: {
-          patient,
+      if (source === "questionnaire") {
 
-          riskReport,
+  navigate(
+    `/dashboard/report-display/${patient.id}`,
+    {
+      state: {
+        reportType: "clinical"
+      }
+    }
+  );
 
-          lifestyleMatrix,
+} else {
 
-          ayurvedaReport,
+  navigate(
+    "/dashboard/clinical-data-result",
+    {
+      state: {
+        patient,
+        riskReport,
+        lifestyleMatrix,
+        ayurvedaReport,
+        clinicalReport: response.data
+      }
+    }
+  );
 
-          clinicalReport: response.data,
-        },
-      });
+}
     } catch (error) {
       console.error("CLINICAL SUBMIT ERROR:", error);
 

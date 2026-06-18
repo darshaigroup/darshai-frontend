@@ -39,10 +39,10 @@ const PatientReportSummary = () => {
           await getPatientSummary(
             patientId
           );
-console.log(
-  "PATIENT SUMMARY RESPONSE:",
-  data
-);
+// console.log(
+//   "PATIENT SUMMARY RESPONSE:",
+//   data
+// );
         setReport(data);
 
       }catch(error){

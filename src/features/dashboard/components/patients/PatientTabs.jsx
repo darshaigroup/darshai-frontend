@@ -19,7 +19,7 @@ const PatientTabs = ({ activeTab, setActiveTab, patient }) => {
     },
     {
       id: "biomarkers",
-      label: "Biomarkers",
+      label: "Health Data",
       icon: <FaHeartbeat />,
     },
     {

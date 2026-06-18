@@ -443,6 +443,34 @@ if (!clinicalReport) {
   );
 }
 
+const hasValue = (value) => {
+  if (Array.isArray(value)) return value.length > 0;
+
+  return (
+    value !== undefined &&
+    value !== null &&
+    value !== ""
+  );
+};
+
+const getDisplayValue = (field, answers) => {
+  const value = answers?.[field];
+
+  if (Array.isArray(value)) {
+    const otherValue =
+      answers?.[`${field}_other`];
+
+    return value
+      .map((item) =>
+        item === "Other" && otherValue
+          ? `Other (${otherValue})`
+          : item
+      )
+      .join(", ");
+  }
+
+  return value || "-";
+};
 
   return (
 
@@ -533,39 +561,35 @@ if (!clinicalReport) {
 
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
 
-      <LifestyleCard
-        title="Retreat Goal"
-        value={
-          lifestyleMatrix.matrix_answers
-            ?.retreat_goal
-        }
-      />
+  <LifestyleCard
+    title="Retreat Goal"
+    value={
+      lifestyleMatrix.matrix_answers?.retreat_goal
+    }
+  />
 
-      <LifestyleCard
-        title="Environment"
-        value={
-          lifestyleMatrix.matrix_answers
-            ?.natural_environment
-        }
-      />
+  <LifestyleCard
+    title="Environment"
+    value={
+      lifestyleMatrix.matrix_answers?.natural_environment
+    }
+  />
 
-      <LifestyleCard
-        title="Food Style"
-        value={
-          lifestyleMatrix.matrix_answers
-            ?.food_style
-        }
-      />
+  <LifestyleCard
+    title="Food Style"
+    value={
+      lifestyleMatrix.matrix_answers?.food_style
+    }
+  />
 
-      <LifestyleCard
-        title="Activity"
-        value={
-          lifestyleMatrix.matrix_answers
-            ?.activity_level
-        }
-      />
+  <LifestyleCard
+    title="Activity"
+    value={
+      lifestyleMatrix.matrix_answers?.activity_level
+    }
+  />
 
-    </div>
+</div>
 
     {/* EXPAND BUTTON */}
 
@@ -594,9 +618,18 @@ if (!clinicalReport) {
 
       <div className="mt-10 space-y-8">
 
-        {lifestyleMatrixSections.map(
-          (section) => (
-
+        {lifestyleMatrixSections
+  .filter((section) =>
+    section.questions?.some(
+      (question) =>
+        hasValue(
+          lifestyleMatrix?.matrix_answers?.[
+            question.id
+          ]
+        )
+    )
+  )
+  .map((section) => (
             <div
               key={section.id}
               className="border border-slate-200 rounded-[28px] p-6"
@@ -610,22 +643,26 @@ if (!clinicalReport) {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-                {section.questions.map(
-                  (question) => (
+                {section.questions
+  .filter((question) =>
+    hasValue(
+      lifestyleMatrix?.matrix_answers?.[
+        question.id
+      ]
+    )
+  )
+  .map((question) => (
 
-                    <LifestyleCard
-                      key={question.id}
-                      title={question.question}
-                      value={
-                        lifestyleMatrix
-                          .matrix_answers?.[
-                          question.id
-                        ] || "N/A"
-                      }
-                    />
+    <LifestyleCard
+      key={question.id}
+      title={question.question}
+      value={getDisplayValue(
+        question.id,
+        lifestyleMatrix?.matrix_answers
+      )}
+    />
 
-                  )
-                )}
+  ))}
 
               </div>
 
