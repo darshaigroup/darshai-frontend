@@ -115,7 +115,7 @@ useEffect(()=>{
         <div className="flex items-center gap-4">
           <button
             onClick={openModal}
-            className="px-6 py-3 rounded-full bg-[#8BC34A] text-white shadow-md hover:bg-[#7CB342] transition"
+            className="px-6 py-3 rounded-full bg-[#4f9401] text-white shadow-md hover:bg-[#7CB342] transition"
           >
             + Add Patient
           </button>

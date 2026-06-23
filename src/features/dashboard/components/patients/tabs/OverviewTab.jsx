@@ -1,6 +1,6 @@
 import { FaShieldAlt,FaHeartbeat,FaExclamationTriangle,FaLeaf,FaClipboardCheck,FaChartLine } from "react-icons/fa";
 import { useEffect,useState } from "react";
-import { getPatientReport } from "../../../Services/reportService";
+import { getPatientReport } from "../../../services/reportService";
 
 const OverviewTab = ({ patient }) => {
 
@@ -96,284 +96,122 @@ const OverviewTab = ({ patient }) => {
     ).length;
 
 
+const clinical = reportData?.clinical_answers || {};
+const lifestyle = reportData?.matrix_answers || {};
 
-  return (
+const topRisks = [...blocks]
+  .sort((a,b) => b.score - a.score)
+  .slice(0,4);
+
+ return (
+  <div className="space-y-6">
+
+    {/* HEADER */}
 
     <div className="grid grid-cols-12 gap-6">
 
-      {/* LEFT SECTION */}
+      <div className="col-span-9 bg-white rounded-[32px] p-8 shadow-sm">
 
-      <div className="col-span-9">
+        <p className="text-green-600 font-medium text-sm">
+          Assessment Completed
+        </p>
 
-        <div className="grid grid-cols-3 gap-6">
+        <h1 className="text-4xl font-bold text-[#173C68] mt-3">
+          Patient Wellness Overview
+        </h1>
 
-          <PremiumCard
-  title="Overall Risk Score"
-  value={
-    reportData?.composite_score || "-"
-  }
-  icon={<FaShieldAlt />}
-  color="from-red-500 to-orange-500"
-/>
+        <p className="text-slate-500 mt-2">
+          Complete AI, Ayurveda, Lifestyle and Clinical Summary
+        </p>
 
-<PremiumCard
-  title="Risk Band"
-  value={
-    reportData?.risk_band || "-"
-  }
-  icon={<FaHeartbeat />}
-  color="from-amber-500 to-yellow-500"
-/>
+        <div className="grid grid-cols-4 gap-4 mt-8">
 
-          <PremiumCard
-            title="Highest Risk Domain"
-            value={
-              highestRisk?.title || "-"
-            }
-            subValue={
-              highestRisk
-                ? `${highestRisk.score}%`
-                : "-"
-            }
-            icon={<FaExclamationTriangle />}
-            color="from-rose-500 to-red-600"
+          <InfoCard
+            label="Patient"
+            value={patient?.name}
           />
 
-          <PremiumCard
-            title="Critical Domains"
-            value={criticalCount}
-            icon={<FaChartLine />}
-            color="from-violet-500 to-purple-600"
+          <InfoCard
+            label="Gender"
+            value={patient?.gender}
           />
 
-          <PremiumCard
-            title="Prakriti Responses"
-            value={prakritiCount}
-            icon={<FaLeaf />}
-            color="from-emerald-500 to-green-600"
+          <InfoCard
+            label="Risk Band"
+            value={reportData?.risk_band}
           />
 
-          <PremiumCard
-            title="Lifestyle Parameters"
-            value={lifestyleCount}
-            icon={<FaClipboardCheck />}
-            color="from-cyan-500 to-blue-600"
+          <InfoCard
+            label="Assessment ID"
+            value={reportData?.assessment_id?.slice(0,8)}
           />
-
-        </div>
-
-        {/* TOP RISK DOMAINS */}
-
-        <div className="bg-white rounded-[32px] p-8 shadow-sm mt-6">
-
-          <div className="flex justify-between items-center mb-6">
-
-            <div>
-
-              <h2 className="text-2xl font-semibold text-[#173C68]">
-                Risk Domains
-              </h2>
-
-              <p className="text-slate-500 text-sm">
-                AI Wellness Risk Analysis
-              </p>
-
-            </div>
-
-          </div>
-
-          <div className="space-y-5">
-
-            {
-
-              [...blocks]
-
-                .sort(
-                  (a,b) => b.score - a.score
-                )
-
-                .slice(0,5)
-
-                .map((item) => (
-
-                  <div
-                    key={item.id}
-                    className="bg-[#F8FAFC] rounded-[24px] p-5 border"
-                  >
-
-                    <div className="flex justify-between mb-3">
-
-                      <h3 className="font-semibold text-[#173C68]">
-                        {item.title}
-                      </h3>
-
-                      <span
-                        className={`
-                          px-3
-                          py-1
-                          rounded-full
-                          text-xs
-                          font-medium
-                          ${
-                            item.risk_level === "High"
-                              ? "bg-red-100 text-red-600"
-                              : item.risk_level === "Moderate"
-                              ? "bg-orange-100 text-orange-600"
-                              : "bg-green-100 text-green-600"
-                          }
-                        `}
-                      >
-                        {item.risk_level}
-                      </span>
-
-                    </div>
-
-                    <div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
-
-                      <div
-                        className={`
-                          h-full
-                          rounded-full
-                          ${
-                            item.risk_level === "High"
-                              ? "bg-red-500"
-                              : item.risk_level === "Moderate"
-                              ? "bg-orange-500"
-                              : "bg-green-500"
-                          }
-                        `}
-                        style={{
-                          width:`${item.score}%`
-                        }}
-                      />
-
-                    </div>
-
-                    <div className="flex justify-end mt-2">
-
-                      <span className="text-sm text-slate-500">
-                        {item.score}%
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                ))
-
-            }
-
-          </div>
 
         </div>
 
       </div>
 
-      {/* RIGHT SECTION */}
-
       <div className="col-span-3">
 
-        <div className="bg-[#173C68] text-white rounded-[32px] p-8 h-full flex flex-col justify-between shadow-lg">
+        <div className="bg-gradient-to-br from-[#173C68] to-[#275892] rounded-[32px] p-8 text-white shadow-xl">
 
-          <div>
+          <h2 className="text-xl font-semibold">
+            Wellness Snapshot
+          </h2>
 
-            <h2 className="text-2xl font-bold">
-              Wellness Snapshot
-            </h2>
+          <h1 className="text-6xl font-bold mt-6">
+            {reportData?.composite_score}
+          </h1>
 
-            <p className="text-white/70 mt-2">
-              Composite Wellness Assessment
-            </p>
+          <div className="mt-5">
 
-          </div>
-
-          <div className="my-10">
-
-            <h1 className="text-7xl font-bold">
-              {
-                patient?.ai_response?.composite_score || "-"
-              }
-            </h1>
-
-            <div className="mt-5">
-
-             <span
-  className={`
-    px-5
-    py-2
-    rounded-full
-    text-sm
-    font-semibold
-    ${
-      reportData?.risk_band === "High"
-        ? "bg-red-500"
-        : reportData?.risk_band === "Moderate"
-        ? "bg-orange-500"
-        : "bg-green-500"
-    }
-  `}
->
-  {reportData?.risk_band}
-</span>
-
-            </div>
+            <span
+              className={`px-4 py-2 rounded-full text-sm font-medium ${
+                reportData?.risk_band === "High"
+                  ? "bg-red-500"
+                  : reportData?.risk_band === "Moderate"
+                  ? "bg-orange-500"
+                  : "bg-green-500"
+              }`}
+            >
+              {reportData?.risk_band}
+            </span>
 
           </div>
 
-          <div className="space-y-4 text-sm">
+          <div className="mt-8 space-y-3 text-sm">
 
             <div className="flex justify-between">
-
-              <span className="text-white/70">
-                Assessment ID
-              </span>
-
-              <span>
-  {
-    reportData?.assessment_id
-      ?.slice(0,8)
-  }
-</span>
-
-            </div>
-
-            <div className="flex justify-between">
-
               <span className="text-white/70">
                 Completion
               </span>
 
-             <span>
-  {
-    reportData?.ai_response
-      ?.total_completion_pct || 0
-  }%
-</span>
-
+              <span>
+                {reportData?.ai_response?.total_completion_pct}%
+              </span>
             </div>
 
             <div className="flex justify-between">
-
               <span className="text-white/70">
                 Critical Domains
               </span>
 
-              <span>
-                {criticalCount}
-              </span>
-
+              <span>{criticalCount}</span>
             </div>
 
             <div className="flex justify-between">
-
               <span className="text-white/70">
-                Patient
+                Lifestyle Responses
               </span>
 
-              <span>
-                {patient?.name}
+              <span>{lifestyleCount}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-white/70">
+                Ayurveda Responses
               </span>
 
+              <span>{prakritiCount}</span>
             </div>
 
           </div>
@@ -384,10 +222,199 @@ const OverviewTab = ({ patient }) => {
 
     </div>
 
-  );
+    {/* TOP RISKS */}
+
+    <div className="grid grid-cols-4 gap-6">
+
+      {topRisks.map(item => (
+
+        <div
+          key={item.id}
+          className="bg-white rounded-[28px] p-6 shadow-sm border"
+        >
+
+          <div className="flex justify-between">
+
+            <div>
+
+              <p className="text-sm text-slate-500">
+                {item.title}
+              </p>
+
+              <h2 className="text-4xl font-bold mt-3">
+                {item.score}%
+              </h2>
+
+            </div>
+
+            <div
+              className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white ${
+                item.risk_level === "High"
+                  ? "bg-red-500"
+                  : item.risk_level === "Moderate"
+                  ? "bg-orange-500"
+                  : "bg-green-500"
+              }`}
+            >
+              <FaChartLine />
+            </div>
+
+          </div>
+
+          <div className="mt-5">
+
+            <span
+              className={`px-3 py-1 rounded-full text-xs ${
+                item.risk_level === "High"
+                  ? "bg-red-100 text-red-600"
+                  : item.risk_level === "Moderate"
+                  ? "bg-orange-100 text-orange-600"
+                  : "bg-green-100 text-green-600"
+              }`}
+            >
+              {item.risk_level}
+            </span>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+    {/* RISK DOMAINS */}
+
+    <div className="bg-white rounded-[32px] p-8 shadow-sm">
+
+      <h2 className="text-2xl font-semibold text-[#173C68] mb-6">
+        Risk Domains
+      </h2>
+
+      <div className="space-y-5">
+
+        {blocks.map(item => (
+
+          <div key={item.id}>
+
+            <div className="flex justify-between mb-2">
+
+              <h3 className="font-medium">
+                {item.title}
+              </h3>
+
+              <span>
+                {item.score}%
+              </span>
+
+            </div>
+
+            <div className="h-3 rounded-full bg-slate-200 overflow-hidden">
+
+              <div
+                className={`h-full ${
+                  item.risk_level === "High"
+                    ? "bg-red-500"
+                    : item.risk_level === "Moderate"
+                    ? "bg-orange-500"
+                    : "bg-green-500"
+                }`}
+                style={{
+                  width:`${item.score}%`
+                }}
+              />
+
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
+
+    </div>
+
+    {/* LIFESTYLE + CLINICAL */}
+
+    <div className="grid grid-cols-2 gap-6">
+
+      <SectionCard title="Lifestyle Summary">
+
+        <InfoCard label="Food Style" value={lifestyle.food_style} />
+        <InfoCard label="Activity" value={lifestyle.activity_level} />
+        <InfoCard label="Water Intake" value={lifestyle.water_intake} />
+        <InfoCard label="Environment" value={lifestyle.natural_environment} />
+        <InfoCard label="Retreat Goal" value={lifestyle.retreat_goal} />
+        <InfoCard label="Mind Body" value={lifestyle.mind_body_practice} />
+
+      </SectionCard>
+
+      <SectionCard title="Clinical Summary">
+
+        <InfoCard label="Height" value={clinical.height} />
+        <InfoCard label="Medication" value={clinical.takingMedication} />
+        <InfoCard label="Blood Pressure" value={clinical.bloodPressureKnown} />
+        <InfoCard label="Allergies" value={clinical.hasAllergies} />
+        <InfoCard label="Primary Goal" value={clinical.primaryGoal} />
+        <InfoCard label="Fatigue" value={clinical.fatiguePattern} />
+
+      </SectionCard>
+
+    </div>
+
+    {/* AYURVEDA */}
+
+    <SectionCard title="Ayurveda Assessment">
+
+      <div className="grid grid-cols-3 gap-4">
+
+        <InfoCard
+          label="Prakriti Questions"
+          value={Object.keys(reportData?.prakriti_answers || {}).length}
+        />
+
+        <InfoCard
+          label="Vikriti Questions"
+          value={Object.keys(reportData?.vikriti_answers || {}).length}
+        />
+
+        <InfoCard
+          label="Ama Questions"
+          value={Object.keys(reportData?.ama_answers || {}).length}
+        />
+
+      </div>
+
+    </SectionCard>
+
+  </div>
+);
 
 };
+const InfoCard = ({ label,value }) => (
+  <div className="bg-[#F8FAFC] border rounded-[20px] p-4">
+    <p className="text-xs text-slate-500">
+      {label}
+    </p>
 
+   <p className="text-lg font-semibold text-[#173C68] mt-2">
+  {Array.isArray(value)
+    ? value.join(", ")
+    : value || "-"}
+</p>
+  </div>
+);
+const SectionCard = ({ title,children }) => (
+  <div className="bg-white rounded-[32px] p-8 shadow-sm">
+    <h2 className="text-2xl font-semibold text-[#173C68] mb-6">
+      {title}
+    </h2>
+
+    <div className="grid grid-cols-2 gap-4">
+      {children}
+    </div>
+  </div>
+);
 const PremiumCard = ({
   title,
   value,

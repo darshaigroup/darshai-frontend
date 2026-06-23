@@ -1,6 +1,6 @@
 import {useEffect,useState} from "react";
 import {useParams} from "react-router-dom";
-import {getPatientSummary} from "../Services/reportService";
+import {getPatientSummary} from "../services/reportService";
 //import for components
 import Watermark from "../assessments/components/resultSummary/Watermark";
 import PatientReportHeader from "../components/patientReportSummary/PatientReportHeader";

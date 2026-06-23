@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPatients } from "../../Services/patientService";
+import { getPatients } from "../../services/patientService";
 
 const SelectPatientModal = ({
   isOpen,

@@ -5,7 +5,7 @@ import {
 
 import PatientCard from "../components/patients/PatientCard";
 
-import {getPatients} from "../Services/patientService";
+import {getPatients} from "../services/patientService";
 
 const Patients = () => {
 

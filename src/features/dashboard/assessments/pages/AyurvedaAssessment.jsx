@@ -27,11 +27,11 @@ const AyurvedaAssessment = () => {
 
   const lifestyleMatrix = location.state?.lifestyleMatrix;
 
-  console.log("PATIENT", patient);
+  // console.log("PATIENT", patient);
 
-  console.log("RISK REPORT", riskReport);
+  // console.log("RISK REPORT", riskReport);
 
-  console.log("LIFESTYLE MATRIX", lifestyleMatrix);
+  // console.log("LIFESTYLE MATRIX", lifestyleMatrix);
 
   const [openSection, setOpenSection] = useState("prakriti");
 
@@ -114,14 +114,22 @@ const AyurvedaAssessment = () => {
           },
         });
       } else {
-        navigate("/dashboard/ayurveda-result", {
-          state: {
-            patient,
-            riskReport,
-            report: response.data,
-            lifestyleMatrix,
-          },
-        });
+       navigate(
+  "/dashboard/ayurveda-result",
+  {
+    state: {
+      patient,
+      riskReport,
+      lifestyleMatrix,
+      report:
+        response.data.report.data,
+      assessmentId:
+        response.data.assessmentId,
+      aiResultId:
+        response.data.aiResultId
+    }
+  }
+);
       }
     } catch (error) {
       console.error(error);

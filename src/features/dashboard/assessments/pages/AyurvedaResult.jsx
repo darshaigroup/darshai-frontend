@@ -9,19 +9,25 @@ const AyurvedaResult = () => {
   const lifestyleMatrix = location.state?.lifestyleMatrix;
   const report = location.state?.report?.data || location.state?.report || {};
 
-  console.log("LOCATION STATE", location.state);
-  console.log("PATIENT", patient);
-  console.log("RISK REPORT", riskReport);
-  console.log("LIFESTYLE MATRIX", lifestyleMatrix);
-  console.log("REPORT", report);
+  // console.log("LOCATION STATE", location.state);
+  // console.log("PATIENT", patient);
+  // console.log("RISK REPORT", riskReport);
+  // console.log("LIFESTYLE MATRIX", lifestyleMatrix);
+  // console.log("REPORT", report);
 
   if (!report || !report.prakriti) {
-    return (
-      <div className="p-10 text-center text-xl font-semibold">
-        No Ayurveda Report Found
-      </div>
-    );
-  }
+  return (
+    <div className="p-10">
+      <h2 className="text-xl font-bold mb-4">
+        Debug Ayurveda Report
+      </h2>
+
+      <pre className="bg-black text-green-400 p-4 rounded overflow-auto text-sm">
+        {JSON.stringify(location.state, null, 2)}
+      </pre>
+    </div>
+  );
+}
 
   return (
     <div className="max-w-7xl mx-auto p-8 space-y-8">

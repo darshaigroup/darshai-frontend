@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
+
+
 const ReportsHeader = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-between items-start">
 
@@ -15,21 +20,13 @@ const ReportsHeader = () => {
       {/* RIGHT ACTIONS */}
       <div className="flex items-center gap-3">
 
-        <button className="px-5 py-2 rounded-full bg-[#8DC63F] text-white shadow">
-          + Add Patients
-        </button>
+      
 
-        <button className="px-5 py-2 rounded-full border text-gray-600">
+        <button onClick={() => navigate(`/dashboard/questionnaires`)}className="px-5 py-2 rounded-full border text-gray-600">
           Questionnaires
         </button>
 
-        <button className="px-5 py-2 rounded-full border text-gray-600">
-          Archive
-        </button>
-
-        <button className="px-6 py-2 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#3BAA9D] text-white shadow-md">
-          Generate AI Report
-        </button>
+      
 
       </div>
     </div>

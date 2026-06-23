@@ -4,7 +4,7 @@ import SelectPatientModal from "../components/Questionnaires/SelectPatientModal"
 import { questionnaireData } from "../data/QuestionnarieData";
 import QuestionnaireCard from "../components/Questionnaires/QuestionnaireCard";
 import PendingList from "../components/Questionnaires/PendingList";
-import { getPatients } from "../Services/patientService";
+import { getPatients } from "../services/patientService";
 console.log(getPatients);
 
 const Questionnaires = () => {
