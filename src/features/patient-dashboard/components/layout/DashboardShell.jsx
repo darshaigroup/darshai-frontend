@@ -21,18 +21,22 @@ export default function DashboardShell({
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] flex">
+    <div
+      className={`min-h-screen transition-colors duration-500 ${
+        isDarkMode
+          ? "bg-[#071426]"
+          : "bg-[#F6F3EC]"
+      }`}
+    >
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block">
+      <aside className="hidden lg:block fixed left-0 top-0 h-screen z-40">
         <Sidebar
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           activePatient={activePatient}
           onLogout={onLogout}
-          isDarkMode={isDarkMode}
-          onToggleTheme={onToggleTheme}
         />
-      </div>
+      </aside>
 
       {/* Mobile Sidebar */}
       <MobileSidebar
@@ -44,30 +48,43 @@ export default function DashboardShell({
         onLogout={onLogout}
       />
 
-      <div className="flex-1 lg:ml-72 min-w-0">
+      {/* Main Content */}
+      <div className="lg:pl-72 min-h-screen flex flex-col">
+
+        {/* Sticky Header */}
         <Header
           activePatient={activePatient}
+          currentTab={currentTab}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          onLogout={onLogout}
           patients={patients}
           onSelectPatient={onSelectPatient}
-          currentTab={currentTab}
+          onLogout={onLogout}
           isDarkMode={isDarkMode}
           onToggleTheme={onToggleTheme}
           onRestartTour={onRestartTour}
           onOpenSidebar={() => setMobileSidebarOpen(true)}
         />
 
-        <main className="p-4 md:p-6 lg:p-8 pb-28">
-          {children}
+        {/* Dashboard Body */}
+        <main className="flex-1 pb-36">
+          <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-6 lg:py-8">
+            {children}
+          </div>
         </main>
 
+        {/* Floating Apple Dock */}
         <AppleDock
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           activePatient={activePatient}
         />
+      </div>
+
+      {/* Decorative Background Blobs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
+        <div className="absolute top-[-140px] right-[-120px] w-[520px] h-[520px] rounded-full bg-emerald-500/5 blur-3xl" />
+        <div className="absolute bottom-[-200px] left-[-180px] w-[620px] h-[620px] rounded-full bg-sky-500/5 blur-3xl" />
       </div>
     </div>
   );

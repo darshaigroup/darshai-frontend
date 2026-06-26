@@ -6,12 +6,19 @@ import hero from "@/assets/images/MainImg.png";
 export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-    if (token && token !== "undefined") {
-      navigate("/dashboard");
-    }
-  }, []);
+  if (!token) return;
+
+  if (role === "doctor") {
+    navigate("/dashboard", { replace: true });
+  }
+
+  if (role === "client") {
+    navigate("/patient-dashboard", { replace: true });
+  }
+}, [navigate]);
 
   const [form, setForm] = useState({
     email: "",
@@ -59,16 +66,21 @@ export default function Login() {
 
       // ✅ STORE DATA
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+localStorage.setItem("user", JSON.stringify(data.user));
+localStorage.setItem("role", data.user.role);
 
-      // ✅ HANDLE BACKEND REDIRECT
-      if (data.redirect === "/doctor-dashboard") {
-        navigate("/dashboard", { replace: true }); // doctor landing page
-      } else if (data.redirect === "/patient-dashboard") {
-        navigate("/dashboard", { replace: true }); // patient landing
-      } else {
-        navigate("/dashboard", { replace: true }); // fallback
-      }
+switch (data.user.role) {
+  case "doctor":
+    navigate("/dashboard", { replace: true });
+    break;
+
+  case "client":
+    navigate("/patient-dashboard", { replace: true });
+    break;
+
+  default:
+    navigate("/", { replace: true });
+}
     } catch (err) {
       setError(err.message);
     } finally {

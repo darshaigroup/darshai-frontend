@@ -3,46 +3,47 @@ import ReportFilters from "../components/reports/ReportFilters";
 import ReportsTable from "../components/reports/ReportTable";
 import ReportViewer from "../components/reports/ReportViewer";
 
-export default function ReportsPage({
+export default function ReportView({
   reports = [],
-  onDownloadReport,
+  onDownload,
 }) {
   const [search, setSearch] = useState("");
-  const [selectedType, setSelectedType] = useState("all");
+  const [type, setType] = useState("all");
   const [selectedReport, setSelectedReport] = useState(null);
 
   const filteredReports = useMemo(() => {
     return reports.filter(report => {
-      const searchMatch =
-        report.name.toLowerCase().includes(search.toLowerCase());
+      const searchMatch = report.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
       const typeMatch =
-        selectedType === "all" || report.type === selectedType;
+        type === "all" || report.type === type;
 
       return searchMatch && typeMatch;
     });
-  }, [reports, search, selectedType]);
+  }, [reports, search, type]);
 
   return (
     <div className="space-y-6">
       <ReportFilters
         search={search}
         setSearch={setSearch}
-        selectedType={selectedType}
-        setSelectedType={setSelectedType}
+        selectedType={type}
+        setSelectedType={setType}
       />
 
       <ReportsTable
         reports={filteredReports}
         onView={setSelectedReport}
-        onDownload={onDownloadReport}
+        onDownload={onDownload}
       />
 
       <ReportViewer
-        open={!!selectedReport}
         report={selectedReport}
+        open={!!selectedReport}
         onClose={() => setSelectedReport(null)}
-        onDownload={onDownloadReport}
+        onDownload={onDownload}
       />
     </div>
   );
