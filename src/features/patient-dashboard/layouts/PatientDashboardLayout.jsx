@@ -27,11 +27,6 @@ export default function PatientDashboardLayout() {
 
     navigate("/login", { replace: true });
   };
-
-  /* -------------------------------------------------------------------------- */
-  /* Temporary Demo Patient (Replace with API later)                             */
-  /* -------------------------------------------------------------------------- */
-
   const activePatient = useMemo(
     () => ({
       id: 1,
@@ -53,7 +48,6 @@ export default function PatientDashboardLayout() {
   const appointments = [];
   const reports = [];
 
-  /* -------------------------------------------------------------------------- */
 
   const renderPage = () => {
     switch (currentTab) {
