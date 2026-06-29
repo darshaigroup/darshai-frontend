@@ -12,7 +12,7 @@ import PatientTabs from "../components/patients/PatientTabs";
 
 import {
   getPatientById,
-} from "../services-t/patientService";
+} from "../services/patientService";
 
 const PatientProfile = () => {
 

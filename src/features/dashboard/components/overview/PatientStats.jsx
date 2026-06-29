@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 
 import StatCard from "./StatCard";
-import { getPatients } from "../../services-t/patientService";
+import { getPatients } from "../../services/patientService";
 
 const PatientStats = () => {
   const [stats, setStats] = useState(null);

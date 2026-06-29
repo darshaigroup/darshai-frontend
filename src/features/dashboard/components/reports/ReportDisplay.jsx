@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, User, FileText, Stethoscope } from "lucide-react";
-import {getPatientReport,getReportsTable,getSignatures,} from "../../services-t/reportService";
+import {getPatientReport,getReportsTable,getSignatures,} from "../../services/reportService";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
