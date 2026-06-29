@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, User, FileText, Stethoscope } from "lucide-react";
-import {getPatientReport,getReportsTable,getSignatures,} from "../../Services/reportService";
+import {getPatientReport,getReportsTable,getSignatures,} from "../../services/reportService";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -152,7 +152,19 @@ const downloadPDF =
   };
   const fetchPatientReport = async () => {
     try {
-      const data = await getPatientReport(patientId);
+      const data =
+  await getPatientReport(
+    patientId
+  );
+
+console.log(
+  "FINAL AYURVEDA RESULT",
+  JSON.stringify(
+    data.patient.final_ayurveda_result,
+    null,
+    2
+  )
+);
 
       setPatient(data.patient);
 
@@ -250,55 +262,147 @@ const downloadPDF =
             </div>
           </div>
         );
-      case "ayurveda":
-        const ayurveda = patient?.engine_response || {};
+     case "ayurveda":
+  const ayurveda =
+    patient?.final_ayurveda_result || {};
 
-        return (
-          <div className="space-y-6">
-            <div className="grid md:grid-cols-3 gap-5">
-              <MetricCard
-                label="Prakriti"
-                value={ayurveda?.prakriti?.prakriti_type}
-              />
+  return (
+    <div className="space-y-6">
 
-              <MetricCard
-                label="Dominant Dosha"
-                value={ayurveda?.prakriti?.dominant_dosha}
-              />
+      <div className="grid md:grid-cols-3 gap-5">
 
-              <MetricCard label="Risk Tier" value={ayurveda?.risk_tier} />
-            </div>
+        <MetricCard
+          label="Prakriti Type"
+          value={
+            ayurveda?.prakriti?.prakriti_type
+          }
+        />
 
-            <div className="grid md:grid-cols-3 gap-5">
-              <MetricCard
-                label="Vata"
-                value={`${ayurveda?.prakriti?.vata_pct}%`}
-              />
+        <MetricCard
+          label="Dominant Dosha"
+          value={
+            ayurveda?.prakriti?.dominant_dosha
+          }
+        />
 
-              <MetricCard
-                label="Pitta"
-                value={`${ayurveda?.prakriti?.pitta_pct}%`}
-              />
+        <MetricCard
+          label="Risk Tier"
+          value={ayurveda?.risk_tier}
+        />
 
-              <MetricCard
-                label="Kapha"
-                value={`${ayurveda?.prakriti?.kapha_pct}%`}
-              />
-            </div>
+      </div>
 
-            <div className="rounded-[24px] border p-6">
-              <h3 className="font-semibold mb-3">Agni Assessment</h3>
+      <div className="grid md:grid-cols-3 gap-5">
 
-              <p>{ayurveda?.agni?.agni_type}</p>
-            </div>
+        <MetricCard
+          label="Vata %"
+          value={`${ayurveda?.prakriti?.vata_pct || 0}%`}
+        />
 
-            <div className="rounded-[24px] border p-6">
-              <h3 className="font-semibold mb-3">Ama Assessment</h3>
+        <MetricCard
+          label="Pitta %"
+          value={`${ayurveda?.prakriti?.pitta_pct || 0}%`}
+        />
 
-              <p>Severity :{ayurveda?.ama?.severity}</p>
-            </div>
-          </div>
-        );
+        <MetricCard
+          label="Kapha %"
+          value={`${ayurveda?.prakriti?.kapha_pct || 0}%`}
+        />
+
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-5">
+
+        <MetricCard
+          label="Primary Dosha"
+          value={ayurveda?.primary_dosha}
+        />
+
+        <MetricCard
+          label="Primary Level"
+          value={ayurveda?.primary_level}
+        />
+
+        <MetricCard
+          label="Secondary Dosha"
+          value={ayurveda?.secondary_dosha}
+        />
+
+        <MetricCard
+          label="Secondary Level"
+          value={ayurveda?.secondary_level}
+        />
+
+      </div>
+
+      <div className="rounded-[24px] border p-6">
+
+        <h3 className="font-semibold mb-3">
+          Agni Assessment
+        </h3>
+
+        <p>
+          {ayurveda?.agni?.agni_type}
+        </p>
+
+        <p className="text-sm text-slate-500 mt-2">
+          {
+            ayurveda?.agni?.clinical_meaning
+          }
+        </p>
+
+      </div>
+
+      <div className="rounded-[24px] border p-6">
+
+        <h3 className="font-semibold mb-3">
+          Ama Assessment
+        </h3>
+
+        <p>
+          Severity :
+          {" "}
+          {ayurveda?.ama?.severity}
+        </p>
+
+        <p>
+          Percentage :
+          {" "}
+          {ayurveda?.ama?.percentage}%
+        </p>
+
+      </div>
+
+      <div className="rounded-[24px] border p-6">
+
+        <h3 className="font-semibold mb-3">
+          Correlation Summary
+        </h3>
+
+        <p>
+          {
+            ayurveda?.correlation?.summary
+          }
+        </p>
+
+      </div>
+
+      <div className="rounded-[24px] border p-6">
+
+        <h3 className="font-semibold mb-3">
+          Clinical Summary
+        </h3>
+
+        <p>
+          {
+            ayurveda?.clinical_summary
+          }
+        </p>
+
+      </div>
+
+    </div>
+  ); 
       case "clinical":
         const clinical = patient?.clinical_answers || {};
 

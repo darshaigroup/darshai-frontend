@@ -1,29 +1,35 @@
-const StatCard = ({ title, value, icon, change, color }) => {
-  return (
-   <div className="bg-white rounded-[28px] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
-      
-      <div>
-        <p className="text-gray-400 text-sm font-medium">{title}</p>
+const LoadingDots=()=>(
+  <div className="flex justify-center gap-2 mt-4">
+    <span className="w-3 h-3 rounded-full bg-[#1E7A3A] animate-bounce"></span>
+    <span className="w-3 h-3 rounded-full bg-[#1E7A3A] animate-bounce" style={{animationDelay:"0.15s"}}></span>
+    <span className="w-3 h-3 rounded-full bg-[#1E7A3A] animate-bounce" style={{animationDelay:"0.3s"}}></span>
+  </div>
+);
 
-        <h2 className="text-3xl font-semibold text-[#1E293B] mt-2">
-          {value}
-        </h2>
+const StatCard=({title,value,icon,color})=>{
+  return(
+    <div className="bg-white rounded-[32px] min-h-[220px] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-300">
 
-        <span
-          className={`text-xs mt-2 inline-block px-2 py-1 rounded-full ${
-            change > 0
-              ? "bg-green-100 text-green-600"
-              : "bg-red-100 text-red-500"
-          }`}
-        >
-          {change > 0 ? "+" : ""}
-          {change}%
-        </span>
+      <div className="h-full flex flex-col items-center justify-center text-center">
+
+        <div className={`${color} text-5xl mb-5 drop-shadow-[0_0_12px_rgba(34,197,94,0.35)]`}>
+          {icon}
+        </div>
+
+        {value===undefined||value===null?(
+          <LoadingDots/>
+        ):(
+          <h2 className="text-[64px] font-bold leading-none text-[#1E293B]">
+            {value}
+          </h2>
+        )}
+
+        <p className="mt-3 text-xl font-medium text-gray-500">
+          {title}
+        </p>
+
       </div>
 
-      <div className={`text-2xl ${color} opacity-80`}>
-        {icon}
-      </div>
     </div>
   );
 };

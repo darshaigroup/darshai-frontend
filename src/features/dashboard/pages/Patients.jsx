@@ -5,7 +5,7 @@ import {
 
 import PatientCard from "../components/patients/PatientCard";
 
-import {getPatients} from "../Services/patientService";
+import {getPatients} from "../services/patientService";
 
 const Patients = () => {
 
@@ -67,13 +67,12 @@ const Patients = () => {
 
   <div className="space-y-8">
 
-    <div className="grid md:grid-cols-3 gap-6">
-
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
       {(showAll
         ? patients
         : patients.slice(
             0,
-            6
+            10
           )
       ).map(
         (patient) => (

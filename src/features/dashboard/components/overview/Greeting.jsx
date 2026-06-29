@@ -1,19 +1,24 @@
+
+import hero from "../../../../assets/images/Doctor_hero.png";
 const Greeting = () => {
   return (
-    <div className="bg-white rounded-[28px] p-8 flex justify-between items-center shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-      
-      <div>
-        <p className="text-gray-500 text-sm">Good Morning,</p>
+    <div className="bg-white rounded-[36px] px-12 py-10 min-h-[300px] flex items-center justify-between shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
 
-        <h1 className="text-[42px] font-bold text-[#1E293B] mt-2 leading-tight">
+      <div className="max-w-[600px]">
+        <p className="text-[28px] text-gray-500 font-medium">
+          Good Morning,
+        </p>
+
+        <h1 className="mt-4 text-[72px] font-bold leading-[1.1] text-[#1E293B]">
           Dr. Renjith N Raj
         </h1>
       </div>
 
       <img
-        src="https://img.freepik.com/free-vector/doctors-concept-illustration_114360-1515.jpg"
-        className="w-56 hidden md:block"
+        src={hero}
+        className="hidden lg:block h-[240px] object-contain"
       />
+
     </div>
   );
 };

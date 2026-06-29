@@ -42,12 +42,11 @@ const Assessment = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const source = location.state?.source;
+
+
   const steps = [
-    {
-      component: FlowIntro,
-      key: "flowIntro",
-      sectionId: "intro",
-    },
+  
     {
       component: BurnoutAssessment,
       key: "burnout",
@@ -238,13 +237,33 @@ const Assessment = () => {
 
         const result = await submitAssessment(payload);
 
-        navigate("/dashboard/result", {
-          state: {
-            patient: updatedData.patient,
-            data: result,
-            lifestyleMatrix: updatedData.lifestyleMatrix,
-          },
-        });
+       if(source === "questionnaire"){
+
+  navigate(
+    `/dashboard/report-display/${patient.id}`,
+    {
+      state:{
+        reportType:"risk"
+      }
+    }
+  );
+
+}else{
+
+  navigate(
+    "/dashboard/result",
+    {
+      state:{
+        patient,
+        data:result,
+        lifestyleMatrix:
+          updatedData.lifestyleMatrix,
+        source
+      }
+    }
+  );
+
+}
 
         return;
       } catch (error) {

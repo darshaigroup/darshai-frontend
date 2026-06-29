@@ -22,6 +22,8 @@ const LifestyleMatrixAssessment = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const source = location.state?.source;
+
   useEffect(() => {
     if (patient?.id) {
       loadLifestyleMatrix();
@@ -112,12 +114,30 @@ const LifestyleMatrixAssessment = () => {
         matrix_answers: answers,
       });
 
-      navigate("/dashboard/lifestyle-matrix-result", {
-        state: {
-          patient,
-          report,
-        },
-      });
+     if (source === "questionnaire") {
+
+  navigate(
+    `/dashboard/report-display/${patient.id}`,
+    {
+      state: {
+        reportType: "lifestyle"
+      }
+    }
+  );
+
+} else {
+
+  navigate(
+    "/dashboard/lifestyle-matrix-result",
+    {
+      state: {
+        patient,
+        report
+      }
+    }
+  );
+
+}
     } catch (error) {
       console.error("SAVE MATRIX ERROR", error);
 
@@ -129,19 +149,30 @@ const LifestyleMatrixAssessment = () => {
 
   const activeSection = lifestyleMatrixSections[currentSection];
 
-  const visibleQuestions = activeSection.questions.filter((question) => {
-    if (question.id !== "attendees_count") {
-      return true;
+  const visibleQuestions =
+  activeSection?.questions?.filter(
+    (question) => {
+
+      if (!question.visibleFor) {
+        return true;
+      }
+
+      return question.visibleFor.includes(
+        answers.retreat_for
+      );
+
     }
-
-    return (
-      answers.retreat_for === "Family" || answers.retreat_for === "Corporate"
-    );
-  });
-
+  ) || [];
   const totalQuestions = lifestyleMatrixSections.reduce(
-    (sum, section) => sum + section.questions.length,
+    (sum, section) => sum + (section.questions?.length || 0),
     0,
+  );
+
+  const validSections =
+  lifestyleMatrixSections.filter(
+    (section) =>
+      section.title &&
+      Array.isArray(section.questions)
   );
 
   const answeredQuestions = Object.keys(answers).length;
@@ -189,35 +220,28 @@ const LifestyleMatrixAssessment = () => {
         {/* SECTION NAVIGATION */}
 
         <div className="flex flex-wrap gap-3 mb-8">
-          {lifestyleMatrixSections.map((section, index) => (
-            <button
-              key={section.id}
-              onClick={() => setCurrentSection(index)}
-              className={`
-
-                px-5
-
-                py-3
-
-                rounded-2xl
-
-                text-sm
-
-                font-medium
-
-                transition-all
-
-                ${
-                  currentSection === index
-                    ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white shadow-lg scale-[1.02]"
-                    : "bg-white border border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
-                }
-
-              `}
-            >
-              {section.title}
-            </button>
-          ))}
+          {lifestyleMatrixSections
+  .filter(
+    (section) =>
+      section.title &&
+      Array.isArray(section.questions)
+  )
+  .map((section, index) => (
+    <button
+      key={section.id}
+      onClick={() => setCurrentSection(index)}
+      className={`
+        px-5 py-3 rounded-2xl text-sm font-medium transition-all
+        ${
+          currentSection === index
+            ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white shadow-lg scale-[1.02]"
+            : "bg-white border border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+        }
+      `}
+    >
+      {section.title}
+    </button>
+))}
         </div>
 
         {/* ACTIVE SECTION */}
@@ -249,67 +273,63 @@ const LifestyleMatrixAssessment = () => {
                   {question.question}
                 </h3>
 
-                {question.id === "attendees_count" ? (
+                {question.type === "number" ? (
                   <input
                     type="number"
-                    min="1"
-                    value={answers.attendees_count || ""}
-                    onChange={(e) =>
-                      handleAnswer("attendees_count", e.target.value)
-                    }
-                    placeholder="Enter number of attendees"
-                    className="w-full h-12 px-4 rounded-2xl border border-slate-200 outline-none focus:border-[#00C853]"
+                    min="0"
+                    max={question.max || 100}
+                    value={answers[question.id] || ""}
+                    onChange={(e) => handleAnswer(question.id, e.target.value)}
+                    placeholder={`Enter ${question.question}`}
+                    className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:border-[#00C853]"
                   />
+                ) : question.type === "select" ? (
+                  <select
+                    value={answers[question.id] || ""}
+                    onChange={(e) => handleAnswer(question.id, e.target.value)}
+                    className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:border-[#00C853]"
+                  >
+                    <option value="">Select</option>
+
+                    {Array.from(
+                      {
+                        length: question.max,
+                      },
+                      (_, i) => i + 1,
+                    ).map((value) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
                 ) : (
                   <div className="flex flex-wrap gap-3">
                     {question.options.map((option) => (
-                     <button
-  key={option}
-  onClick={() =>
-    handleAnswer(
-      question.id,
-      option,
-      question.multiple
-    )
-  }
-  className={`
-
-    px-5
-
-    py-3
-
-    rounded-2xl
-
-    border
-
-    font-medium
-
-    transition-all
-
-    ${
-      (
-        question.multiple
-          ? (
-              answers[
-                question.id
-              ] || []
-            ).includes(
-              option
+                      <button
+                        key={option}
+                        onClick={() =>
+                          handleAnswer(question.id, option, question.multiple)
+                        }
+                        className={`
+          px-5
+          py-3
+          rounded-2xl
+          border
+          font-medium
+          transition-all
+          ${
+            (
+              question.multiple
+                ? (answers[question.id] || []).includes(option)
+                : answers[question.id] === option
             )
-          : answers[
-              question.id
-            ] === option
-      )
-        ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
-        : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
-    }
-
-  `}
->
-
-  {option}
-
-</button>
+              ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
+              : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+          }
+        `}
+                      >
+                        {option}
+                      </button>
                     ))}
                   </div>
                 )}
@@ -356,7 +376,7 @@ const LifestyleMatrixAssessment = () => {
               disabled={isSubmitting}
               className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Generating Report..." : "Generate Report"}
+              {isSubmitting ? "Generating Report..." : "View Report"}
             </button>
           ) : (
             <button

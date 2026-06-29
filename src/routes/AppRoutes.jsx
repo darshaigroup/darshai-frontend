@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Layouts
@@ -5,55 +6,76 @@ import MainLayout from "@/layouts/MainLayout";
 import DashboardLayout from "@/layouts/DoctorDashboardLayout";
 import RouteLoader from "@/layouts/RouteLoader";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
+import PatientProtectedRoute from "@/routes/PatientProtectedRoute";
+import LifestyleProtectedRoute from "./LifestyleProtectedRoute";
 
+// Public
+const Home = lazy(() => import("@/pages/Home/HomeMain"));
+const Philosophy = lazy(() => import("@/pages/Home/Philosophy"));
+const OurStory = lazy(() => import("@/pages/OurStory/StoryMain"));
+const OurProgram = lazy(() => import("@/pages/OurProgram/ProgramMain"));
+const ProgramDetail = lazy(() => import("@/pages/OurProgram/ProgramDetail"));
+const GeoWellnessCenter = lazy(() => import("@/pages/OurProgram/GeoWellnessCenter"));
+const GeoWellnessCategory = lazy(() =>
+  import("@/pages/OurProgram/GeoWellnessCenter").then((m) => ({
+    default: m.GeoWellnessCategory,
+  }))
+);
+const Explore = lazy(() => import("@/pages/Explore/ExploreMain"));
+const BlogArticle = lazy(() => import("@/pages/Explore/BlogArticle"));
+const FlipBookPage = lazy(() => import("@/components/Explore/FlipBookPage"));
+const ComingSoon = lazy(() => import("@/components/Explore/ComingSoon"));
+const ContactUs = lazy(() => import("@/pages/Contact/ContactMain"));
+const PrivacyPolicy = lazy(() => import("@/pages/LegalFile/PrivacyPolicy"));
+const TermsConditions = lazy(() => import("@/pages/LegalFile/TermsConditions"));
+const Welcome = lazy(() => import("@/pages/Lifestyle/Welcome"));
+const OnboardingFlow = lazy(() => import("@/pages/Lifestyle/OnboardingFlow"));
+const Review = lazy(() => import("@/pages/Lifestyle/Review"));
+const WellnessBlueprint = lazy(() => import("@/pages/Lifestyle/WellnessBlueprint"));
 
-// Public Pages
-import Home from "@/pages/Home/HomeMain";
-import Philosophy from "@/pages/Home/Philosophy";
-import OurStory from "@/pages/OurStory/StoryMain";
-import OurProgram from "@/pages/OurProgram/ProgramMain";
-import ProgramDetail from "@/pages/OurProgram/ProgramDetail";
-import GeoWellnessCenter, { GeoWellnessCategory } from "@/pages/OurProgram/GeoWellnessCenter";
-import Explore from "@/pages/Explore/ExploreMain";
-import BlogArticle from "@/pages/Explore/BlogArticle";
-import FlipBookPage from "@/components/Explore/FlipBookPage";
-import ComingSoon from "@/components/Explore/ComingSoon";
-import ContactUs from "@/pages/Contact/ContactMain";
-import PrivacyPolicy from "@/pages/LegalFile/PrivacyPolicy";
-import TermsConditions from "@/pages/LegalFile/TermsConditions";
+// Dashboard
+const Overview = lazy(() => import("@/features/dashboard/pages/Overview"));
+const Analysis = lazy(() => import("@/features/dashboard/pages/Analysis"));
+const Patients = lazy(() => import("@/features/dashboard/pages/Patients"));
+const PatientProfile = lazy(() => import("@/features/dashboard/pages/PatientProfile"));
+const Reports = lazy(() => import("@/features/dashboard/pages/Reports"));
+const GeoWellness = lazy(() => import("@/features/dashboard/pages/GeoWellness"));
+const Questionnaires = lazy(() => import("@/features/dashboard/pages/Questionnaires"));
+const PatientReportSummary = lazy(() => import("@/features/dashboard/pages/PatientReportSummary"));
 
-// Dashboard Pages
-import Overview from "@/features/dashboard/pages/Overview";
-import Analysis from "@/features/dashboard/pages/Analysis";
-import Patients from "@/features/dashboard/pages/Patients";
-import Result from "@/features/dashboard/assessments/pages/Result";
-import GeoWellness from "@/features/dashboard/pages/GeoWellness";
-import Reports from "@/features/dashboard/pages/Reports";
-import ReportDisplay from "@/features/dashboard/components/reports/ReportDisplay";
-import Questionnaires from "@/features/dashboard/pages/Questionnaires";
-import PatientProfile from "@/features/dashboard/pages/PatientProfile";
-import Assessment from "@/features/dashboard/assessments/pages/Assessment";
-import LifestyleMatrixAssessment from "@/features/dashboard/assessments/pages/LifestyleMatrixAssessment";
-import LifestyleMatrixResult from "@/features/dashboard/assessments/pages/LifestyleMatrixResult";
-import AyurvedaAssessment from "@/features/dashboard/assessments/pages/AyurvedaAssessment";
-import AyurvedaResult from "@/features/dashboard/assessments/pages/AyurvedaResult";
-import ClinicalDataAssessment from "@/features/dashboard/assessments/pages/ClinicalDataAssessment";
-import ClinicalDataResult from "@/features/dashboard/assessments/pages/ClinicalDataResult";
-import ResultSummary from "@/features/dashboard/assessments/pages/ResultSummary";
-import PatientReportSummary from "@/features/dashboard/pages/PatientReportSummary";
-import LabReportViewer from "@/features/dashboard/assessments/pages/LabReportViewer";
+const ReportDisplay = lazy(() => import("@/features/dashboard/components/reports/ReportDisplay"));
+const Assessment = lazy(() => import("@/features/dashboard/assessments/pages/Assessment"));
+const Result = lazy(() => import("@/features/dashboard/assessments/pages/Result"));
+const LifestyleMatrixAssessment = lazy(() => import("@/features/dashboard/assessments/pages/LifestyleMatrixAssessment"));
+const LifestyleMatrixResult = lazy(() => import("@/features/dashboard/assessments/pages/LifestyleMatrixResult"));
+const AyurvedaAssessment = lazy(() => import("@/features/dashboard/assessments/pages/AyurvedaAssessment"));
+const AyurvedaResult = lazy(() => import("@/features/dashboard/assessments/pages/AyurvedaResult"));
+const ClinicalDataAssessment = lazy(() => import("@/features/dashboard/assessments/pages/ClinicalDataAssessment"));
+const ClinicalDataResult = lazy(() => import("@/features/dashboard/assessments/pages/ClinicalDataResult"));
+const ResultSummary = lazy(() => import("@/features/dashboard/assessments/pages/ResultSummary"));
+const LabReportViewer = lazy(() => import("@/features/dashboard/assessments/pages/LabReportViewer"));
+
+// Patient Dashboard
+const PatientDashboardLayout = lazy(() =>
+  import("@/features/patient-dashboard/layouts/PatientDashboardLayout")
+);
 
 // Auth
-import Login from "@/pages/Auth/Login";
-import Register from "@/pages/Auth/Register";
+const Login = lazy(() => import("@/pages/Auth/Login"));
+const Register = lazy(() => import("@/pages/Auth/Register"));
 
 const AppRoutes = () => {
   return (
-    <Routes>
 
+    <Suspense fallback={<RouteLoader />}>
+    <Routes>
       {/* AUTH */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/lifestyle/welcome" element={ <LifestyleProtectedRoute><Welcome /></LifestyleProtectedRoute>} />
+      <Route path="/lifestyle/onboard" element={ <LifestyleProtectedRoute><OnboardingFlow /></LifestyleProtectedRoute>} />
+      <Route path="/lifestyle/review" element={ <LifestyleProtectedRoute><Review /></LifestyleProtectedRoute>} />
+      <Route path="/lifestyle/wellness-blueprint" element={ <LifestyleProtectedRoute><WellnessBlueprint /></LifestyleProtectedRoute>} />
 
       {/* PUBLIC */}
       <Route element={<MainLayout />}>
@@ -65,12 +87,15 @@ const AppRoutes = () => {
 
           <Route path="/program" element={<OurProgram />} />
 
+          <Route path="/program/:slug" element={<ProgramDetail />} />
           <Route
-            path="/program/:slug"
-            element={<ProgramDetail />}
+            path="/program/geo-wellness-center"
+            element={<GeoWellnessCenter />}
           />
-          <Route path="/program/geo-wellness-center" element={<GeoWellnessCenter />} />
-          <Route path="/program/geo-wellness-center/:category" element={<GeoWellnessCategory />} />
+          <Route
+            path="/program/geo-wellness-center/:category"
+            element={<GeoWellnessCategory />}
+          />
 
           <Route path="/explore" element={<Explore />} />
           <Route path="/explore/:category" element={<Explore />} />
@@ -86,34 +111,61 @@ const AppRoutes = () => {
       {/* PROTECTED DASHBOARD */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
-
           <Route element={<RouteLoader />}>
             <Route index element={<Overview />} />
             <Route path="analysis" element={<Analysis />} />
             <Route path="patients" element={<Patients />} />
             <Route path="patients/:id" element={<PatientProfile />} />
             <Route path="reports" element={<Reports />} />
-            <Route path="report-display/:patientId" element={<ReportDisplay />}/>
-            <Route path="patient-report-summary/:patientId" element={<PatientReportSummary />}/>
+            <Route
+              path="report-display/:patientId"
+              element={<ReportDisplay />}
+            />
+            <Route
+              path="patient-report-summary/:patientId"
+              element={<PatientReportSummary />}
+            />
             <Route path="geowellness" element={<GeoWellness />} />
             <Route path="questionnaires" element={<Questionnaires />} />
-            <Route path="lifestyle-matrix-assessment" element={<LifestyleMatrixAssessment />} />
-            <Route path="lifestyle-matrix-result" element={<LifestyleMatrixResult />}/>
+            <Route
+              path="lifestyle-matrix-assessment"
+              element={<LifestyleMatrixAssessment />}
+            />
+            <Route
+              path="lifestyle-matrix-result"
+              element={<LifestyleMatrixResult />}
+            />
             <Route path="assessments" element={<Assessment />} />
-             <Route path="result" element={<Result />} />
-             <Route path="ayurveda-assessment" element={<AyurvedaAssessment />} />
-             <Route path="ayurveda-result" element={ <AyurvedaResult />}/>
-             <Route path="clinical-data-assessment" element={<ClinicalDataAssessment />} />
-             <Route path="clinical-data-result" element={<ClinicalDataResult />} />
-             <Route path="result-summary" element={<ResultSummary />} />
-             <Route path="result-summary/:patientId" element={<ResultSummary />}/>
-             <Route path="lab-reports/:id" element={<LabReportViewer />}/>
+            <Route path="result" element={<Result />} />
+            <Route
+              path="ayurveda-assessment"
+              element={<AyurvedaAssessment />}
+            />
+            <Route path="ayurveda-result" element={<AyurvedaResult />} />
+            <Route
+              path="clinical-data-assessment"
+              element={<ClinicalDataAssessment />}
+            />
+            <Route
+              path="clinical-data-result"
+              element={<ClinicalDataResult />}
+            />
+            <Route path="result-summary" element={<ResultSummary />} />
+            <Route
+              path="result-summary/:patientId"
+              element={<ResultSummary />}
+            />
+            <Route path="lab-reports/:id" element={<LabReportViewer />} />
           </Route>
-
         </Route>
       </Route>
 
+      <Route element={<PatientProtectedRoute />}>
+        <Route path="/patient-dashboard" element={<PatientDashboardLayout />} />
+      </Route>
     </Routes>
+    </Suspense>
+
   );
 };
 

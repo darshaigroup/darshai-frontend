@@ -1,8 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const PatientProtectedRoute = () => {
+export default function PatientProtectedRoute() {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role !== "client") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return <Outlet />;
-};
-
-export default PatientProtectedRoute;
-
+}

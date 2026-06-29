@@ -106,15 +106,15 @@ const AddPatientModal = ({
           );
 
        
-        navigate(
-          "/dashboard/lifestyle-matrix-assessment",
-          {
-            state: {
-              patient:
-                response.patient,
-            },
-          }
-        );
+      navigate(
+  "/dashboard/lifestyle-matrix-assessment",
+  {
+    state:{
+      patient:response.patient,
+      source:"full-flow"
+    }
+  }
+);
 
         onClose();
 
@@ -141,8 +141,10 @@ const AddPatientModal = ({
 
   return (
 
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-4">
+  <div div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm overflow-y-auto px-4 py-8">
+  <div className="flex min-h-full items-center justify-center">
 
+  
       <div className="w-full max-w-[480px] rounded-[36px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.12)] overflow-hidden">
 
         {/* TOP */}
@@ -182,7 +184,7 @@ const AddPatientModal = ({
 
         {/* FORM */}
 
-        <div className="p-8 space-y-5">
+        <div className="p-8 space-y-5 max-h-[75vh] overflow-y-auto">
 
           {/* NAME */}
 
@@ -330,6 +332,8 @@ const AddPatientModal = ({
           </button>
 
         </div>
+
+      </div>
 
       </div>
 

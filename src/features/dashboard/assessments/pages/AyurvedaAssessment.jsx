@@ -25,17 +25,19 @@ const AyurvedaAssessment = () => {
 
   const riskReport = location.state?.riskReport;
 
-  const  lifestyleMatrix=location.state?.lifestyleMatrix;
+  const lifestyleMatrix = location.state?.lifestyleMatrix;
 
-  console.log("PATIENT", patient);
+  // console.log("PATIENT", patient);
 
-  console.log("RISK REPORT", riskReport);
+  // console.log("RISK REPORT", riskReport);
 
-  console.log("LIFESTYLE MATRIX", lifestyleMatrix);
+  // console.log("LIFESTYLE MATRIX", lifestyleMatrix);
 
   const [openSection, setOpenSection] = useState("prakriti");
 
   const [isGenerating, setIsGenerating] = useState(false);
+
+  const source = location.state?.source;
 
   const [answers, setAnswers] = useState({
     prakriti: {},
@@ -48,45 +50,29 @@ const AyurvedaAssessment = () => {
   });
 
   const normalizeVikriti = (data) => {
-
     const normalized = {};
 
     Object.keys(data).forEach((key) => {
-
-      normalized[key] =
-        data[key].map(
-          (value) => value ?? 1
-        );
-
+      normalized[key] = data[key].map((value) => value ?? 1);
     });
 
     return normalized;
-
   };
 
   const normalizeAgni = (data) => {
-
     const normalized = {};
 
     Object.keys(data).forEach((key) => {
-
       normalized[key] = {
+        vishama: data[key]?.vishama ?? 0,
 
-        vishama:
-          data[key]?.vishama ?? 0,
+        tikshna: data[key]?.tikshna ?? 0,
 
-        tikshna:
-          data[key]?.tikshna ?? 0,
-
-        manda:
-          data[key]?.manda ?? 0,
-
+        manda: data[key]?.manda ?? 0,
       };
-
     });
 
     return normalized;
-
   };
 
   const handleGenerateReport = async () => {
@@ -113,37 +99,38 @@ const AyurvedaAssessment = () => {
 
         gapHours: 24,
 
-        prakritiAnswers:
-          answers.prakriti,
+        prakritiAnswers: answers.prakriti,
 
-        vikritiAnswers:
-          normalizeVikriti(
-            answers.vikriti
-          ),
+        vikritiAnswers: normalizeVikriti(answers.vikriti),
 
-        agniAnswers:
-          normalizeAgni(
-            answers.agni
-          ),
+        agniAnswers: normalizeAgni(answers.agni),
 
-        amaAnswers:
-          answers.ama,
+        amaAnswers: answers.ama,
       });
-      navigate(
-        "/dashboard/ayurveda-result",
-
-        {
+      if (source === "questionnaire") {
+        navigate(`/dashboard/report-display/${patient.id}`, {
           state: {
-            patient,
-
-            riskReport,
-
-            report: response.data,
-
-            lifestyleMatrix,
+            reportType: "ayurveda",
           },
-        },
-      );
+        });
+      } else {
+       navigate(
+  "/dashboard/ayurveda-result",
+  {
+    state: {
+      patient,
+      riskReport,
+      lifestyleMatrix,
+      report:
+        response.data.report.data,
+      assessmentId:
+        response.data.assessmentId,
+      aiResultId:
+        response.data.aiResultId
+    }
+  }
+);
+      }
     } catch (error) {
       console.error(error);
 
@@ -288,9 +275,10 @@ const AyurvedaAssessment = () => {
 
               transition-all
 
-              ${isGenerating
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-[#0F766E] to-[#14B8A6] hover:scale-[1.01]"
+              ${
+                isGenerating
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-[#0F766E] to-[#14B8A6] hover:scale-[1.01]"
               }
 
             `}
