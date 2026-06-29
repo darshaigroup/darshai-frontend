@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFilePdf,FaUpload } from "react-icons/fa";
-import { getPatientReport } from "../../../services/reportService";
+import { getPatientReport } from "../../../services-t/reportService";
 
 const ReportsTab = ({ patient }) => {
   const navigate=useNavigate();

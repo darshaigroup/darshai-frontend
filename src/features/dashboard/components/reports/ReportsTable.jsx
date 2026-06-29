@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { FaEye } from "react-icons/fa";
 
-import {getReportsTable} from "../../services/reportService";
+import {getReportsTable} from "../../services-t/reportService";
 
 import DefaultAvatar from "@/assets/images/profile.jpg";
 const ReportsTable = () => {

@@ -1,6 +1,6 @@
 import { FaShieldAlt,FaHeartbeat,FaExclamationTriangle,FaLeaf,FaClipboardCheck,FaChartLine } from "react-icons/fa";
 import { useEffect,useState } from "react";
-import { getPatientReport } from "../../../services/reportService";
+import { getPatientReport } from "../../../services-t/reportService";
 
 const OverviewTab = ({ patient }) => {
 

@@ -66,7 +66,7 @@ import {
   FaStethoscope,
 } from "react-icons/fa";
 import { useEffect,useState } from "react";
-import { getPatientReport } from "../../../services/reportService";
+import { getPatientReport } from "../../../services-t/reportService";
 const BiomarkerTab = ({ patient }) => {
   const [reportData,setReportData]=useState(null);
 

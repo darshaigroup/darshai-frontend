@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import { getPatientReport } from "../../../services/reportService";
+import { getPatientReport } from "../../../services-t/reportService";
 
 const HistoryTab = ({ patient }) => {
   const [reportData,setReportData] = useState(null);
