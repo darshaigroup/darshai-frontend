@@ -226,16 +226,12 @@ export default function Register() {
                       // console.log("REGISTER RESPONSE:", res);
 
                       if (res?.success) {
-                        localStorage.setItem(
-                          "patient",
-                          JSON.stringify(res.patient || form),
-                        );
+                        if (res.token) {
+                          localStorage.setItem("token", res.token);
+                        }
 
-                        navigate("/lifestyle/welcome", {
+                        navigate(res.redirect || "/lifestyle/welcome", {
                           replace: true,
-                          state: {
-                            patient: res.patient || form,
-                          },
                         });
 
                         return;

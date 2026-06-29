@@ -1,33 +1,60 @@
 import { motion } from "framer-motion";
 
-export default function ChoiceCard({ icon:Icon, title, description, selected, onClick }) {
+export default function ChoiceCard({ icon: Icon, title, description, selected, onClick }) {
   return (
     <motion.button
-      whileHover={{ y:-4, scale:1.02 }}
-      whileTap={{ scale:0.98 }}
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: .98 }}
       onClick={onClick}
-      className={`w-full text-left p-6 rounded-[28px] border transition-all duration-300 ${
+      className={`w-full rounded-[28px] border p-6 text-left transition-all duration-300 ${
         selected
-          ? "bg-[#1E7A3A] border-[#1E7A3A] text-white shadow-[0_20px_60px_rgba(30,122,58,0.25)]"
-          : "bg-white border-[#E6E8EC] text-[#173C68] hover:border-[#1E7A3A]/30 hover:shadow-xl"
-      }`}
+          ? "border-[#83C341] shadow-[0_10px_35px_rgba(131,195,65,.18)]"
+          : "border-[#E7E8EB] hover:border-[#83C341]/40 hover:shadow-lg"
+      } bg-white`}
     >
-      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 ${
-        selected
-          ? "bg-white/10 text-white"
-          : "bg-[#F3F8F4] text-[#1E7A3A]"
-      }`}>
-        {Icon && <Icon size={26} />}
-      </div>
+      <motion.div
+        animate={
+          selected
+            ? { scale: [1, 1.15, 1], rotate: [0, -3, 3, 0] }
+            : { scale: 1, rotate: 0 }
+        }
+        transition={{
+          duration: 1.6,
+          repeat: selected ? Infinity : 0,
+          ease: "easeInOut",
+        }}
+        className={`relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-500 ${
+          selected
+            ? "bg-[#F4FFE8]"
+            : "bg-[#F8F8F5]"
+        }`}
+      >
+        {selected && (
+          <>
+            <span className="absolute inset-0 rounded-full border-2 border-[#A7DA58] animate-ping opacity-30" />
+            <span className="absolute -inset-1 rounded-full shadow-[0_0_25px_rgba(131,195,65,.45)]" />
+          </>
+        )}
 
-      <h3 className="text-lg font-semibold">{title}</h3>
+        {Icon && (
+          <Icon
+            size={30}
+            strokeWidth={1.8}
+            className={`relative transition-all duration-500 ${
+              selected
+                ? "text-[#74B72E]"
+                : "text-[#7D8B79]"
+            }`}
+          />
+        )}
+      </motion.div>
+
+      <h3 className="mt-5 text-lg font-semibold text-[#173C68]">
+        {title}
+      </h3>
 
       {description && (
-        <p className={`mt-2 text-sm ${
-          selected
-            ? "text-white/80"
-            : "text-slate-500"
-        }`}>
+        <p className="mt-2 text-sm text-slate-500">
           {description}
         </p>
       )}

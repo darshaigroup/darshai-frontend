@@ -60,7 +60,13 @@ export const registerUser = async (data) => {
       return { success: false, message: result.message || "Error" };
     }
 
-    return result;
+  if(result.success&&result.token){
+
+  localStorage.setItem("token",result.token);
+
+}
+
+return result;
   } catch (err) {
     return { success: false, message: "Network error" };
   }

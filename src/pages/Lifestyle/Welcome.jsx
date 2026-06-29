@@ -27,7 +27,7 @@ export default function Welcome() {
 
         <div className="flex justify-center mt-12">
           <button
-            onClick={() => navigate("/lifestyle/onboarding")}
+            onClick={() => navigate("/lifestyle/onboard")}
             className="px-10 py-5 rounded-full bg-[#1E7A3A] text-white flex items-center gap-3 hover:bg-[#14532d] transition-all"
           >
             Begin Journey

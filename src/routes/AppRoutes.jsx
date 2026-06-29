@@ -7,6 +7,7 @@ import DashboardLayout from "@/layouts/DoctorDashboardLayout";
 import RouteLoader from "@/layouts/RouteLoader";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PatientProtectedRoute from "@/routes/PatientProtectedRoute";
+import LifestyleProtectedRoute from "./LifestyleProtectedRoute";
 
 // Public
 const Home = lazy(() => import("@/pages/Home/HomeMain"));
@@ -71,10 +72,10 @@ const AppRoutes = () => {
       {/* AUTH */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/lifestyle/welcome" element={<Welcome />} />
-      <Route path="/lifestyle/onboarding" element={<OnboardingFlow />} />
-      <Route path="/lifestyle/review" element={<Review />} />
-      <Route path="/lifestyle/blueprint" element={<WellnessBlueprint />} />
+      <Route path="/lifestyle/welcome" element={ <LifestyleProtectedRoute><Welcome /></LifestyleProtectedRoute>} />
+      <Route path="/lifestyle/onboard" element={ <LifestyleProtectedRoute><OnboardingFlow /></LifestyleProtectedRoute>} />
+      <Route path="/lifestyle/review" element={ <LifestyleProtectedRoute><Review /></LifestyleProtectedRoute>} />
+      <Route path="/lifestyle/wellness-blueprint" element={ <LifestyleProtectedRoute><WellnessBlueprint /></LifestyleProtectedRoute>} />
 
       {/* PUBLIC */}
       <Route element={<MainLayout />}>
