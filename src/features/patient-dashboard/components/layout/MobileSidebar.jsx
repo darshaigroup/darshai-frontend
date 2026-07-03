@@ -46,6 +46,7 @@ export default function MobileSidebar({
 
             {/* Sidebar */}
             <Sidebar
+              idPrefix="mobile-sidebar"
               currentTab={currentTab}
               activePatient={activePatient}
               onLogout={() => {
@@ -54,7 +55,15 @@ export default function MobileSidebar({
               }}
               setCurrentTab={(tab) => {
                 setCurrentTab(tab);
-                onClose();
+
+                const tourRunning =
+                  localStorage.getItem("dashboard-tour-completed") !== "true";
+
+                if (!tourRunning) {
+                  setTimeout(() => {
+                    onClose();
+                  }, 250);
+                }
               }}
             />
           </motion.aside>

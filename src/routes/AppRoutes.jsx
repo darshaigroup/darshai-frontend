@@ -8,6 +8,7 @@ import RouteLoader from "@/layouts/RouteLoader";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PatientProtectedRoute from "@/routes/PatientProtectedRoute";
 import LifestyleProtectedRoute from "./LifestyleProtectedRoute";
+import SalesProtectedRoute from "@/layouts/SalesProtectedRoute";
 
 // Public
 const Home = lazy(() => import("@/pages/Home/HomeMain"));
@@ -56,9 +57,16 @@ const ResultSummary = lazy(() => import("@/features/dashboard/assessments/pages/
 const LabReportViewer = lazy(() => import("@/features/dashboard/assessments/pages/LabReportViewer"));
 
 // Patient Dashboard
-const PatientDashboardLayout = lazy(() =>
-  import("@/features/patient-dashboard/layouts/PatientDashboardLayout")
-);
+const PatientDashboardLayout = lazy(() =>import("@/features/patient-dashboard/layouts/PatientDashboardLayout"));
+
+// Sales Dashboard
+const SalesDashboardLayout = lazy(() =>import("@/features/sales-dashboard/layouts/SalesDashboardLayout"));
+const Dashboard = lazy(() =>import("@/features/sales-dashboard/pages/Dashboard"));
+const LeadList = lazy(() =>import("@/features/sales-dashboard/pages/LeadList"));
+const LeadDetails = lazy(() =>import("@/features/sales-dashboard/pages/LeadDetails"));
+const FollowUps = lazy(() =>import("@/features/sales-dashboard/pages/FollowUps"));
+const AssignDoctor = lazy(() =>import("@/features/sales-dashboard/pages/AssignDoctor"));
+const ClosedLeads = lazy(() =>import("@/features/sales-dashboard/pages/ClosedLeads"));
 
 // Auth
 const Login = lazy(() => import("@/pages/Auth/Login"));
@@ -66,106 +74,149 @@ const Register = lazy(() => import("@/pages/Auth/Register"));
 
 const AppRoutes = () => {
   return (
-
     <Suspense fallback={<RouteLoader />}>
-    <Routes>
-      {/* AUTH */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/lifestyle/welcome" element={ <LifestyleProtectedRoute><Welcome /></LifestyleProtectedRoute>} />
-      <Route path="/lifestyle/onboard" element={ <LifestyleProtectedRoute><OnboardingFlow /></LifestyleProtectedRoute>} />
-      <Route path="/lifestyle/review" element={ <LifestyleProtectedRoute><Review /></LifestyleProtectedRoute>} />
-      <Route path="/lifestyle/wellness-blueprint" element={ <LifestyleProtectedRoute><WellnessBlueprint /></LifestyleProtectedRoute>} />
+      <Routes>
+        {/* AUTH */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/lifestyle/welcome"
+          element={
+            <LifestyleProtectedRoute>
+              <Welcome />
+            </LifestyleProtectedRoute>
+          }
+        />
+        <Route
+          path="/lifestyle/onboard"
+          element={
+            <LifestyleProtectedRoute>
+              <OnboardingFlow />
+            </LifestyleProtectedRoute>
+          }
+        />
+        <Route
+          path="/lifestyle/review"
+          element={
+            <LifestyleProtectedRoute>
+              <Review />
+            </LifestyleProtectedRoute>
+          }
+        />
+        <Route
+          path="/lifestyle/wellness-blueprint"
+          element={
+            <LifestyleProtectedRoute>
+              <WellnessBlueprint />
+            </LifestyleProtectedRoute>
+          }
+        />
 
-      {/* PUBLIC */}
-      <Route element={<MainLayout />}>
-        <Route element={<RouteLoader />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/philosophy" element={<Philosophy />} />
-          <Route path="/story" element={<OurStory />} />
-          <Route path="/contact" element={<ContactUs />} />
-
-          <Route path="/program" element={<OurProgram />} />
-
-          <Route path="/program/:slug" element={<ProgramDetail />} />
-          <Route
-            path="/program/geo-wellness-center"
-            element={<GeoWellnessCenter />}
-          />
-          <Route
-            path="/program/geo-wellness-center/:category"
-            element={<GeoWellnessCategory />}
-          />
-
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/explore/:category" element={<Explore />} />
-          <Route path="/blog/:slug" element={<BlogArticle />} />
-          <Route path="/pdf/:file" element={<FlipBookPage />} />
-          <Route path="/coming-soon/:type" element={<ComingSoon />} />
-
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsConditions />} />
-        </Route>
-      </Route>
-
-      {/* PROTECTED DASHBOARD */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* PUBLIC */}
+        <Route element={<MainLayout />}>
           <Route element={<RouteLoader />}>
-            <Route index element={<Overview />} />
-            <Route path="analysis" element={<Analysis />} />
-            <Route path="patients" element={<Patients />} />
-            <Route path="patients/:id" element={<PatientProfile />} />
-            <Route path="reports" element={<Reports />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/philosophy" element={<Philosophy />} />
+            <Route path="/story" element={<OurStory />} />
+            <Route path="/contact" element={<ContactUs />} />
+
+            <Route path="/program" element={<OurProgram />} />
+
+            <Route path="/program/:slug" element={<ProgramDetail />} />
             <Route
-              path="report-display/:patientId"
-              element={<ReportDisplay />}
+              path="/program/geo-wellness-center"
+              element={<GeoWellnessCenter />}
             />
             <Route
-              path="patient-report-summary/:patientId"
-              element={<PatientReportSummary />}
+              path="/program/geo-wellness-center/:category"
+              element={<GeoWellnessCategory />}
             />
-            <Route path="geowellness" element={<GeoWellness />} />
-            <Route path="questionnaires" element={<Questionnaires />} />
-            <Route
-              path="lifestyle-matrix-assessment"
-              element={<LifestyleMatrixAssessment />}
-            />
-            <Route
-              path="lifestyle-matrix-result"
-              element={<LifestyleMatrixResult />}
-            />
-            <Route path="assessments" element={<Assessment />} />
-            <Route path="result" element={<Result />} />
-            <Route
-              path="ayurveda-assessment"
-              element={<AyurvedaAssessment />}
-            />
-            <Route path="ayurveda-result" element={<AyurvedaResult />} />
-            <Route
-              path="clinical-data-assessment"
-              element={<ClinicalDataAssessment />}
-            />
-            <Route
-              path="clinical-data-result"
-              element={<ClinicalDataResult />}
-            />
-            <Route path="result-summary" element={<ResultSummary />} />
-            <Route
-              path="result-summary/:patientId"
-              element={<ResultSummary />}
-            />
-            <Route path="lab-reports/:id" element={<LabReportViewer />} />
+
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/explore/:category" element={<Explore />} />
+            <Route path="/blog/:slug" element={<BlogArticle />} />
+            <Route path="/pdf/:file" element={<FlipBookPage />} />
+            <Route path="/coming-soon/:type" element={<ComingSoon />} />
+
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsConditions />} />
           </Route>
         </Route>
-      </Route>
 
-      <Route element={<PatientProtectedRoute />}>
-        <Route path="/patient-dashboard" element={<PatientDashboardLayout />} />
-      </Route>
-    </Routes>
+        {/* PROTECTED DASHBOARD */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route element={<RouteLoader />}>
+              <Route index element={<Overview />} />
+              <Route path="analysis" element={<Analysis />} />
+              <Route path="patients" element={<Patients />} />
+              <Route path="patients/:id" element={<PatientProfile />} />
+              <Route path="reports" element={<Reports />} />
+              <Route
+                path="report-display/:patientId"
+                element={<ReportDisplay />}
+              />
+              <Route
+                path="patient-report-summary/:patientId"
+                element={<PatientReportSummary />}
+              />
+              <Route path="geowellness" element={<GeoWellness />} />
+              <Route path="questionnaires" element={<Questionnaires />} />
+              <Route
+                path="lifestyle-matrix-assessment"
+                element={<LifestyleMatrixAssessment />}
+              />
+              <Route
+                path="lifestyle-matrix-result"
+                element={<LifestyleMatrixResult />}
+              />
+              <Route path="assessments" element={<Assessment />} />
+              <Route path="result" element={<Result />} />
+              <Route
+                path="ayurveda-assessment"
+                element={<AyurvedaAssessment />}
+              />
+              <Route path="ayurveda-result" element={<AyurvedaResult />} />
+              <Route
+                path="clinical-data-assessment"
+                element={<ClinicalDataAssessment />}
+              />
+              <Route
+                path="clinical-data-result"
+                element={<ClinicalDataResult />}
+              />
+              <Route path="result-summary" element={<ResultSummary />} />
+              <Route
+                path="result-summary/:patientId"
+                element={<ResultSummary />}
+              />
+              <Route path="lab-reports/:id" element={<LabReportViewer />} />
+            </Route>
+          </Route>
+        </Route>
+
+        <Route element={<SalesProtectedRoute />}>
+          <Route path="/sales-dashboard" element={<SalesDashboardLayout />}>
+            <Route element={<RouteLoader />}>
+              <Route index element={<Dashboard />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="leads" element={<LeadList />} />
+              <Route path="leads/:id" element={<LeadDetails />} />
+              <Route path="followups" element={<FollowUps />} />
+              <Route path="assign-doctor" element={<AssignDoctor />} />
+              <Route path="closed" element={<ClosedLeads />} />
+            </Route>
+          </Route>
+        </Route>
+
+        <Route element={<PatientProtectedRoute />}>
+          <Route
+            path="/patient-dashboard"
+            element={<PatientDashboardLayout />}
+          />
+        </Route>
+      </Routes>
     </Suspense>
-
   );
 };
 

@@ -36,7 +36,7 @@ export default function WellnessHero({
 
   return (
     <section
-      className="relative overflow-hidden rounded-[36px] border border-white/10 shadow-[0_35px_80px_rgba(6,21,42,.45)]"
+     className="relative overflow-hidden rounded-[24px] md:rounded-[30px] xl:rounded-[36px] border border-white/10 shadow-[0_20px_50px_rgba(6,21,42,.35)] lg:shadow-[0_35px_80px_rgba(6,21,42,.45)]"
       style={{
         background:
           "linear-gradient(135deg,#06152A 0%,#0C2441 45%,#17365D 100%)",
@@ -51,13 +51,13 @@ export default function WellnessHero({
 
       <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(transparent_97%,rgba(255,255,255,.12)_100%),linear-gradient(90deg,transparent_97%,rgba(255,255,255,.12)_100%)] bg-[size:40px_40px]" />
 
-      <div className="relative z-10 p-6 md:p-8 xl:p-10">
+      <div className="relative z-10 px-5 py-6 sm:px-6 md:px-8 xl:px-10 xl:py-10">
 
-        <div className="grid xl:grid-cols-12 gap-8 items-center">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 xl:gap-10 items-center">
 
           {/* Left */}
 
-          <div className="xl:col-span-4 flex justify-center">
+          <div className="xl:col-span-4 flex justify-center xl:justify-start order-1">
 
             <motion.div
               initial={{ opacity: 0, scale: .95 }}
@@ -70,9 +70,9 @@ export default function WellnessHero({
 
           {/* Right */}
 
-          <div className="xl:col-span-8">
+          <div className="xl:col-span-8 order-2 text-center xl:text-left">
 
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2">
+           <div className="inline-flex items-center gap-2 mx-auto xl:mx-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2">
 
               <Sparkles className="w-4 h-4 text-emerald-400" />
 
@@ -82,13 +82,13 @@ export default function WellnessHero({
 
             </div>
 
-            <h1 className="mt-6 text-3xl lg:text-5xl font-serif font-bold text-white leading-tight">
+            <h1 className="mt-6 text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-serif font-bold text-white leading-tight">
               {patientName}
               <br />
               Longevity Diagnostics
             </h1>
 
-            <p className="mt-5 max-w-3xl text-slate-300 leading-7">
+            <p className="mt-5 max-w-3xl mx-auto xl:mx-0 text-sm md:text-base text-slate-300 leading-7">
               Your biological systems are continuously synchronized through
               DarshAI's Geo Wellness Intelligence. Review your constitutional
               balance, vitality metrics and AI-guided longevity recommendations.
@@ -96,7 +96,7 @@ export default function WellnessHero({
 
             {/* Cards */}
 
-            <div className="grid md:grid-cols-3 gap-4 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-8">
 
               {cards.map(card => {
 
@@ -107,7 +107,7 @@ export default function WellnessHero({
                   <motion.div
                     whileHover={{ y: -4 }}
                     key={card.title}
-                    className="rounded-3xl border border-white/10 bg-white/[0.05] backdrop-blur-xl p-5"
+                    className="rounded-3xl border border-white/10 bg-white/[0.05] backdrop-blur-xl p-4 md:p-5"
                   >
                     <div className="flex items-center justify-between">
 
@@ -137,7 +137,7 @@ export default function WellnessHero({
 
             <motion.div
               whileHover={{ y: -3 }}
-              className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6"
+              className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-5 md:p-6"
             >
 
               <div className="flex items-center justify-between flex-wrap gap-4">

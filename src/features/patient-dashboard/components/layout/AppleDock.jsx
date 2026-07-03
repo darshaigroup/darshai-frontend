@@ -42,19 +42,19 @@ export default function AppleDock({
   ];
 
   return (
-    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] w-full flex justify-center px-4 pointer-events-none">
+    <div className="fixed bottom-5 inset-x-0 z-[80] flex justify-center px-4 md:hidden">
       <motion.div
-        initial={{ y: 90, opacity: 0 }}
+        initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
           type: "spring",
-          stiffness: 120,
-          damping: 18,
+          stiffness: 180,
+          damping: 20,
         }}
-        className="pointer-events-auto relative flex items-center gap-2 px-4 py-3 rounded-full border border-white/10 bg-slate-950/80 backdrop-blur-2xl shadow-[0_25px_80px_rgba(0,0,0,.45)]"
+        className="relative flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/80 px-4 py-3 backdrop-blur-3xl shadow-[0_25px_80px_rgba(0,0,0,.45)]"
       >
-        {/* Top Shine */}
-        <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        {/* Shine */}
+        <div className="absolute left-8 right-8 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         {items.map(item => {
           const Icon = item.icon;
@@ -66,12 +66,12 @@ export default function AppleDock({
               className="relative flex flex-col items-center group"
             >
               {/* Tooltip */}
-              <div className="absolute -top-12 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 pointer-events-none">
-                <div className="bg-slate-950 text-white text-[10px] font-semibold tracking-wide px-3 py-1.5 rounded-lg border border-white/10 shadow-lg whitespace-nowrap">
+              <div className="pointer-events-none absolute -top-11 scale-90 opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100">
+                <div className="rounded-lg border border-white/10 bg-slate-900 px-3 py-1 text-[10px] font-semibold text-white shadow-xl whitespace-nowrap">
                   {item.label}
                 </div>
 
-                <div className="w-2 h-2 bg-slate-950 rotate-45 mx-auto -mt-1 border-r border-b border-white/10" />
+                <div className="mx-auto -mt-1 h-2 w-2 rotate-45 border-b border-r border-white/10 bg-slate-900" />
               </div>
 
               {/* Button */}
@@ -81,52 +81,55 @@ export default function AppleDock({
                   scale: 1.18,
                 }}
                 whileTap={{
-                  scale: 0.92,
+                  scale: .92,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 16,
                 }}
                 onClick={() => setCurrentTab(item.id)}
-                className={`relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                className={`relative flex h-12 w-12 items-center justify-center rounded-full transition-all ${
                   active
-                    ? "bg-white text-slate-900 shadow-lg"
+                    ? "text-slate-900"
                     : "text-white/70 hover:text-white"
                 }`}
               >
-                {/* Active Glow */}
                 {active && (
                   <motion.div
-                    layoutId="dockGlow"
-                    className="absolute -inset-1 rounded-full bg-emerald-500/30 blur-md"
+                    layoutId="dock-active"
                     transition={{
                       type: "spring",
-                      stiffness: 300,
-                      damping: 24,
+                      stiffness: 320,
+                      damping: 25,
                     }}
+                    className="absolute inset-0 rounded-full bg-white shadow-lg"
                   />
                 )}
 
-                <Icon className="relative z-10 w-5 h-5" />
+                <Icon className="relative z-10 h-5 w-5" />
 
-                {/* Badge */}
                 {!!item.badge && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center border border-slate-900">
+                  <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border border-slate-900 bg-rose-500 text-[9px] font-bold text-white">
                     {item.badge}
                   </span>
                 )}
               </motion.button>
 
-              {/* Active Dot */}
-              <div className="h-2 mt-1 flex items-center justify-center">
+              {/* Indicator */}
+              <div className="mt-1 h-2 flex items-center">
                 {active ? (
                   <motion.div
-                    layoutId="dockIndicator"
-                    className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"
+                    layoutId="dock-dot"
                     transition={{
                       type: "spring",
                       stiffness: 350,
                       damping: 25,
                     }}
+                    className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"
                   />
                 ) : (
-                  <div className="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-white/30 transition-colors" />
+                  <div className="h-1.5 w-1.5 rounded-full bg-transparent transition-colors group-hover:bg-white/30" />
                 )}
               </div>
             </div>

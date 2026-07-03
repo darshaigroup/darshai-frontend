@@ -6,19 +6,28 @@ import hero from "@/assets/images/MainImg.png";
 export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-  if (!token) return;
+    if (!token) return;
 
-  if (role === "doctor") {
-    navigate("/dashboard", { replace: true });
-  }
+    switch (role) {
+      case "doctor":
+        navigate("/dashboard", { replace: true });
+        break;
 
-  if (role === "client") {
-    navigate("/patient-dashboard", { replace: true });
-  }
-}, [navigate]);
+      case "sales":
+        navigate("/sales-dashboard", { replace: true });
+        break;
+
+      case "client":
+        navigate("/patient-dashboard", { replace: true });
+        break;
+
+      default:
+        navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   const [form, setForm] = useState({
     email: "",
@@ -66,21 +75,25 @@ export default function Login() {
 
       // ✅ STORE DATA
       localStorage.setItem("token", data.token);
-localStorage.setItem("user", JSON.stringify(data.user));
-localStorage.setItem("role", data.user.role);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("role", data.user.role);
 
-switch (data.user.role) {
-  case "doctor":
-    navigate("/dashboard", { replace: true });
-    break;
+      switch (data.user.role) {
+        case "doctor":
+          navigate("/dashboard", { replace: true });
+          break;
 
-  case "client":
-    navigate("/patient-dashboard", { replace: true });
-    break;
+        case "sales":
+          navigate("/sales-dashboard", { replace: true });
+          break;
 
-  default:
-    navigate("/", { replace: true });
-}
+        case "client":
+          navigate("/patient-dashboard", { replace: true });
+          break;
+
+        default:
+          navigate("/login", { replace: true });
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -143,7 +156,13 @@ switch (data.user.role) {
           {/* 🔥 ERROR MESSAGE */}
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-          <div className="space-y-6">
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
+          >
             {/* EMAIL */}
             <div>
               <label className="text-xs tracking-[3px] text-[#C6A75E] block mb-2">
@@ -207,7 +226,7 @@ switch (data.user.role) {
                 Register for waitlist
               </Link>
             </p>
-          </div>
+          </form>
         </div>
       </div>
     </div>
