@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardShell from "../components/layout/DashboardShell";
-
+import { TourProvider } from "../components/onbaording/TourContext";
 import DashboardPage from "../pages/DashboardPage";
 import AssessmentPage from "../pages/AssessmentPage";
 import ReportsPage from "../pages/ReportsPage";
 import ResultsPage from "../pages/ResultsPage";
 import SettingsPage from "../pages/SettingsPage";
-
+import TourHelper from "../components/onbaording/TourHelper";
 export default function PatientDashboardLayout() {
   const navigate = useNavigate();
 
@@ -74,24 +74,27 @@ export default function PatientDashboardLayout() {
     }
   };
 
-  return (
-    <DashboardShell
-      activePatient={activePatient}
-      currentTab={currentTab}
-      setCurrentTab={setCurrentTab}
-      searchQuery={searchQuery}
-      setSearchQuery={setSearchQuery}
-      patients={[activePatient]}
-      onSelectPatient={() => {}}
+return (
+  <TourProvider>
+  <DashboardShell
+    activePatient={activePatient}
+    currentTab={currentTab}
+    setCurrentTab={setCurrentTab}
+    searchQuery={searchQuery}
+    setSearchQuery={setSearchQuery}
+    patients={[activePatient]}
+    onSelectPatient={() => {}}
+    onLogout={handleLogout}
+    isDarkMode={isDarkMode}
+    onToggleTheme={() => setIsDarkMode(v => !v)}
+  >
+    {renderPage()}
+  </DashboardShell>
 
-      
-      onLogout={handleLogout}
-
-      isDarkMode={isDarkMode}
-      onToggleTheme={() => setIsDarkMode(v => !v)}
-      onRestartTour={() => {}}
-    >
-      {renderPage()}
-    </DashboardShell>
-  );
+  <TourHelper
+    currentTab={currentTab}
+    setCurrentTab={setCurrentTab}
+  />
+</TourProvider>
+);
 }

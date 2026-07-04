@@ -7,7 +7,7 @@ import {
   LogOut,
   HelpCircle,
 } from "lucide-react";
-
+import useTour from "../onbaording/useTour";
 export default function Header({
   activePatient,
   searchQuery,
@@ -16,8 +16,8 @@ export default function Header({
   currentTab,
   isDarkMode,
   onToggleTheme,
-  onRestartTour,
   onOpenSidebar,
+  setMobileSidebarOpen,
 }) {
   const titles = {
     dashboard: {
@@ -43,6 +43,23 @@ export default function Header({
   };
 
   const page = titles[currentTab] || titles.dashboard;
+  const { startTour } = useTour();
+  const handleStartTour = () => {
+  const mobile = window.innerWidth < 768;
+
+  if (mobile) {
+    setMobileSidebarOpen(true);
+
+    setTimeout(() => {
+      startTour();
+    }, 350);
+
+    return;
+  }
+
+  startTour();
+};
+  
 
   return (
     <header className="sticky top-0 z-30 border-b border-stone-200/70 bg-[#F8F6F1]/90 backdrop-blur-xl">
@@ -97,12 +114,13 @@ export default function Header({
 
           {/* Tour */}
           <button
-            onClick={onRestartTour}
-            className="w-11 h-11 rounded-xl bg-white border border-stone-200 flex items-center justify-center hover:bg-emerald-50 transition-all"
-            title="Restart Tour"
-          >
-            <HelpCircle className="w-5 h-5 text-slate-600" />
-          </button>
+  id="tour-start-btn"
+  onClick={handleStartTour}
+  className="w-11 h-11 rounded-xl bg-white border border-stone-200 flex items-center justify-center hover:bg-emerald-50 transition-all"
+  title="Start Dashboard Tour"
+>
+  <HelpCircle className="w-5 h-5 text-slate-600" />
+</button>
 
           {/* Theme */}
           <button

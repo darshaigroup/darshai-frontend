@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import Logo from "@/assets/images/logo.png";
 import {
   LayoutDashboard,
   Brain,
@@ -16,6 +17,7 @@ export default function Sidebar({
   setCurrentTab,
   activePatient,
   onLogout,
+  idPrefix = "sidebar",
 }) {
   const menu = [
     { id: "dashboard", label: "Wellness Overview", icon: LayoutDashboard },
@@ -26,25 +28,24 @@ export default function Sidebar({
   ];
 
   const vitality =
-    activePatient?.biometrics?.vitalityScore ||
-    activePatient?.vitalityScore ||
+    activePatient?.biometrics?.vitalityScore ??
+    activePatient?.vitalityScore ??
     88;
 
   return (
     <aside
-      className="relative w-72 h-screen overflow-hidden border-r border-white/5"
+      className="relative flex h-screen w-[290px] flex-col overflow-hidden border-r border-white/5"
       style={{
         background:
           "linear-gradient(180deg,#06152A 0%,#081B34 45%,#0A2342 100%)",
       }}
     >
-      {/* Background Glow */}
-      <div className="absolute -top-20 left-0 w-80 h-80 rounded-full bg-emerald-500/10 blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-sky-500/5 blur-3xl" />
+      {/* Background */}
+      <div className="absolute -top-20 left-0 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
+      <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-sky-500/5 blur-3xl" />
 
-      {/* Topographic Pattern */}
       <svg
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.035]"
         viewBox="0 0 300 900"
         preserveAspectRatio="none"
       >
@@ -56,153 +57,160 @@ export default function Sidebar({
         />
       </svg>
 
-      <div className="relative flex flex-col h-full">
+      <div className="relative flex h-full flex-col">
+     
+    {/* Logo */}
+<div className="px-6 pt-7">
+  <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl">
 
-        {/* Logo */}
-        <div className="px-6 pt-7">
-          <motion.div
-            whileHover={{ y: -2 }}
-            className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-5"
-          >
-            <div className="flex items-center gap-4">
+    {/* Ambient Glow */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute h-36 w-36 rounded-full bg-emerald-400/25 blur-[70px]" />
+      <div className="absolute h-28 w-28 rounded-full bg-cyan-300/90 blur-[55px]" />
+      <div className="absolute h-44 w-44 rounded-full bg-emerald-300/10 blur-[90px] animate-pulse" />
+    </div>
 
-              <div className="w-14 h-14 rounded-full border border-emerald-400/30 bg-slate-900 flex items-center justify-center shadow-lg">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-[#C9A75B]" />
-              </div>
+    {/* Animated Border Glow */}
+    <div
+      className="absolute inset-0 rounded-3xl"
+      style={{
+        boxShadow:
+          "0 0 30px rgba(16,185,129,.18), inset 0 0 20px rgba(16,185,129,.08)",
+      }}
+    />
 
-              <div>
-                <h1 className="font-black tracking-[0.18em] text-white text-lg">
-                  DARSHAI
-                </h1>
+    {/* Logo */}
+    <div className="relative z-10 flex justify-center px-4 pt-5">
+      <img
+        src={Logo}
+        alt="DarshAI"
+        className="w-full max-w-[210px] object-contain select-none"
+        draggable={false}
+      />
+    </div>
 
-                <div className="mt-1 flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-emerald-400" />
+    {/* Bottom Glow Line */}
+    <div className="relative z-10 flex justify-center pb-4 pt-3">
+      <div className="h-[3px] w-28 rounded-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_20px_#34d399]" />
+    </div>
 
-                  <span className="text-[10px] tracking-[0.18em] uppercase font-semibold text-emerald-300">
-                    Geo Wellness
-                  </span>
-                </div>
-              </div>
+  </div>
+</div>
 
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Wellness Card */}
-        <div className="px-6 mt-5">
-          <div className="rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent p-5">
-
+        {/* Wellness */}
+        <div className="px-6 pt-5">
+          <div className="rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.05] to-transparent p-5 backdrop-blur-xl">
             <div className="flex items-start justify-between">
-
               <div>
-
-                <p className="text-[10px] uppercase tracking-[0.18em] font-mono text-[#C9A75B]">
+                <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#C9A75B]">
                   Health Intelligence
                 </p>
 
-                <h2 className="mt-2 text-xl text-white font-serif">
+                <h3 className="mt-2 font-serif text-xl text-white">
                   Wellness Alignment
-                </h2>
-
-                <h3 className="mt-1 text-3xl font-bold text-emerald-400">
-                  {vitality}%
                 </h3>
 
+                <h2 className="mt-1 text-3xl font-bold text-emerald-400">
+                  {vitality}%
+                </h2>
               </div>
 
               <div className="relative mt-1">
-
-                <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-30" />
-
-                <span className="relative w-3 h-3 rounded-full bg-emerald-400 block" />
-
+                <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-40 animate-ping" />
+                <span className="relative block h-3 w-3 rounded-full bg-emerald-400" />
               </div>
-
             </div>
 
-            <div className="mt-6 flex items-center gap-2 text-xs text-slate-300">
-              <Compass className="w-4 h-4 text-emerald-400" />
+            <div className="mt-5 flex items-center gap-2 text-xs text-slate-300">
+              <Compass className="h-4 w-4 text-emerald-400" />
               {activePatient?.city || "Bangalore"} • Synced
             </div>
-
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 mt-8 space-y-2 overflow-y-auto">
-
-          {menu.map(item => {
+        <nav className="mt-8 flex-1 space-y-2 overflow-y-auto px-4">
+          {menu.map((item) => {
             const Icon = item.icon;
             const active = currentTab === item.id;
 
             return (
               <motion.button
+                id={`${idPrefix}-${item.id}`}
                 key={item.id}
-                whileHover={{ x: 5 }}
+                whileHover={{ x: 4 }}
                 whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
                 onClick={() => setCurrentTab(item.id)}
-                className={`relative flex items-center justify-between w-full rounded-2xl px-5 py-3.5 transition-all ${
-                  active
-                    ? "bg-gradient-to-r from-[#173C68] to-[#1E7A3A] text-white shadow-lg"
-                    : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
-                }`}
+                className="relative flex w-full items-center rounded-2xl px-4 py-3 text-left"
               >
                 {active && (
-                  <span className="absolute left-2 w-1 h-8 rounded-full bg-[#C9A75B]" />
-                )}
-
-                <div className="flex items-center gap-3">
-
-                  <Icon
-                    className={`w-5 h-5 ${
-                      active ? "text-[#C9A75B]" : ""
-                    }`}
+                  <motion.div
+                    layoutId={`${idPrefix}-active`}
+                    transition={{
+                      type: "spring",
+                      stiffness: 320,
+                      damping: 28,
+                    }}
+                    className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#173C68] to-[#1E7A3A] shadow-xl"
                   />
-
-                  <span className="text-xs uppercase tracking-[0.14em] font-medium">
-                    {item.label}
-                  </span>
-
-                </div>
+                )}
 
                 {active && (
-                  <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <motion.div
+                    layoutId={`${idPrefix}-line`}
+                    className="absolute left-0 h-8 w-1 rounded-r-full bg-[#C9A75B]"
+                  />
                 )}
+
+                <div className="relative z-10 flex w-full items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className={`h-5 w-5 ${
+                        active ? "text-[#C9A75B]" : "text-slate-400"
+                      }`}
+                    />
+
+                    <span
+                      className={`text-xs font-medium uppercase tracking-[.14em] ${
+                        active ? "text-white" : "text-slate-300"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+
+                  {active && (
+                    <motion.div
+                      layoutId={`${idPrefix}-dot`}
+                      className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"
+                    />
+                  )}
+                </div>
               </motion.button>
             );
           })}
-
         </nav>
 
         {/* Footer */}
         <div className="px-5 pb-5">
-
           <button
             onClick={onLogout}
-            className="mb-5 flex items-center gap-3 w-full rounded-2xl px-5 py-3 text-rose-400 hover:bg-rose-500/10 transition"
+            className="mb-5 flex w-full items-center gap-3 rounded-2xl px-5 py-3 text-rose-400 transition hover:bg-rose-500/10"
           >
-            <LogOut className="w-5 h-5" />
-            <span className="uppercase tracking-[0.14em] text-xs">
-              Sign Out
-            </span>
+            <LogOut className="h-5 w-5" />
+            <span className="text-xs uppercase tracking-[.14em]">Sign Out</span>
           </button>
 
-          <div className="rounded-2xl border border-white/5 bg-black/20 py-4 text-center">
-
-            <div className="flex justify-center items-center gap-2">
-
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-
-              <span className="text-[10px] tracking-[0.22em] uppercase text-[#C9A75B]">
+          <div className="rounded-2xl border border-white/5 bg-black/20 py-4 text-center backdrop-blur-xl">
+            <div className="flex items-center justify-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <span className="text-[10px] uppercase tracking-[.22em] text-[#C9A75B]">
                 Vaidya Protocol v1.1
               </span>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
     </aside>
   );

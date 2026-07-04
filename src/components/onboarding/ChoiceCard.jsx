@@ -60,4 +60,4 @@ export default function ChoiceCard({ icon: Icon, title, description, selected, o
       )}
     </motion.button>
   );
-}
+} 
