@@ -15,10 +15,8 @@ import {
 
 export default function AssignDoctor() {
   const [loading, setLoading] = useState(true);
-
   const [leads, setLeads] = useState([]);
   const [doctors, setDoctors] = useState([]);
-
   const [search, setSearch] = useState("");
   const [selectedLead, setSelectedLead] = useState(null);
 
@@ -35,7 +33,9 @@ export default function AssignDoctor() {
 
       setLeads(
         (leadData || []).filter(
-          (lead) => lead.lead_status !== "Assigned"
+          (lead) =>
+            lead.lead_status === "Purchased" &&
+            !lead.doctor_name
         )
       );
 
@@ -51,7 +51,8 @@ export default function AssignDoctor() {
     return leads.filter(
       (lead) =>
         lead.name?.toLowerCase().includes(search.toLowerCase()) ||
-        lead.email?.toLowerCase().includes(search.toLowerCase())
+        lead.email?.toLowerCase().includes(search.toLowerCase()) ||
+        lead.phone?.includes(search)
     );
   }, [search, leads]);
 
@@ -62,25 +63,36 @@ export default function AssignDoctor() {
 
       <SectionTitle
         title="Assign Doctor"
-        subtitle="Assign qualified wellness experts to new leads."
+        subtitle="Assign doctors only after the wellness package has been purchased."
       />
+
+      <div className="rounded-2xl border border-[#D8EAD9] bg-[#F6FCF7] p-5">
+        <h3 className="text-lg font-semibold text-[#1E7A3A]">
+          Ready for Doctor Assignment
+        </h3>
+
+        <p className="mt-2 text-sm text-slate-600">
+          Only patients who have completed the package purchase are shown
+          here. After assigning a doctor, the lead will move to
+          <span className="font-semibold text-[#173C68]"> Assigned</span>.
+        </p>
+      </div>
 
       <SearchBar
         value={search}
         onChange={setSearch}
-        placeholder="Search patient..."
+        placeholder="Search purchased patient..."
       />
 
       {!filteredLeads.length ? (
         <EmptyState
-          title="No Pending Assignments"
-          description="All eligible leads have already been assigned."
+          title="No Purchased Patients"
+          description="Patients who purchase a package will appear here for doctor assignment."
         />
       ) : (
         <div className="grid gap-8 xl:grid-cols-2">
 
           <div className="space-y-6">
-
             {filteredLeads.map((lead) => (
               <LeadCard
                 key={lead.id}
@@ -89,18 +101,15 @@ export default function AssignDoctor() {
                 onCall={() => window.open(`tel:${lead.phone}`)}
               />
             ))}
-
           </div>
 
           <div className="space-y-6">
-
             {doctors.map((doctor) => (
               <DoctorCard
                 key={doctor.id}
                 doctor={doctor}
               />
             ))}
-
           </div>
 
         </div>

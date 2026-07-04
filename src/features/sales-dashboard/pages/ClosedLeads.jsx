@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, XCircle } from "lucide-react";
 
 import SectionTitle from "../components/ui/SectionTitle";
 import StatsCard from "../components/card/StatsCard";
@@ -29,7 +29,9 @@ export default function ClosedLeads() {
 
       setLeads(
         (data || []).filter(
-          (lead) => lead.lead_status === "Closed"
+          (lead) =>
+            lead.lead_status === "Closed" ||
+            lead.lead_status === "Not Interested"
         )
       );
     } catch (err) {
@@ -56,23 +58,37 @@ export default function ClosedLeads() {
     });
   }, [leads, search, from, to]);
 
+  const salesClosed = filtered.filter(
+    (lead) => lead.lead_status === "Closed"
+  ).length;
+
+  const lostLeads = filtered.filter(
+    (lead) => lead.lead_status === "Not Interested"
+  ).length;
+
   if (loading) return <Loading />;
 
   return (
     <div className="space-y-8">
-
       <SectionTitle
         title="Closed Leads"
-        subtitle="Successfully converted wellness enquiries."
+        subtitle="Sales completed and lost opportunities."
       />
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2">
 
         <StatsCard
-          title="Closed Leads"
-          value={filtered.length}
+          title="Sales Completed"
+          value={salesClosed}
           icon={CheckCircle2}
           color="#1E7A3A"
+        />
+
+        <StatsCard
+          title="Lost Opportunity"
+          value={lostLeads}
+          icon={XCircle}
+          color="#DC2626"
         />
 
       </div>
@@ -99,7 +115,7 @@ export default function ClosedLeads() {
       ) : (
         <EmptyState
           title="No Closed Leads"
-          description="Closed leads will appear here."
+          description="Completed sales and lost opportunities will appear here."
         />
       )}
 

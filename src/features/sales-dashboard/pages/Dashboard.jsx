@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import {
   Users,
-  UserPlus,
+  PhoneCall,
+  HeartHandshake,
+  CreditCard,
   UserCheck,
   CheckCircle2,
+  XCircle,
 } from "lucide-react";
 
 import SectionTitle from "../components/ui/SectionTitle";
@@ -44,44 +47,70 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8">
-
       <SectionTitle
         title="Sales Dashboard"
-        subtitle="Overview of sales pipeline and lead conversion."
+        subtitle="Overview of complete sales pipeline."
       />
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4">
 
         <StatsCard
           title="Total Leads"
-          value={stats.total_leads}
+          value={stats.total_leads || 0}
           icon={Users}
           color="#173C68"
         />
 
         <StatsCard
-          title="New Leads"
-          value={stats.new_leads}
-          icon={UserPlus}
+          title="Lead"
+          value={stats.lead || 0}
+          icon={Users}
           color="#2563EB"
         />
 
         <StatsCard
+          title="Contacted"
+          value={stats.contacted || 0}
+          icon={PhoneCall}
+          color="#0EA5E9"
+        />
+
+        <StatsCard
+          title="Interested"
+          value={stats.interested || 0}
+          icon={HeartHandshake}
+          color="#16A34A"
+        />
+
+        <StatsCard
+          title="Purchased"
+          value={stats.purchased || 0}
+          icon={CreditCard}
+          color="#C6A75E"
+        />
+
+        <StatsCard
           title="Assigned"
-          value={stats.assigned}
+          value={stats.assigned || 0}
           icon={UserCheck}
           color="#1E7A3A"
         />
 
         <StatsCard
-          title="Closed"
-          value={stats.closed}
+          title="Sales Closed"
+          value={stats.closed || 0}
           icon={CheckCircle2}
-          color="#C6A75E"
+          color="#15803D"
+        />
+
+        <StatsCard
+          title="Lost Opportunity"
+          value={stats.lost || 0}
+          icon={XCircle}
+          color="#DC2626"
         />
 
       </div>
-
     </div>
   );
 }

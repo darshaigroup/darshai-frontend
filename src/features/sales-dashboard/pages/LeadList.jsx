@@ -8,6 +8,7 @@ import LeadTable from "../components/leads/LeadTable";
 import AssignDoctorModal from "../components/leads/AssignDoctorModal";
 import Loading from "../components/common/Loading";
 import EmptyState from "../components/common/EmptyState";
+
 import { getLeads } from "../services/salesService";
 
 export default function LeadList() {
@@ -26,7 +27,14 @@ export default function LeadList() {
   async function loadLeads() {
     try {
       const data = await getLeads();
-      setLeads(data || []);
+
+      setLeads(
+        (data || []).filter(
+          (lead) =>
+            lead.lead_status !== "Closed" &&
+            lead.lead_status !== "Not Interested"
+        )
+      );
     } catch (err) {
       console.error(err);
     } finally {
@@ -57,14 +65,12 @@ export default function LeadList() {
 
   return (
     <div className="space-y-8">
-
       <SectionTitle
         title="Lead Management"
-        subtitle="Manage and assign wellness enquiries."
+        subtitle="Manage the complete active sales pipeline."
       />
 
       <div className="grid gap-4 lg:grid-cols-4">
-
         <div className="lg:col-span-2">
           <SearchBar
             value={search}
@@ -76,6 +82,14 @@ export default function LeadList() {
         <StatusFilter
           value={status}
           onChange={setStatus}
+          options={[
+            "All",
+            "Lead",
+            "Contacted",
+            "Interested",
+            "Purchased",
+            "Assigned",
+          ]}
         />
 
         <DateFilter
@@ -84,7 +98,6 @@ export default function LeadList() {
           onFromChange={setFrom}
           onToChange={setTo}
         />
-
       </div>
 
       {filtered.length ? (
@@ -94,8 +107,8 @@ export default function LeadList() {
         />
       ) : (
         <EmptyState
-          title="No Leads Found"
-          description="No leads match the selected filters."
+          title="No Active Leads"
+          description="No active leads match the selected filters."
         />
       )}
 
@@ -108,7 +121,6 @@ export default function LeadList() {
           loadLeads();
         }}
       />
-
     </div>
   );
 }
