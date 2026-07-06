@@ -8,7 +8,7 @@ export default function MobileMenu({children,close}){
       initial={{x:-320}}
       animate={{x:0}}
       exit={{x:-320}}
-      transition={{duration:.3,ease:"easeOut"}}
+      transition={{type:"spring",stiffness:260,damping:28}}
       className="relative h-screen w-full bg-gradient-to-b from-[#173C68] via-[#163E66] to-[#1E7A3A] shadow-[0_30px_80px_rgba(0,0,0,.35)] overflow-hidden"
     >
 

@@ -13,6 +13,7 @@ export default function FollowupCard({
   leadId,
   initialDate = "",
   initialRemark = "",
+  history=[],
   onSaved,
 }) {
   const [date, setDate] = useState(initialDate);
@@ -25,48 +26,54 @@ export default function FollowupCard({
     setRemark(initialRemark);
   }, [initialDate, initialRemark]);
 
-  const handleSave = async () => {
-    if (!date) {
-      alert("Please select a follow-up date.");
-      return;
-    }
+  const handleSave=async()=>{
 
-    try {
-      setLoading(true);
+  if(!date){
+    alert("Please select a follow-up date.");
+    return;
+  }
+
+  if(date<today){
+    alert("Follow-up date cannot be earlier than today.");
+    return;
+  }
+
+  try{
+    setLoading(true);
+    setSaved(false);
+
+    await updateFollowup(leadId,date,remark);
+
+    setSaved(true);
+
+    onSaved?.();
+
+    setTimeout(()=>{
       setSaved(false);
+    },2500);
 
-      await updateFollowup(leadId, date);
+  }catch(err){
+    alert(err.message||"Unable to schedule follow-up.");
+  }finally{
+    setLoading(false);
+  }
 
-      setSaved(true);
-
-      onSaved?.();
-
-      setTimeout(() => {
-        setSaved(false);
-      }, 2500);
-    } catch (err) {
-      alert(err.message || "Unable to schedule follow-up.");
-    } finally {
-      setLoading(false);
-    }
-  };
+};
 
   const today = new Date().toISOString().split("T")[0];
 
-  const status =
-    !date
-      ? "Not Scheduled"
-      : date < today
-      ? "Overdue"
-      : date === today
-      ? "Today"
-      : "Upcoming";
+  const status=
+  !date
+    ? "Not Scheduled"
+    : date===today
+    ? "Today"
+    : "Upcoming";
 
   const statusColor = {
     "Not Scheduled": "bg-slate-100 text-slate-600",
     Today: "bg-[#FFF7E5] text-[#C58A00]",
     Upcoming: "bg-[#EDF9F0] text-[#1E7A3A]",
-    Overdue: "bg-[#FDECEC] text-[#D64545]",
+    
   };
 
   return (
@@ -105,12 +112,13 @@ export default function FollowupCard({
               className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
             />
 
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="h-12 w-full rounded-full border border-[#E8E3DA] bg-[#FCFBF9] pl-11 pr-4 outline-none focus:border-[#1E7A3A] focus:ring-4 focus:ring-[#1E7A3A]/10"
-            />
+           <input
+  type="date"
+  min={today}
+  value={date}
+  onChange={(e)=>setDate(e.target.value)}
+  className="h-12 w-full rounded-full border border-[#E8E3DA] bg-[#FCFBF9] pl-11 pr-4 outline-none focus:border-[#1E7A3A] focus:ring-4 focus:ring-[#1E7A3A]/10"
+/>
           </div>
         </div>
 
@@ -172,6 +180,55 @@ export default function FollowupCard({
           {loading ? "Saving..." : "Save Follow-up"}
         </GradientButton>
       </div>
+      <div className="mt-10 border-t border-[#ECE7DD] pt-8">
+  <div className="mb-6 flex items-center justify-between">
+    <h2 className="font-serif text-2xl text-[#173C68]">
+      Follow-up History
+    </h2>
+
+    <span className="rounded-full bg-[#F8F6F2] px-4 py-2 text-sm text-slate-500">
+      {history.length} Records
+    </span>
+  </div>
+
+  {!history.length ? (
+    <div className="rounded-2xl border border-dashed border-[#E8E3DA] p-8 text-center text-slate-500">
+      No follow-up history available.
+    </div>
+  ) : (
+    <div className="space-y-4">
+      {history.map(item=>(
+        <div
+          key={item.id}
+          className="rounded-2xl border border-[#ECE7DD] bg-[#FCFBF9] p-5"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-[#173C68]">
+                {new Date(item.created_at).toLocaleString()}
+              </h3>
+
+              <p className="mt-1 text-sm text-slate-500">
+                Status :
+                <span className="ml-1 font-medium text-[#1E7A3A]">
+                  {item.lead_status}
+                </span>
+              </p>
+            </div>
+
+            <span className="rounded-full bg-[#EDF9F0] px-4 py-2 text-sm text-[#1E7A3A]">
+              {item.followup_date?.slice(0,10)}
+            </span>
+          </div>
+
+          <div className="mt-4 rounded-xl bg-white p-4">
+            {item.remark}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
     </motion.div>
   );
 }

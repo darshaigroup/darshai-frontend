@@ -11,9 +11,8 @@ LogOut,
 UserCircle2
 } from "lucide-react";
 
-export default function Header({openSidebar}){
+export default function Header({openSidebar, }){
   const navigate=useNavigate();
-  const [search,setSearch]=useState("");
   const [showMenu,setShowMenu]=useState(false);
 
   const today=useMemo(()=>{
@@ -62,7 +61,7 @@ export default function Header({openSidebar}){
 
         </div>
 
-        <div className="hidden md:flex flex-1 max-w-xl">
+        {/* <div className="hidden md:flex flex-1 max-w-xl">
 
           <div className="relative w-full">
 
@@ -72,15 +71,14 @@ export default function Header({openSidebar}){
             />
 
             <input
-              value={search}
-              onChange={e=>setSearch(e.target.value)}
+              
               placeholder="Search patient, email, phone..."
               className="w-full pl-12 pr-5 h-12 rounded-2xl bg-white border border-slate-200 focus:outline-none focus:border-[#1E7A3A] transition"
             />
 
           </div>
 
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-3">
 
@@ -123,39 +121,55 @@ export default function Header({openSidebar}){
 
             </button>
 
-            {showMenu&&(
+            {showMenu && (
 
-              <motion.div
-                initial={{opacity:0,y:10}}
-                animate={{opacity:1,y:0}}
-                className="absolute right-0 mt-3 w-56 rounded-3xl bg-white shadow-2xl border border-slate-200 overflow-hidden"
-              >
+  <motion.div
+    initial={{ opacity: 0, y: 10, scale: .98 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    className="absolute right-0 mt-3 w-72 rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden"
+  >
 
-                <button
-                  onClick={()=>navigate("/sales/profile")}
-                  className="w-full px-5 py-4 text-left hover:bg-slate-50 transition"
-                >
-                  My Profile
-                </button>
+    <div className="bg-gradient-to-r from-[#173C68] to-[#1E7A3A] px-6 py-6">
 
-                <button
-                  onClick={()=>navigate("/sales/settings")}
-                  className="w-full px-5 py-4 text-left hover:bg-slate-50 transition"
-                >
-                  Settings
-                </button>
+      <div className="flex items-center gap-4">
 
-                <button
-                  onClick={logout}
-                  className="w-full px-5 py-4 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition"
-                >
-                  <LogOut size={18}/>
-                  Logout
-                </button>
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-[#173C68] shadow">
 
-              </motion.div>
+          <UserCircle2 size={42} />
 
-            )}
+        </div>
+
+        <div>
+
+          <h3 className="text-lg font-semibold text-white">
+            {user?.name || "Sales Team"}
+          </h3>
+
+          <p className="text-sm text-white/80">
+            {user?.email || "sales@darshai.com"}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div className="p-4">
+
+      <button
+        onClick={logout}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-50 py-3 font-medium text-red-600 transition hover:bg-red-100"
+      >
+        <LogOut size={18} />
+        Logout
+      </button>
+
+    </div>
+
+  </motion.div>
+
+)}
 
           </div>
 

@@ -9,7 +9,7 @@ import AssignDoctorModal from "../components/leads/AssignDoctorModal";
 import Loading from "../components/common/Loading";
 import EmptyState from "../components/common/EmptyState";
 
-import { getLeads } from "../services/salesService";
+import { searchLeads, getLeads } from "../services/salesService";
 
 export default function LeadList() {
   const [loading, setLoading] = useState(true);
@@ -21,19 +21,29 @@ export default function LeadList() {
   const [selectedLead, setSelectedLead] = useState(null);
 
   useEffect(() => {
-    loadLeads();
-  }, []);
+  loadLeads();
+}, []);
 
-  async function loadLeads() {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadLeads(search);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  async function loadLeads(keyword = "") {
     try {
-      const data = await getLeads();
+      const data = keyword.trim()
+        ? await searchLeads(keyword)
+        : await getLeads();
 
       setLeads(
         (data || []).filter(
           (lead) =>
             lead.lead_status !== "Closed" &&
-            lead.lead_status !== "Not Interested"
-        )
+            lead.lead_status !== "Not Interested",
+        ),
       );
     } catch (err) {
       console.error(err);
@@ -49,8 +59,7 @@ export default function LeadList() {
         lead.email?.toLowerCase().includes(search.toLowerCase()) ||
         lead.phone?.includes(search);
 
-      const statusMatch =
-        status === "All" || lead.lead_status === status;
+      const statusMatch = status === "All" || lead.lead_status === status;
 
       const created = lead.created_at?.slice(0, 10);
 
@@ -75,7 +84,8 @@ export default function LeadList() {
           <SearchBar
             value={search}
             onChange={setSearch}
-            placeholder="Search leads..."
+            onSearch={() => loadLeads(search)}
+            placeholder="Search patient, email or phone..."
           />
         </div>
 
@@ -101,10 +111,7 @@ export default function LeadList() {
       </div>
 
       {filtered.length ? (
-        <LeadTable
-          leads={filtered}
-          onAssign={setSelectedLead}
-        />
+        <LeadTable leads={filtered} onAssign={setSelectedLead} />
       ) : (
         <EmptyState
           title="No Active Leads"
