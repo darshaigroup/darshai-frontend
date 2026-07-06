@@ -65,6 +65,7 @@ const Dashboard = lazy(() =>import("@/features/sales-dashboard/pages/Dashboard")
 const LeadList = lazy(() =>import("@/features/sales-dashboard/pages/LeadList"));
 const LeadDetails = lazy(() =>import("@/features/sales-dashboard/pages/LeadDetails"));
 const FollowUps = lazy(() =>import("@/features/sales-dashboard/pages/FollowUps"));
+const FollowupHistory=lazy(()=>import("@/features/sales-dashboard/pages/FollowupHistory"));
 const AssignDoctor = lazy(() =>import("@/features/sales-dashboard/pages/AssignDoctor"));
 const ClosedLeads = lazy(() =>import("@/features/sales-dashboard/pages/ClosedLeads"));
 
@@ -203,6 +204,7 @@ const AppRoutes = () => {
               <Route path="leads" element={<LeadList />} />
               <Route path="leads/:id" element={<LeadDetails />} />
               <Route path="followups" element={<FollowUps />} />
+              <Route path="followups/:id" element={<FollowupHistory />} />
               <Route path="assign-doctor" element={<AssignDoctor />} />
               <Route path="closed" element={<ClosedLeads />} />
             </Route>

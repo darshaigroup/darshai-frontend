@@ -10,13 +10,14 @@ import AssignDoctorModal from "../components/leads/AssignDoctorModal";
 import Loading from "../components/common/Loading";
 import EmptyState from "../components/common/EmptyState";
 
-import { getLeadDetails,updateLeadStatus  } from "../services/salesService";
+import { getLeadDetails,updateLeadStatus, getFollowupHistory } from "../services/salesService";
 
 export default function LeadDetails() {
   const { id } = useParams();
 
   const [loading, setLoading] = useState(true);
   const [lead, setLead] = useState(null);
+  const [followupHistory, setFollowupHistory] = useState([]);
   const [assignOpen, setAssignOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 const [nextStatus, setNextStatus] = useState("");
@@ -29,8 +30,13 @@ const [confirmMessage, setConfirmMessage] = useState("");
 
   async function loadLead() {
     try {
-      const data = await getLeadDetails(id);
-      setLead(data);
+     const [leadData, historyData] = await Promise.all([
+  getLeadDetails(id),
+  getFollowupHistory(id),
+]);
+
+setLead(leadData);
+setFollowupHistory(historyData || []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -238,11 +244,12 @@ return (
 
     <div className="grid gap-8 xl:grid-cols-2">
       <FollowupCard
-        leadId={lead.id}
-        initialDate={lead.followup_date}
-        initialRemark={lead.sales_notes || ""}
-        onSaved={loadLead}
-      />
+  leadId={lead.id}
+  initialDate={lead.followup_date}
+  initialRemark={lead.sales_notes || ""}
+  history={followupHistory}
+  onSaved={loadLead}
+/>
 
       <NotesEditor
         leadId={lead.id}
@@ -265,17 +272,12 @@ return (
         className="w-full max-w-md rounded-[32px] bg-white p-8 shadow-2xl"
       >
         <h2 className="text-3xl font-serif text-center text-[#173C68]">
-          Confirm Action
-        </h2>
+  {confirmTitle}
+</h2>
 
-        <p className="mt-5 text-center leading-7 text-slate-600">
-          Are you sure you want to move this lead to
-          <span className="font-semibold text-[#173C68]">
-            {" "}
-            {nextStatus}
-          </span>
-          ?
-        </p>
+       <p className="mt-5 text-center leading-7 text-slate-600">
+  {confirmMessage}
+</p>
 
         {nextStatus === "Purchased" && (
           <p className="mt-3 text-center text-sm text-[#C58A00] font-medium">
@@ -284,7 +286,7 @@ return (
         )}
 
         <p className="mt-3 text-center text-sm text-red-500 font-medium">
-          This action cannot be undone.
+          Once confirmed, this action cannot be undone.
         </p>
 
         <div className="mt-8 flex gap-4">

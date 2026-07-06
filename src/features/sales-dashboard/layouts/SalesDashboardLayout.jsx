@@ -14,7 +14,7 @@ export default function SalesDashboardLayout(){
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-[290px] z-40">
-        <Sidebar />
+       <Sidebar close={()=>setSidebarOpen(false)} />
       </aside>
 
       {/* Mobile Sidebar */}
@@ -36,9 +36,12 @@ export default function SalesDashboardLayout(){
               transition={{duration:.3}}
               className="fixed left-0 top-0 h-screen w-[290px] z-50 lg:hidden"
             >
-              <MobileMenu close={()=>setSidebarOpen(false)}>
-                <Sidebar mobile />
-              </MobileMenu>
+             <MobileMenu close={()=>setSidebarOpen(false)}>
+  <Sidebar
+    mobile
+    close={()=>setSidebarOpen(false)}
+  />
+</MobileMenu>
             </motion.div>
           </>
         )}
@@ -56,7 +59,7 @@ export default function SalesDashboardLayout(){
           <motion.div
             initial={{opacity:0,y:20}}
             animate={{opacity:1,y:0}}
-            transition={{duration:.35}}
+            transition={{duration:.35,ease:[0.22,1,0.36,1],}}
             className="mx-auto max-w-[1700px]"
           >
             <Outlet />
