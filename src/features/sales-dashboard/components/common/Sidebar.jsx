@@ -106,7 +106,7 @@ export default function Sidebar({ mobile, close }) {
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden bg-gradient-to-b from-[#173C68] via-[#184A73] to-[#1E7A3A] text-white">
-      <div className="border-b border-white/10 p-6">
+      <div className="border-b border-white/10 p-2">
         <motion.div
           initial={{ opacity: 0, y: -25 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,35 +125,32 @@ export default function Sidebar({ mobile, close }) {
                 duration: 5,
                 repeat: Infinity,
               }}
-              className="h-36 w-auto object-contain"
+              className="h-33 w-auto object-contain"
             />
           </div>
         </motion.div>
       </div>
 
-      <div className="px-5 pt-6">
+      <div className="px-5 pt-2">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="rounded-[30px] border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,.12)]"
         >
-          <p className="text-xs uppercase tracking-[3px] text-white/60">
-            Today's Pipeline
-          </p>
 
           <motion.h2
             key={stats.total_leads}
             initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="mt-3 text-5xl font-bold"
+            className="mt-1 text-4xl font-bold"
           >
             {stats.total_leads}
           </motion.h2>
 
           <p className="mt-2 text-white/75">Active Lifestyle Leads</p>
 
-          <div className="mt-6 h-2 overflow-hidden rounded-full bg-white/10">
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
             <motion.div
               animate={{ width: `${progress}%` }}
               transition={{ duration: 1 }}
@@ -161,7 +158,7 @@ export default function Sidebar({ mobile, close }) {
             />
           </div>
 
-          <div className="mt-4 flex items-center justify-between text-xs text-white/70">
+          <div className="mt-2 flex items-center justify-between text-xs text-white/70">
             <span>Converted</span>
 
             <span className="font-semibold">{progress.toFixed(0)}%</span>
@@ -317,7 +314,7 @@ export default function Sidebar({ mobile, close }) {
 
       {/* ---------- Logout ---------- */}
 
-      <div className="border-t border-white/10 p-5">
+      <div className="border-t border-white/10 p-2">
         <motion.button
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
