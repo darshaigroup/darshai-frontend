@@ -4,7 +4,6 @@ import Loading from "../components/common/Loading";
 import EmptyState from "../components/common/EmptyState";
 
 import DashboardHeader from "../components/dashboard/DashboardHeader";
-import KPISections from "../components/dashboard/KPISections";
 import QuickActions from "../components/dashboard/QuickActions";
 import ConversionOverview from "../components/dashboard/ConversionOverview";
 import RecentRegistrations from "../components/dashboard/RecentRegistrations";
@@ -84,7 +83,7 @@ export default function Dashboard() {
     <div className="space-y-10">
 
       <DashboardHeader/>
-
+{/* 
       <ConversionOverview
         stats={stats}
       />
@@ -95,7 +94,7 @@ export default function Dashboard() {
        <RecentRegistrations
         leads={leads}
       />
-      <QuickActions/>
+      <QuickActions/> */}
 
 
     </div>
