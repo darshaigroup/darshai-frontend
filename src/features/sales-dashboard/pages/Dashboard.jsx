@@ -83,7 +83,7 @@ export default function Dashboard() {
     <div className="space-y-10">
 
       <DashboardHeader/>
-{/* 
+
       <ConversionOverview
         stats={stats}
       />
@@ -94,7 +94,7 @@ export default function Dashboard() {
        <RecentRegistrations
         leads={leads}
       />
-      <QuickActions/> */}
+      <QuickActions/>
 
 
     </div>
