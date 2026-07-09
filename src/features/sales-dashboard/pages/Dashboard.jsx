@@ -78,19 +78,28 @@ export default function Dashboard() {
     );
   }
 
-  return (
-  <div className="space-y-10">
+  return(
 
-    <DashboardHeader />
+    <div className="space-y-10">
 
-    <ConversionOverview stats={stats} />
+      <DashboardHeader/>
 
-    <DashboardCharts />
+      <ConversionOverview
+        stats={stats}
+      />
 
-    <RecentRegistrations />
+      <DashboardCharts
+        stats={stats}
+      />
+       <RecentRegistrations
+        leads={leads}
+      />
+      
 
-  </div>
-);
+
+    </div>
+
+  );
 
 }
 
