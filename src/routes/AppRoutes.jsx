@@ -198,7 +198,6 @@ const AppRoutes = () => {
 
         <Route element={<SalesProtectedRoute />}>
           <Route path="/sales-dashboard" element={<SalesDashboardLayout />}>
-            <Route element={<RouteLoader />}>
               <Route index element={<Dashboard />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="leads" element={<LeadList />} />
@@ -207,7 +206,6 @@ const AppRoutes = () => {
               <Route path="followups/:id" element={<FollowupHistory />} />
               <Route path="assign-doctor" element={<AssignDoctor />} />
               <Route path="closed" element={<ClosedLeads />} />
-            </Route>
           </Route>
         </Route>
 
