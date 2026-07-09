@@ -79,15 +79,10 @@ export default function Dashboard() {
   }
 
   return (
-  <div
-    style={{
-      background: "red",
-      color: "white",
-      padding: 40,
-      fontSize: 40,
-    }}
-  >
-    DASHBOARD IS RENDERING
+  <div className="space-y-10">
+
+    <DashboardHeader />
+
   </div>
 );
 
