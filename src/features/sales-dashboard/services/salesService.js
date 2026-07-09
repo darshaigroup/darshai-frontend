@@ -5,7 +5,7 @@ const getToken=()=>localStorage.getItem("token");
 async function request(endpoint,options={}){
 
   const res=await fetch(`${API}${endpoint}`,{
-    cache: "reload",
+    cache: "no-store",
     headers:{
       "Content-Type":"application/json",
       Authorization:`Bearer ${getToken()}`,

@@ -69,12 +69,8 @@ export default function Sidebar({ mobile, close }) {
       ]);
 
       const followups = (leads || []).filter(
-        (lead) =>
-          lead.followup_date &&
-          ["Lead", "Contacted", "Interested", "Purchased"].includes(
-            lead.lead_status,
-          ),
-      ).length;
+  lead => !!lead.followup_date
+).length;
 
       setStats({
         total_leads: dashboard.total_leads || 0,
