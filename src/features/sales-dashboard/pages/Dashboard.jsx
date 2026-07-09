@@ -87,6 +87,8 @@ export default function Dashboard() {
 
     <DashboardCharts />
 
+    <RecentRegistrations />
+
   </div>
 );
 
