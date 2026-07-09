@@ -85,6 +85,8 @@ export default function Dashboard() {
 
     <ConversionOverview stats={stats} />
 
+    <DashboardCharts />
+
   </div>
 );
 
