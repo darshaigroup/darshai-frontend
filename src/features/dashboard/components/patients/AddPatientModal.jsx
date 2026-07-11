@@ -2,28 +2,35 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import {
-  addPatient,
-} from "../../assessments/services/patientService";
+import {addPatient,updatePatient,} from "../../assessments/services/patientService";
 
 const AddPatientModal = ({
   onClose,
+  patient = null,
+  mode = "create",
 }) => {
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  const [formData,
-    setFormData] =
-      useState({
-        name: "",
-        dob: "",
-        gender: "",
-        email: "",
-        phone: "",
-        occupation: "",
-        location: "",
-      });
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      navigate(-1);
+    }
+  };
+
+ const [formData, setFormData] = useState({
+  name: patient?.name || "",
+  dob: patient?.dob
+    ? patient.dob.split("T")[0]
+    : "",
+  gender: patient?.gender || "",
+  email: patient?.email || "",
+  phone: patient?.phone || "",
+  occupation: patient?.occupation || "",
+  location: patient?.location || "",
+});
 
   const [isSubmitting,
     setIsSubmitting] =
@@ -100,24 +107,56 @@ const AddPatientModal = ({
           true
         );
 
-        const response =
-          await addPatient(
-            formData
-          );
+     let savedPatient;
 
-       
-      navigate(
-  "/dashboard/lifestyle-matrix-assessment",
-  {
-    state:{
-      patient:response.patient,
-      source:"full-flow"
+if (mode === "create") {
+
+  const response = await addPatient(formData);
+
+  savedPatient = response.patient;
+
+  navigate(
+    "/dashboard/lifestyle-matrix-assessment",
+    {
+      state: {
+        patient: savedPatient,
+        workflow: "new",
+      },
     }
+  );
+
+} else {
+
+  const response = await updatePatient(
+    patient.id,
+    formData
+  );
+
+  savedPatient = response.patient;
+
+  // Edit Profile -> return to patients list
+  if (mode === "edit") {
+
+    alert("Patient profile updated successfully.");
+
+    navigate("/dashboard/patients");
+
+    return;
   }
-);
 
-        onClose();
+  // Assign Assessment -> continue workflow
+  navigate(
+    "/dashboard/lifestyle-matrix-assessment",
+    {
+      state: {
+        patient: savedPatient,
+        workflow: "new",
+      },
+    }
+  );
+}
 
+handleClose();
       } catch (
         error
       ) {
@@ -160,14 +199,15 @@ const AddPatientModal = ({
               </p>
 
               <h2 className="text-[32px] leading-[1.1] font-serif text-[#1E7A3A]">
-                Add New Patient
-              </h2>
-
+  {mode === "create"
+    ? "Add New Patient"
+    : "Patient Information"}
+</h2>
             </div>
 
             <button
               onClick={
-                onClose
+                handleClose
               }
               className="w-10 h-10 rounded-full border border-[#1E7A3A]/10 text-[#1E7A3A] hover:bg-[#1E7A3A] hover:text-white transition-all duration-300"
             >
@@ -177,7 +217,9 @@ const AddPatientModal = ({
           </div>
 
           <p className="text-[#1E7A3A]/65 text-sm leading-[1.8] mt-5">
-            Enter patient information to begin the precision wellness assessment journey.
+           {mode === "create"
+  ? "Enter patient information to begin the precision wellness assessment journey."
+  : "Review or update patient information before starting the assessment."}
           </p>
 
         </div>
@@ -320,12 +362,13 @@ const AddPatientModal = ({
             <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.5),transparent_70%)]" />
 
             <span className="relative z-10">
-
-              {
-                isSubmitting
-                  ? "CREATING PATIENT..."
-                  : "CONTINUE TO ASSESSMENT"
-              }
+{
+  isSubmitting
+    ? mode === "create"
+      ? "CREATING PATIENT..."
+      : "UPDATING PATIENT..."
+    : "CONTINUE TO ASSESSMENT"
+}
 
             </span>
 

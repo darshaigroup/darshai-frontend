@@ -43,7 +43,8 @@ const Reports = lazy(() => import("@/features/dashboard/pages/Reports"));
 const GeoWellness = lazy(() => import("@/features/dashboard/pages/GeoWellness"));
 const Questionnaires = lazy(() => import("@/features/dashboard/pages/Questionnaires"));
 const PatientReportSummary = lazy(() => import("@/features/dashboard/pages/PatientReportSummary"));
-
+const PatientAssessment = lazy(() => import("@/features/dashboard/pages/PatientAssessment"));
+const EditPatient = lazy(() => import("@/features/dashboard/assessments/pages/EditPatient"));
 const ReportDisplay = lazy(() => import("@/features/dashboard/components/reports/ReportDisplay"));
 const Assessment = lazy(() => import("@/features/dashboard/assessments/pages/Assessment"));
 const Result = lazy(() => import("@/features/dashboard/assessments/pages/Result"));
@@ -152,15 +153,17 @@ const AppRoutes = () => {
               <Route path="analysis" element={<Analysis />} />
               <Route path="patients" element={<Patients />} />
               <Route path="patients/:id" element={<PatientProfile />} />
+              <Route path="patient-assessment" element={<PatientAssessment />}/>
               <Route path="reports" element={<Reports />} />
-              <Route
-                path="report-display/:patientId"
-                element={<ReportDisplay />}
-              />
+              <Route path="report-display/:patientId"element={<ReportDisplay />}/>
               <Route
                 path="patient-report-summary/:patientId"
                 element={<PatientReportSummary />}
               />
+              <Route
+  path="edit-patient"
+  element={<EditPatient />}
+/>
               <Route path="geowellness" element={<GeoWellness />} />
               <Route path="questionnaires" element={<Questionnaires />} />
               <Route
