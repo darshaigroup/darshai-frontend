@@ -13,7 +13,7 @@ const Questionnaires = () => {
   const navigate = useNavigate();
 
   /* PATIENT */
-  const patient = location.state?.patient;
+  const patient = location.state?.patient; 
 
   /* OPEN ASSESSMENT */
  const [selectedAssessment,setSelectedAssessment] = useState(null);
