@@ -11,25 +11,26 @@ export default function TourStep({
 }) {
   if (!step || !target) return null;
 
-  const cardWidth = 420;
+  const mobile=window.innerWidth<640;
+  const cardWidth=mobile?window.innerWidth-32:420;
 
-  const left = Math.min(
-    Math.max(20, target.left),
-    window.innerWidth - cardWidth - 20
-  );
+  const left=mobile
+    ?16
+    :Math.min(
+        Math.max(20,target.left),
+        window.innerWidth-cardWidth-20
+      );
 
-  const top =
-    target.bottom + 24 + 320 > window.innerHeight
-      ? target.top - 300
-      : target.bottom + 24;
+  const top=mobile
+    ?Math.min(target.bottom+20,window.innerHeight-360)
+    :target.bottom+340>window.innerHeight
+      ?Math.max(20,target.top-300)
+      :target.bottom+24;
 
-  return (
+  return(
     <div
-      className="fixed z-[1005] w-[92vw] max-w-md rounded-3xl border border-white/10 bg-[#06152A] p-6 text-white shadow-[0_35px_80px_rgba(0,0,0,.55)]"
-      style={{
-        top,
-        left,
-      }}
+      className="fixed z-[1005] w-[calc(100vw-32px)] max-w-[420px] rounded-3xl border border-white/10 bg-[#06152A] p-5 sm:p-6 text-white shadow-[0_35px_80px_rgba(0,0,0,.55)]"
+      style={{top,left}}
     >
       <TourProgress
         current={step.id}
@@ -40,7 +41,7 @@ export default function TourStep({
         {step.category}
       </span>
 
-      <h2 className="mt-4 font-serif text-2xl font-bold">
+      <h2 className="mt-4 text-xl sm:text-2xl font-serif font-bold">
         {step.title}
       </h2>
 

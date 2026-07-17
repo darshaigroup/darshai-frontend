@@ -10,6 +10,7 @@ export default function Register() {
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [agree, setAgree] = useState(false);
   const navigate = useNavigate();
 
   /* FORM STATE */
@@ -55,7 +56,10 @@ export default function Register() {
       newErrors.occupation = "Occupation is required";
     }
 
+    if (!agree)
+      newErrors.agree = "Please accept the Privacy Policy to continue";
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -205,9 +209,40 @@ export default function Register() {
 
                 {error && <Error text={error} />}
 
+                <div className="flex items-start gap-3 mt-2">
+                  <input
+                    id="agree"
+                    type="checkbox"
+                    checked={agree}
+                    onChange={(e) => setAgree(e.target.checked)}
+                    className="mt-1 h-4 w-4 accent-[#1E7A3A] cursor-pointer"
+                  />
+
+                  <label
+                    htmlFor="agree"
+                    className="text-sm text-slate-600 leading-6 cursor-pointer"
+                  >
+                    I agree to be contacted by{" "}
+                    <span className="font-semibold text-[#1E7A3A]">
+                      DarshAI
+                    </span>{" "}
+                    regarding my inquiry and have read the{" "}
+                    <Link
+                      to="/privacy-policy"
+                      target="_blank"
+                      className="text-[#1E7A3A] font-medium underline hover:text-[#173C68]"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </label>
+                </div>
+
+                {errors.agree && <Error text={errors.agree} />}
+
                 {/* JOIN */}
                 <button
-                  disabled={!verified || loading}
+                  disabled={!verified || !agree || loading}
                   onClick={async () => {
                     if (!validate()) return;
 
@@ -248,9 +283,9 @@ export default function Register() {
                   }}
                   className={`w-full py-4 rounded-full tracking-[4px] text-sm mt-4
                   ${
-                    verified
-                      ? "bg-[#1E7A3A] text-white"
-                      : "bg-gray-300 text-gray-500"
+                    verified && agree
+                      ? "bg-[#1E7A3A] text-white hover:bg-[#166733]"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }`}
                 >
                   {loading ? "PROCESSING..." : "JOIN WAITLIST →"}

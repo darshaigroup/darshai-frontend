@@ -9,42 +9,41 @@ import {
 } from "lucide-react";
 import WellnessCard from "./WellnessCard";
 
-export default function VitalsGrid() {
-  const vitals = [
-    {
-      title: "Body Temperature",
-      value: "36.2°C",
-      unit: "Normal",
-      trend: "+0.2",
-      icon: Thermometer,
-      color: "amber",
-    },
-    {
-      title: "Pulse Spectrum",
-      value: "85 BPM",
-      unit: "Stable",
-      trend: "-2%",
-      icon: Heart,
-      color: "rose",
-    },
-    {
-      title: "Blood Pressure",
-      value: "110/70",
-      unit: "Optimal",
-      trend: "+1%",
-      icon: Activity,
-      color: "emerald",
-    },
-    {
-      title: "Breathing Cadence",
-      value: "15/min",
-      unit: "Balanced",
-      trend: "Normal",
-      icon: Wind,
-      color: "sky",
-    },
-  ];
-
+export default function VitalsGrid({ patient }) {
+ const vitals=[
+{
+title:"Dominant Dosha",
+value:`${patient?.primaryLevel||0}%`,
+unit:patient?.primaryDosha||"--",
+trend:"+0%",
+icon:Thermometer,
+color:"amber",
+},
+{
+title:"Secondary Dosha",
+value:`${patient?.secondaryLevel||0}%`,
+unit:patient?.secondaryDosha||"--",
+trend:"+0%",
+icon:Heart,
+color:"rose",
+},
+{
+title:"Wellness Score",
+value:`${patient?.compositeScore||0}%`,
+unit:"Excellent",
+trend:"+2%",
+icon:Activity,
+color:"emerald",
+},
+{
+title:"Risk Tier",
+value:patient?.riskTier||"Pending",
+unit:patient?.riskBand||"Stable",
+trend:"Live",
+icon:Wind,
+color:"sky",
+},
+];  
   return (
     <section className="space-y-6">
 
