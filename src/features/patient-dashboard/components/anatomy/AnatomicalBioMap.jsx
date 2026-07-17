@@ -11,43 +11,45 @@ import {
  HeartPulse
 } from "lucide-react";
 
-export default function AnatomicalBioMap() {
+export default function AnatomicalBioMap({ patient }) {
   const [selected, setSelected] = useState("heart");
 
-  const nodes = {
-    brain: {
-      icon: Brain,
-      title: "Cerebral Prana",
-      value: 88,
-      color: "#38BDF8",
-      desc: "Neuro-sensory coordination and cognitive vitality.",
-      insight: "Brain recovery remains excellent with balanced Vata activity."
-    },
-    heart: {
-      icon: HeartPulse,
-      title: "Sadhaka Pitta",
-      value: 92,
-      color: "#FB7185",
-      desc: "Emotional resilience and cardiovascular regulation.",
-      insight: "Excellent cardiac resilience with optimal emotional balance."
-    },
-    stomach: {
-      icon: Activity,
-      title: "Samana Agni",
-      value: 74,
-      color: "#F59E0B",
-      desc: "Digestive metabolism and nutrient absorption.",
-      insight: "Support Agni with warm meals and consistent meal timing."
-    },
-    lungs: {
-      icon: Wind,
-      title: "Avalambaka Kapha",
-      value: 69,
-      color: "#10B981",
-      desc: "Respiratory support and oxygen transport.",
-      insight: "Practice breathing exercises to enhance lung vitality."
-    }
-  };
+ const report=patient?.report||{};
+
+const nodes={
+  brain:{
+    icon:Brain,
+    title:patient?.secondaryDosha||"Secondary Dosha",
+    value:Number(patient?.secondaryLevel||60),
+    color:"#38BDF8",
+    desc:`Secondary constitutional influence (${patient?.secondaryDosha||"--"}).`,
+    insight:patient?.clinicalSummary||"AI analysis unavailable.",
+  },
+  heart:{
+    icon:HeartPulse,
+    title:patient?.primaryDosha||"Dominant Dosha",
+    value:Number(patient?.primaryLevel||80),
+    color:"#FB7185",
+    desc:`Primary constitutional influence (${patient?.primaryDosha||"--"}).`,
+    insight:patient?.clinicalSummary||"AI analysis unavailable.",
+  },
+  stomach:{
+    icon:Activity,
+    title:"Wellness Score",
+    value:Number(patient?.compositeScore||0),
+    color:"#F59E0B",
+    desc:"Overall wellness score generated from the clinical assessment.",
+    insight:patient?.clinicalSummary||"Assessment pending.",
+  },
+  lungs:{
+    icon:Wind,
+    title:patient?.riskTier||"Risk Tier",
+    value:Number(patient?.compositeScore||0),
+    color:"#10B981",
+    desc:`Current risk category: ${patient?.riskBand||"Pending"}.`,
+    insight:patient?.clinicalSummary||"Assessment pending.",
+  },
+};
 
   const current = nodes[selected];
   const Icon = current.icon;
@@ -218,13 +220,13 @@ export default function AnatomicalBioMap() {
 
               <ShieldCheck className="w-6 h-6 text-emerald-500" />
 
-              <p className="mt-4 text-sm text-slate-500">
-                Recovery
-              </p>
+             <p className="mt-4 text-sm text-slate-500">
+  Risk Tier
+</p>
 
-              <h4 className="mt-2 text-2xl font-bold text-slate-900">
-                Excellent
-              </h4>
+<h4 className="mt-2 text-2xl font-bold text-slate-900">
+  {patient?.riskTier||"Pending"}
+</h4>
 
             </div>
 
@@ -233,12 +235,12 @@ export default function AnatomicalBioMap() {
               <Activity className="w-6 h-6 text-sky-500" />
 
               <p className="mt-4 text-sm text-slate-500">
-                AI Sync
-              </p>
+  Wellness Score
+</p>
 
-              <h4 className="mt-2 text-2xl font-bold text-slate-900">
-                Live
-              </h4>
+<h4 className="mt-2 text-2xl font-bold text-slate-900">
+  {patient?.compositeScore||0}%
+</h4>
 
             </div>
 

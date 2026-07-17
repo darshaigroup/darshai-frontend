@@ -24,7 +24,7 @@ export default function TourNavigation({
         Skip
       </button>
 
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         <button
           disabled={current === 1}
           onClick={onBack}
@@ -36,7 +36,7 @@ export default function TourNavigation({
 
         <button
           onClick={onNext}
-          className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+          className="flex items-center gap-0.5 rounded-xl bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
         >
           {last ? "Finish" : "Next"}
 
