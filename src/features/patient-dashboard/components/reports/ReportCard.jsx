@@ -1,48 +1,48 @@
-import { FileText, Download, Eye, Calendar } from "lucide-react";
+import { Calendar, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 
-export default function ReportCard({ report, onView, onDownload }) {
+export default function ReportCard({ report }) {
+  const Icon = report.icon;
+
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm"
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3 }}
+      className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:border-emerald-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
     >
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex gap-4 min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-            <FileText className="w-5 h-5 text-emerald-500" />
+      <div className="flex items-start justify-between">
+        <div className="flex gap-4">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-2xl ${report.color}`}
+          >
+            <Icon className="h-7 w-7" />
           </div>
 
-          <div className="min-w-0">
-            <h3 className="font-semibold text-slate-900 dark:text-white truncate">
+          <div>
+            <h3 className="text-base font-semibold text-slate-900 dark:text-white">
               {report.name}
             </h3>
 
-            <div className="mt-2 flex items-center gap-2 text-xs text-slate-500">
-              <Calendar className="w-3 h-3" />
-              {report.date}
+            <p className="mt-1 text-sm text-slate-500">
+              {report.type} Assessment
+            </p>
+
+            <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+              <Calendar className="h-4 w-4" />
+              <span>Completed on {report.date}</span>
             </div>
 
-            <span className="inline-flex mt-3 px-2.5 py-1 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-600">
-              {report.type}
+            <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Completed
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={() => onView(report)}
-            className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center"
-          >
-            <Eye className="w-4 h-4" />
-          </button>
-
-          <button
-            onClick={() => onDownload(report)}
-            className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center"
-          >
-            <Download className="w-4 h-4" />
-          </button>
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/10">
+          <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
         </div>
       </div>
     </motion.div>

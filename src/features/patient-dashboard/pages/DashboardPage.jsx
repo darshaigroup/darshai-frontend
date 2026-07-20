@@ -9,52 +9,55 @@ import ReportsTable from "../components/reports/ReportTable";
 
 export default function DashboardPage({
   patientData,
-  appointments=[],
-  reports=[],
+  appointments = [],
+  reports = [],
   onJoinAppointment,
   onRescheduleAppointment,
-}){
+}) {
+  const profile = patientData?.profile?.patient || {};
+  const report = patientData?.report?.patient || {};
+  const assessment = patientData?.assessment?.data || {};
+  const progress = patientData?.progress || {};
 
-  const profile=patientData?.profile?.patient||{};
-  const report=patientData?.report?.patient||{};
-  const assessment=patientData?.assessment?.data||{};
-  const progress=patientData?.progress||{};
+  const patient = {
+    id: profile.id,
+    name: profile.name,
+    full_name: profile.name,
+    email: profile.email,
+    phone: profile.phone,
+    gender: profile.gender,
+    dob: profile.dob,
+    occupation: profile.occupation,
+    location: profile.location,
+    city: profile.location,
+    avatar: profile.profile_image,
 
-  const patient={
-    id:profile.id,
-    name:profile.name,
-    full_name:profile.name,
-    email:profile.email,
-    phone:profile.phone,
-    gender:profile.gender,
-    dob:profile.dob,
-    occupation:profile.occupation,
-    location:profile.location,
-    city:profile.location,
-    avatar:profile.profile_image,
-
-    biometrics:{
-      vitalityScore:Number(report.composite_score||assessment.composite_score||0),
+    biometrics: {
+      vitalityScore: Number(
+        report.composite_score || assessment.composite_score || 0,
+      ),
     },
 
-    vitalityScore:Number(report.composite_score||assessment.composite_score||0),
-    compositeScore:report.composite_score,
-    riskBand:report.risk_band,
-    aiResponse:report.ai_response,
+    vitalityScore: Number(
+      report.composite_score || assessment.composite_score || 0,
+    ),
+    compositeScore: report.composite_score,
+    riskBand: report.risk_band,
+    aiResponse: report.ai_response,
 
-    primaryDosha:report.primary_dosha,
-    secondaryDosha:report.secondary_dosha,
-    primaryLevel:report.primary_level,
-    secondaryLevel:report.secondary_level,
+    primaryDosha: report.primary_dosha,
+    secondaryDosha: report.secondary_dosha,
+    primaryLevel: report.primary_level,
+    secondaryLevel: report.secondary_level,
 
-    riskTier:report.risk_tier,
-    clinicalSummary:report.clinical_summary,
-    finalAyurvedaResult:report.final_ayurveda_result,
+    riskTier: report.risk_tier,
+    clinicalSummary: report.clinical_summary,
+    finalAyurvedaResult: report.final_ayurveda_result,
 
-    practitioner:{
-      name:report.practitioner_name,
-      designation:report.designation,
-      signature:report.signature_url,
+    practitioner: {
+      name: report.practitioner_name,
+      designation: report.designation,
+      signature: report.signature_url,
     },
 
     assessment,
@@ -62,38 +65,29 @@ export default function DashboardPage({
     progress,
   };
 
-  return(
+  return (
     <div className="space-y-8 lg:space-y-10">
+      <WellnessHero patient={patient} />
 
-      <WellnessHero patient={patient}/>
-
-      <VitalsGrid patient={patient}/>
+      <VitalsGrid patient={patient} />
 
       <section className="grid grid-cols-1 2xl:grid-cols-12 gap-8">
-
         <div className="2xl:col-span-8 space-y-8">
-          <DoshaBodyMap patient={patient}/>
-          <AnatomicalBioMap patient={patient}/>
+          <DoshaBodyMap patient={patient} />
+          <AnatomicalBioMap patient={patient} />
         </div>
 
         <div className="2xl:col-span-4 space-y-8">
-          <AgniMap patient={patient}/>
+          <AgniMap patient={patient} />
           <AppointmentList
             appointments={appointments}
             onJoin={onJoinAppointment}
             onReschedule={onRescheduleAppointment}
           />
         </div>
-
       </section>
 
-      <WellnessMetrics patient={patient}/>
-
-      <ReportsTable
-        patient={patient}
-        reports={reports}
-      />
-
+      <ReportsTable progress={progress} />
     </div>
   );
 }
