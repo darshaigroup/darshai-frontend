@@ -64,10 +64,7 @@ export default function WellnessCard({
 
         <div>
 
-          <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-[.18em] uppercase ${theme.badge}`}>
-            Live
-          </span>
-
+         
           <p className="mt-4 text-[11px] uppercase tracking-[.18em] font-mono text-slate-400">
             {title}
           </p>
@@ -124,21 +121,15 @@ export default function WellnessCard({
       </div>
 
       {/* Footer */}
-      <div className="mt-6 flex items-center justify-between">
+     <div className="mt-6 flex items-center justify-between">
 
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-
-          <TrendingUp className={`w-4 h-4 ${theme.text}`} />
-
-          <span>{trend} Today</span>
-
-        </div>
+       
 
         <div className="flex items-center gap-1 text-xs text-slate-400">
 
           <Activity className="w-3.5 h-3.5" />
 
-          <span>AI Synced</span>
+          <span>Live Synced</span>
 
         </div>
 

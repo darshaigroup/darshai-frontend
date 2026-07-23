@@ -7,12 +7,12 @@ import {
   useParams,
 } from "react-router-dom";
 
-import PatientHeader from "../components/patients/PatientHeader";
-import PatientTabs from "../components/patients/PatientTabs";
+import PatientHeader from "../../patients/PatientHeader";
+import PatientTabs from "../../patients/PatientTabs";
 
 import {
   getPatientById,
-} from "../services/patientService";
+} from "../../../services/patientService";
 
 const PatientProfile = () => {
 

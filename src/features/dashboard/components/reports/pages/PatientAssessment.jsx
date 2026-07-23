@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import AddPatientModal from "../components/patients/AddPatientModal";
+import AddPatientModal from "../../patients/AddPatientModal";
 
 export default function PatientAssessment() {
   const location = useLocation();

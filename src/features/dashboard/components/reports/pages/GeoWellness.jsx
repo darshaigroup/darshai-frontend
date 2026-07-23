@@ -1,7 +1,7 @@
-import GeoHeader from "../components/geo/GeoHeader";
-import RetreatCard from "../components/geo/RetreatCard";
-import PlacementTable from "../components/geo/PlacementTable";
-import { retreats, placements } from "../data/geoData";
+import GeoHeader from "../../geo/GeoHeader";
+import RetreatCard from "../../geo/RetreatCard";
+import PlacementTable from "../../geo/PlacementTable";
+import { retreats, placements } from "../../../data/geoData";
 
 const GeoWellness = () => {
   return (

@@ -33,7 +33,7 @@ const wellnessIndex =
 
 const vitals = [
   {
-    title: "Dominant Dosha",
+    title: "Primary Dosha",
     value: patient?.primaryDosha || "Not Assessed",
     unit: "",
     trend: hasAssessment ? "" : "Complete assessment",

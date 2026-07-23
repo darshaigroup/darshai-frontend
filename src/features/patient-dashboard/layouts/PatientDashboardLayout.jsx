@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardShell from "../components/layout/DashboardShell";
 import { TourProvider } from "../components/onbaording/TourContext";
-import DashboardPage from "../pages/DashboardPage";
-import AssessmentPage from "../pages/AssessmentPage";
-import ReportsPage from "../pages/ReportsPage";
-import ResultsPage from "../pages/ResultsPage";
-import SettingsPage from "../pages/SettingsPage";
+import { Outlet, useLocation } from "react-router-dom";
 import TourHelper from "../components/onbaording/TourHelper";
 import logo from "@/assets/images/logos.png"
 import {getMyProfile,getMyReport,getMyAssessment, getAssessmentProgress,} from "../services/patientDashboardService";
@@ -195,19 +191,26 @@ if(loading||!patientData){
   return (
     <TourProvider>
       <DashboardShell
-        activePatient={activePatient}
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        patients={activePatient ? [activePatient] : []}
-        onSelectPatient={() => {}}
-        onLogout={handleLogout}
-        isDarkMode={isDarkMode}
-        onToggleTheme={() => setIsDarkMode(v => !v)}
-      >
-        {renderPage()}
-      </DashboardShell>
+  activePatient={activePatient}
+  currentTab={currentTab}
+  searchQuery={searchQuery}
+  setSearchQuery={setSearchQuery}
+  patients={activePatient ? [activePatient] : []}
+  onSelectPatient={() => {}}
+  onLogout={handleLogout}
+  isDarkMode={isDarkMode}
+  onToggleTheme={() => setIsDarkMode(v => !v)}
+>
+  <Outlet
+    context={{
+      patientData,
+      activePatient,
+      reports,
+      assessment,
+      appointments,
+    }}
+  />
+</DashboardShell>
 
       <TourHelper
         currentTab={currentTab}

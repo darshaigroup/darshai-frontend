@@ -1,7 +1,7 @@
-import PatientTrendChart from "../components/charts/PatientTrendChart";
-import AppointmentBarChart from "../components/charts/AppointmentBarChart";
-import DiseasePieChart from "../components/charts/DiseasePieChart";
-import InsightCard from "../components/Analysis/InsightCard";
+import PatientTrendChart from "../../charts/PatientTrendChart";
+import AppointmentBarChart from "../../charts/AppointmentBarChart";
+import DiseasePieChart from "../../charts/DiseasePieChart";
+import InsightCard from "../../Analysis/InsightCard";
 
 const Analysis = () => {
   return (

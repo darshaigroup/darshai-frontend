@@ -1,17 +1,17 @@
 import {useEffect,useState} from "react";
 import {useParams} from "react-router-dom";
-import {getPatientSummary} from "../services/reportService";
+import {getPatientSummary} from "../../../services/reportService";
 //import for components
-import Watermark from "../assessments/components/resultSummary/Watermark";
-import PatientReportHeader from "../components/patientReportSummary/PatientReportHeader";
-import PatientProfileCard from "../components/patientReportSummary/PatientProfileCard";
-import WellnessOverview from "../components/patientReportSummary/WellnessOverview";
-import RiskDomains from "../components/patientReportSummary/RiskDomains";
-import ClinicalAssessment from "../components/patientReportSummary/ClinicalAssessment";
-import LifestyleAssessment from "../components/patientReportSummary/LifestyleAssessment";
-import AyurvedaAssessment from "../components/patientReportSummary/AyurvedaAssessment";
-import PractitionerSection from "../components/patientReportSummary/PractitionerSection";
-import PatientReportFooter from "../components/patientReportSummary/PatientReportFooter";
+import Watermark from "../../../assessments/components/resultSummary/Watermark";
+import PatientReportHeader from "../../patientReportSummary/PatientReportHeader";
+import PatientProfileCard from "../../patientReportSummary/PatientProfileCard";
+import WellnessOverview from "../../patientReportSummary/WellnessOverview";
+import RiskDomains from "../../patientReportSummary/RiskDomains";
+import ClinicalAssessment from "../../patientReportSummary/ClinicalAssessment";
+import LifestyleAssessment from "../../patientReportSummary/LifestyleAssessment";
+import AyurvedaAssessment from "../../patientReportSummary/AyurvedaAssessment";
+import PractitionerSection from "../../patientReportSummary/PractitionerSection";
+import PatientReportFooter from "../../patientReportSummary/PatientReportFooter";
 
 const PatientReportSummary = () => {
 

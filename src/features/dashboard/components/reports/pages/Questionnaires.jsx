@@ -1,10 +1,10 @@
 import {useState,useEffect} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import SelectPatientModal from "../components/Questionnaires/SelectPatientModal";
-import { questionnaireData } from "../data/QuestionnarieData";
-import QuestionnaireCard from "../components/Questionnaires/QuestionnaireCard";
-import PendingList from "../components/Questionnaires/PendingList";
-import { getPatients } from "../services/patientService";
+import SelectPatientModal from "../../Questionnaires/SelectPatientModal";
+import { questionnaireData } from "../../../data/QuestionnarieData";
+import QuestionnaireCard from "../../Questionnaires/QuestionnaireCard";
+import PendingList from "../../Questionnaires/PendingList";
+import { getPatients } from "../../../services/patientService";
 console.log(getPatients);
 
 const Questionnaires = () => {
