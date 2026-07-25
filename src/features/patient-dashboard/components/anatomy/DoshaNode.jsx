@@ -1,47 +1,22 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
-export default function DoshaNode({
-  x,
-  y,
-  color,
-  active,
-  label,
-  onClick,
-}) {
+export default function DoshaNode({ color="#10B981", active=false, label="", onClick }) {
   return (
-    <motion.g
-      whileHover={{ scale: 1.1 }}
-      className="cursor-pointer"
-      onClick={onClick}
-    >
+    <motion.div whileHover={{ scale: 1.08 }} transition={{ duration: .25 }} onClick={onClick} className="relative flex h-5 w-5 cursor-pointer items-center justify-center">
       {active && (
-        <circle
-          cx={x}
-          cy={y}
-          r="22"
-          fill={color}
-          opacity="0.15"
-          className="animate-pulse"
+        <motion.span
+          animate={{ scale: [1, 1.35, 1], opacity: [.2, .45, .2] }}
+          transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+          className="absolute inset-0 rounded-full"
+          style={{ background: color }}
         />
       )}
 
-      <circle
-        cx={x}
-        cy={y}
-        r="8"
-        fill={color}
-        stroke="white"
-        strokeWidth="2"
-      />
+      <span className="relative z-10 h-4 w-4 rounded-full border-2 border-white" style={{ background: color }} />
 
-      <text
-        x={x}
-        y={y - 14}
-        textAnchor="middle"
-        className="fill-slate-300 text-[8px] font-mono"
-      >
+      <span className="absolute -top-6 whitespace-nowrap text-[10px] font-semibold text-slate-500">
         {label}
-      </text>
-    </motion.g>
+      </span>
+    </motion.div>
   );
 }

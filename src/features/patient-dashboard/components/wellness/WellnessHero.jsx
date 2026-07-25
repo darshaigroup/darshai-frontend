@@ -3,52 +3,65 @@ import { Sparkles, ShieldCheck, HeartPulse, Activity, Brain, ArrowRight } from "
 import VitalityScore from "./VitalityScore";
 
 export default function WellnessHero({ patient }) {
-  const report=patient?.report||{};
-  const assessment=patient?.assessment||{};
+  const report = patient?.report || {};
+const assessment = patient?.assessment || {};
 
-  const riskScore=Number(
+const display = (value, fallback) =>
+  value !== null &&
+  value !== undefined &&
+  value !== ""
+    ? value
+    : fallback;
+
+const riskScore =
   report?.composite_score ??
   assessment?.composite_score ??
   patient?.riskScore ??
-  0
-);
+  null;
 
-const vitalityScore=Math.max(0,100-riskScore);
+const vitalityScore =
+  riskScore !== null
+    ? Math.max(0, 100 - Number(riskScore))
+    : null;
 
-  const recommendation=
-    report?.correlation_result?.summary||
-    patient?.clinicalSummary||
-    report?.clinical_summary||
-    "Continue following your personalized wellness protocol to improve recovery, constitutional balance and long-term metabolic resilience.";
+const recommendation =
+  report?.correlation_result?.summary ||
+  patient?.clinicalSummary ||
+  report?.clinical_summary ||
+  "Complete your assessment to receive AI-powered personalized wellness recommendations.";
 
-  const cards=[
+  const cards = [
   {
-  title:"Dominant Dosha",
-  value:
-    patient?.primaryDosha||
-    report?.primary_dosha||
-    report?.dominant_dosha||
-    "--",
-  color:"text-emerald-400",
-  icon:Brain,
-},
-   {
-title:"Wellness Index",
-value:`${vitalityScore}%`,
-color:"text-sky-400",
-icon:Activity,
-},
-    {
-      title:"Prakriti",
-      value:
-        report?.prakriti_result?.prakriti_type||
-        patient?.finalAyurvedaResult?.prakriti?.prakriti_type||
-        "--",
-      color:"text-amber-400",
-      icon:HeartPulse,
-    },
-  ];
-
+    title: "Primary Dosha",
+    value: display(
+      patient?.primaryDosha ||
+      report?.primary_dosha ||
+      report?.dominant_dosha,
+      "Not Assessed"
+    ),
+    color: "text-emerald-400",
+    icon: Brain,
+  },
+  {
+    title: "Wellness Index",
+    value:
+      vitalityScore !== null
+        ? `${vitalityScore}%`
+        : "Assessment Required",
+    color: "text-sky-400",
+    icon: Activity,
+  },
+  {
+    title: "Prakriti",
+    value: display(
+      report?.prakriti_result?.prakriti_type ||
+      patient?.finalAyurvedaResult?.prakriti?.prakriti_type,
+      "Pending Analysis"
+    ),
+    color: "text-amber-400",
+    icon: HeartPulse,
+  },
+];
   return (
     <section
       className="relative overflow-hidden rounded-[24px] md:rounded-[30px] xl:rounded-[36px] border border-white/10 shadow-[0_20px_50px_rgba(6,21,42,.35)] lg:shadow-[0_35px_80px_rgba(6,21,42,.45)]"
@@ -67,11 +80,12 @@ icon:Activity,
           <div className="xl:col-span-4 flex justify-center xl:justify-start order-1">
             <motion.div initial={{opacity:0,scale:.95}} animate={{opacity:1,scale:1}}>
               <VitalityScore
-  score={vitalityScore}
+  score={vitalityScore ?? 0}
   report={{
     ...report,
-    risk_score:riskScore,
-    wellness_score:vitalityScore,
+    risk_score: riskScore,
+    wellness_score: vitalityScore,
+    hasAssessment: riskScore !== null,
   }}
 />
             </motion.div>
@@ -87,7 +101,7 @@ icon:Activity,
             </div>
 
             <h1 className="mt-6 text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-serif font-bold text-white leading-tight">
-              {patient?.full_name||patient?.name||"Patient"}
+              {display(patient?.full_name || patient?.name, "New Patient")}
               <br/>
               Longevity Diagnostics
             </h1>

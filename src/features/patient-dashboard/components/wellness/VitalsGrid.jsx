@@ -10,40 +10,70 @@ import {
 import WellnessCard from "./WellnessCard";
 
 export default function VitalsGrid({ patient }) {
- const vitals=[
-{
-title:"Dominant Dosha",
-value:`${patient?.primaryLevel||0}%`,
-unit:patient?.primaryDosha||"--",
-trend:"+0%",
-icon:Thermometer,
-color:"amber",
-},
-{
-title:"Secondary Dosha",
-value:`${patient?.secondaryLevel||0}%`,
-unit:patient?.secondaryDosha||"--",
-trend:"+0%",
-icon:Heart,
-color:"rose",
-},
-{
-title:"Wellness Score",
-value:`${patient?.compositeScore||0}%`,
-unit:"Excellent",
-trend:"+2%",
-icon:Activity,
-color:"emerald",
-},
-{
-title:"Risk Tier",
-value:patient?.riskTier||"Pending",
-unit:patient?.riskBand||"Stable",
-trend:"Live",
-icon:Wind,
-color:"sky",
-},
-];  
+const hasAssessment =
+  patient &&
+  (
+    patient.primaryDosha ||
+    patient.secondaryDosha ||
+    patient.compositeScore !== null &&
+    patient.compositeScore !== undefined ||
+    patient.riskTier
+  );
+
+const riskScore =
+  patient?.compositeScore !== null &&
+  patient?.compositeScore !== undefined
+    ? Number(patient.compositeScore)
+    : null;
+
+const wellnessIndex =
+  riskScore !== null
+    ? Math.max(0, 100 - riskScore)
+    : null;
+
+const vitals = [
+  {
+    title: "Primary Dosha",
+    value: patient?.primaryDosha || "Not Assessed",
+    unit: "",
+    trend: hasAssessment ? "" : "Complete assessment",
+    icon: Thermometer,
+    color: "amber",
+  },
+  {
+    title: "Secondary Dosha",
+    value: patient?.secondaryDosha || "Not Assessed",
+    unit: "",
+    trend: hasAssessment ? "" : "Complete assessment",
+    icon: Heart,
+    color: "rose",
+  },
+  {
+    title: "Wellness Index",
+    value:
+      wellnessIndex !== null
+        ? `${wellnessIndex}%`
+        : "Unavailable",
+    unit: "",
+    trend:
+      riskScore !== null
+        ? `${riskScore}% Risk`
+        : "Assessment Required",
+    icon: Activity,
+    color: "emerald",
+  },
+  {
+    title: "Risk Tier",
+    value: patient?.riskTier || "Pending Analysis",
+    unit: "",
+    trend:
+      patient?.riskTier
+        ? "Live"
+        : "Waiting for Assessment",
+    icon: Wind,
+    color: "sky",
+  },
+];
   return (
     <section className="space-y-6">
 

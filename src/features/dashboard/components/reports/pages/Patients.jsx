@@ -3,9 +3,9 @@ import {
   useEffect,
 } from "react";
 
-import PatientCard from "../components/patients/PatientCard";
+import PatientCard from "../../patients/PatientCard";
 
-import {getPatients} from "../services/patientService";
+import {getPatients} from "../../../services/patientService";
 
 const Patients = () => {
 

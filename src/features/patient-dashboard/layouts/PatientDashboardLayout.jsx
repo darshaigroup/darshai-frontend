@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardShell from "../components/layout/DashboardShell";
 import { TourProvider } from "../components/onbaording/TourContext";
-import DashboardPage from "../pages/DashboardPage";
-import AssessmentPage from "../pages/AssessmentPage";
-import ReportsPage from "../pages/ReportsPage";
-import ResultsPage from "../pages/ResultsPage";
-import SettingsPage from "../pages/SettingsPage";
+import { Outlet, useLocation } from "react-router-dom";
 import TourHelper from "../components/onbaording/TourHelper";
 import logo from "@/assets/images/logos.png"
-import {getMyProfile,getMyReport,getMyAssessment,} from "../services/patientDashboardService";
+import {getMyProfile,getMyReport,getMyAssessment, getAssessmentProgress,} from "../services/patientDashboardService";
 
 export default function PatientDashboardLayout() {
   const navigate = useNavigate();
@@ -26,25 +22,38 @@ export default function PatientDashboardLayout() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadDashboard = async () => {
-      try {
-       const [profile,report,assessmentData]=await Promise.all([
-  getMyProfile(),
-  getMyReport(),
-  getMyAssessment(),
-]);
+   const loadDashboard = async () => {
+  try {
+    const profile = await getMyProfile();
 
-setPatientData({profile,report,assessment:assessmentData,});
+    const patientId = profile?.patient?.id;
 
-       setActivePatient({...(profile.patient||{}),...(report.patient||{}),});
-        setReports(report.labReports || []);
-        setAssessment(assessmentData.data || null);
-      } catch (err) {
-        console.error("Dashboard Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const [report, assessmentData, progress] = await Promise.all([
+      getMyReport(),
+      getMyAssessment(),
+      getAssessmentProgress(patientId),
+    ]);
+
+    setPatientData({
+      profile,
+      report,
+      assessment: assessmentData,
+      progress,
+    });
+
+    setActivePatient({
+      ...(profile.patient || {}),
+      ...(report.patient || {}),
+    });
+
+    setReports(report.labReports || []);
+    setAssessment(assessmentData.data || null);
+  } catch (err) {
+    console.error("Dashboard Error:", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
     loadDashboard();
   }, []);
@@ -182,19 +191,30 @@ if(loading||!patientData){
   return (
     <TourProvider>
       <DashboardShell
-        activePatient={activePatient}
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        patients={activePatient ? [activePatient] : []}
-        onSelectPatient={() => {}}
-        onLogout={handleLogout}
-        isDarkMode={isDarkMode}
-        onToggleTheme={() => setIsDarkMode(v => !v)}
-      >
-        {renderPage()}
-      </DashboardShell>
+  profile={patientData?.profile}
+  report={patientData?.report}
+  assessment={patientData?.assessment}
+  progress={patientData?.progress}
+  activePatient={activePatient}
+  currentTab={currentTab}
+  searchQuery={searchQuery}
+  setSearchQuery={setSearchQuery}
+  patients={activePatient ? [activePatient] : []}
+  onSelectPatient={() => {}}
+  onLogout={handleLogout}
+  isDarkMode={isDarkMode}
+  onToggleTheme={() => setIsDarkMode(v => !v)}
+>
+  <Outlet
+    context={{
+      patientData,
+      activePatient,
+      reports,
+      assessment,
+      appointments,
+    }}
+  />
+</DashboardShell>
 
       <TourHelper
         currentTab={currentTab}

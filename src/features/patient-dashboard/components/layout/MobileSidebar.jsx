@@ -1,20 +1,15 @@
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
-export default function MobileSidebar({
-  open,
-  onClose,
-  currentTab,
-  setCurrentTab,
-  activePatient,
-  onLogout,
-}) {
+export default function MobileSidebar({ open, onClose, activePatient, onLogout }) {
+  const { pathname } = useLocation();
+
   return (
     <AnimatePresence>
       {open && (
         <>
-          {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -24,46 +19,26 @@ export default function MobileSidebar({
             className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm lg:hidden"
           />
 
-          {/* Sidebar */}
           <motion.aside
             initial={{ x: -320 }}
             animate={{ x: 0 }}
             exit={{ x: -320 }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 28,
-            }}
-            className="fixed left-0 top-0 bottom-0 z-50 w-72 lg:hidden"
+            transition={{ type: "spring", stiffness: 260, damping: 28 }}
+            className="fixed inset-y-0 left-0 z-50 w-72 lg:hidden"
           >
-            {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 z-50 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+              className="absolute right-5 top-5 z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-white backdrop-blur-xl transition hover:bg-white/20"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
 
-            {/* Sidebar */}
             <Sidebar
               idPrefix="mobile-sidebar"
-              currentTab={currentTab}
               activePatient={activePatient}
               onLogout={() => {
                 onClose();
                 onLogout?.();
-              }}
-              setCurrentTab={(tab) => {
-                setCurrentTab(tab);
-
-                const tourRunning =
-                  localStorage.getItem("dashboard-tour-completed") !== "true";
-
-                if (!tourRunning) {
-                  setTimeout(() => {
-                    onClose();
-                  }, 250);
-                }
               }}
             />
           </motion.aside>

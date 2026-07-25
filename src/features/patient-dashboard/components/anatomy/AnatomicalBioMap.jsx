@@ -1,268 +1,328 @@
-import { useState } from "react";
-import { motion } from "motion/react";
-import {
-  Brain,
-  Heart,
-  Activity,
-  Wind,
-  Sparkles,
-  ShieldCheck,
-  ArrowRight,
- HeartPulse
-} from "lucide-react";
+import { useMemo,useState } from "react";
+import { motion } from "framer-motion";
+import { Wind,Flame,Leaf,ShieldCheck,Activity,ArrowRight,Sparkles } from "lucide-react";
+import tridosha from "@/assets/images/TridoshaBody.png";
 
-export default function AnatomicalBioMap({ patient }) {
-  const [selected, setSelected] = useState("heart");
+export default function AnatomicalBioMap({ patient={} }) {
+  const [selected,setSelected]=useState("kapha");
 
- const report=patient?.report||{};
+  const report=patient?.report??{},
+        ay=report?.final_ayurveda_result??{},
+        prakriti=ay?.prakriti??{},
+        vikriti=ay?.vikriti??{},
+        correlation=ay?.correlation??{},
+        value=(v,f)=>(v??"")!==""?v:f,
+        num=v=>Number.isFinite(+v)?+v:0,
+        composite=patient?.compositeScore??report?.composite_score??ay?.composite_score??0,
+        wellness=Math.max(0,100-num(composite)),
+        risk=ay?.risk_tier??report?.risk_tier??"Pending",
+        summary=ay?.clinical_summary??correlation?.summary??"Assessment pending.";
 
-const nodes={
-  brain:{
-    icon:Brain,
-    title:patient?.secondaryDosha||"Secondary Dosha",
-    value:Number(patient?.secondaryLevel||60),
-    color:"#38BDF8",
-    desc:`Secondary constitutional influence (${patient?.secondaryDosha||"--"}).`,
-    insight:patient?.clinicalSummary||"AI analysis unavailable.",
-  },
-  heart:{
-    icon:HeartPulse,
-    title:patient?.primaryDosha||"Dominant Dosha",
-    value:Number(patient?.primaryLevel||80),
-    color:"#FB7185",
-    desc:`Primary constitutional influence (${patient?.primaryDosha||"--"}).`,
-    insight:patient?.clinicalSummary||"AI analysis unavailable.",
-  },
-  stomach:{
-    icon:Activity,
-    title:"Wellness Score",
-    value:Number(patient?.compositeScore||0),
-    color:"#F59E0B",
-    desc:"Overall wellness score generated from the clinical assessment.",
-    insight:patient?.clinicalSummary||"Assessment pending.",
-  },
-  lungs:{
-    icon:Wind,
-    title:patient?.riskTier||"Risk Tier",
-    value:Number(patient?.compositeScore||0),
-    color:"#10B981",
-    desc:`Current risk category: ${patient?.riskBand||"Pending"}.`,
-    insight:patient?.clinicalSummary||"Assessment pending.",
-  },
-};
+  const nodes=useMemo(()=>({
+      kapha:{
+      title:"Kapha",
+      icon:Leaf,
+      color:"#22C55E",
+      confidence:num(prakriti?.kapha_pct),
+      imbalance:num(vikriti?.kapha_pct),
+      desc:"Earth & Water • Provides immunity, stability and structural strength.",
+      insight:summary
+    },
+    pitta:{
+      title:"Pitta",
+      icon:Flame,
+      color:"#F59E0B",
+      confidence:num(prakriti?.pitta_pct),
+      imbalance:num(vikriti?.pitta_pct),
+      desc:"Fire & Water • Governs digestion, metabolism and transformation.",
+      insight:summary
+    },
+     vata:{
+      title:"Vata",
+      icon:Wind,
+      color:"#38BDF8",
+      confidence:num(prakriti?.vata_pct),
+      imbalance:num(vikriti?.vata_pct),
+      desc:"Air & Ether • Controls movement, nervous system and circulation.",
+      insight:summary
+    },
+  }),[prakriti,vikriti,summary]);
 
-  const current = nodes[selected];
-  const Icon = current.icon;
+  const positions={
+    kapha:[50,26],
+    pitta:[50,40],
+    vata:[50,60], 
+    
+  };
 
-  return (
-    <motion.section
-      whileHover={{ y: -3 }}
-      className="rounded-[32px] border border-stone-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,.08)] overflow-hidden"
-    >
-      {/* Header */}
-      <div className="px-6 lg:px-8 py-6 border-b border-stone-100 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+  const current=nodes[selected],
+        Icon=current.icon;
+  return(
+  <motion.section
+  whileHover={{ y:-3 }}
+  className="overflow-hidden rounded-[32px] border border-stone-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,.08)]"
+>
 
-        <div>
+  <div className="flex flex-col gap-5 border-b border-stone-100 px-6 py-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
 
-          <div className="inline-flex items-center gap-2 rounded-full bg-sky-50 border border-sky-200 px-4 py-2">
-            <Sparkles className="w-4 h-4 text-sky-600" />
-            <span className="text-[11px] uppercase tracking-[.22em] font-mono text-sky-700">
-              Bio Intelligence
-            </span>
-          </div>
-
-          <h2 className="mt-4 text-3xl font-serif font-bold text-slate-900">
-            Anatomical Biomarker Map
-          </h2>
-
-          <p className="mt-2 text-slate-500 max-w-2xl">
-            Explore organ-specific vitality powered by biometric analysis and Ayurvedic intelligence.
-          </p>
-
-        </div>
-
-        <button className="flex items-center gap-2 rounded-full bg-[#06152A] px-5 py-3 text-white hover:bg-[#0B2442] transition">
-          Full Biomarker Report
-          <ArrowRight className="w-4 h-4" />
-        </button>
-
+    <div>
+      <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2">
+        <Sparkles className="h-4 w-4 text-emerald-600"/>
+        <span className="font-mono text-[11px] uppercase tracking-[.22em] text-emerald-700">
+          Tridosha Intelligence
+        </span>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 p-6 lg:p-8">
+      <h2 className="mt-4 font-serif text-3xl font-bold text-slate-900">
+        Tridosha Sharira Map
+      </h2>
 
-        {/* Human Body */}
-        <div className="relative flex justify-center">
+      <p className="mt-2 max-w-2xl text-slate-500">
+        Explore your constitutional balance through interactive Ayurvedic intelligence.
+      </p>
+    </div>
 
-          <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(56,189,248,.08),transparent_70%)]" />
+    <button className="flex items-center gap-2 rounded-full bg-[#06152A] px-5 py-3 text-white transition hover:bg-[#0B2442]">
+      Full Ayurveda Report
+      <ArrowRight className="h-4 w-4"/>
+    </button>
 
-          <svg
-            viewBox="0 0 220 330"
-            className="w-full max-w-[300px] relative z-10"
-          >
+  </div>
 
-            <path
-              d="M110 40 C95 40 90 50 90 62 C90 74 100 84 110 84 C120 84 130 74 130 62 C130 50 125 40 110 40
-              M110 84 L110 235
-              M78 118 L142 118
-              M92 235 L82 315
-              M128 235 L138 315"
-              fill="none"
-              stroke="#CBD5E1"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
+  <div className="grid gap-10 p-6 lg:grid-cols-[380px_minmax(0,1fr)] lg:p-8">
 
-            {Object.entries(nodes).map(([key, node], index) => {
+    {/* ---------------- BODY ---------------- */}
 
-              const positions = {
-                brain:[110,95],
-                heart:[110,135],
-                stomach:[110,175],
-                lungs:[110,215]
-              };
+    <div className="relative flex items-center justify-center">
 
-              return (
-                <motion.circle
-                  key={key}
-                  whileHover={{ scale:1.2 }}
-                  cx={positions[key][0]}
-                  cy={positions[key][1]}
-                  r={selected===key?12:9}
-                  fill={node.color}
-                  className="cursor-pointer"
-                  onClick={()=>setSelected(key)}
-                />
-              );
+      <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(34,197,94,.08),transparent_70%)]"/>
 
-            })}
+      <div className="relative w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[360px]">
 
-          </svg>
+        <img
+          src={tridosha}
+          alt="Tridosha Body"
+          draggable={false}
+          className="w-full select-none object-contain"
+        />
 
-        </div>
+        {Object.entries(nodes).map(([key,node])=>{
 
-        {/* Right */}
-        <div>
+          const active=selected===key;
 
-          <div className="flex items-center gap-4">
-
-            <div
-              className="w-16 h-16 rounded-3xl flex items-center justify-center"
+          return(
+            <motion.button
+              key={key}
+              onClick={()=>setSelected(key)}
+              whileHover={{scale:1.12}}
+              whileTap={{scale:.95}}
+              className="absolute -translate-x-1/2 -translate-y-1/2 outline-none"
               style={{
-                background:`${current.color}15`,
-                border:`1px solid ${current.color}30`
+                left:`${positions[key][0]}%`,
+                top:`${positions[key][1]}%`
               }}
             >
-              <Icon
-                className="w-8 h-8"
-                style={{color:current.color}}
-              />
-            </div>
 
-            <div>
-
-              <h3 className="text-3xl font-serif font-bold text-slate-900">
-                {current.title}
-              </h3>
-
-              <span
-                className="inline-flex mt-2 rounded-full px-3 py-1 text-xs font-semibold"
-                style={{
-                  background:`${current.color}20`,
-                  color:current.color
+              <motion.span
+                animate={{
+                  scale:[1,1.9,1],
+                  opacity:[.45,.12,.45]
                 }}
-              >
-                Active Biomarker
-              </span>
-
-            </div>
-
-          </div>
-
-          <p className="mt-6 text-slate-600 leading-7">
-            {current.desc}
-          </p>
-
-          {/* Progress */}
-          <div className="mt-8">
-
-            <div className="flex justify-between mb-2">
-              <span className="text-sm text-slate-500">
-                Organ Vitality
-              </span>
-
-              <span
-                className="font-semibold"
-                style={{color:current.color}}
-              >
-                {current.value}%
-              </span>
-
-            </div>
-
-            <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
-
-              <motion.div
-                initial={{width:0}}
-                animate={{width:`${current.value}%`}}
-                transition={{duration:1}}
-                className="h-full rounded-full"
-                style={{background:current.color}}
+                transition={{
+                  repeat:Infinity,
+                  duration:2.4,
+                  ease:"easeInOut"
+                }}
+                className="absolute -left-1 -top-2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{background:node.color}}
               />
 
-            </div>
+              <motion.span
+                animate={active?{scale:[1,1.2,1]}:{}}
+                transition={{repeat:Infinity,duration:1.5}}
+                className={`relative flex items-center justify-center rounded-full border-[3px] border-white shadow-2xl ${active?"h-7 w-7":"h-5 w-5"}`}
+                style={{background:node.color}}
+              />
 
+            </motion.button>
+          );
+
+        })}
+
+      </div>
+
+    </div>
+
+    {/* ---------------- RIGHT PANEL ---------------- */}
+
+    <div className="space-y-6">
+            <div className="rounded-[30px] border border-slate-200 bg-white p-6 shadow-sm">
+
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+
+          <div
+            className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[26px]"
+            style={{
+              background:`${current.color}15`,
+              border:`1px solid ${current.color}30`
+            }}
+          >
+            <Icon size={42} style={{color:current.color}}/>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
+          <div className="min-w-0">
 
-            <div className="rounded-3xl bg-slate-50 border border-slate-200 p-5">
-
-              <ShieldCheck className="w-6 h-6 text-emerald-500" />
-
-             <p className="mt-4 text-sm text-slate-500">
-  Risk Tier
-</p>
-
-<h4 className="mt-2 text-2xl font-bold text-slate-900">
-  {patient?.riskTier||"Pending"}
-</h4>
-
+            <div className="inline-flex rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[.18em]"
+              style={{
+                background:`${current.color}15`,
+                color:current.color
+              }}
+            >
+              {current.title} Constitution
             </div>
 
-            <div className="rounded-3xl bg-slate-50 border border-slate-200 p-5">
+            <h3 className="mt-3 font-serif text-4xl font-bold text-slate-900">
+              {current.title}
+            </h3>
 
-              <Activity className="w-6 h-6 text-sky-500" />
-
-              <p className="mt-4 text-sm text-slate-500">
-  Wellness Score
-</p>
-
-<h4 className="mt-2 text-2xl font-bold text-slate-900">
-  {patient?.compositeScore||0}%
-</h4>
-
-            </div>
-
-          </div>
-
-          {/* Recommendation */}
-          <div className="mt-8 rounded-3xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-sky-50 p-6">
-
-            <p className="text-[11px] uppercase tracking-[.2em] text-emerald-700 font-mono">
-              AI Recommendation
-            </p>
-
-            <p className="mt-3 text-slate-700 leading-7">
-              {current.insight}
+            <p className="mt-2 max-w-2xl leading-7 text-slate-600">
+              {current.desc}
             </p>
 
           </div>
 
         </div>
 
+        <div className="mt-8">
+
+          <div className="mb-3 flex items-center justify-between">
+
+            <span className="text-sm font-medium text-slate-500">
+              Prakriti Confidence
+            </span>
+
+            <span
+              className="font-semibold"
+              style={{color:current.color}}
+            >
+              {current.confidence.toFixed(2)}%
+            </span>
+
+          </div>
+
+          <div className="h-3 overflow-hidden rounded-full bg-slate-100">
+
+            <motion.div
+              initial={{width:0}}
+              animate={{width:`${current.confidence}%`}}
+              transition={{duration:.8}}
+              className="h-full rounded-full"
+              style={{background:current.color}}
+            />
+
+          </div>
+
+        </div>
+
+        <div className="mt-8">
+
+          <div className="mb-3 flex items-center justify-between">
+
+            <span className="text-sm font-medium text-slate-500">
+              Current Vikriti
+            </span>
+
+            <span
+              className="font-semibold"
+              style={{color:current.color}}
+            >
+              {current.imbalance.toFixed(2)}%
+            </span>
+
+          </div>
+
+          <div className="h-3 overflow-hidden rounded-full bg-slate-100">
+
+            <motion.div
+              initial={{width:0}}
+              animate={{width:`${current.imbalance}%`}}
+              transition={{duration:1}}
+              className="h-full rounded-full"
+              style={{background:current.color}}
+            />
+
+          </div>
+
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+
+            <ShieldCheck className="h-7 w-7 text-emerald-600"/>
+
+            <p className="mt-4 text-sm text-slate-500">
+              Risk Tier
+            </p>
+
+            <h4 className="mt-2 text-2xl font-bold text-slate-900">
+              {risk}
+            </h4>
+
+          </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+
+            <Activity className="h-7 w-7 text-sky-600"/>
+
+            <p className="mt-4 text-sm text-slate-500">
+              Wellness Index
+            </p>
+
+            <h4 className="mt-2 text-2xl font-bold text-slate-900">
+              {wellness}%
+            </h4>
+
+          </div>
+
+        </div>
+
+        <div
+          className="mt-8 rounded-3xl border p-6"
+          style={{
+            background:`linear-gradient(135deg,${current.color}12,#ffffff)`,
+            borderColor:`${current.color}30`
+          }}
+        >
+
+          <div className="flex items-center gap-2">
+
+            <Sparkles
+              size={18}
+              style={{color:current.color}}
+            />
+
+            <span
+              className="font-mono text-[11px] font-semibold uppercase tracking-[.22em]"
+              style={{color:current.color}}
+            >
+              AI Clinical Interpretation
+            </span>
+
+          </div>
+
+          <p className="mt-4 leading-8 text-slate-700">
+            {current.insight}
+          </p>
+
+        </div>
+
       </div>
 
-    </motion.section>
-  );
+    </div>
+
+  </div>
+
+</motion.section>
+  )
 }

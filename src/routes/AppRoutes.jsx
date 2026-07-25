@@ -35,15 +35,15 @@ const Review = lazy(() => import("@/pages/Lifestyle/Review"));
 const WellnessBlueprint = lazy(() => import("@/pages/Lifestyle/WellnessBlueprint"));
 
 // Dashboard
-const Overview = lazy(() => import("@/features/dashboard/pages/Overview"));
-const Analysis = lazy(() => import("@/features/dashboard/pages/Analysis"));
-const Patients = lazy(() => import("@/features/dashboard/pages/Patients"));
-const PatientProfile = lazy(() => import("@/features/dashboard/pages/PatientProfile"));
-const Reports = lazy(() => import("@/features/dashboard/pages/Reports"));
-const GeoWellness = lazy(() => import("@/features/dashboard/pages/GeoWellness"));
-const Questionnaires = lazy(() => import("@/features/dashboard/pages/Questionnaires"));
-const PatientReportSummary = lazy(() => import("@/features/dashboard/pages/PatientReportSummary"));
-const PatientAssessment = lazy(() => import("@/features/dashboard/pages/PatientAssessment"));
+const Overview = lazy(() => import("@/features/dashboard/components/reports/pages/Overview"));
+const Analysis = lazy(() => import("@/features/dashboard/components/reports/pages/Analysis"));
+const Patients = lazy(() => import("@/features/dashboard/components/reports/pages/Patients"));
+const PatientProfile = lazy(() => import("@/features/dashboard/components/reports/pages/PatientProfile"));
+const Reports = lazy(() => import("@/features/dashboard/components/reports/pages/Reports"));
+const GeoWellness = lazy(() => import("@/features/dashboard/components/reports/pages/GeoWellness"));
+const Questionnaires = lazy(() => import("@/features/dashboard/components/reports/pages/Questionnaires"));
+const PatientReportSummary = lazy(() => import("@/features/dashboard/components/reports/pages/PatientReportSummary"));
+const PatientAssessment = lazy(() => import("@/features/dashboard/components/reports/pages/PatientAssessment"));
 const EditPatient = lazy(() => import("@/features/dashboard/assessments/pages/EditPatient"));
 const ReportDisplay = lazy(() => import("@/features/dashboard/components/reports/ReportDisplay"));
 const Assessment = lazy(() => import("@/features/dashboard/assessments/pages/Assessment"));
@@ -59,7 +59,12 @@ const LabReportViewer = lazy(() => import("@/features/dashboard/assessments/page
 
 // Patient Dashboard
 const PatientDashboardLayout = lazy(() =>import("@/features/patient-dashboard/layouts/PatientDashboardLayout"));
-
+const DashboardPage = lazy(() => import("@/features/patient-dashboard/pages/DashboardPage"));
+const AssessmentPage = lazy(() => import("@/features/patient-dashboard/pages/AssessmentPage"));
+const ReportsPage = lazy(() =>import("@/features/patient-dashboard/pages/ReportsPage"));
+const ReportViewer = lazy(() =>import("@/features/patient-dashboard/pages/ReportViewer"));
+const ResultsPage = lazy(() =>import("@/features/patient-dashboard/pages/ResultsPage"));
+const SettingsPage = lazy(() =>import("@/features/patient-dashboard/pages/SettingsPage"));
 // Sales Dashboard
 const SalesDashboardLayout = lazy(() =>import("@/features/sales-dashboard/layouts/SalesDashboardLayout"));
 const Dashboard = lazy(() =>import("@/features/sales-dashboard/pages/Dashboard"));
@@ -153,17 +158,20 @@ const AppRoutes = () => {
               <Route path="analysis" element={<Analysis />} />
               <Route path="patients" element={<Patients />} />
               <Route path="patients/:id" element={<PatientProfile />} />
-              <Route path="patient-assessment" element={<PatientAssessment />}/>
+              <Route
+                path="patient-assessment"
+                element={<PatientAssessment />}
+              />
               <Route path="reports" element={<Reports />} />
-              <Route path="report-display/:patientId"element={<ReportDisplay />}/>
+              <Route
+                path="report-display/:patientId"
+                element={<ReportDisplay />}
+              />
               <Route
                 path="patient-report-summary/:patientId"
                 element={<PatientReportSummary />}
               />
-              <Route
-  path="edit-patient"
-  element={<EditPatient />}
-/>
+              <Route path="edit-patient" element={<EditPatient />} />
               <Route path="geowellness" element={<GeoWellness />} />
               <Route path="questionnaires" element={<Questionnaires />} />
               <Route
@@ -201,22 +209,26 @@ const AppRoutes = () => {
 
         <Route element={<SalesProtectedRoute />}>
           <Route path="/sales-dashboard" element={<SalesDashboardLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="leads" element={<LeadList />} />
-              <Route path="leads/:id" element={<LeadDetails />} />
-              <Route path="followups" element={<FollowUps />} />
-              <Route path="followups/:id" element={<FollowupHistory />} />
-              <Route path="assign-doctor" element={<AssignDoctor />} />
-              <Route path="closed" element={<ClosedLeads />} />
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="leads" element={<LeadList />} />
+            <Route path="leads/:id" element={<LeadDetails />} />
+            <Route path="followups" element={<FollowUps />} />
+            <Route path="followups/:id" element={<FollowupHistory />} />
+            <Route path="assign-doctor" element={<AssignDoctor />} />
+            <Route path="closed" element={<ClosedLeads />} />
           </Route>
         </Route>
 
         <Route element={<PatientProtectedRoute />}>
-          <Route
-            path="/patient-dashboard"
-            element={<PatientDashboardLayout />}
-          />
+          <Route path="/patient-dashboard" element={<PatientDashboardLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="assessment" element={<AssessmentPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+            <Route path="reports/:reportType" element={<ReportViewer/>} />
+            <Route path="results" element={<ResultsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
         </Route>
       </Routes>
     </Suspense>

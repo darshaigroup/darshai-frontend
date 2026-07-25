@@ -3,48 +3,62 @@ import ReportFilters from "../components/reports/ReportFilters";
 import ReportsTable from "../components/reports/ReportTable";
 import ReportViewer from "../components/reports/ReportViewer";
 
-export default function ReportView({
-  reports = [],
-  onDownload,
-}) {
+export default function ReportView({ patientData }) {
   const [search, setSearch] = useState("");
-  const [type, setType] = useState("all");
+  const [status, setStatus] = useState("all");
   const [selectedReport, setSelectedReport] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const reports = useMemo(() => {
+    if (!patientData) return [];
+
+    const assessment = patientData?.assessment?.data ?? {};
+    const progress = patientData?.progress ?? {};
+
+    return [
+      {
+        id: assessment.assessment_id ?? "assessment",
+        name: "Health Assessment Report",
+        type: assessment.risk_band ?? "Assessment",
+        date: assessment.created_at ?? assessment.updated_at ?? patientData?.profile?.patient?.created_at,
+        status: progress.completed ? "Completed" : "Pending",
+      },
+    ];
+  }, [patientData]);
 
   const filteredReports = useMemo(() => {
     return reports.filter(report => {
-      const searchMatch = report.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-
-      const typeMatch =
-        type === "all" || report.type === type;
-
-      return searchMatch && typeMatch;
+      const matchSearch = report.name.toLowerCase().includes(search.toLowerCase());
+      const matchStatus = status === "all" || report.status.toLowerCase() === status.toLowerCase();
+      return matchSearch && matchStatus;
     });
-  }, [reports, search, type]);
+  }, [reports, search, status]);
+
+  const handleView = report => {
+    setSelectedReport(report);
+    setOpen(true);
+  };
 
   return (
-    <div className="space-y-6">
+    <>
       <ReportFilters
         search={search}
-        setSearch={setSearch}
-        selectedType={type}
-        setSelectedType={setType}
+        status={status}
+        onSearchChange={setSearch}
+        onStatusChange={setStatus}
       />
 
       <ReportsTable
         reports={filteredReports}
-        onView={setSelectedReport}
-        onDownload={onDownload}
+        onView={handleView}
       />
 
       <ReportViewer
+        open={open}
+        onOpenChange={setOpen}
         report={selectedReport}
-        open={!!selectedReport}
-        onClose={() => setSelectedReport(null)}
-        onDownload={onDownload}
+        patientData={patientData}
       />
-    </div>
+    </>
   );
 }

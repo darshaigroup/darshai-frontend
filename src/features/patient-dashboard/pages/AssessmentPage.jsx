@@ -1,17 +1,13 @@
+import { useOutletContext } from "react-router-dom";
 import AssessmentView from "../sections/AssessmentView";
 
-export default function AssessmentPage({
-  activePatient,
-  assessmentData,
-  onSubmitAssessment,
-}) {
+export default function AssessmentPage() {
+  const { patientData } = useOutletContext();
+
   return (
-    <div className="space-y-6 md:space-y-8">
-      <AssessmentView
-        activePatient={activePatient}
-        assessmentData={assessmentData}
-        onSubmitAssessment={onSubmitAssessment}
-      />
-    </div>
+    <AssessmentView
+      report={patientData?.report?.patient}
+      pendingAssessments={[]}
+    />
   );
 }
