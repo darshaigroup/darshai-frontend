@@ -32,7 +32,7 @@ const recommendation =
 
   const cards = [
   {
-    title: "Dominant Dosha",
+    title: "Primary Dosha",
     value: display(
       patient?.primaryDosha ||
       report?.primary_dosha ||

@@ -24,7 +24,7 @@ export default function DoshaBodyMap({ patient = {} }) {
   const doshas = Object.fromEntries(Object.entries(DOSHAS).map(([k, d]) => [k, {
     ...d,
     level: percentages[d.label],
-    badge: primary === d.label ? "Dominant" : secondary === d.label ? "Secondary" : "Balanced",
+    badge: primary === d.label ? "Primary" : secondary === d.label ? "Secondary" : "Balanced",
     severity: primary === d.label ? report?.primary_level : secondary === d.label ? report?.secondary_level : "Balanced",
     description: report?.clinical_summary ?? correlation?.summary ?? `${d.label} assessment pending.`,
     recommendation: correlation?.ama_link ?? "Maintain a balanced Ayurvedic lifestyle.",

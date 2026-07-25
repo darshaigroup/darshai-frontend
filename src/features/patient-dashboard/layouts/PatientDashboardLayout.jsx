@@ -191,6 +191,10 @@ if(loading||!patientData){
   return (
     <TourProvider>
       <DashboardShell
+  profile={patientData?.profile}
+  report={patientData?.report}
+  assessment={patientData?.assessment}
+  progress={patientData?.progress}
   activePatient={activePatient}
   currentTab={currentTab}
   searchQuery={searchQuery}
