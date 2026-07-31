@@ -4,11 +4,13 @@ import { Routes, Route } from "react-router-dom";
 // Layouts
 import MainLayout from "@/layouts/MainLayout";
 import DashboardLayout from "@/layouts/DoctorDashboardLayout";
+import CareerLayout from "@/layouts/CareerLayout";
 import RouteLoader from "@/layouts/RouteLoader";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PatientProtectedRoute from "@/routes/PatientProtectedRoute";
 import LifestyleProtectedRoute from "./LifestyleProtectedRoute";
 import SalesProtectedRoute from "@/layouts/SalesProtectedRoute";
+
 
 // Public
 const Home = lazy(() => import("@/pages/Home/HomeMain"));
@@ -22,6 +24,7 @@ const GeoWellnessCategory = lazy(() =>
     default: m.GeoWellnessCategory,
   }))
 );
+const CareerLanding = lazy(() =>import("@/pages/careers/CareerLanding/CareerLanding"));
 const Explore = lazy(() => import("@/pages/Explore/ExploreMain"));
 const BlogArticle = lazy(() => import("@/pages/Explore/BlogArticle"));
 const FlipBookPage = lazy(() => import("@/components/Explore/FlipBookPage"));
@@ -118,7 +121,6 @@ const AppRoutes = () => {
             </LifestyleProtectedRoute>
           }
         />
-
         {/* PUBLIC */}
         <Route element={<MainLayout />}>
           <Route element={<RouteLoader />}>
@@ -126,9 +128,7 @@ const AppRoutes = () => {
             <Route path="/philosophy" element={<Philosophy />} />
             <Route path="/story" element={<OurStory />} />
             <Route path="/contact" element={<ContactUs />} />
-
             <Route path="/program" element={<OurProgram />} />
-
             <Route path="/program/:slug" element={<ProgramDetail />} />
             <Route
               path="/program/geo-wellness-center"
@@ -138,15 +138,19 @@ const AppRoutes = () => {
               path="/program/geo-wellness-center/:category"
               element={<GeoWellnessCategory />}
             />
-
             <Route path="/explore" element={<Explore />} />
             <Route path="/explore/:category" element={<Explore />} />
             <Route path="/blog/:slug" element={<BlogArticle />} />
             <Route path="/pdf/:file" element={<FlipBookPage />} />
             <Route path="/coming-soon/:type" element={<ComingSoon />} />
-
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsConditions />} />
+          </Route>
+        </Route>
+
+        <Route element={<CareerLayout />}>
+          <Route element={<RouteLoader />}>
+            <Route path="/careers" element={<CareerLanding />} />
           </Route>
         </Route>
 
@@ -225,7 +229,7 @@ const AppRoutes = () => {
             <Route index element={<DashboardPage />} />
             <Route path="assessment" element={<AssessmentPage />} />
             <Route path="reports" element={<ReportsPage />} />
-            <Route path="reports/:reportType" element={<ReportViewer/>} />
+            <Route path="reports/:reportType" element={<ReportViewer />} />
             <Route path="results" element={<ResultsPage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>

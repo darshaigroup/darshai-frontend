@@ -32,7 +32,7 @@ export default function DashboardShell({
         <div className="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-emerald-500/5 blur-3xl"/>
         <div className="absolute -bottom-56 -left-56 h-[640px] w-[640px] rounded-full bg-sky-500/5 blur-3xl"/>
       </div>
-
+ 
       <aside className="fixed left-0 top-0 z-40 hidden h-screen w-[290px] md:block">
         <Sidebar
           idPrefix="sidebar"
