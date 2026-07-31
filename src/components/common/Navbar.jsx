@@ -10,10 +10,12 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   let programTimeout;
   let exploreTimeout;
+  let contactTimeout;
 
   // 🔥 Scroll detection
   useEffect(() => {
@@ -79,10 +81,7 @@ export default function Navbar() {
 
             {programOpen && (
               <div className={dropdownStyle}>
-                <Link
-                  to="/program"
-                  className="px-5 py-2 hover:text-[#C9A75B]"
-                >
+                <Link to="/program" className="px-5 py-2 hover:text-[#C9A75B]">
                   Wellness Programmes
                 </Link>
                 <Link
@@ -115,7 +114,7 @@ export default function Navbar() {
 
             {exploreOpen && (
               <div className={dropdownStyle}>
-                  <Link
+                <Link
                   to="/explore/journal"
                   className="px-5 py-2 hover:text-[#C9A75B]"
                 >
@@ -148,25 +147,50 @@ export default function Navbar() {
               </div>
             )}
           </div>
+          {/* CONTACT DROPDOWN */}
+          <div
+            className="relative group"
+            onMouseEnter={() => {
+              clearTimeout(contactTimeout);
+              setContactOpen(true);
+            }}
+            onMouseLeave={() => {
+              contactTimeout = setTimeout(() => setContactOpen(false), 200);
+            }}
+          >
+            <div
+              className={`flex items-center gap-2 cursor-pointer ${textColor}`}
+            >
+              <span className={hoverItem}>CONTACT</span>
+              <FaChevronDown size={12} />
+            </div>
 
-          {/* CONTACT */}
-          <Link to="/contact" className={`group ${textColor}`}>
-            <span className={hoverItem}>CONTACT US</span>
-          </Link>
+            {contactOpen && (
+              <div className={dropdownStyle}>
+                <Link to="/contact" className="px-5 py-2 hover:text-[#C9A75B]">
+                  Contact Us
+                </Link>
+
+                <Link to="/careers" className="px-5 py-2 hover:text-[#C9A75B]">
+                  Careers
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* CTA */}
         <Link to="/register">
-        <button
-          onClick={() => navigate("/dashboard")}
-          className={`hidden md:block px-5 py-2 rounded-full transition ${
-            scrolled
-              ? "bg-[#1E7A3A] text-white"
-              : "border border-white text-white"
-          }`}
-        >
-          BEGIN JOURNEY
-        </button>
+          <button
+            onClick={() => navigate("/dashboard")}
+            className={`hidden md:block px-5 py-2 rounded-full transition ${
+              scrolled
+                ? "bg-[#1E7A3A] text-white"
+                : "border border-white text-white"
+            }`}
+          >
+            BEGIN JOURNEY
+          </button>
         </Link>
 
         {/* MOBILE ICON */}
@@ -178,7 +202,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* 📱 MOBILE MENU */}
       {/* 📱 MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
@@ -267,6 +290,7 @@ export default function Navbar() {
                   { name: "Image", path: "/explore/image" },
                   { name: "Blog", path: "/explore/blog" },
                   { name: "Brochure", path: "/explore/brochure" },
+                  { name: "Careers", path: "/careers" },
                 ].map((item) => (
                   <Link
                     key={item.name}
@@ -286,9 +310,9 @@ export default function Navbar() {
 
             {/* CTA */}
             <Link to="/register">
-            <button className="bg-[#1E7A3A] text-white py-4 px-3 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
-              BEGIN JOURNEY
-            </button>
+              <button className="bg-[#1E7A3A] text-white py-4 px-3 rounded-full text-lg tracking-widest hover:bg-[#166534] transition active:scale-95">
+                BEGIN JOURNEY
+              </button>
             </Link>
           </motion.div>
         )}
