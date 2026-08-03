@@ -24,6 +24,10 @@ export default function Login() {
         navigate("/patient-dashboard", { replace: true });
         break;
 
+      case "hr":
+        navigate("/hr-dashboard", { replace: true });
+        break;
+
       default:
         navigate("/login", { replace: true });
     }

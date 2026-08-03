@@ -141,6 +141,7 @@ Balmatta, Mangalore-575 001
           <FooterLink to="/explore/image">Image</FooterLink>
           <FooterLink to="/explore/blog">Blog</FooterLink>
           <FooterLink to="/explore/brochure">Brochure</FooterLink>
+           <FooterLink to="/careers">Careers</FooterLink>
         </FooterColumn>
       </div>
 
@@ -165,18 +166,15 @@ Balmatta, Mangalore-575 001
   {/* PREMIUM WHATSAPP */}
 <div className="flex flex-col items-end gap-3">
 
-  <motion.div
+  {/* <motion.div
   animate={{ opacity: [0.95, 1, 0.95], y: [0, -4, 0] }}
   transition={{ duration: 3, repeat: Infinity }}
   className="relative w-[130px] rounded-[22px] rounded-br-md bg-white border border-[#C6A75E]/20 shadow-[0_20px_60px_rgba(0,0,0,0.12)] px-5 py-5 text-center"
 >
-
-  {/* GOLD BADGE */}
   <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#C6A75E] text-white text-[9px] uppercase tracking-[0.25em] shadow-[0_8px_20px_rgba(198,167,94,0.35)]">
     Live
   </div>
 
-  {/* CHAT TAIL */}
   <div className="absolute -bottom-2 right-5 w-4 h-4 bg-white border-r border-b border-[#C6A75E]/20 rotate-45" />
 
   <p className="mt-2 text-[#C6A75E] text-[10px] tracking-[0.22em] uppercase">
@@ -189,7 +187,7 @@ Balmatta, Mangalore-575 001
 
  
 
-</motion.div>
+</motion.div> */}
 
   <motion.a
     href="https://wa.me/918088171511"

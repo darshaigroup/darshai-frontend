@@ -199,9 +199,9 @@ const PatientPreviewTable = () => {
           <span>Email</span>
           <span>Date</span>
           <span>Status</span>
-          <div className="flex justify-end gap-20">
-            <span>Profile</span>
-            <span>Workflow</span>
+          <div className="flex justify-end items-center gap-3">
+            <span className="w-[130px] text-center">Profile</span>
+            <span className="w-[150px] text-center">Workflow</span>
           </div>
         </div>
 
@@ -244,61 +244,20 @@ const PatientPreviewTable = () => {
 
             <div className="flex justify-end items-center gap-3">
               <button
-                onClick={() =>
-                  navigate("/dashboard/edit-patient", {
-                    state: {
-                      patient: p,
-                    },
-                  })
-                }
-                className="
-    group
-    h-11
-    px-5
-    rounded-3xl
-    border border-[#03A547]/20
-    bg-white
-    text-[#03A547]
-    text-sm
-    font-semibold
-    shadow-sm
-    hover:bg-[#03A547]
-    hover:text-white
-    hover:shadow-lg
-    hover:-translate-y-0.5
-    transition-all duration-300
-  "
+                onClick={() => navigate("/dashboard/edit-patient",{state:{patient:p}})}
+                className="w-[130px] h-11 rounded-3xl border border-[#03A547]/20 bg-white text-[#03A547] text-sm font-semibold shadow-sm hover:bg-[#03A547] hover:text-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
               >
                 Edit Profile
               </button>
 
               <button
                 onClick={() => handleWorkflow(p)}
-                className={`
-      group
-      relative
-      overflow-hidden
-      h-11
-      px-6
-      rounded-3xl
-      text-sm
-      font-semibold
-      text-white
-      shadow-lg
-      hover:shadow-xl
-      hover:-translate-y-0.5
-      active:scale-95
-      transition-all duration-300
-      ${getWorkflowButton(p.progress).color}
-    `}
+                className={`w-[150px] h-11 rounded-3xl text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-300 ${getWorkflowButton(p.progress).color}`}
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-
+                <span className="flex items-center justify-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-white animate-pulse"/>
                   {getWorkflowButton(p.progress).label}
                 </span>
-
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all"></div>
               </button>
             </div>
           </div>
