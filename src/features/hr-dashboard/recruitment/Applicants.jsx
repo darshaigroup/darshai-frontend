@@ -6,7 +6,7 @@ import hrRecruitmentService from "./services/hrRecruitmentService";
 import ApplicantFilters from "./components/applicants/ApplicantFilters";
 import ApplicantTable from "./components/applicants/ApplicantTable";
 import Pagination from "./components/applicants/Pagination";
-import CandidateDrawer from "./components/candidate/CandidateDrawer";
+import CandidateDrawer from "./components/Candidate/CandidateDrawer";
 import ResumeViewer from "./components/resume/ResumeViewer";
 
 const DEFAULT_FILTERS={search:"",jobId:"",status:"",from:"",to:""};
