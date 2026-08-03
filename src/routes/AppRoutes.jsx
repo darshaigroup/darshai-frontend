@@ -187,7 +187,7 @@ const AppRoutes = () => {
 
         {/* ========================= HR DASHBOARD ========================= */}
 
-        {/* <Route element={<HRProtectedRoute />}>
+        <Route element={<HRProtectedRoute />}>
           <Route path="/hr-dashboard" element={<HRDashboardLayout />}>
             <Route element={<RouteLoader />}>
               <Route index element={<HRRecruitmentDashboard />} />
@@ -197,7 +197,7 @@ const AppRoutes = () => {
               <Route path="settings" element={<HRSettings />} />
             </Route>
           </Route>
-        </Route> */}
+        </Route>
 
         {/* ========================= PATIENT DASHBOARD ========================= */}
 
