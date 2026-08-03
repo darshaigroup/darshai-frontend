@@ -44,7 +44,7 @@ const HRHeader=({onMenuClick})=>{
 
           <div className="mx-1 hidden h-7 w-px bg-[#E5EAE6] sm:block"/>
 
-          <button type="button" onClick={()=>navigate("/hr/profile")} className="flex items-center gap-2 rounded-xl p-1 transition hover:bg-[#F4F7F4] sm:pr-2">
+          <button type="button" onClick={()=>navigate("/hr-dashboard/profile")} className="flex items-center gap-2 rounded-xl p-1 transition hover:bg-[#F4F7F4] sm:pr-2">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8F3EA] text-[#1E7A3A]">
               <UserRound className="h-[17px] w-[17px]"/>
             </div>

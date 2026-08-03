@@ -19,7 +19,7 @@ const HRSidebar=({mobile=false,onNavigate})=>{
   };
 
   const handleProfile=()=>{
-    navigate("/hr/profile");
+    navigate("/hr-dashboard/profile");
     onNavigate?.();
   };
 
