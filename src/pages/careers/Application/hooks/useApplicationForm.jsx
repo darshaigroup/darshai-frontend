@@ -52,7 +52,7 @@ const STEP_FIELDS={
 const TOTAL_STEPS=5;
 
 const useApplicationForm=()=>{
-  const [step,setStep]=useState(1),[loading,setLoading]=useState(false),[success,setSuccess]=useState(false),[applicationCode,setApplicationCode]=useState(""),[jobTitle,setJobTitle]=useState(""),[submitError,setSubmitError]=useState("");
+  const [step,setStep]=useState(1),[loading,setLoading]=useState(false),[success,setSuccess]=useState(false),[candidateCode,setCandidateCode]=useState(""),[applicationCode,setApplicationCode]=useState(""),[jobTitle,setJobTitle]=useState(""),[submitError,setSubmitError]=useState("");
   const methods=useForm({resolver:zodResolver(schema),defaultValues,mode:"onTouched"});
   const progress=useMemo(()=>Math.round(step/TOTAL_STEPS*100),[step]);
 
@@ -60,17 +60,26 @@ const useApplicationForm=()=>{
     const fields=step===3&&methods.getValues("experience")==="Fresher"?["jobId","experience"]:STEP_FIELDS[step];
     const valid=await methods.trigger(fields,{shouldFocus:true});
     if(!valid) return;
+    setSubmitError("");
     setStep(s=>Math.min(s+1,TOTAL_STEPS));
   };
 
-  const prevStep=()=>setStep(s=>Math.max(s-1,1));
-  const goToStep=index=>setStep(Math.min(Math.max(index,1),TOTAL_STEPS));
+  const prevStep=()=>{
+    setSubmitError("");
+    setStep(s=>Math.max(s-1,1));
+  };
+
+  const goToStep=index=>{
+    setSubmitError("");
+    setStep(Math.min(Math.max(index,1),TOTAL_STEPS));
+  };
 
   const resetForm=()=>{
     methods.reset(defaultValues);
     setStep(1);
     setLoading(false);
     setSuccess(false);
+    setCandidateCode("");
     setApplicationCode("");
     setJobTitle("");
     setSubmitError("");
@@ -78,21 +87,47 @@ const useApplicationForm=()=>{
 
   const submit=async values=>{
     if(loading) return;
+
     setLoading(true);
     setSubmitError("");
+
     try{
-      const response=await applicationService.submitApplication(values);
-      setApplicationCode(response?.application?.applicationCode||response?.applicationCode||"");
-      setJobTitle(values.jobTitle||"");
-      setSuccess(true);
-    }catch(err){
-      setSubmitError(err?.message||"Unable to submit application. Please try again.");
-    }finally{
-      setLoading(false);
-    }
+  const response=await applicationService.submitApplication(values);
+
+  const payload=response?.data?.data||response?.data||response;
+
+  if(!payload?.success) throw new Error(payload?.message||"Unable to submit application.");
+
+  const candidateCode=payload?.candidate?.candidateCode;
+  const applicationCode=payload?.application?.applicationCode;
+
+  console.log("API Response:",response);
+  console.log("Payload:",payload);
+  console.log("Candidate Code:",candidateCode);
+  console.log("Application Code:",applicationCode);
+
+  if(!candidateCode||!applicationCode)
+    throw new Error("Application submitted but Candidate ID or Application ID was not returned.");
+
+  setCandidateCode(candidateCode);
+  setApplicationCode(applicationCode);
+  setJobTitle(values.jobTitle||"Selected Position");
+  setSuccess(true);
+}catch(err){
+  console.error("Application submission failed:",err);
+  setSuccess(false);
+  setCandidateCode("");
+  setApplicationCode("");
+  setSubmitError(err?.message||"Unable to submit application. Please try again.");
+}finally{
+  setLoading(false);
+}
   };
 
-  return{methods,step,progress,loading,success,applicationCode,jobTitle,submitError,nextStep,prevStep,goToStep,submit,resetForm};
+  return{
+    methods,step,progress,loading,success,candidateCode,applicationCode,jobTitle,submitError,
+    nextStep,prevStep,goToStep,submit,resetForm,setSubmitError
+  };
 };
 
 export default useApplicationForm;
