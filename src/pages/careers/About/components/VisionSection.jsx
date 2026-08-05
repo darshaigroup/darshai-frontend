@@ -30,7 +30,7 @@ const vision = {
   quote:
     "Health is not a luxury you purchase, but a biological sovereignty you reclaim through mathematical precision.",
   name: "Veekshitha V",
-  role: "Founder & Bio-Luxury Strategist",
+  role: " Founder & CEO",
   award: "Silver Jubilee Year Award Journalist & Science Scholar",
 };
 
@@ -105,24 +105,13 @@ const VisionSection = () => (
               <strong className="font-semibold text-[#132C1D]">
                 Veekshitha V
               </strong>{" "}
-              is an Innovator in science communication and a bio-luxury
-              strategist dedicated to bridging the significant gap between
-              ancient Ayurvedic wisdom and modern clinical data.
+              is the Founder & CEO of DARSHAI Group Pvt. Ltd. with a background in science and media communication, she is building DARSHAI as an AI-native Geo-Wellness platform connecting preventive wellness, environmental intelligence, Ayurveda, technology, and trusted wellness partners.
             </p>
 
             <p>
               As a Silver Jubilee Year Award journalist and science scholar, she
               recognized that the greatest crisis in modern health was not a
               lack of information, but a lack of integration.
-            </p>
-
-            <p>
-              Under her leadership, DARSHAI has evolved from a startup concept
-              into an elite ecosystem where{" "}
-              <strong className="font-semibold text-[#132C1D]">Darsh AI</strong>
-              - our proprietary diagnostic engine-translates thousands of years
-              of traditional medicine into quantifiable, data - backed longevity
-              protocols.
             </p>
           </motion.div>
 
@@ -131,10 +120,8 @@ const VisionSection = () => (
             className="mt-9 rounded-[18px] border border-[#E7C86E] bg-[#FFFDF7] px-7 py-6"
           >
             <p className="text-[17px] leading-[1.8] text-[#1F2E22]">
-              Her work focuses on the <strong>'Science of Where'</strong>, a
-              concept that explores the relationship between human optimization
-              and environment. She is not just building a wellness company; she
-              is architecting a new standard for human performance.
+               Her vision is to make personalized wellness more structured, measurable, and accessible while building meaningful career opportunities for young professionals.
+
             </p>
           </motion.div>
         </motion.div>

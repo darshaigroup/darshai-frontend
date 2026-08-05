@@ -23,7 +23,7 @@ const positions = [
     category:"Sales/Marketing",
     title:"Client Acquisition & Strategic Partnerships Executive",
     description:
-      "Build strategic healthcare partnerships, strengthen community engagement, and accelerate DarshAI's preventive healthcare ecosystem.",
+      "Generate qualified leads, acquire B2B and B2C clients, build wellness partnerships, conduct corporate outreach, and support DARSHAI’s revenue growth.",
     overview:
       "As a Client Acquisition & Strategic Partnerships Executive, you'll collaborate with hospitals, wellness organizations, NGOs, institutions, and strategic partners to expand DarshAI's impact while driving outreach initiatives and long-term collaborations.",
     location: "Mangalore",
@@ -61,7 +61,7 @@ const positions = [
     category:"Sales/Marketing",
     title:"Client Relationship Executive",
     description:
-      "Deliver exceptional client experiences by managing patient relationships, onboarding, and operational communication.",
+      "Manage client enquiries, follow-ups, wellness coordination, documentation, and communication to provide a professional and trusted client experience",
     overview:
       "You'll become the primary point of contact for patients and partners, ensuring a seamless experience throughout their wellness journey while coordinating closely with internal teams.",
     location: "Mangalore",

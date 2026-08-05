@@ -16,7 +16,7 @@ const SLIDES=[
 const HERO={
   badge:"JOIN INDIA'S AI-NATIVE HEALTHCARE STARTUP",
   title:"Shape the Future of Wellness Through Innovation",
-  desc:"Build your career at DarshAI and create meaningful impact through Artificial Intelligence, Preventive Healthcare, Longevity, and Technology."
+  desc:"Build your career at DARSHAI and create meaningful impact through AI, preventive healthcare, Geo-Wellness, and innovation."
 };
 
 const HeroSection=()=>{

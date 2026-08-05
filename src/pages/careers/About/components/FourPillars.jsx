@@ -31,7 +31,7 @@ const pillars = [
     label: "PROPRIETARY DIAGNOSTIC LLM",
     title: "AI-Native",
     description:
-      "DarshAI translates 5,000 years of classical Ayurvedic diagnostic scriptures into quantifiable, algorithmic health protocols.",
+      "DARSHAI uses AI to support personalized wellness assessments, recommendations, and wellness planning.",
     pill: "Continuous Machine Learning",
   },
   {
@@ -40,7 +40,7 @@ const pillars = [
     label: "THE SCIENCE OF WHERE",
     title: "Geo-Wellness",
     description:
-      "Human optimization dynamically adapted to geographical location, ambient climate, bio-telemetry, and environmental rhythms.",
+      "We study how location, climate, environment, and lifestyle can influence a person’s well-being.",
     pill: "Environmental Optimization",
   },
   {
@@ -49,7 +49,7 @@ const pillars = [
     label: "BIO-SOVEREIGNTY FIRST",
     title: "Preventive Healthcare",
     description:
-      "Moving beyond symptom suppression to proactive longevity, predicting physiological imbalances before symptoms emerge.",
+      "We focus on helping people improve well-being before health concerns become more serious.",
     pill: "Precision Longevity",
   },
   {
@@ -58,7 +58,7 @@ const pillars = [
     label: "CLINICAL & SCIENTIFIC VALIDATION",
     title: "Trusted Wellness Network",
     description:
-      "An elite ecosystem unifying certified Ayurvedic scholars, clinical researchers, and data-backed medical protocols.",
+      "We work with selected wellness centres, Ayurveda professionals, clinical advisors, and other wellness partners.",
     pill: "Evidence-Based Ayurveda",
   },
 ];

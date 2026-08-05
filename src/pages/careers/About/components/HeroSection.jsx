@@ -32,12 +32,12 @@ const float={
 const hero={
   badge:"INTRODUCING DARSHAI",
   title:[
-    "Unifying 5,000 years of classical",
-    "Ayurvedic wisdom with",
-    "continuous bio-telemetry and",
-    "generative AI algorithms."
+    " Combining Ayurvedic knowledge,",
+    "Preventive healthcare",
+    "Environmental intelligence, and",
+    "AI to build personalized wellness solutions."
   ],
-  quote:"Reclaiming biological sovereignty through mathematical precision and evidence-based preventive longevity."
+  quote:" Building a healthier future through personalized, preventive, and technology-enabled wellness."
 };
 
 const glowBlobs=[

@@ -69,8 +69,8 @@ const steps=[
   sectionTitle:"On-Site Office Interview",
   sectionSubtitle:"In-person evaluation at headquarters focusing on domain mastery and leadership alignment",
   icon:Building2,
-  title:"Functional Interview – Marketing Dept",
-  description:"In-depth functional session with department leads and strategy specialists on-site at our office.",
+  title:"Role-Specific Functional Interview",
+  description:"An in-person practical interview to assess communication, client handling, lead generation, partnership development, problem-solving, and role suitability.",
   badge:"On-Site / Department Head"
 },
 {
@@ -94,7 +94,7 @@ const steps=[
   id:9,
   icon:FileBadge,
   title:"Offer Letter",
-  description:"Official offer dispatch detailing role structure, transparent compensation, equity options, and employee benefits.",
+  description:" Official offer communication detailing the role, compensation, joining date, reporting structure, and employment terms.",
   badge:"Formal Dispatch"
 },
 {

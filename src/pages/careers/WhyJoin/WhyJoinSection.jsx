@@ -15,7 +15,7 @@ const features = [
     icon: Rocket,
     title: "Accelerate Your Career",
     description:
-      "Join one of India's emerging AI-powered healthcare startups and build meaningful solutions alongside visionary leaders.",
+      "An emerging AI-native Geo-Wellness startup from Mangalore and build meaningful solutions alongside visionary leaders.",
     points: [
       "Work directly with the Founder & Leadership Team.",
       "Build one of India's emerging AI-powered Geo-Wellness platforms.",
