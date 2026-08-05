@@ -15,20 +15,20 @@ const faqs = [
     question:
       "What makes DARSHAI different from traditional HealthTech companies?",
     answer:
-      "DARSHAI is India's first AI-native healthcare company built upon thousands of years of validated Ayurvedic science combined with modern biometrics and Generative AI. We focus on preventive, hyper-personalized wellness rather than reactive disease management.",
+      " DARSHAI combines AI, Geo-Wellness, preventive healthcare, Ayurveda, and trusted wellness partnerships to create more personalized wellness experiences.",
   },
   {
     category: "HIRING PROCESS",
     question:
       "How long does the entire selection process take from application to offer?",
     answer:
-      "The recruitment process typically takes between 1–3 weeks depending on the role. It generally includes application review, an initial screening, technical or functional interviews, an HR discussion, and finally the offer and onboarding process.",
+      "Candidates shortlisted at Alva’s Pragathi will be contacted for the office interview. Final results will be communicated after completion of the functional and founder interviews.",
   },
   {
     category: "CULTURE & BENEFITS",
     question: "Are remote or hybrid work arrangements available at DARSHAI?",
     answer:
-      "Some positions may offer hybrid flexibility depending on business requirements. However, many roles require on-site collaboration to foster innovation, cross-functional teamwork, and high-quality healthcare delivery.",
+      "These are primarily Mangalore-based roles. Limited flexibility may be provided depending on business requirements, but candidates should be available for office work, meetings, and field activities.",
   },
   {
     category: "AI & TECH",
@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     category: "CULTURE & BENEFITS",
-    question: "What wellness benefits and ESOP plans does DARSHAI offer?",
+    question: "What learning, career-growth, and wellness opportunities does DARSHAI provide?",
     answer:
       "DARSHAI promotes employee well-being through a collaborative culture, continuous learning opportunities, preventive healthcare initiatives, and role-specific benefits. ESOP eligibility and additional benefits depend on the position and company policy.",
   },

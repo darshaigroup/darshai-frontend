@@ -10,8 +10,8 @@ const containerClass="relative z-20 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12
 
 const mission={
   badge:"OUR MISSION",
-  title:"To bridge the gap between ancient Ayurvedic wisdom and modern clinical data-making hyper-personalized preventive health accessible, quantifiable, and sovereign.",
-  description:"We are not just building software; we are architecting an elite ecosystem for human performance, preventive longevity, and environmental optimization powered by AI and classical Ayurvedic intelligence."
+  title:"To combine Ayurvedic knowledge, modern health insights, environmental intelligence, and AI to make personalized preventive wellness more accessible.",
+  description:" We are building a connected ecosystem of technology, wellness experts, trusted centres, and personalized wellness services."
 };
 
 const blobs=[
