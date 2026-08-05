@@ -47,7 +47,7 @@ const ApplicationSection = () => {
     );
 
   return (
-    <section id="why-join" className="bg-[#FBF8F1] py-12 sm:py-16 md:py-20">
+    <section id="application" className="bg-[#FBF8F1] py-12 sm:py-16 md:py-20">
       {/* Submission Error */}
       <AnimatePresence>
         {submitError && (

@@ -3,15 +3,15 @@ import {motion} from "framer-motion";
 
 const profile={
   personal:{
-    firstName:"Rupesh",
-    lastName:"Dash",
-    gender:"Male",
-    dob:"2002-01-14"
+    firstName:"Varsha",
+    lastName:"Devadiga",
+    gender:"Female",
+    dob:"-"
   },
   contact:{
-    email:"hr@darshai.in",
-    phone:"+91 9876543210",
-    city:"Mysuru",
+    email:"varshadevadiga@darshai.in",
+    phone:"+91 7676740701",
+    city:"Mangaluru",
     state:"Karnataka",
     country:"India"
   },
@@ -19,15 +19,15 @@ const profile={
     employeeId:"HR-001",
     designation:"HR Recruiter",
     department:"Human Resources",
-    joiningDate:"03 Aug 2026",
+    joiningDate:"April 2026",
     reportingTo:"HR Manager",
     employmentType:"Full Time"
   },
   account:{
-    username:"rupesh.dash",
+    username:"varshadevadiga",
     role:"HR",
     status:"Active",
-    lastLogin:"03 Aug 2026, 09:35 AM"
+    lastLogin:"today"
   }
 };
 
@@ -63,7 +63,7 @@ const Stat=({icon:Icon,title,value,color})=>(
 const ProfileInformation=()=>(
   <div className="space-y-6">
 
-    <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+    {/* <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
 
       <Stat icon={Activity} title="Applications Managed" value="324" color="bg-[#EDF7F0] text-[#1E7A3A]"/>
 
@@ -73,7 +73,7 @@ const ProfileInformation=()=>(
 
       <Stat icon={ShieldCheck} title="Account Status" value="Active" color="bg-[#EDF7F0] text-[#1E7A3A]"/>
 
-    </section>
+    </section> */}
 
     <div className="grid gap-6 xl:grid-cols-2">
 

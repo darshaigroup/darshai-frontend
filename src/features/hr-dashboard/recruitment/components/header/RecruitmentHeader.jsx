@@ -40,7 +40,7 @@ const RecruitmentHeader=({stats={},loading=false})=>{
         </div>
 
         <div className="flex shrink-0">
-          <button type="button" onClick={()=>navigate("/hr/applications")} className="group flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#1E7A3A] px-5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(30,122,58,.16)] transition hover:bg-[#17672F] active:scale-[.98] sm:w-auto">
+          <button type="button" onClick={()=>navigate("/hr-dashboard/applications")} className="group flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#1E7A3A] px-5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(30,122,58,.16)] transition hover:bg-[#17672F] active:scale-[.98] sm:w-auto">
             View Applications
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"/>
           </button>
