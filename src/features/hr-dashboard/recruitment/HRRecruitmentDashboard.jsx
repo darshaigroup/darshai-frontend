@@ -4,7 +4,6 @@ import {motion} from "framer-motion";
 import hrRecruitmentService from "./services/hrRecruitmentService";
 import RecruitmentHeader from "./components/header/RecruitmentHeader";
 import RecruitmentStats from "./components/dashboard/RecruitmentStats";
-import ApplicationsByJob from "./components/dashboard/ApplicationsByJob";
 import RecentApplications from "./components/dashboard/RecentApplications";
 
 const EMPTY_STATS={
@@ -55,8 +54,7 @@ const HRRecruitmentDashboard=()=>{
 
       <RecruitmentStats stats={stats} loading={loading}/>
 
-      <div className="grid min-w-0 gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(360px,.65fr)]">
-        <ApplicationsByJob data={applicationsByJob} loading={loading}/>
+      <div className="w-full min-w-0">
         <RecentApplications data={recentApplications} loading={loading}/>
       </div>
     </div>

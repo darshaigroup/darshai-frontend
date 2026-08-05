@@ -1,13 +1,13 @@
 import {BadgeCheck,BriefcaseBusiness,CalendarDays,Camera,Mail,Phone,} from "lucide-react";
 import { motion } from "framer-motion";
-
+import person from "@/assets/images/profile.jpg";
 const user = {
-  name: "Rupesh Kumar Dash",
+  name: "Varsha Devadiga",
   role: "HR Recruiter",
   employeeId: "HR-001",
-  email: "hr@darshai.in",
-  phone: "+91 9876543210",
-  joined: "03 Aug 2026",
+  email: "varshadevadiga@darshai.in",
+  phone: "+91 7676740701",
+  joined: "April 2026",
   avatar: null,
 };
 
@@ -47,15 +47,11 @@ const ProfileHeader = () => (
         <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-end">
           <div className="relative">
             <div className="flex h-28 w-28 items-center justify-center rounded-3xl border-4 border-white bg-[#EAF4EC] text-3xl font-bold text-[#1E7A3A] shadow-lg">
-              {user.avatar ? (
                 <img
-                  src={user.avatar}
+                  src={person}
                   alt={user.name}
                   className="h-full w-full rounded-[22px] object-cover"
                 />
-              ) : (
-                initials(user.name)
-              )}
             </div>
 
             <button className="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-xl bg-[#1E7A3A] text-white shadow-lg transition hover:bg-[#17652F]">
@@ -83,10 +79,6 @@ const ProfileHeader = () => (
             </p>
           </div>
         </div>
-
-        <button className="h-11 rounded-xl bg-[#1E7A3A] px-6 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(30,122,58,.18)] transition hover:bg-[#17652F]">
-          Edit Profile
-        </button>
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

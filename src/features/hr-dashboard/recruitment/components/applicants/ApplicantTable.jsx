@@ -2,7 +2,7 @@ import {Eye,FileText,Mail,MapPin,MoreHorizontal,Phone,UserRound} from "lucide-re
 import {motion} from "framer-motion";
 import EmptyState from "../common/EmptyState";
 import TableSkeleton from "../common/TableSkeleton";
-
+import person from "@/assets/images/profile.jpg";
 const formatDate=value=>{
   if(!value) return "—";
   const date=new Date(value);
@@ -109,8 +109,12 @@ const ApplicantTable=({applications=[],loading=false,onView,onResume})=>{
               {rows.map((application,index)=>(
                 <motion.tr key={application.applicationId||index} initial={{opacity:0}} animate={{opacity:1}} transition={{duration:.2,delay:index*.018}} onClick={()=>onView?.(application.applicationId)} className="group cursor-pointer border-b border-[#EEF2EF] transition-colors last:border-0 hover:bg-[#FAFCFA]">
                   <td className="px-5 py-4 lg:px-6">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EAF4EC] text-[11px] font-bold text-[#1E7A3A]">{getInitials(application.fullName)}</div>
+                    <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-[#DFECE2] bg-[#F3F7F4] transition group-hover:border-[#BFD9C5]">
+                         <img
+                            src={person}
+                            alt="Candidate"
+                            className="h-full w-full object-cover"
+                           />
                       <div className="min-w-0">
                         <p className="max-w-[190px] truncate text-[13px] font-semibold text-[#29382E] group-hover:text-[#1E7A3A]">{application.fullName||"Unknown Candidate"}</p>
                         <p className="mt-1 max-w-[190px] truncate text-[10px] text-[#929D95]">{application.candidateCode||"—"}</p>

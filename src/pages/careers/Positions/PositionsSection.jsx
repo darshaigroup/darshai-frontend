@@ -17,22 +17,22 @@ const fade = {
 
 const positions = [
   {
-  id:1,
-featured:true,
-department:"Business Development",
-category:"Sales/Marketing",
-title:"Partnership & Community Manager",
+    id:1,
+    featured:true,
+    department:"Business Development",
+    category:"Sales/Marketing",
+    title:"Client Acquisition & Strategic Partnerships Executive",
     description:
       "Build strategic healthcare partnerships, strengthen community engagement, and accelerate DarshAI's preventive healthcare ecosystem.",
     overview:
-      "As a Partnership & Community Manager, you'll collaborate with hospitals, wellness organizations, NGOs, institutions, and strategic partners to expand DarshAI's impact while driving outreach initiatives and long-term collaborations.",
+      "As a Client Acquisition & Strategic Partnerships Executive, you'll collaborate with hospitals, wellness organizations, NGOs, institutions, and strategic partners to expand DarshAI's impact while driving outreach initiatives and long-term collaborations.",
     location: "Mangalore",
     experience: "0–3 Years",
     employmentType: "Full Time",
-    salary: "₹2.40LPA – ₹4.20LPA",
+    salary: "₹2.40 LPA–₹3.00 LPA + Attractive Incentives",
     vacancies: 1,
     qualifications: [
-      "BBA / Commerce / Management / Healthcare Management",
+      "MBA/ BBA / Commerce / Management / Healthcare Management",
       "Excellent communication & presentation skills",
       "Strong interpersonal & networking abilities",
       "Willingness to work in a startup environment",
@@ -57,9 +57,9 @@ title:"Partnership & Community Manager",
   {
     id: 2,
     featured:false,
-department:"Client Experience",
-category:"Sales/Marketing",
-title:"Client Relationship Executive",
+    department:"Client Experience",
+    category:"Sales/Marketing",
+    title:"Client Relationship Executive",
     description:
       "Deliver exceptional client experiences by managing patient relationships, onboarding, and operational communication.",
     overview:
@@ -67,10 +67,10 @@ title:"Client Relationship Executive",
     location: "Mangalore",
     experience: "0–3 Years",
     employmentType: "Full Time",
-    salary: "₹2.40LPA – ₹3.60LPA",
+    salary: "₹2.20 LPA–₹2.80 LPA",
     vacancies: 1,
     qualifications: [
-      "BBA / Psychology / Hospital Administration",
+      "MBA / BBA / Psychology / Hospital Administration",
       "Excellent communication skills",
       "Customer-first mindset",
       "CRM knowledge preferred",
@@ -94,9 +94,9 @@ title:"Client Relationship Executive",
   {
     id: 3,
     featured:false,
-department:"Consultant Opportunities",
-category:"Consultant",
-title:"Senior Ayurveda Advisor",
+    department:"Consultant Opportunities",
+    category:"Consultant",
+    title:"Senior Ayurveda Advisor",
     description:
       "Guide preventive healthcare programs with deep Ayurvedic expertise while collaborating with DarshAI's AI-driven longevity platform.",
     overview:

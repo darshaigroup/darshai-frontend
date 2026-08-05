@@ -28,18 +28,7 @@ const DetailCard=({icon:Icon,label,value,copy=false})=>(
         <p className="text-xs font-semibold uppercase tracking-[.08em] text-[#839087]">{label}</p>
 
         <div className="mt-1 flex items-center gap-2">
-          <p className="min-w-0 break-all text-[15px] font-bold text-[#1E2A22] sm:text-base">{value||"-"}</p>
-
-          {copy&&value&&(
-            <button
-              type="button"
-              onClick={()=>copyText(value)}
-              aria-label={`Copy ${label}`}
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[#789080] transition hover:bg-[#EDF8F0] hover:text-[#1E7A3A]"
-            >
-              <Copy size={14}/>
-            </button>
-          )}
+          <p className="min-w-0 break-all text-[15px] font-bold text-[#1E2A22] sm:text-base">{value||"-"}</p> 
         </div>
       </div>
     </div>
@@ -132,8 +121,8 @@ const Step6Submit=({candidateCode,applicationCode,jobTitle,resetForm})=>(
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {[
               "Our Talent Acquisition team will review your profile.",
-              "Shortlisted candidates will receive an interview invitation.",
-              "Updates will be sent to your registered email address.",
+              "Shortlisted candidates will participate in the interview process.",
+              "After the interview process, we will notify you of the outcome.",
               "Keep your Candidate ID and Application ID for future communication."
             ].map((text,index)=>(
               <div key={text} className="flex items-start gap-3 rounded-2xl bg-white/70 p-4">
