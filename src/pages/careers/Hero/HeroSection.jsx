@@ -3,9 +3,9 @@ import {Link} from "react-router-dom";
 import {motion,AnimatePresence} from "framer-motion";
 import {ArrowRight,Sparkles,Mouse} from "lucide-react";
 
-import career1 from "@/assets/images/bg2.png";
-import career2 from "@/assets/images/bg7.png";
-import career3 from "@/assets/images/bg8.png";
+import career1 from "@/assets/images/alvas1.jpg";
+import career2 from "@/assets/images/alvas2.jpg";
+import career3 from "@/assets/images/alvas3.jpeg";
 
 const SLIDES=[
   {image:career1},

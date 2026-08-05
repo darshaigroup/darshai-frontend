@@ -12,12 +12,12 @@ const Card=({title,description,children})=>(
   </section>
 );
 
-const Input=({label,icon:Icon,...props})=>(
+const Detail=({label,icon:Icon,value})=>(
   <div className="space-y-2">
-    <label className="text-xs font-semibold uppercase tracking-[.12em] text-[#7D8780]">{label}</label>
-    <div className="flex h-12 items-center rounded-xl border border-[#DFE6E1] bg-white px-4 transition focus-within:border-[#1E7A3A]">
-      <Icon className="mr-3 h-4 w-4 text-[#8B958E]"/>
-      <input {...props} className="h-full w-full bg-transparent text-sm text-[#243128] outline-none"/>
+    <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7D8780]">{label}</p>
+    <div className="flex h-12 items-center rounded-xl border border-[#DFE6E1] bg-[#FAFCFA] px-4">
+      <Icon className="mr-3 h-4 w-4 shrink-0 text-[#8B958E]"/>
+      <p className="min-w-0 truncate text-sm font-medium text-[#243128]">{value||"—"}</p>
     </div>
   </div>
 );
@@ -38,11 +38,7 @@ const Toggle=({title,description,checked,onChange})=>(
       <p className="mt-1 text-xs text-[#7B867F]">{description}</p>
     </div>
 
-    <button
-      type="button"
-      onClick={()=>onChange(!checked)}
-      className={`relative h-7 w-12 rounded-full transition ${checked?"bg-[#1E7A3A]":"bg-[#CBD5CE]"}`}
-    >
+    <button type="button" onClick={()=>onChange(!checked)} className={`relative h-7 w-12 rounded-full transition ${checked?"bg-[#1E7A3A]":"bg-[#CBD5CE]"}`}>
       <span className={`absolute top-1 h-5 w-5 rounded-full bg-white transition ${checked?"left-6":"left-1"}`}/>
     </button>
   </div>
@@ -50,12 +46,37 @@ const Toggle=({title,description,checked,onChange})=>(
 
 const AccountSettings=()=>{
 
+  const profile={
+    personal:{
+      firstName:"Varsha",
+      lastName:"Devadiga",
+      gender:"Female",
+      dob:"-"
+    },
+    contact:{
+      email:"varshadevadiga@darshai.in",
+      phone:"+91 7676740701",
+      city:"Mangaluru",
+      state:"Karnataka",
+      country:"India"
+    },
+    employment:{
+      employeeId:"HR-001",
+      designation:"HR Recruiter",
+      department:"Human Resources",
+      joiningDate:"April 2026",
+      reportingTo:"HR Manager",
+      employmentType:"Full Time"
+    },
+    account:{
+      username:"varshadevadiga",
+      role:"HR",
+      status:"Active",
+      lastLogin:"today"
+    }
+  };
+
   const [form,setForm]=useState({
-    fullName:"Rupesh Kumar Dash",
-    email:"hr@darshai.in",
-    phone:"+91 9876543210",
-    department:"Human Resources",
-    designation:"HR Recruiter",
     language:"English",
     timezone:"Asia/Kolkata",
     landingPage:"overview",
@@ -77,40 +98,118 @@ const AccountSettings=()=>{
       <Card title="Personal Information" description="Basic information about your HR account.">
         <div className="grid gap-5 md:grid-cols-2">
 
-          <Input
-            label="Full Name"
+          <Detail
+            label="First Name"
             icon={UserRound}
-            value={form.fullName}
-            onChange={e=>update("fullName",e.target.value)}
+            value={profile.personal.firstName}
           />
 
-          <Input
+          <Detail
+            label="Last Name"
+            icon={UserRound}
+            value={profile.personal.lastName}
+          />
+
+          <Detail
+            label="Gender"
+            icon={UserRound}
+            value={profile.personal.gender}
+          />
+
+          <Detail
+            label="Date of Birth"
+            icon={UserRound}
+            value={profile.personal.dob}
+          />
+
+          <Detail
             label="Email"
             icon={Mail}
-            type="email"
-            value={form.email}
-            onChange={e=>update("email",e.target.value)}
+            value={profile.contact.email}
           />
 
-          <Input
+          <Detail
             label="Phone"
             icon={Phone}
-            value={form.phone}
-            onChange={e=>update("phone",e.target.value)}
+            value={profile.contact.phone}
           />
 
-          <Input
-            label="Department"
+          <Detail
+            label="City"
+            icon={Globe}
+            value={profile.contact.city}
+          />
+
+          <Detail
+            label="State"
+            icon={Globe}
+            value={profile.contact.state}
+          />
+
+          <Detail
+            label="Country"
+            icon={Globe}
+            value={profile.contact.country}
+          />
+
+          <Detail
+            label="Employee ID"
             icon={UserRound}
-            value={form.department}
-            onChange={e=>update("department",e.target.value)}
+            value={profile.employment.employeeId}
           />
 
-          <Input
+          <Detail
             label="Designation"
             icon={UserRound}
-            value={form.designation}
-            onChange={e=>update("designation",e.target.value)}
+            value={profile.employment.designation}
+          />
+
+          <Detail
+            label="Department"
+            icon={UserRound}
+            value={profile.employment.department}
+          />
+
+          <Detail
+            label="Joining Date"
+            icon={UserRound}
+            value={profile.employment.joiningDate}
+          />
+
+          <Detail
+            label="Reporting To"
+            icon={UserRound}
+            value={profile.employment.reportingTo}
+          />
+
+          <Detail
+            label="Employment Type"
+            icon={UserRound}
+            value={profile.employment.employmentType}
+          />
+
+          <Detail
+            label="Username"
+            icon={UserRound}
+            value={profile.account.username}
+          />
+
+          <Detail
+            label="Role"
+            icon={UserRound}
+            value={profile.account.role}
+          />
+
+          <Detail
+            label="Status"
+            icon={UserRound}
+            value={profile.account.status}
+          />
+
+          <Detail
+            label="Last Login"
+            icon={UserRound}
+            value={profile.account.lastLogin}
           />
 
         </div>
@@ -150,8 +249,9 @@ const AccountSettings=()=>{
         <div className="grid gap-4 sm:grid-cols-2">
 
           <button
+            type="button"
             onClick={()=>update("theme","light")}
-            className={`rounded-2xl border p-5 transition ${form.theme==="light"?"border-[#1E7A3A] bg-[#F4FBF6]":"border-[#E5EBE6]"}`}
+            className={`rounded-2xl border p-5 text-left transition ${form.theme==="light"?"border-[#1E7A3A] bg-[#F4FBF6]":"border-[#E5EBE6]"}`}
           >
             <Sun className="h-7 w-7 text-[#1E7A3A]"/>
             <h4 className="mt-4 text-sm font-semibold">Light Theme</h4>
@@ -159,8 +259,9 @@ const AccountSettings=()=>{
           </button>
 
           <button
+            type="button"
             onClick={()=>update("theme","dark")}
-            className={`rounded-2xl border p-5 transition ${form.theme==="dark"?"border-[#1E7A3A] bg-[#F4FBF6]":"border-[#E5EBE6]"}`}
+            className={`rounded-2xl border p-5 text-left transition ${form.theme==="dark"?"border-[#1E7A3A] bg-[#F4FBF6]":"border-[#E5EBE6]"}`}
           >
             <Moon className="h-7 w-7 text-[#1E7A3A]"/>
             <h4 className="mt-4 text-sm font-semibold">Dark Theme</h4>
@@ -210,7 +311,7 @@ const AccountSettings=()=>{
       </Card>
 
       <div className="flex justify-end">
-        <button className="flex h-11 items-center gap-2 rounded-xl bg-[#1E7A3A] px-6 text-sm font-semibold text-white transition hover:bg-[#17652F]">
+        <button type="button" className="flex h-11 items-center gap-2 rounded-xl bg-[#1E7A3A] px-6 text-sm font-semibold text-white transition hover:bg-[#17652F]">
           <Save className="h-4 w-4"/>
           Save Preferences
         </button>
