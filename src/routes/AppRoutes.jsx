@@ -189,13 +189,11 @@ const AppRoutes = () => {
 
         <Route element={<HRProtectedRoute />}>
           <Route path="/hr-dashboard" element={<HRDashboardLayout />}>
-            <Route element={<RouteLoader />}>
               <Route index element={<HRRecruitmentDashboard />} />
               <Route path="overview" element={<HRRecruitmentDashboard />} />
               <Route path="applications" element={<Applicants />} />
               <Route path="profile" element={<HRProfile />} />
               <Route path="settings" element={<HRSettings />} />
-            </Route>
           </Route>
         </Route>
 

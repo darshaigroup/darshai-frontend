@@ -91,40 +91,40 @@ const positions = [
       "Problem Solving",
     ],
   },
-  {
-    id: 3,
-    featured:false,
-    department:"Consultant Opportunities",
-    category:"Consultant",
-    title:"Senior Ayurveda Advisor",
-    description:
-      "Guide preventive healthcare programs with deep Ayurvedic expertise while collaborating with DarshAI's AI-driven longevity platform.",
-    overview:
-      "Support evidence-based wellness protocols, mentor practitioners, and contribute domain expertise to clinical and product initiatives.",
-    location: "Mangalore",
-    experience: "5+ Years",
-    employmentType: "Consultant",
-    salary: "Negotiable",
-    vacancies: 1,
-    qualifications: [
-      "BAMS / MD Ayurveda",
-      "Strong clinical experience",
-      "Evidence-based practice mindset",
-    ],
-    responsibilities: [
-      "Review wellness protocols.",
-      "Guide clinical consultations.",
-      "Collaborate with AI research teams.",
-      "Support practitioner training.",
-    ],
-    skills: [
-      "Ayurveda",
-      "Clinical Practice",
-      "Leadership",
-      "Mentoring",
-      "Healthcare",
-    ],
-  },
+  // {
+  //   id: 3,
+  //   featured:false,
+  //   department:"Consultant Opportunities",
+  //   category:"Consultant",
+  //   title:"Senior Ayurveda Advisor",
+  //   description:
+  //     "Guide preventive healthcare programs with deep Ayurvedic expertise while collaborating with DarshAI's AI-driven longevity platform.",
+  //   overview:
+  //     "Support evidence-based wellness protocols, mentor practitioners, and contribute domain expertise to clinical and product initiatives.",
+  //   location: "Mangalore",
+  //   experience: "5+ Years",
+  //   employmentType: "Consultant",
+  //   salary: "Negotiable",
+  //   vacancies: 1,
+  //   qualifications: [
+  //     "BAMS / MD Ayurveda",
+  //     "Strong clinical experience",
+  //     "Evidence-based practice mindset",
+  //   ],
+  //   responsibilities: [
+  //     "Review wellness protocols.",
+  //     "Guide clinical consultations.",
+  //     "Collaborate with AI research teams.",
+  //     "Support practitioner training.",
+  //   ],
+  //   skills: [
+  //     "Ayurveda",
+  //     "Clinical Practice",
+  //     "Leadership",
+  //     "Mentoring",
+  //     "Healthcare",
+  //   ],
+  // },
 ];
 
 const PositionsSection = () => {
