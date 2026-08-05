@@ -112,9 +112,9 @@ const HRSettings=()=>{
 
       <MobileTabs active={active} onChange={setActive}/>
 
-      <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+      <div className="lg:grid-cols-[300px_1fr]">
 
-        <aside className="hidden h-fit rounded-3xl border border-[#E3E9E4] bg-white p-5 lg:block">
+        {/* <aside className="hidden h-fit rounded-3xl border border-[#E3E9E4] bg-white p-5 lg:block">
           <div className="mb-5">
             <h3 className="text-lg font-semibold text-[#243128]">
               Settings
@@ -148,7 +148,7 @@ const HRSettings=()=>{
               </div>
             </div>
           </div>
-        </aside>
+        </aside> */}
 
         <section className="space-y-6">
 
