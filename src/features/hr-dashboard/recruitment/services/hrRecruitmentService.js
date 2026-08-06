@@ -45,11 +45,16 @@ const getApplications=async(params={})=>{
     applications:Array.isArray(res?.data)?res.data:[],
     pagination:res?.pagination||{
       page:Number(params.page)||1,
-      limit:Number(params.limit)||20,
+      limit:Number(params.limit)||10,
       total:0,
       totalPages:0
     }
   };
+};
+
+const getJobOptions=async()=>{
+  const res=await request(`${API}/jobs`);
+  return Array.isArray(res?.data)?res.data:[];
 };
 
 const getApplicationById=async id=>{
@@ -70,4 +75,11 @@ const getResumeUrl=async documentId=>{
   return res?.data||null;
 };
 
-export default{getDashboard,getApplications,getApplicationById,getCandidateById,getResumeUrl};
+export default{
+  getDashboard,
+  getApplications,
+  getJobOptions,
+  getApplicationById,
+  getCandidateById,
+  getResumeUrl
+};

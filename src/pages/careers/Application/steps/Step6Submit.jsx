@@ -150,7 +150,7 @@ const Step6Submit=({candidateCode,applicationCode,jobTitle,resetForm})=>(
             onClick={resetForm}
             className="flex h-14 w-full items-center justify-center gap-2 rounded-full border border-[#D4E1D7] bg-white px-8 font-semibold text-[#1E7A3A] transition hover:-translate-y-0.5 hover:bg-[#F4F8F5] sm:w-auto"
           >
-            <RotateCcw size={18}/> Submit Another Application
+            <RotateCcw size={18}/> Back to Application
           </button>
         </motion.div>
 

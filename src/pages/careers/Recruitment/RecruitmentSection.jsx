@@ -44,17 +44,18 @@ const steps=[
 },
 {
   id:3,
-  icon:Users,
-  title:"Group Discussion",
-  description:"Participate in a collaborative group discussion evaluating communication, problem-solving, and team alignment.",
-  badge:"Interactive Session"
-},
-{
-  id:4,
   icon:ClipboardCheck,
   title:"Written Assessment",
   description:"Complete a practical task, case study, or role-specific assignment designed to showcase your technical capability.",
   badge:"Practical Task"
+},
+{
+  id:4,
+  icon:Users,
+  title:"Group Discussion",
+  description:"Participate in a collaborative group discussion evaluating communication, problem-solving, and team alignment.",
+  badge:"Interactive Session"
+  
 },
 {
   id:5,

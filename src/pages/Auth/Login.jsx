@@ -82,21 +82,25 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("role", data.user.role);
 
-      switch (data.user.role) {
+      switch(data.user.role){
         case "doctor":
-          navigate("/dashboard", { replace: true });
+          navigate("/dashboard",{replace:true});
           break;
 
         case "sales":
-          navigate("/sales-dashboard", { replace: true });
+          navigate("/sales-dashboard",{replace:true});
           break;
 
         case "client":
-          navigate("/patient-dashboard", { replace: true });
+          navigate("/patient-dashboard",{replace:true});
+          break;
+
+        case "hr":
+          navigate("/hr-dashboard",{replace:true});
           break;
 
         default:
-          navigate("/login", { replace: true });
+          navigate("/login",{replace:true});
       }
     } catch (err) {
       setError(err.message);
