@@ -1,88 +1,25 @@
-const API_URL =
-  import.meta.env.VITE_API_URL;
+const API_URL=import.meta.env.VITE_API_URL;
 
-/* =========================
-   GET ALL PATIENTS
-========================= */
+const request=async(endpoint,options={})=>{
+  const token=localStorage.getItem("token");
+  const response=await fetch(`${API_URL}${endpoint}`,{...options,headers:{Authorization:`Bearer ${token}`,...options.headers}});
+  const result=await response.json().catch(()=>({}));
 
-export const getPatients =
-  async () => {
+  if(response.status===401){
+    window.dispatchEvent(new CustomEvent("session-expired",{detail:{message:result.message||"Your session has expired. Please login again."}}));
+    throw new Error("SESSION_EXPIRED");
+  }
 
-    const token =
-      localStorage.getItem("token");
+  if(!response.ok) throw new Error(result.message||"Request failed");
+  return result;
+};
 
-    const response =
-      await fetch(
-        `${API_URL}/api/patients`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+export const getPatients=async()=>{
+  const result=await request("/api/patients");
+  return result.patients||[];
+};
 
-    const result =
-      await response.json();
-
-    // console.log(
-    //   "PATIENT RESPONSE:",
-    //   result
-    // );
-
-    if (!response.ok) {
-
-      throw new Error(
-        result.message ||
-        "Failed to fetch patients"
-      );
-
-    }
-
-    return result.patients || [];
-
-  };
-
-/* =========================
-   GET PATIENT BY ID
-========================= */
-
-export const getPatientById =
-  async (patientId) => {
-
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch(
-        `${API_URL}/api/patients/${patientId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-    const result =
-      await response.json();
-
-    // console.log(
-    //   "PATIENT DETAIL RESPONSE:",
-    //   result
-    // );
-
-    if (!response.ok) {
-
-      throw new Error(
-        result.message ||
-        "Failed to fetch patient"
-      );
-
-    }
-
-    return (
-      result.patient ||
-      result.data ||
-      null
-    );
-
-  };
+export const getPatientById=async patientId=>{
+  const result=await request(`/api/patients/${patientId}`);
+  return result.patient||result.data||null;
+};
