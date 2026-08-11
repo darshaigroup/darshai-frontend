@@ -1,152 +1,28 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL=import.meta.env.VITE_API_URL;
 
-export const getReportsTable =
-  async () => {
+const request=async(endpoint,options={})=>{
+  const token=localStorage.getItem("token");
+  const response=await fetch(`${API_URL}${endpoint}`,{...options,headers:{Authorization:`Bearer ${token}`,...options.headers}});
+  const result=await response.json().catch(()=>({}));
 
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch(
-        `${API_URL}/api/reports`,
-        {
-          headers:{
-            Authorization:`Bearer ${token}`,
-          },
-        }
-      );
-
-    const result =
-      await response.json();
-
-    // console.log(
-    //   "REPORT TABLE:",
-    //   result
-    // );
-
-    if(!response.ok){
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-    return result;
-
-  };
-
-export const getPatientReport =
-  async (patientId) => {
-
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch(
-        `${API_URL}/api/reports/${patientId}`,
-        {
-          headers:{
-            Authorization:`Bearer ${token}`,
-          },
-        }
-      );
-
-    const result =
-      await response.json();
-
-    // console.log(
-    //   "REPORT DETAIL:",
-    //   result
-    // );
-
-    if(!response.ok){
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-    return result;
-
-  };
-
- export const getSignatures =
-  async () => {
-
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch(
-        `${API_URL}/api/practitioner/signatures`,
-        {
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        }
-      );
-
-    const result =
-      await response.json();
-
-    return (
-      result.data || []
-    );
-
-  };
-
-  export const getPatientSummary =
-  async (patientId) => {
-
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch(
-        `${API_URL}/api/reports/${patientId}`,
-        {
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        }
-      );
-
-    const result =
-      await response.json();
-
-    if(!response.ok){
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-    return result;
-
-  };
-
-  export const getAssessmentProgress = async patientId => {
-
-  const token = localStorage.getItem("token");
-
-  const response = await fetch(
-    `${API_URL}/api/reports/${patientId}/progress`,
-    {
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    }
-  );
-
-  const result = await response.json();
-
-  if(!response.ok){
-    throw new Error(result.message);
+  if(response.status===401){
+    window.dispatchEvent(new CustomEvent("session-expired",{detail:{message:result.message||"Your session has expired. Please login again."}}));
+    throw new Error("SESSION_EXPIRED");
   }
 
+  if(!response.ok) throw new Error(result.message||"Request failed");
   return result;
-
 };
+
+export const getReportsTable=()=>request("/api/reports");
+
+export const getPatientReport=patientId=>request(`/api/reports/${patientId}`);
+
+export const getSignatures=async()=>{
+  const result=await request("/api/practitioner/signatures");
+  return result.data||[];
+};
+
+export const getPatientSummary=patientId=>request(`/api/reports/${patientId}`);
+
+export const getAssessmentProgress=patientId=>request(`/api/reports/${patientId}/progress`);

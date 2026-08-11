@@ -1,85 +1,62 @@
 const API=`${import.meta.env.VITE_API_URL}/api/hr/recruitment`;
 
-const getError=async res=>{
+const getError=async response=>{
   try{
-    const data=await res.json();
+    const data=await response.json();
     return data?.message||data?.error||data?.errors?.[0]?.message||"Something went wrong.";
   }catch{
-    return `Request failed with status ${res.status}.`;
+    return `Request failed with status ${response.status}.`;
   }
 };
 
 const request=async(url,options={})=>{
-  const res=await fetch(url,{
-    ...options,
-    headers:{
-      Accept:"application/json",
-      ...options.headers
-    }
-  });
+  const token=localStorage.getItem("token");
+  const response=await fetch(url,{...options,headers:{Accept:"application/json",Authorization:`Bearer ${token}`,...options.headers}});
 
-  if(!res.ok) throw new Error(await getError(res));
-  return res.json();
+  if(response.status===401){
+    const message=await getError(response);
+    window.dispatchEvent(new CustomEvent("session-expired",{detail:{message}}));
+    throw new Error("SESSION_EXPIRED");
+  }
+
+  if(!response.ok) throw new Error(await getError(response));
+  return response.json();
 };
 
 const getDashboard=async()=>{
-  const res=await request(`${API}/dashboard`);
-  return res?.data||{
-    stats:{},
-    applicationsByJob:[],
-    recentApplications:[]
-  };
+  const result=await request(`${API}/dashboard`);
+  return result?.data||{stats:{},applicationsByJob:[],recentApplications:[]};
 };
 
 const getApplications=async(params={})=>{
   const query=new URLSearchParams();
-
-  Object.entries(params).forEach(([key,value])=>{
-    if(value!==undefined&&value!==null&&value!=="") query.set(key,String(value));
-  });
-
+  Object.entries(params).forEach(([key,value])=>{if(value!==undefined&&value!==null&&value!=="")query.set(key,String(value));});
   const url=query.size?`${API}/applications?${query.toString()}`:`${API}/applications`;
-  const res=await request(url);
-
-  return{
-    applications:Array.isArray(res?.data)?res.data:[],
-    pagination:res?.pagination||{
-      page:Number(params.page)||1,
-      limit:Number(params.limit)||10,
-      total:0,
-      totalPages:0
-    }
-  };
+  const result=await request(url);
+  return{applications:Array.isArray(result?.data)?result.data:[],pagination:result?.pagination||{page:Number(params.page)||1,limit:Number(params.limit)||10,total:0,totalPages:0}};
 };
 
 const getJobOptions=async()=>{
-  const res=await request(`${API}/jobs`);
-  return Array.isArray(res?.data)?res.data:[];
+  const result=await request(`${API}/jobs`);
+  return Array.isArray(result?.data)?result.data:[];
 };
 
 const getApplicationById=async id=>{
-  if(!id) throw new Error("Application ID is required.");
-  const res=await request(`${API}/applications/${encodeURIComponent(id)}`);
-  return res?.data||null;
+  if(!id)throw new Error("Application ID is required.");
+  const result=await request(`${API}/applications/${encodeURIComponent(id)}`);
+  return result?.data||null;
 };
 
 const getCandidateById=async id=>{
-  if(!id) throw new Error("Candidate ID is required.");
-  const res=await request(`${API}/candidates/${encodeURIComponent(id)}`);
-  return res?.data||null;
+  if(!id)throw new Error("Candidate ID is required.");
+  const result=await request(`${API}/candidates/${encodeURIComponent(id)}`);
+  return result?.data||null;
 };
 
 const getResumeUrl=async documentId=>{
-  if(!documentId) throw new Error("Resume document ID is required.");
-  const res=await request(`${API}/documents/${encodeURIComponent(documentId)}/view`);
-  return res?.data||null;
+  if(!documentId)throw new Error("Resume document ID is required.");
+  const result=await request(`${API}/documents/${encodeURIComponent(documentId)}/view`);
+  return result?.data||null;
 };
 
-export default{
-  getDashboard,
-  getApplications,
-  getJobOptions,
-  getApplicationById,
-  getCandidateById,
-  getResumeUrl
-};
+export default{getDashboard,getApplications,getJobOptions,getApplicationById,getCandidateById,getResumeUrl};
