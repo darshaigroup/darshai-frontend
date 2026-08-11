@@ -113,12 +113,12 @@ useEffect(()=>{
 
         {/* Actions */}
         <div className="flex items-center gap-4">
-          <button
+          {/* <button
             onClick={openModal}
             className="px-6 py-3 rounded-full bg-[#4f9401] text-white shadow-md hover:bg-[#7CB342] transition"
           >
             + Add Patient
-          </button>
+          </button> */}
 
           <Settings size={18} className="text-gray-500 cursor-pointer" />
           <button
