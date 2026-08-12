@@ -17,27 +17,35 @@ export default function ResultsPage() {
     <div className="space-y-8">
       <HealthOverview assessment={assessment} report={report}/>
 
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-12 xl:col-span-8">
-          <HealthRadar assessment={assessment}/>
-        </div>
-
-        <div className="col-span-12 xl:col-span-4">
-          <SafetyAlerts assessment={assessment}/>
+      <div className="grid grid-cols-12 items-stretch gap-6">
+      <div className="col-span-12 flex h-full xl:col-span-8">
+        <div className="flex h-full w-full">
+          <HealthRadar assessment={assessment} />
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-12 xl:col-span-6">
-          <BodyHeatMap assessment={assessment}/>
+      <div className="col-span-12 flex h-full xl:col-span-4">
+        <div className="flex h-full w-full">
+          <SafetyAlerts assessment={assessment} />
         </div>
+      </div>
+    </div>
 
-        <div className="col-span-12 xl:col-span-6">
-          <AyurvedaDashboard report={report}/>
+    <div className="grid grid-cols-12 items-stretch gap-6">
+      <div className="col-span-12 flex h-full xl:col-span-6">
+        <div className="flex h-full w-full">
+          <BodyHeatMap assessment={assessment} />
         </div>
       </div>
 
-      <LifestyleDashboard report={report}/>
+      <div className="col-span-12 flex h-full xl:col-span-6">
+        <div className="flex h-full w-full">
+          <AyurvedaDashboard report={report} />
+        </div>
+      </div>
+    </div>
+
+      {/* <LifestyleDashboard report={report}/> */}
     </div>
   );
 }

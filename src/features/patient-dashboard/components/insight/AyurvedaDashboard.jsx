@@ -235,45 +235,7 @@ const stages=[
               </div>
 
               <div className="space-y-5">
-                <div className="rounded-2xl border border-slate-200 p-4 sm:rounded-3xl sm:p-5">
-                  <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-slate-900 sm:text-lg">
-                      Dominant Constitution
-                    </h3>
-
-                    <Leaf className="text-emerald-600" size={18} />
-                  </div>
-
-                  <div
-                    className="flex flex-col gap-5 rounded-2xl p-3 sm:flex-row sm:items-center sm:justify-between"
-                    style={{ background: `${clr[dominant] ?? "#16A34A"}15` }}
-                  >
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm text-slate-500">Dominant Dosha</p>
-
-                      <h3
-                        className="mt-1 break-words text-2xl font-bold capitalize sm:text-3xl"
-                        style={{ color: clr[dominant] ?? "#16A34A" }}
-                      >
-                        {dominant}
-                      </h3>
-
-                      {prakriti?.prakriti_type && (
-                        <p className="mt-2 text-sm text-slate-500">
-                          {prakriti.prakriti_type}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white shadow">
-                      <Leaf
-                        size={30}
-                        style={{ color: clr[dominant] ?? "#16A34A" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
+               
                 <div className="grid grid-cols-1 gap-5">
                   {/* -------------------- AGNI -------------------- */}
                   <div className="rounded-2xl border border-slate-200 p-4 sm:rounded-3xl sm:p-5">

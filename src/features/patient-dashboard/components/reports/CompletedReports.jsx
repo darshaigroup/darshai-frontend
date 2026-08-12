@@ -52,12 +52,9 @@ export default function CompletedReports({ progress = {}, report = {} }) {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate("/patient-dashboard/reports")}
-          className="inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-semibold text-white transition hover:bg-emerald-700"
-        >
-          Open Wellness Reports
-          <ArrowRight size={16} />
+       <button type="button" onClick={() => navigate("/patient-dashboard/reports")} className="group flex w-full items-center justify-center gap-2 rounded-full bg-[#06152A] px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-[#0B2442] md:w-auto">
+           Open Reports
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1"/>
         </button>
       </div>
 
@@ -68,4 +65,4 @@ export default function CompletedReports({ progress = {}, report = {} }) {
       </div>
     </section>
   );
-}
+}  

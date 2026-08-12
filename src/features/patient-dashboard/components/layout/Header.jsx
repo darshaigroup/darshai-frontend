@@ -1,6 +1,6 @@
-import { Search,Bell,Moon,Sun,Menu,LogOut,HelpCircle } from "lucide-react";
+import {Search,Bell,Moon,Sun,Menu,HelpCircle} from "lucide-react";
 import useTour from "../onbaording/useTour";
-
+import person from "@/assets/images/profile.jpg";
 export default function Header({
   profile,
   report,
@@ -8,7 +8,6 @@ export default function Header({
   progress,
   searchQuery,
   setSearchQuery,
-  onLogout,
   currentTab,
   isDarkMode,
   onToggleTheme,
@@ -18,12 +17,24 @@ export default function Header({
   const patient=profile?.patient??profile??{},
         reportData=report?.patient??report??{},
         assessmentData=assessment?.data??assessment??{},
-        finalAyurveda=reportData?.final_ayurveda_result??{},
+        finalAyurveda=
+          reportData?.final_ayurveda_result??
+          report?.final_ayurveda_result??
+          {},
+        prakriti=finalAyurveda?.prakriti??{},
         firstName=(patient?.name??patient?.full_name??"Patient").split(" ")[0],
         fullName=patient?.name??patient?.full_name??"Patient",
-        riskTier=finalAyurveda?.risk_tier??reportData?.risk_tier??assessmentData?.risk_band??"--",
-        dosha=finalAyurveda?.primary_dosha??reportData?.primary_dosha??finalAyurveda?.prakriti?.dominant_dosha??"TriDosha",
-        avatar=patient?.profile_image||`https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=10b981&color=fff`,
+        riskTier=
+          finalAyurveda?.risk_tier??
+          reportData?.risk_tier??
+          assessmentData?.risk_band??
+          "--",
+        prakritiType=
+          prakriti?.prakriti_type??
+          "Pending Analysis",
+        avatar=
+          patient?.profile_image||
+          `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=10b981&color=fff`,
         alerts=[],
         completed=progress?.completed??false;
 
@@ -67,13 +78,20 @@ export default function Header({
     <header className="sticky top-0 z-30 border-b border-stone-200/70 bg-[#F8F6F1]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-24 max-w-[1520px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
 
-        <button onClick={onOpenSidebar} className="flex h-11 w-11 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm lg:hidden">
+        <button
+          onClick={onOpenSidebar}
+          className="flex h-11 w-11 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm lg:hidden"
+        >
           <Menu className="h-5 w-5 text-slate-700"/>
         </button>
 
         <div className="hidden min-w-[250px] md:block">
-          <h2 className="font-serif text-[28px] font-bold leading-none text-slate-900">{page.title}</h2>
-          <p className="mt-2 text-sm text-slate-500">{page.subtitle}</p>
+          <h2 className="font-serif text-[28px] font-bold leading-none text-slate-900">
+            {page.title}
+          </h2>
+          <p className="mt-2 text-sm text-slate-500">
+            {page.subtitle}
+          </p>
         </div>
 
         <div className="hidden max-w-xl flex-1 lg:flex">
@@ -90,8 +108,6 @@ export default function Header({
 
         <div className="flex items-center gap-2 sm:gap-3">
 
-         
-
           <button
             id="tour-start-btn"
             onClick={handleStartTour}
@@ -106,34 +122,54 @@ export default function Header({
             title="Toggle Theme"
             className="flex h-11 w-11 items-center justify-center rounded-xl border border-stone-200 bg-white transition-all hover:bg-emerald-50"
           >
-            {isDarkMode?<Sun className="h-5 w-5 text-amber-500"/>:<Moon className="h-5 w-5 text-slate-700"/>}
+            {isDarkMode
+              ?<Sun className="h-5 w-5 text-amber-500"/>
+              :<Moon className="h-5 w-5 text-slate-700"/>
+            }
           </button>
 
-          <button className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-stone-200 bg-white transition-all hover:bg-emerald-50">
+          <button
+            className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-stone-200 bg-white transition-all hover:bg-emerald-50"
+          >
             <Bell className="h-5 w-5 text-slate-700"/>
-            {alerts.length>0&&<span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-rose-500"/>}
+            {alerts.length>0&&(
+              <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-rose-500"/>
+            )}
           </button>
 
           <div className="hidden items-center gap-3 pl-2 md:flex">
-            <div className="text-right">
-              <p className="text-sm font-semibold text-slate-900">{fullName}</p>
-              <p className="text-[11px] uppercase tracking-[0.15em] text-emerald-600">{dosha}</p>
+            <div className="flex items-center gap-3">
+
+              <div className="text-right">
+                <p className="text-sm font-semibold text-slate-900">
+                  {fullName}
+                </p>
+
+                <div className="mt-1 flex items-center justify-end gap-2">
+                  <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+                    <span className="absolute h-2.5 w-2.5 animate-ping rounded-full bg-emerald-400/50"/>
+                    <span className="absolute h-2.5 w-2.5 rounded-full bg-emerald-400/20 blur-sm"/>
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500"/>
+                  </span>
+
+                  <span className="text-[11px] font-semibold text-slate-700">
+                    {prakritiType}
+                  </span>
+                </div>
+              </div>
+
+              <div className="relative">
+                <span className="absolute -inset-1 rounded-full bg-emerald-400/20 blur-md"/>
+
+                <img
+                  src={person}
+                  alt={fullName}
+                  className="relative h-11 w-11 rounded-full border-2 border-emerald-500 bg-white object-cover"
+                />
+              </div>
+
             </div>
-
-            <img
-              src={avatar}
-              alt={fullName}
-              className="h-11 w-11 rounded-full border-2 border-emerald-500 object-cover"
-            />
           </div>
-
-          <button
-            onClick={onLogout}
-            title="Logout"
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-stone-200 bg-white transition-all hover:border-rose-300 hover:bg-rose-50"
-          >
-            <LogOut className="h-5 w-5 text-slate-700 hover:text-rose-600"/>
-          </button>
 
         </div>
       </div>
