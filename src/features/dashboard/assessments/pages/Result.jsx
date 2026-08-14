@@ -332,7 +332,6 @@ const Result = () => {
           ))}
         </div>
 
-        {/* AI SUMMARY */}
 
         {data.aiResponse && (
           <div className="bg-white rounded-[32px] shadow-xl p-8">

@@ -66,7 +66,7 @@ export default function WelcomeModal({
             <div className="mt-8 border-t border-white/10 pt-5">
               <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500">
                 <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                HIPAA • Secure • AI Guided
+                HIPAA • Secure •  Guided
               </div>
             </div>
           </motion.div>

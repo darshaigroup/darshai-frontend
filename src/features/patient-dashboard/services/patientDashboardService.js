@@ -25,9 +25,7 @@ const request=async(endpoint,options={})=>{
     throw new Error("SESSION_EXPIRED");
   }
 
-  if(!response.ok){
-    throw new Error(result.message||"Request failed");
-  }
+  if(!response.ok) throw new Error(result.message||"Request failed");
 
   return result;
 };
@@ -35,4 +33,8 @@ const request=async(endpoint,options={})=>{
 export const getMyProfile=()=>request("/api/patients/profile");
 export const getMyReport=()=>request("/api/reports/patient-report");
 export const getMyAssessment=()=>request("/api/assessments/my-assessment");
-export const getAssessmentProgress=patientId=>request(`/api/reports/${patientId}/progress`);
+export const getAssessmentProgress=patientId=>
+  request(`/api/reports/${patientId}/progress`);
+
+export const searchMyDashboard=query=>
+  request(`/api/reports/search?q=${encodeURIComponent(query)}`);

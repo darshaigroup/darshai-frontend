@@ -31,7 +31,7 @@ const pillars = [
     label: "PROPRIETARY DIAGNOSTIC LLM",
     title: "AI-Native",
     description:
-      "DARSHAI uses AI to support personalized wellness assessments, recommendations, and wellness planning.",
+      "DARSHAI uses personalized wellness assessments, recommendations, and wellness planning.",
     pill: "Continuous Machine Learning",
   },
   {

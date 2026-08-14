@@ -4,12 +4,19 @@ import DashboardShell from "../components/layout/DashboardShell";
 import {TourProvider} from "../components/onbaording/TourContext";
 import TourHelper from "../components/onbaording/TourHelper";
 import logo from "@/assets/images/logos.png";
-import {getMyProfile,getMyReport,getMyAssessment,getAssessmentProgress} from "../services/patientDashboardService";
+import {
+  getMyProfile,
+  getMyReport,
+  getMyAssessment,
+  getAssessmentProgress,
+  searchMyDashboard
+} from "../services/patientDashboardService";
 
 export default function PatientDashboardLayout(){
   const navigate=useNavigate();
   const [currentTab,setCurrentTab]=useState("dashboard");
   const [searchQuery,setSearchQuery]=useState("");
+  const [searchResults,setSearchResults]=useState([]);
   const [isDarkMode,setIsDarkMode]=useState(false);
   const [activePatient,setActivePatient]=useState(null);
   const [reports,setReports]=useState([]);
@@ -23,25 +30,13 @@ export default function PatientDashboardLayout(){
       try{
         const profile=await getMyProfile();
         const patientId=profile?.patient?.id;
-
         const [report,assessmentData,progress]=await Promise.all([
           getMyReport(),
           getMyAssessment(),
           patientId?getAssessmentProgress(patientId):Promise.resolve(null)
         ]);
-
-        const mergedPatient={
-          ...(profile?.patient||{}),
-          ...(report?.patient||{})
-        };
-
-        setPatientData({
-          profile,
-          report,
-          assessment:assessmentData,
-          progress
-        });
-
+        const mergedPatient={...(profile?.patient||{}),...(report?.patient||{})};
+        setPatientData({profile,report,assessment:assessmentData,progress});
         setActivePatient(mergedPatient);
         setReports(report?.labReports||[]);
         setAssessment(assessmentData?.data||null);
@@ -54,6 +49,41 @@ export default function PatientDashboardLayout(){
 
     loadDashboard();
   },[]);
+
+  useEffect(()=>{
+    const query=searchQuery.trim();
+
+    if(!query){
+      setSearchResults([]);
+      return;
+    }
+
+    const timer=setTimeout(async()=>{
+      try{
+        const data=await searchMyDashboard(query);
+        setSearchResults(data?.results||[]);
+      }catch(err){
+        console.error("Search Error:",err);
+        setSearchResults([]);
+      }
+    },300);
+
+    return()=>clearTimeout(timer);
+  },[searchQuery]);
+
+  const handleSearchSelect=item=>{
+    if(!item?.route)return;
+
+    setSearchQuery("");
+    setSearchResults([]);
+
+    navigate(item.route,{
+      state:{
+        focus:item.focus,
+        search:item.value
+      }
+    });
+  };
 
   const handleLogout=()=>{
     localStorage.removeItem("token");
@@ -79,7 +109,6 @@ export default function PatientDashboardLayout(){
             <div className="absolute h-52 w-52 rounded-full border border-[#C9A75B]/20"/>
             <div className="absolute h-44 w-44 rounded-full border border-emerald-500/30 animate-spin [animation-duration:8s]"/>
             <div className="absolute h-32 w-32 rounded-full border border-[#C9A75B]/40 animate-spin [animation-duration:5s] [animation-direction:reverse]"/>
-
             <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#06152A] to-[#0B2442] shadow-[0_0_45px_rgba(30,122,58,.35)]">
               <img src={logo} alt="DarshAI" className="h-16 w-16 object-contain"/>
             </div>
@@ -126,6 +155,8 @@ export default function PatientDashboardLayout(){
         currentTab={currentTab}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        searchResults={searchResults}
+        onSearchSelect={handleSearchSelect}
         patients={activePatient?[activePatient]:[]}
         onSelectPatient={()=>{}}
         onLogout={handleLogout}

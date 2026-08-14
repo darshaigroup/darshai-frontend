@@ -1,5 +1,5 @@
 import {useMemo,useState} from "react";
-import {Mail,Phone,MapPin,Briefcase,Settings,Globe,Clock,Sun,Moon,Leaf,Sparkles,ArrowRight,CheckCircle2} from "lucide-react";
+import {Mail,Phone,MapPin,Briefcase,Settings,Globe,Clock,TargetIcon,Sun,Moon,PersonStandingIcon,Leaf,Sparkles,ArrowRight,CheckCircle2} from "lucide-react";
 import person from "@/assets/images/profile.jpg";
 const getLifestyleAnswers=patientData=>{
   const sources=[
@@ -284,7 +284,7 @@ export default function SettingsView({
         <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-start gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-50">
-              <Leaf className="text-emerald-600" size={21}/>
+              <TargetIcon className="text-emerald-600" size={21}/>
             </div>
 
             <div>
@@ -324,7 +324,7 @@ export default function SettingsView({
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4 sm:gap-6">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-emerald-100 sm:h-20 sm:w-20">
-              <Leaf className="text-emerald-600" size={34}/>
+              <PersonStandingIcon className="text-emerald-600" size={34}/>
             </div>
 
             <div>

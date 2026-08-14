@@ -68,7 +68,7 @@ export default function WellnessMetrics() {
           </h2>
 
           <p className="mt-3 max-w-3xl text-slate-500 leading-7">
-            Your AI companion continuously analyzes physiological biomarkers,
+            Your companion continuously analyzes physiological biomarkers,
             constitutional balance and recovery trends to optimize long-term
             wellness.
           </p>
@@ -125,7 +125,7 @@ export default function WellnessMetrics() {
           <div>
 
             <p className="text-[11px] uppercase tracking-[0.18em] font-mono text-emerald-600">
-              AI Companion Summary
+              Wellness Companion Summary
             </p>
 
             <h3 className="mt-3 text-xl font-semibold text-slate-900">

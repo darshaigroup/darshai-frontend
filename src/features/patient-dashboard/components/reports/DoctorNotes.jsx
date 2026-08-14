@@ -59,7 +59,7 @@ export default function DoctorNotes({ doctor = {} }) {
     <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-slate-900">Doctor Notes & Recommendations</h2>
-        <p className="mt-1 text-sm text-slate-500">Clinical observations, AI insights and personalized recommendations.</p>
+        <p className="mt-1 text-sm text-slate-500">Clinical observations, insights and personalized recommendations.</p>
       </div>
 
       <div className="grid gap-5">

@@ -13,7 +13,7 @@ const ReportsHeader = () => {
           Clinical Reports
         </h1>
         <p className="text-gray-500 text-sm">
-          Comprehensive wellness documentation and AI analysis
+          Comprehensive wellness documentation and analysis
         </p>
       </div>
 
