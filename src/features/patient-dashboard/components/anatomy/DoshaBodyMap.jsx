@@ -47,11 +47,7 @@ export default function DoshaBodyMap({patient={}}){
           <div className="relative w-full max-w-[320px] sm:max-w-[360px]">
             <img src={body} alt="Dosha Body" className="w-full select-none object-contain" draggable={false}/>
             {Object.values(DOSHAS).map(d=><button key={d.label} type="button" aria-label={`Select ${d.label}`} onClick={()=>setActive(d.label.toLowerCase())} className={`absolute z-20 ${d.position}`}><DoshaNode label={d.label} color={d.color} active={active===d.label.toLowerCase()}/></button>)}
-            <motion.div animate={{y:[-4,4,-4],scale:[1,1.02,1]}} transition={{repeat:Infinity,duration:4,ease:"easeInOut"}} className="absolute right-[-6px] top-[2%] z-30 rounded-2xl border border-slate-200 bg-white px-5 py-2.5 text-center shadow-[0_15px_35px_rgba(15,23,42,.12)] sm:right-[-20px] sm:rounded-3xl sm:px-8 sm:py-3">
-              <p className="text-[8px] uppercase tracking-[.2em] text-slate-400 sm:text-[10px]">Wellness</p>
-              <motion.h3 key={wellness} initial={{scale:.8,opacity:0}} animate={{scale:1,opacity:1}} className="mt-1 text-2xl font-bold text-emerald-600 sm:text-4xl">{wellness!==null?`${wellness}%`:"--"}</motion.h3>
-              <p className="mt-1 text-[9px] text-slate-500 sm:text-xs">{riskTier}</p>
-            </motion.div>
+            
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 rounded-full bg-[radial-gradient(circle_at_center,rgba(16,185,129,.09),transparent_70%)]"/>
           </div>
         </div>

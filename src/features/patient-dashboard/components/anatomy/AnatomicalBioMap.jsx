@@ -1,6 +1,6 @@
 import { useMemo,useState } from "react";
 import { motion } from "framer-motion";
-import { Wind,Flame,Leaf,ShieldCheck,Activity,ArrowRight,Sparkles } from "lucide-react";
+import { Wind,Flame,Leaf,HeartPulse,Activity,ArrowRight,Sparkles, HeartPlus } from "lucide-react";
 import tridosha from "@/assets/images/TridoshaBody.png";
 
 export default function AnatomicalBioMap({ patient={} }) {
@@ -164,7 +164,7 @@ const goToReport = () => {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-              <ShieldCheck className="h-7 w-7 text-emerald-600"/>
+              <HeartPulse className="h-7 w-7 text-red-600"/>
               <p className="mt-4 font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">Risk Tier</p>
               <h4 className="mt-2 text-2xl font-bold text-slate-900">{risk}</h4>
             </div>

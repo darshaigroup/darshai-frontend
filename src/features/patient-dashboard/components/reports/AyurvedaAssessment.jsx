@@ -488,7 +488,7 @@ export default function AyurvedaAssessment({ayurveda={}}){
 
           </div>
 
-          {!!ama?.indicators_present?.length&&(
+          {/* {!!ama?.indicators_present?.length&&(
             <div className="mt-5 sm:mt-6">
               <h4 className="mb-3 text-sm font-semibold text-slate-900 sm:text-base">
                 Indicators Present
@@ -505,7 +505,7 @@ export default function AyurvedaAssessment({ayurveda={}}){
                 ))}
               </div>
             </div>
-          )}
+          )} */}
 
         </motion.div>
 

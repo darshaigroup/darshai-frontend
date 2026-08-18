@@ -13,7 +13,8 @@ const gaugeBadge=r=>{r=String(r??"").toLowerCase();if(["low","normal"].includes(
 const riskLabel=p=>p>=80?"High Risk":p>=30?"Moderate":"Good";
 
 const Gauge=({score=0,risk})=>{
-  const r=68,c=2*Math.PI*r,p=c-c*(Math.min(Math.max(Number(score)||0,0),100)/100),stroke=gaugeStroke(risk);
+  const r=68,c=2*Math.PI*r,p=c-c*(Math.min(Math.max(Number(score)||0,0),100)/100);
+  const stroke=Number(score)<=33?"#16a34a":Number(score)<=66?"#eab308":"#dc2626";
   return(
     <div className="relative mx-auto flex h-44 w-44 items-center justify-center sm:h-52 sm:w-52">
       <svg viewBox="0 0 208 208" className="h-full w-full -rotate-90">
@@ -22,12 +23,11 @@ const Gauge=({score=0,risk})=>{
       </svg>
       <div className="absolute flex flex-col items-center">
         <h2 className="text-3xl font-bold text-slate-700 sm:text-4xl">{score}</h2>
-        <span className={`mt-2 rounded-full px-3 py-1 text-xs font-semibold capitalize sm:mt-3 sm:px-4 sm:py-1.5 sm:text-sm ${gaugeBadge(risk)}`}>{risk??"--"}</span>
+        <p className="text-xs font-medium text-slate-500 sm:text-sm">Composite Score</p>
       </div>
     </div>
   );
 };
-
 export default function RiskAssessment({assessment={},ai={}}){
   const [open,setOpen]=useState(null);
   const blocks=Array.isArray(ai?.blocks)?ai.blocks:[];
@@ -71,7 +71,7 @@ export default function RiskAssessment({assessment={},ai={}}){
           </div>
 
           <div className="flex w-full justify-center lg:w-auto lg:shrink-0">
-            <Gauge score={score} risk={assessment?.risk_band}/>
+            <Gauge score={score} />
           </div>
         </div>
       </div>
