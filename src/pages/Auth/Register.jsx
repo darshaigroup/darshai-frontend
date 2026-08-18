@@ -261,10 +261,6 @@ export default function Register() {
                       // console.log("REGISTER RESPONSE:", res);
 
                       if (res?.success) {
-                        if (res.token) {
-                          localStorage.setItem("token", res.token);
-                        }
-
                         navigate(res.redirect || "/lifestyle/welcome", {
                           replace: true,
                         });
