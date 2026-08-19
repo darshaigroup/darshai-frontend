@@ -127,10 +127,10 @@ export default function TermsConditions() {
               <Phone className="w-5 h-5 text-[#1F4D3E]" />
 
               <a
-                href="tel:+918088171511"
+                href="tel:+917204190150"
                 className="text-[#1F4D3E]/70 hover:text-[#C6A75E] transition"
               >
-                +91-8088171511
+                +91-7204190150
               </a>
             </div>
           </div>

@@ -12,8 +12,9 @@ import {
 } from "lucide-react";
 
 const pct=v=>Math.min(Math.max(Number(v)||0,0),100),
-  clr=v=>v>80?"#ef4444":v>=60?"#f59e0b":"#22c55e",
-  bg=v=>v>80?"bg-red-100 text-red-700":v>=60?"bg-amber-100 text-amber-700":"bg-emerald-100 text-emerald-700",
+  level=v=>v>=80?"High":v>=60?"Moderate":"Low",
+  clr=v=>v>=80?"#ef4444":v>=60?"#f59e0b":"#22c55e",
+  bg=v=>v>=80?"bg-red-100 text-red-700":v>=60?"bg-amber-100 text-amber-700":"bg-emerald-100 text-emerald-700",
   cardAnim={initial:{opacity:0,y:18},animate:{opacity:1,y:0},transition:{duration:.45}},
   expandAnim={initial:{height:0,opacity:0},animate:{height:"auto",opacity:1},exit:{height:0,opacity:0},transition:{duration:.25}};
 
@@ -50,18 +51,14 @@ const Gauge=({value=0,risk="Healthy"})=>{
           initial={{scale:.8,opacity:0}}
           animate={{scale:1,opacity:1}}
           transition={{delay:.2}}
-          className="text-5xl font-bold tracking-tight"
+          className="text-7xl font-bold tracking-tight"
         >
           {p}
         </motion.h2>
 
-        <p className="mt-1 text-sm font-medium text-slate-500">
+        <p className="mt-1 text-2xl font-medium text-slate-500">
           Overall Score
         </p>
-
-        <span className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${bg(p)}`}>
-          {risk}
-        </span>
       </div>
     </div>
   );
@@ -166,7 +163,6 @@ const CTA=({onClick})=>(
         Explore detailed insights & recommendations
       </p>
     </div>
-
     <Sparkles size={22}/>
   </motion.button>
 );
@@ -189,23 +185,26 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
     const result=assessment?.ai_response??report?.ai_response??{},
       blocks=result?.blocks??[],
       score=pct(assessment?.composite_score??report?.composite_score),
-      risk=assessment?.risk_band??report?.risk_band??result?.composite_risk??"Healthy",
+      risk=level(score),
       completion=result?.total_completion_pct??100,
 
-      // Critical = strictly greater than 80
-      critical=blocks.filter(b=>pct(b?.score)>80).length,
+      critical=blocks.filter(b=>pct(b?.score)>=80).length,
 
-      // Moderate = 60 to 80 inclusive
       moderate=blocks.filter(b=>{
         const score=pct(b?.score);
-        return score>=60&&score<=80;
+        return score>=60&&score<80;
       }).length,
 
       healthy=Math.max(blocks.length-critical-moderate,0),
 
       priorities=[...blocks]
         .sort((a,b)=>pct(b?.score)-pct(a?.score))
-        .slice(0,4),
+        .slice(0,4)
+        .map(b=>({
+          ...b,
+          score:pct(b?.score),
+          risk_level:level(b?.score)
+        })),
 
       metrics=[
         {
@@ -226,13 +225,13 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
           icon:ClipboardCheck,
           title:"Assessment",
           value:`${completion}%`,
-          subtitle:"Assessment completed",
+          subtitle:"Assessment",
           color:"#22c55e",
           details:[
-            "Clinical Assessment ✓",
-            "Lifestyle Assessment ✓",
-            "Risk Assessment ✓",
-            "Ayurveda Assessment ✓"
+            "Clinical Assessment ",
+            "Lifestyle Assessment ",
+            "Risk Assessment ",
+            "Ayurveda Assessment "
           ]
         },
         {
@@ -242,11 +241,8 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
           value:critical,
           subtitle:"Need immediate attention",
           color:"#ef4444",
-
-          // IMPORTANT:
-          // Use the exact same score condition as the critical count.
           details:blocks
-            .filter(b=>pct(b?.score)>80)
+            .filter(b=>pct(b?.score)>=80)
             .map(b=>`${b.title} (${pct(b.score)}%)`)
         },
         {
@@ -396,9 +392,9 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
           {priorities.map((item,i)=>(
             <InsightCard
               key={item.id??item.title??i}
-              icon={pct(item.score)>80?ShieldAlert:AlertTriangle}
+              icon={item.score>=80?ShieldAlert:AlertTriangle}
               title={item.title}
-              level={item.risk_level}
+              level={level(item.score)}
               color={clr(item.score)}
               open={openInsight===item.id}
               onToggle={()=>{
@@ -413,11 +409,9 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
                     {item.score}% Risk
                   </span>
 
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                    {item.answered}/{item.total} Parameters
-                  </span>
+                 
 
-                  {pct(item.score)>80&&(
+                  {item.score>=80&&(
                     <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
                       Immediate Review
                     </span>
@@ -453,7 +447,7 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
                         </span>
 
                         <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                          bg(p.score/p.max_score*100)
+                          bg((Number(p.score)||0)/(Number(p.max_score)||1)*100)
                         }`}>
                           {p.option}
                         </span>
@@ -468,7 +462,7 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
                   </p>
 
                   <p className="mt-2 text-sm text-slate-700">
-                    {item.score>80
+                    {item.score>=80
                       ?"This body system shows significant deviation and should be prioritized during clinical review."
                       :item.score>=60
                       ?"Moderate findings are present. Preventive attention and continued monitoring are recommended."

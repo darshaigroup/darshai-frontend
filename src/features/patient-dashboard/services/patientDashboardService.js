@@ -33,8 +33,22 @@ const request=async(endpoint,options={})=>{
 export const getMyProfile=()=>request("/api/patients/profile");
 export const getMyReport=()=>request("/api/reports/patient-report");
 export const getMyAssessment=()=>request("/api/assessments/my-assessment");
-export const getAssessmentProgress=patientId=>
-  request(`/api/reports/${patientId}/progress`);
+export const getAssessmentProgress=patientId=>request(`/api/reports/${patientId}/progress`);
+export const searchMyDashboard=query=>request(`/api/reports/search?q=${encodeURIComponent(query)}`);
 
-export const searchMyDashboard=query=>
-  request(`/api/reports/search?q=${encodeURIComponent(query)}`);
+// Notifications
+export const getNotifications=(limit=20)=>
+  request(`/api/notifications?limit=${limit}`);
+
+export const getUnreadNotificationCount=()=>
+  request("/api/notifications/unread-count");
+
+export const markNotificationAsRead=notificationId=>
+  request(`/api/notifications/${notificationId}/read`,{
+    method:"PATCH"
+  });
+
+export const markAllNotificationsAsRead=()=>
+  request("/api/notifications/read-all",{
+    method:"PATCH"
+  });

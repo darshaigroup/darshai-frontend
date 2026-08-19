@@ -81,10 +81,6 @@ export default function SafetyAlerts({ assessment={} }) {
                       <h3 className="break-words text-base font-semibold leading-5 text-slate-900 sm:text-lg sm:leading-6">
                         {item.title}
                       </h3>
-
-                      <p className="mt-1 text-xs leading-5 text-slate-500 sm:text-sm">
-                        {item.answered}/{item.total} assessment parameters evaluated
-                      </p>
                     </div>
                   </div>
 
@@ -112,17 +108,11 @@ export default function SafetyAlerts({ assessment={} }) {
                 <div className="flex min-w-0 items-center justify-between gap-3 rounded-xl bg-red-50 px-3 py-3 sm:px-4">
                   <div className="min-w-0 flex-1">
                     <p className="break-words text-xs font-medium leading-5 text-red-700 sm:text-sm">
-                      Immediate attention recommended.
+                      Immediate attention recommended
                     </p>
-
-                    {item.completion>0&&(
-                      <p className="mt-1 text-[10px] leading-4 text-red-400 sm:text-xs">
-                        Assessment completion: {item.completion}%
-                      </p>
-                    )}
                   </div>
 
-                  <ChevronRight size={17} className="shrink-0 text-red-400"/>
+                  
                 </div>
 
               </div>

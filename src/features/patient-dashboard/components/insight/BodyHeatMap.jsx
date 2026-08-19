@@ -250,9 +250,7 @@ export default function BodyHeatMap({assessment={}}){
                         {system.title}
                       </h4>
 
-                      <p className="mt-1 text-sm text-slate-500">
-                        {system.answered}/{system.total} parameters
-                      </p>
+                     
                     </div>
                   </div>
 
