@@ -36,7 +36,7 @@ export default function AppleDock({ activePatient }) {
   ];
 
   return (
-    <div className="fixed inset-x-0 bottom-3 z-[80] flex justify-center px-3 sm:px-4 md:hidden">
+    <div className="fixed inset-x-0 bottom-3 z-[80] flex justify-center px-3 sm:px-4 md:hidden print:hidden">
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

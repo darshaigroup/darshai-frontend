@@ -105,13 +105,6 @@ export default function Sidebar({ activePatient, onLogout, idPrefix = "sidebar" 
             <LogOut className="h-5 w-5" />
             <span className="text-xs uppercase tracking-[.14em]">Sign Out</span>
           </button>
-
-          <div className="rounded-2xl border border-white/5 bg-black/20 py-4 text-center backdrop-blur-xl">
-            <div className="flex items-center justify-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span className="text-[10px] uppercase tracking-[.22em] text-[#C9A75B]">Vaidya Protocol v1.1</span>
-            </div>
-          </div>
         </div>
       </div>
     </aside>

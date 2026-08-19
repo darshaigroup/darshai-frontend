@@ -176,7 +176,7 @@ export default function ContactUs() {
                     href="tel:+917349171511"
                     className="text-[#1F4D3E]/50 hover:text-[#C6A75E] transition"
                   >
-                    +91-8088171511
+                    +91-7204190150
                   </a>
                 </div>
               </div>

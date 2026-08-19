@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import Sidebar from "./Sidebar";
 import MobileSidebar from "./MobileSidebar";
 import Header from "./Header";
@@ -6,25 +6,11 @@ import AppleDock from "./AppleDock";
 import useTour from "../onbaording/useTour";
 
 export default function DashboardShell({
-  children,
-  profile,
-  report,
-  assessment,
-  progress,
-  activePatient,
-  currentTab,
-  setCurrentTab,
-  searchQuery,
-  setSearchQuery,
-  onLogout,
-  patients,
-  onSelectPatient,
-  isDarkMode,
-  onToggleTheme,
-  onRestartTour,
+  children,profile,report,assessment,progress,activePatient,currentTab,setCurrentTab,
+  searchQuery,setSearchQuery,searchResults=[],onSearchSelect,onLogout,patients,
+  onSelectPatient,isDarkMode,onToggleTheme,onRestartTour
 }) {
-  const [mobileSidebarOpen,setMobileSidebarOpen]=useState(false),
-        {isOpen}=useTour();
+  const [mobileSidebarOpen,setMobileSidebarOpen]=useState(false),{isOpen}=useTour();
 
   return(
     <div className={`relative min-h-screen overflow-hidden transition-colors duration-500 ${isDarkMode?"bg-[#071426]":"bg-[#F6F3EC]"}`}>
@@ -32,15 +18,9 @@ export default function DashboardShell({
         <div className="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-emerald-500/5 blur-3xl"/>
         <div className="absolute -bottom-56 -left-56 h-[640px] w-[640px] rounded-full bg-sky-500/5 blur-3xl"/>
       </div>
- 
+
       <aside className="fixed left-0 top-0 z-40 hidden h-screen w-[290px] md:block">
-        <Sidebar
-          idPrefix="sidebar"
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-          activePatient={activePatient}
-          onLogout={onLogout}
-        />
+        <Sidebar idPrefix="sidebar" currentTab={currentTab} setCurrentTab={setCurrentTab} activePatient={activePatient} onLogout={onLogout}/>
       </aside>
 
       <MobileSidebar
@@ -61,7 +41,8 @@ export default function DashboardShell({
           currentTab={currentTab}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          onLogout={onLogout}
+          searchResults={searchResults}
+          onSearchSelect={onSearchSelect}
           isDarkMode={isDarkMode}
           onToggleTheme={onToggleTheme}
           onRestartTour={onRestartTour}
@@ -76,11 +57,7 @@ export default function DashboardShell({
         </main>
 
         <div className="md:hidden">
-          <AppleDock
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-            activePatient={activePatient}
-          />
+          <AppleDock currentTab={currentTab} setCurrentTab={setCurrentTab} activePatient={activePatient}/>
         </div>
       </div>
     </div>

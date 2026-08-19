@@ -67,13 +67,13 @@ Balmatta, Mangalore-575 001
 
   {/* PHONE (CLICKABLE) */}
   <a
-    href="tel:+918088171511"
+    href="tel:+917204190150"
     className="text-sm block hover:text-[#C6A75E]"
   >
-    +91-8088171511
+    +91-7204190150
   </a>
   <a
-  href="https://wa.me/918088171511"
+  href="https://wa.me/917204190150"
   target="_blank"
   rel="noopener noreferrer"
   className="mt-3 inline-flex items-center gap-2 text-sm text-[#1E7A3A] font-medium hover:text-[#C6A75E] transition"
@@ -190,7 +190,7 @@ Balmatta, Mangalore-575 001
 </motion.div> */}
 
   <motion.a
-    href="https://wa.me/918088171511"
+    href="https://wa.me/917204190150"
     target="_blank"
     rel="noopener noreferrer"
     animate={{

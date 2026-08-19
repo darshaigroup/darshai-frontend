@@ -80,14 +80,14 @@ const recommendation =
           <div className="xl:col-span-4 flex justify-center xl:justify-start order-1">
             <motion.div initial={{opacity:0,scale:.95}} animate={{opacity:1,scale:1}}>
               <VitalityScore
-  score={vitalityScore ?? 0}
-  report={{
-    ...report,
-    risk_score: riskScore,
-    wellness_score: vitalityScore,
-    hasAssessment: riskScore !== null,
-  }}
-/>
+                score={vitalityScore ?? 0}
+                report={{
+                  ...report,
+                  risk_score: riskScore,
+                  wellness_score: vitalityScore,
+                  hasAssessment: riskScore !== null,
+                }}
+              />
             </motion.div>
           </div>
 
@@ -96,7 +96,7 @@ const recommendation =
             <div className="inline-flex items-center gap-2 mx-auto xl:mx-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2">
               <Sparkles className="w-4 h-4 text-emerald-400"/>
               <span className="text-[11px] uppercase tracking-[0.22em] font-mono text-emerald-300">
-                Live Bio Telemetry
+                Live Bio Intelligence
               </span>
             </div>
 
@@ -106,10 +106,10 @@ const recommendation =
               Longevity Diagnostics
             </h1>
 
-            <p className="mt-5 max-w-3xl mx-auto xl:mx-0 text-sm md:text-base text-slate-300 leading-7">
+            {/* <p className="mt-5 max-w-3xl mx-auto xl:mx-0 text-sm md:text-base text-slate-300 leading-7">
               {patient?.clinicalSummary||
                 "Your biological systems are continuously synchronized through DarshAI's Geo Wellness Intelligence. Review your constitutional balance, vitality metrics and AI-guided longevity recommendations."}
-            </p>
+            </p> */}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-8">
 
@@ -156,7 +156,7 @@ const recommendation =
                 <div>
 
                   <p className="text-[11px] uppercase tracking-[0.2em] font-mono text-emerald-300">
-                    Companion Recommendation
+                    Clinical Observation
                   </p>
 
                   <p className="mt-3 max-w-2xl text-slate-300 leading-7">
@@ -165,10 +165,10 @@ const recommendation =
 
                 </div>
 
-                <button className="flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-600 transition">
+                {/* <button className="flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-600 transition">
                   View Protocol
                   <ArrowRight className="w-4 h-4"/>
-                </button>
+                </button> */}
 
               </div>
 

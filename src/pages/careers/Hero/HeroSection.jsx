@@ -132,7 +132,7 @@ const HeroSection=()=>{
               </motion.button>
             </div>
 
-            {/* AI Card (Desktop Only) */}
+            {/* Card (Desktop Only) */}
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}

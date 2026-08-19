@@ -29,7 +29,7 @@ const WellnessOverview = ({patient}) => {
 
         <p className="text-slate-500 mt-1">
 
-          AI Generated Wellness Assessment
+          Ayurveda Generated Wellness Assessment
 
         </p>
 

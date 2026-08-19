@@ -65,11 +65,11 @@ export default function DashboardPage() {
 
         <div className="space-y-8 2xl:col-span-4">
           <AgniMap patient={patient} />
-          <AppointmentList
+          {/* <AppointmentList
             appointments={appointments}
             onJoin={appointment => console.log("Join", appointment)}
             onReschedule={appointment => console.log("Reschedule", appointment)}
-          />
+          /> */}
         </div>
       </section>
 
