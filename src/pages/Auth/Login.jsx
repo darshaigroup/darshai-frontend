@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import hero from "@/assets/images/MainImg.png";
-//login page for both doctor and patient, backend will handle the redirect based on role
+
 export default function Login() {
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
@@ -21,6 +22,7 @@ export default function Login() {
         break;
 
       case "client":
+      case "patient":
         navigate("/patient-dashboard", { replace: true });
         break;
 
@@ -29,6 +31,9 @@ export default function Login() {
         break;
 
       default:
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("role");
         navigate("/login", { replace: true });
     }
   }, [navigate]);
@@ -42,15 +47,13 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 🔹 INPUT HANDLER
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  // 🔹 LOGIN HANDLER
   const handleLogin = async () => {
     try {
       if (!form.email || !form.password) {
@@ -61,7 +64,8 @@ export default function Login() {
       setLoading(true);
       setError("");
 
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000";
 
       const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
@@ -74,68 +78,77 @@ export default function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Login failed"); // ✅ FIXED
+        throw new Error(data.message || data.error || "Login failed");
       }
 
-      // ✅ STORE DATA
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("role", data.user.role);
+      const user = data.user;
+      const token = data.token;
 
-      switch(data.user.role){
+      if (!token || !user?.role) {
+        throw new Error("Invalid login response");
+      }
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("role", user.role);
+
+      switch (user.role) {
         case "doctor":
-          navigate("/dashboard",{replace:true});
+          navigate("/dashboard", { replace: true });
           break;
 
         case "sales":
-          navigate("/sales-dashboard",{replace:true});
+          navigate("/sales-dashboard", { replace: true });
           break;
 
         case "client":
-          navigate("/patient-dashboard",{replace:true});
+        case "patient":
+          navigate("/patient-dashboard", { replace: true });
           break;
 
         case "hr":
-          navigate("/hr-dashboard",{replace:true});
+          navigate("/hr-dashboard", { replace: true });
           break;
 
         default:
-          navigate("/login",{replace:true});
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("role");
+          setError("Invalid user role");
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Login failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#f4efe6] flex items-center justify-center px-6">
-      {/* MAIN CARD */}
-      <div className="w-full max-w-5xl grid md:grid-cols-2 rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.15)]">
-        {/* 🔥 LEFT PANEL */}
+    <div className="flex min-h-screen items-center justify-center bg-[#f4efe6] px-6">
+      <div className="grid w-full max-w-5xl overflow-hidden rounded-[40px] shadow-[0_40px_120px_rgba(0,0,0,0.15)] md:grid-cols-2">
         <div className="relative hidden md:block">
           <img
             src={hero}
-            className="absolute inset-0 w-full h-full object-cover"
+            alt="DarshAI"
+            className="absolute inset-0 h-full w-full object-cover"
           />
 
           <div className="absolute inset-0 bg-[#1E7A3A]/85" />
 
-          <div className="relative z-10 p-12 h-full flex flex-col justify-between text-white">
+          <div className="relative z-10 flex h-full flex-col justify-between p-12 text-white">
             <div>
-              <p className="text-xs tracking-[4px] text-[#C6A75E] mb-4">
+              <p className="mb-4 text-xs tracking-[4px] text-[#C6A75E]">
                 DARSHAI LONGEVITY
               </p>
 
-              <h2 className="text-4xl font-serif leading-tight">
+              <h2 className="font-serif text-4xl leading-tight">
                 Reclaim Your <br />
                 <span className="italic text-[#C6A75E]">
                   Biological Sovereignty.
                 </span>
               </h2>
 
-              <p className="mt-6 text-sm text-white/80 max-w-sm">
+              <p className="mt-6 max-w-sm text-sm text-white/80">
                 Access the pinnacle of human optimization. Our waitlist is open
                 for the 2026 Sovereign Pilot.
               </p>
@@ -143,26 +156,28 @@ export default function Login() {
           </div>
         </div>
 
-        {/* 🔥 RIGHT PANEL */}
-        <div className="bg-white p-10 md:p-14 relative">
-          {/* CLOSE */}
+        <div className="relative bg-white p-10 md:p-14">
           <button
+            type="button"
             onClick={() => navigate("/")}
-            className="absolute top-6 right-6 text-gray-400 hover:text-black"
+            className="absolute right-6 top-6 text-gray-400 hover:text-black"
           >
             ✕
           </button>
 
-          <h2 className="text-2xl font-serif text-[#1E7A3A] mb-2">
+          <h2 className="mb-2 font-serif text-2xl text-[#1E7A3A]">
             Welcome Back
           </h2>
 
-          <p className="text-sm text-gray-400 mb-6">
+          <p className="mb-6 text-sm text-gray-400">
             Sign in to access your dashboard
           </p>
 
-          {/* 🔥 ERROR MESSAGE */}
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          {error && (
+            <p className="mb-4 text-sm text-red-500">
+              {error}
+            </p>
+          )}
 
           <form
             className="space-y-6"
@@ -171,33 +186,32 @@ export default function Login() {
               handleLogin();
             }}
           >
-            {/* EMAIL */}
             <div>
-              <label className="text-xs tracking-[3px] text-[#C6A75E] block mb-2">
+              <label className="mb-2 block text-xs tracking-[3px] text-[#C6A75E]">
                 EMAIL ADDRESS
               </label>
 
-              <div className="flex items-center bg-[#f3f3f3] px-4 py-3 rounded-full">
-                <Mail size={16} className="text-gray-400 mr-2" />
+              <div className="flex items-center rounded-full bg-[#f3f3f3] px-4 py-3">
+                <Mail size={16} className="mr-2 text-gray-400" />
+
                 <input
                   name="email"
                   type="email"
                   value={form.email}
                   onChange={handleChange}
                   placeholder="wellness@darshai.com"
-                  className="bg-transparent outline-none w-full text-sm"
+                  className="w-full bg-transparent text-sm outline-none"
                 />
               </div>
             </div>
 
-            {/* PASSWORD */}
             <div>
-              <label className="text-xs tracking-[3px] text-[#C6A75E] block mb-2">
+              <label className="mb-2 block text-xs tracking-[3px] text-[#C6A75E]">
                 PASSWORD
               </label>
 
-              <div className="flex items-center bg-[#f3f3f3] px-4 py-3 rounded-full">
-                <Lock size={16} className="text-gray-400 mr-2" />
+              <div className="flex items-center rounded-full bg-[#f3f3f3] px-4 py-3">
+                <Lock size={16} className="mr-2 text-gray-400" />
 
                 <input
                   name="password"
@@ -205,12 +219,12 @@ export default function Login() {
                   value={form.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="bg-transparent outline-none w-full text-sm"
+                  className="w-full bg-transparent text-sm outline-none"
                 />
 
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword((prev) => !prev)}
                   className="ml-2 text-gray-400 hover:text-[#1E7A3A]"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -218,19 +232,20 @@ export default function Login() {
               </div>
             </div>
 
-            {/* BUTTON */}
             <button
-              onClick={handleLogin}
+              type="submit"
               disabled={loading}
-              className="w-full bg-[#1E7A3A] text-white py-4 rounded-full tracking-[3px] text-sm hover:bg-[#14532d] transition shadow-md disabled:opacity-50"
+              className="w-full rounded-full bg-[#1E7A3A] py-4 text-sm tracking-[3px] text-white shadow-md transition hover:bg-[#14532d] disabled:opacity-50"
             >
               {loading ? "Signing in..." : "Sign In →"}
             </button>
 
-            {/* FOOTER */}
-            <p className="text-xs text-center text-gray-400 mt-6">
+            <p className="mt-6 text-center text-xs text-gray-400">
               Not registered?{" "}
-              <Link to="/register" className="text-[#1E7A3A] hover:underline">
+              <Link
+                to="/register"
+                className="text-[#1E7A3A] hover:underline"
+              >
                 Register for waitlist
               </Link>
             </p>

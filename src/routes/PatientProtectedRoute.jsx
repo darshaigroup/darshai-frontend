@@ -8,8 +8,8 @@ export default function PatientProtectedRoute() {
     return <Navigate to="/login" replace />;
   }
 
-  if (role !== "client") {
-    return <Navigate to="/dashboard" replace />;
+  if (role !== "client" && role !== "patient") {
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;

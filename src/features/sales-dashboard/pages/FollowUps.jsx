@@ -43,8 +43,6 @@ async function loadFollowups(keyword = "") {
       ? await searchLeads(keyword)
       : await getLeads();
 
-      console.log("Search API:", data);
-
     const list = (data || []).sort(
   (a,b)=>
     new Date(a.followup_date || "9999-12-31") -
