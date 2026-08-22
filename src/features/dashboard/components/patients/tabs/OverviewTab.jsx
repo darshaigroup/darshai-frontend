@@ -283,8 +283,6 @@ const topRisks = [...blocks]
 
     </div>
 
-    {/* RISK DOMAINS */}
-
     <div className="bg-white rounded-[32px] p-8 shadow-sm">
 
       <h2 className="text-2xl font-semibold text-[#173C68] mb-6">
