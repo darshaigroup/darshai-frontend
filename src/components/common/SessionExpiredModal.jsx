@@ -1,49 +1,34 @@
-import {useEffect,useState} from "react";
-import {useNavigate} from "react-router-dom";
+export default function SessionExpiredModal({ message, onConfirm }) {
+  return (
+    <div className="fixed inset-x-0 top-0 z-[99999] flex justify-center px-4 pt-4">
+      <div className="w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+        <div className="h-1 bg-amber-500" />
 
-export default function SessionExpiredModal(){
-  const navigate=useNavigate();
-  const [open,setOpen]=useState(false);
-  const [message,setMessage]=useState("");
+        <div className="p-5">
+          <div className="flex items-start gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-100 text-lg font-bold text-amber-600">
+              !
+            </div>
 
-  useEffect(()=>{
-    const handleSessionExpired=e=>{
-      setMessage(e.detail?.message||"Your session has expired. Please login again.");
-      setOpen(true);
-    };
+            <div className="min-w-0 flex-1">
+              <h2 className="text-base font-semibold text-gray-900">
+                Session Expired
+              </h2>
 
-    window.addEventListener("session-expired",handleSessionExpired);
-    return()=>window.removeEventListener("session-expired",handleSessionExpired);
-  },[]);
+              <p className="mt-1 text-sm leading-5 text-gray-600">
+                {message}
+              </p>
+            </div>
+          </div>
 
-  const handleOkay=()=>{
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("role");
-    setOpen(false);
-    navigate("/login",{replace:true});
-  };
-
-  if(!open) return null;
-
-  return(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl">
-        <h2 className="font-serif text-2xl font-semibold text-gray-800">
-          Session Expired
-        </h2>
-
-        <p className="mt-3 text-sm leading-6 text-gray-500">
-          {message}
-        </p>
-
-        <button
-          type="button"
-          onClick={handleOkay}
-          className="mt-7 w-full rounded-full bg-[#1E7A3A] py-3.5 text-sm font-medium tracking-[2px] text-white transition hover:bg-[#14532d]"
-        >
-          OKAY
-        </button>
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="mt-5 w-full rounded-xl bg-[#1E7A3A] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#14532d]"
+          >
+            OK
+          </button>
+        </div>
       </div>
     </div>
   );

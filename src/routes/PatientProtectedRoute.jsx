@@ -2,13 +2,14 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export default function PatientProtectedRoute() {
   const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const role = user?.role || localStorage.getItem("role");
 
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  if (role !== "client" && role !== "patient") {
+  if (!["client", "patient"].includes(String(role).toLowerCase())) {
     return <Navigate to="/login" replace />;
   }
 

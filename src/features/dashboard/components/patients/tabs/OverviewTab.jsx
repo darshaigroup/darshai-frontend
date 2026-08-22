@@ -341,8 +341,6 @@ const topRisks = [...blocks]
       <SectionCard title="Lifestyle Summary">
 
         <InfoCard label="Food Style" value={lifestyle.food_style} />
-        <InfoCard label="Activity" value={lifestyle.activity_level} />
-        <InfoCard label="Water Intake" value={lifestyle.water_intake} />
         <InfoCard label="Environment" value={lifestyle.natural_environment} />
         <InfoCard label="Retreat Goal" value={lifestyle.retreat_goal} />
         <InfoCard label="Mind Body" value={lifestyle.mind_body_practice} />
@@ -353,9 +351,7 @@ const topRisks = [...blocks]
 
         <InfoCard label="Height" value={clinical.height} />
         <InfoCard label="Medication" value={clinical.takingMedication} />
-        <InfoCard label="Blood Pressure" value={clinical.bloodPressureKnown} />
         <InfoCard label="Allergies" value={clinical.hasAllergies} />
-        <InfoCard label="Primary Goal" value={clinical.primaryGoal} />
         <InfoCard label="Fatigue" value={clinical.fatiguePattern} />
 
       </SectionCard>

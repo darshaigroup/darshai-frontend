@@ -134,9 +134,9 @@ const ResultSummary = () => {
 
         <PatientDetails patient={patient} />
 
-        <LifestyleMatrixSummary
+        {/* <LifestyleMatrixSummary
           lifestyleMatrixReport={filteredLifestyleMatrix}
-        />
+        /> */}
 
         <RiskSummary riskReport={riskReport} />
 

@@ -26,8 +26,8 @@ const PatientDetails = ({
         />
 
         <InfoCard
-          title="Patient ID"
-          value={patient?.id}
+          title="Occupation"
+          value={patient?.occupation}
         />
 
       </div>

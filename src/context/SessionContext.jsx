@@ -1,33 +1,13 @@
-import {createContext,useContext,useEffect,useState} from "react";
-import {useNavigate} from "react-router-dom";
-import SessionExpiredModal from "@/components/common/SessionExpiredModal";
-const SessionContext=createContext(null);
+import { createContext, useContext } from "react";
 
-export function SessionProvider({children}){
-  const navigate=useNavigate();
-  const [sessionError,setSessionError]=useState(null);
+const SessionContext = createContext(null);
 
-  useEffect(()=>{
-    const handleSessionExpired=e=>setSessionError(e.detail?.message||"Your session has expired. Please login again.");
-    window.addEventListener("session-expired",handleSessionExpired);
-    return()=>window.removeEventListener("session-expired",handleSessionExpired);
-  },[]);
-
-  const handleSessionClose=()=>{
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("refreshToken");
-    sessionStorage.clear();
-    setSessionError(null);
-    navigate("/login",{replace:true});
-  };
-
-  return(
-    <SessionContext.Provider value={{sessionError,setSessionError}}>
+export function SessionProvider({ children }) {
+  return (
+    <SessionContext.Provider value={{}}>
       {children}
-      {sessionError&&<SessionExpiredModal message={sessionError} onConfirm={handleSessionClose}/>}
     </SessionContext.Provider>
   );
 }
 
-export const useSession=()=>useContext(SessionContext);
+export const useSession = () => useContext(SessionContext);
