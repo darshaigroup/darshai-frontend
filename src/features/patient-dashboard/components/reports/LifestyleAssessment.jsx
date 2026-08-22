@@ -129,7 +129,8 @@ export default function LifestyleAssessment({lifestyle={}}){
         field("Diet Type",diet_type),
         field("Nutrition Score",nutrition_score),
         field("Meals Per Day",meal_frequency),
-        field("Water Intake",water_intake),
+        
+        
         field("Comfort Level",comfort_level)
       ]
     },

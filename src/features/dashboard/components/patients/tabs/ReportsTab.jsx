@@ -223,7 +223,7 @@ const availableReports=[
     <div className="space-y-6">
 
       {/* Upload */}
-      <div className="bg-white p-8 rounded-3xl border-2 border-dashed text-center">
+      {/* <div className="bg-white p-8 rounded-3xl border-2 border-dashed text-center">
 
         <div className="flex flex-col items-center">
 
@@ -253,7 +253,7 @@ const availableReports=[
 
         </div>
 
-      </div>
+      </div> */}
 
       {/* Available Reports */}
     <div className="bg-white p-8 rounded-[32px] shadow-sm">
@@ -300,7 +300,7 @@ const availableReports=[
 </div>
 
       {/* Assessment Info */}
-      <div className="bg-white p-6 rounded-3xl shadow-sm">
+      {/* <div className="bg-white p-6 rounded-3xl shadow-sm">
 
         <div className="flex items-center gap-4">
 
@@ -326,7 +326,7 @@ const availableReports=[
 
         </div>
 
-      </div>
+      </div> */}
 
     </div>
   );

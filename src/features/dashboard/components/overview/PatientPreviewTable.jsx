@@ -195,7 +195,7 @@ const PatientPreviewTable = () => {
                     <p className="font-semibold text-[#1E293B] text-sm truncate">
                       {p.name}
                     </p>
-                    <p className="text-xs text-gray-400 truncate">{p.id}</p>
+                   
                   </div>
                 </div>
 

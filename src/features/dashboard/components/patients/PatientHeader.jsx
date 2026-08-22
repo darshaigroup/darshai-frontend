@@ -98,12 +98,6 @@ const PatientHeader = ({
 
             </h1>
 
-            <p className="text-slate-500 mt-1">
-
-              Patient ID: {patient?.id}
-
-            </p>
-
             <div className="mt-3 flex flex-wrap gap-2">
 
               <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
