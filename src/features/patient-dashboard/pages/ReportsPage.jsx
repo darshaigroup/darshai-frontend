@@ -84,20 +84,6 @@ export default function ReportsPage() {
               <div>
                 <h2 className="text-xl font-semibold text-slate-900">{title}</h2>
                 <p className="mt-1 text-sm text-slate-500">{description}</p>
-
-                <div className="mt-4 flex flex-wrap gap-6 text-sm">
-                  <div>
-                    <p className="text-slate-400">Status</p>
-                    <p className={`font-semibold ${completed ? "text-emerald-600" : "text-amber-600"}`}>
-                      {completed ? "Completed" : "Pending"}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-slate-400">Date</p>
-                    <p className="font-semibold text-slate-700">{completedDate}</p>
-                  </div>
-                </div>
               </div>
             </div>
 
