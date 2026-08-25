@@ -1,7 +1,7 @@
 import {useEffect,useState} from "react";
 import {useParams} from "react-router-dom";
 import {getPatientSummary} from "../../../services/reportService";
-//import for components
+
 import Watermark from "../../../assessments/components/resultSummary/Watermark";
 import PatientReportHeader from "../../patientReportSummary/PatientReportHeader";
 import PatientProfileCard from "../../patientReportSummary/PatientProfileCard";
@@ -12,50 +12,44 @@ import LifestyleAssessment from "../../patientReportSummary/LifestyleAssessment"
 import AyurvedaAssessment from "../../patientReportSummary/AyurvedaAssessment";
 import PractitionerSection from "../../patientReportSummary/PractitionerSection";
 import PatientReportFooter from "../../patientReportSummary/PatientReportFooter";
+import LabReports from "../../../assessments/components/resultSummary/LabReports";
 
-const PatientReportSummary = () => {
+const PatientReportSummary=()=>{
 
-  const {patientId} =
-    useParams();
+  const {patientId}=useParams();
 
-  const [report,setReport] =
-    useState(null);
+  const [report,setReport]=useState(null);
+  const [loading,setLoading]=useState(true);
 
-  const [loading,setLoading] =
-    useState(true);
-
-  useEffect(() => {
-
+  useEffect(()=>{
     loadSummary();
-
   },[patientId]);
 
-  const loadSummary =
-    async () => {
+  const loadSummary=async()=>{
 
-      try{
+    try{
 
-        const data =
-          await getPatientSummary(
-            patientId
-          );
-// console.log(
-//   "PATIENT SUMMARY RESPONSE:",
-//   data
-// );
-        setReport(data);
+      const data=await getPatientSummary(patientId);
 
-      }catch(error){
+      console.log("PATIENT SUMMARY RESPONSE:",data);
+      console.log("PATIENT:",data?.patient);
+      console.log("LAB REPORTS:",data?.labReports);
+      console.log("PATIENT LAB REPORTS:",data?.patient?.lab_reports);
+      console.log("UPLOADED REPORTS:",data?.patient?.uploaded_reports);
 
-        console.error(error);
+      setReport(data);
 
-      }finally{
+    }catch(error){
 
-        setLoading(false);
+      console.error("PATIENT SUMMARY ERROR:",error);
 
-      }
+    }finally{
 
-    };
+      setLoading(false);
+
+    }
+
+  };
 
   if(loading){
 
@@ -67,14 +61,28 @@ const PatientReportSummary = () => {
 
   }
 
-  const patient =
-    report?.patient;
+  const patient=report?.patient;
+
+  /*
+   * getPatientSummary should return labReports at the
+   * top level, same as getPatientReport().
+   *
+   * Fallbacks are kept so older backend responses
+   * will also continue to work.
+   */
+  const labReports=
+    report?.labReports ||
+    patient?.lab_reports ||
+    patient?.uploaded_reports ||
+    [];
+
+  console.log("FINAL LAB REPORTS FOR SUMMARY:",labReports);
 
   return(
 
     <div className="min-h-screen bg-slate-100 py-10">
 
-      <Watermark />
+      <Watermark/>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
 
@@ -82,39 +90,42 @@ const PatientReportSummary = () => {
           patient={patient}
         />
 
-       <PatientProfileCard
-  patient={patient}
-/>
+        <PatientProfileCard
+          patient={patient}
+        />
 
-<WellnessOverview
-  patient={patient}
-/>
+        <WellnessOverview
+          patient={patient}
+        />
 
-<RiskDomains
-  blocks={
-    patient?.ai_response?.blocks || []
-  }
-/>
+        <RiskDomains
+          blocks={patient?.ai_response?.blocks||[]}
+        />
 
-<ClinicalAssessment
-  patient={patient}
-/>
+        <ClinicalAssessment
+          patient={patient}
+        />
 
-<LifestyleAssessment
-  patient={patient}
-/>
+        <LifestyleAssessment
+          patient={patient}
+        />
 
-<AyurvedaAssessment
-  patient={patient}
-/>
+        <AyurvedaAssessment
+          patient={patient}
+        />
 
-<PractitionerSection
-  patient={patient}
-/>
+        <LabReports
+          uploadedReports={labReports}
+        />
 
-<PatientReportFooter
-  patient={patient}
-/>
+        <PractitionerSection
+          patient={patient}
+        />
+
+        <PatientReportFooter
+          patient={patient}
+        />
+
       </div>
 
     </div>

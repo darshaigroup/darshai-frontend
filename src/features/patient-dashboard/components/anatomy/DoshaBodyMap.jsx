@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Flame, Wind, Droplets, Sparkles, Brain, ArrowRight, HeartPulse, Activity } from "lucide-react";
+import { Flame, Wind, Droplets, Sparkles, HeartPulse, Activity, ArrowRight } from "lucide-react";
 import DoshaNode from "./DoshaNode";
 import body from "@/assets/images/BodyTypes.png";
 
@@ -19,17 +19,30 @@ export default function DoshaBodyMap({patient={}}){
   useEffect(()=>setActive(primary.toLowerCase()),[primary]);
 
   const percentages={Vata:num(vikriti?.vata_pct),Pitta:num(vikriti?.pitta_pct),Kapha:num(vikriti?.kapha_pct)};
-  const doshas=Object.fromEntries(Object.entries(DOSHAS).map(([key,dosha])=>[key,{
-    ...dosha,
-    level:percentages[dosha.label],
-    badge:primary===dosha.label?"Primary":secondary===dosha.label?"Secondary":"",
-    description:report?.clinical_summary??correlation?.summary??`${dosha.label} assessment pending.`,
-    recommendation:correlation?.ama_link??"Maintain a balanced Ayurvedic lifestyle."
-  }]));
+  const doshas=Object.fromEntries(Object.entries(DOSHAS).map(([key,dosha])=>[
+    key,{
+      ...dosha,
+      level:percentages[dosha.label],
+      badge:primary===dosha.label?"Primary":secondary===dosha.label?"Secondary":"",
+      description:report?.clinical_summary??correlation?.summary??`${dosha.label} assessment pending.`,
+      recommendation:correlation?.ama_link??"Maintain a balanced Ayurvedic lifestyle."
+    }
+  ]));
 
   const current=doshas[active]??doshas.pitta,Icon=current.icon,riskTier=text(report?.risk_tier??report?.risk_band,"Pending Analysis");
 
-  
+  const riskLabel={
+    Low:"Low Concern",
+    Moderate:"Monitor Closely",
+    High:"Needs Attention"
+  }[riskTier]??riskTier;
+
+  const riskColor={
+    Low:"text-emerald-600",
+    Moderate:"text-amber-600",
+    High:"text-rose-600"
+  }[riskTier]??"text-slate-900";
+
   return(
     <motion.section whileHover={{y:-3}} className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_25px_60px_rgba(15,23,42,.08)]">
       <div className="flex flex-col gap-6 border-b border-slate-100 px-5 py-6 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
@@ -47,7 +60,6 @@ export default function DoshaBodyMap({patient={}}){
           <div className="relative w-full max-w-[320px] sm:max-w-[360px]">
             <img src={body} alt="Dosha Body" className="w-full select-none object-contain" draggable={false}/>
             {Object.values(DOSHAS).map(d=><button key={d.label} type="button" aria-label={`Select ${d.label}`} onClick={()=>setActive(d.label.toLowerCase())} className={`absolute z-20 ${d.position}`}><DoshaNode label={d.label} color={d.color} active={active===d.label.toLowerCase()}/></button>)}
-            
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 rounded-full bg-[radial-gradient(circle_at_center,rgba(16,185,129,.09),transparent_70%)]"/>
           </div>
         </div>
@@ -82,8 +94,16 @@ export default function DoshaBodyMap({patient={}}){
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5"><HeartPulse className="h-6 w-6 text-rose-500"/><p className="mt-4 text-sm text-slate-500">Risk Tier</p><h3 className="mt-2 text-2xl font-bold text-slate-900">{riskTier}</h3></div>
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5"><Activity className="h-6 w-6 text-emerald-500"/><p className="mt-4 text-sm text-slate-500">Wellness Index</p><h3 className="mt-2 text-2xl font-bold text-slate-900">{wellness!==null?`${wellness}%`:"--"}</h3></div>
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+              <HeartPulse className={`h-6 w-6 ${riskColor}`}/>
+              <p className="mt-4 text-sm text-slate-500">Wellness Status</p>
+              <h3 className={`mt-2 text-2xl font-bold ${riskColor}`}>{riskLabel}</h3>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+              <Activity className="h-6 w-6 text-emerald-500"/>
+              <p className="mt-4 text-sm text-slate-500">Wellness Index</p>
+              <h3 className="mt-2 text-2xl font-bold text-slate-900">{wellness!==null?`${wellness}%`:"--"}</h3>
+            </div>
           </div>
         </div>
       </div>
