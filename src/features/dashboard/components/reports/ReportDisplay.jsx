@@ -264,7 +264,7 @@ const ReportDisplay = () => {
           <div className="grid md:grid-cols-3 gap-5 mb-5">
             <InfoCard label="Patient Name" value={patient?.name} />
             <InfoCard label="Gender" value={patient?.gender} />
-            <InfoCard label="Age" value={calculateAge(patient?.dob)} />
+            <InfoCard label="Status" value= "Active" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-5">
