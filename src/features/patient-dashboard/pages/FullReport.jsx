@@ -227,7 +227,7 @@ export default function FullReport(){
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 py-6 print:hidden">
+        {/* <div className="flex justify-end gap-3 py-6 print:hidden">
 
           <button
             type="button"
@@ -240,7 +240,7 @@ export default function FullReport(){
               : <Download className="h-4 w-4"/>}
             {downloading?"Generating PDF...":"Download PDF"}
           </button>
-        </div>
+        </div> */}
       </div>
 
       <style>{`

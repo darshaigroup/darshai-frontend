@@ -152,7 +152,7 @@ export default function LifestyleReport(){
         <div className="border-b border-slate-200 p-8">
           <button
             onClick={()=>navigate("/patient-dashboard/reports")}
-            className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-emerald-600"
+            className="mb-5 inline-flex items-center gap-2 text-sm font-bold text-slate-800 transition hover:text-emerald-600"
           >
             <ArrowLeft className="h-4 w-4"/>
             Back to Reports
@@ -200,7 +200,7 @@ export default function LifestyleReport(){
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 py-6">
+      {/* <div className="flex justify-end gap-3 py-6">
         <button
           type="button"
           onClick={downloadPDF}
@@ -212,7 +212,7 @@ export default function LifestyleReport(){
             : <Download className="h-4 w-4"/>}
           {downloading?"Generating PDF...":"Download PDF"}
         </button>
-      </div>
+      </div> */}
 
       <style>{`
         .report-page-header{display:none}

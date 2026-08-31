@@ -101,7 +101,7 @@ export default function LifestyleAssessment({lifestyle={}}){
       title:"Retreat Profile",
       icon:HeartHandshake,
       fields:[
-        field("Retreat For",retreat_for),
+        field("Visitor",retreat_for),
         field("Adults",adult_count),
         field("Children",children_count),
         field("Rooms",room_count),
@@ -189,19 +189,7 @@ export default function LifestyleAssessment({lifestyle={}}){
             </p>
           </div>
 
-          <div className="rounded-3xl bg-white/15 p-6 backdrop-blur">
-            <p className="text-xs uppercase tracking-wider text-white/80">
-              Responses Captured
-            </p>
-
-            <p className="mt-2 text-5xl font-black">
-              {responses}
-            </p>
-
-            <div className="mt-4 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
-              {lifestyle_grade??"Completed"}
-            </div>
-          </div>
+          
 
         </div>
       </div>

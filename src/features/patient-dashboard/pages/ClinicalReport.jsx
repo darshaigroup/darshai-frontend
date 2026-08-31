@@ -142,7 +142,7 @@ export default function ClinicalReport(){
         <div className="border-b border-slate-200 p-8">
           <button
             onClick={()=>navigate("/patient-dashboard/reports")}
-            className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-emerald-600"
+            className="mb-5 inline-flex items-center gap-2 text-sm font-bold text-slate-800 transition hover:text-emerald-600"
           >
             <ArrowLeft className="h-4 w-4"/>
             Back to Reports
@@ -165,11 +165,6 @@ export default function ClinicalReport(){
             <span className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4"/>
               {generatedDate}
-            </span>
-
-            <span>
-              <strong className="text-slate-700">Report ID:</strong>{" "}
-              {report?.assessment_id?.slice(0,8)??"--"}
             </span>
           </div>
         </div>
@@ -227,7 +222,7 @@ export default function ClinicalReport(){
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 py-6 print:hidden">
+      {/* <div className="flex justify-end gap-3 py-6 print:hidden">
         <button
           type="button"
           onClick={downloadPDF}
@@ -239,7 +234,7 @@ export default function ClinicalReport(){
             :<Download className="h-4 w-4"/>}
           {downloading?"Generating PDF...":"Download PDF"}
         </button>
-      </div>
+      </div> */}
 
       <style>{`
         .report-page-header{display:none}
