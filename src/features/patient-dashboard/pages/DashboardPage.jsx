@@ -4,16 +4,20 @@ import VitalsGrid from "../components/wellness/VitalsGrid";
 import DoshaBodyMap from "../components/anatomy/DoshaBodyMap";
 import AnatomicalBioMap from "../components/anatomy/AnatomicalBioMap";
 import AgniMap from "../components/anatomy/AgniMap";
-import AppointmentList from "../components/appointment/AppointmentList";
+import AmaCard from "../components/anatomy/AmaCard";
 import CompletedReports from "../components/reports/CompletedReports";
 
 export default function DashboardPage() {
-  const { patientData, appointments = [], refreshDashboard } = useOutletContext();
+  const { patientData, refreshDashboard } = useOutletContext();
 
   const profile = patientData?.profile?.patient ?? {};
   const report = patientData?.report?.patient ?? {};
   const assessment = patientData?.assessment?.data ?? {};
   const progress = patientData?.progress ?? {};
+
+  const score = Number(
+    report.composite_score ?? assessment.composite_score ?? 0
+  );
 
   const patient = {
     id: profile.id,
@@ -29,9 +33,9 @@ export default function DashboardPage() {
     location: profile.location,
     city: profile.city ?? profile.location,
     avatar: profile.profile_image,
-    biometrics: { vitalityScore: Number(report.composite_score ?? assessment.composite_score ?? 0) },
-    vitalityScore: Number(report.composite_score ?? assessment.composite_score ?? 0),
-    compositeScore: Number(report.composite_score ?? assessment.composite_score ?? 0),
+    biometrics: { vitalityScore: score },
+    vitalityScore: score,
+    compositeScore: score,
     riskBand: report.risk_band ?? assessment.risk_band,
     aiResponse: assessment.ai_response ?? report.ai_response,
     primaryDosha: report.primary_dosha,
@@ -52,25 +56,21 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-8 lg:space-y-10">
+    <main className="space-y-8 lg:space-y-10">
       <WellnessHero patient={patient} />
 
-      <VitalsGrid patient={patient} report={patientData.report}/>
+      <VitalsGrid patient={patient} report={patientData?.report} />
 
       <section className="grid grid-cols-1 gap-8 2xl:grid-cols-12">
-        <div className="space-y-8 2xl:col-span-8">
+        <div className="min-w-0 space-y-8 2xl:col-span-8">
           <DoshaBodyMap patient={patient} />
           <AnatomicalBioMap patient={patient} />
         </div>
 
-        <div className="space-y-8 2xl:col-span-4">
+        <aside className="min-w-0 space-y-8 2xl:col-span-4">
           <AgniMap patient={patient} />
-          {/* <AppointmentList
-            appointments={appointments}
-            onJoin={appointment => console.log("Join", appointment)}
-            onReschedule={appointment => console.log("Reschedule", appointment)}
-          /> */}
-        </div>
+          <AmaCard patient={patient} />
+        </aside>
       </section>
 
       <CompletedReports
@@ -79,6 +79,6 @@ export default function DashboardPage() {
         patient={patient}
         onRefresh={refreshDashboard}
       />
-    </div>
+    </main>
   );
 }

@@ -189,7 +189,7 @@ export default function RiskReport(){
         </div>
       </div>
 
-      <div className="flex justify-end py-6 print:hidden">
+      {/* <div className="flex justify-end py-6 print:hidden">
         <button
           type="button"
           onClick={downloadPDF}
@@ -201,7 +201,7 @@ export default function RiskReport(){
             :<Download className="h-4 w-4"/>}
           {downloading?"Generating PDF...":"Download PDF"}
         </button>
-      </div>
+      </div> */}
 
       <style>{`
         .report-page-header{display:none}

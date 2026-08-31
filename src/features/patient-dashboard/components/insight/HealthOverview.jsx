@@ -288,9 +288,6 @@ export default function HealthOverview({assessment={},report={},onViewReport=()=
 
         <div className="space-y-6">
           <div>
-            <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${bg(score)}`}>
-              {risk} Risk
-            </span>
 
             <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
               Wellness Snapshot
