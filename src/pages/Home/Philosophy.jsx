@@ -77,28 +77,28 @@ We don't just tell you that you feel better; we show you the exact data proving 
 
     icon: Compass,
 
-    title: "The Sovereign Protocols",
+    title: "The DARSHAI Longevity Ecosystem",
 
     text: `
-We match your specific biological deficit to the exact geographical coordinate — Coast, Forest, or Mountain — and Ayurvedic intervention required to heal it.
+We combine biological intelligence, environmental precision, and evidence-based Ayurvedic protocols to deliver highly personalized longevity interventions.
     `,
   },
 
   {
-  tag: "THE OUTCOME",
+    tag: "THE OUTCOME",
 
-  icon: ShieldCheck,
+    icon: ShieldCheck,
 
-  title: "The Outcome: Health Sovereignty",
+    title: "The Outcome: Health Sovereignty",
 
-  text: `
-DARSHAI is not about temporary wellness; it is about lasting transformation.
+    text: `
+DARSHAI is not about temporary wellness. It is about measurable, long-term biological transformation.
 
-Our goal is to help individuals regain control over their biology through measurable interventions and evidence-based longevity strategies.
+Our mission is to help individuals regain control over their health through precision-guided interventions and evidence-based longevity strategies.
 
-By combining environmental intelligence, clinical data, and personalized protocols, we empower you to build resilience, enhance performance, and achieve long-term health sovereignty.
+By combining biological intelligence, environmental precision, and personalized wellness protocols, we help you build resilience, optimize performance, and achieve lasting health sovereignty.
   `,
-},
+  },
 ];
 
 export default function Philosophy() {
