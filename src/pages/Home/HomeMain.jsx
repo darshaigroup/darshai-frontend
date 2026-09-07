@@ -154,12 +154,13 @@ function HomeMain() {
             </h1>
 
             <p className="text-lg text-white/90 mb-8 leading-relaxed max-w-xl">
-              We noticed a dangerous paradox in modern health: the more
-              "connected" our technology became, the more disconnected we became
-              from our biological foundations. DARSHAI bridges 5,000 years of
-              Ayurvedic tradition with precision-driven biomarker intelligence.
-              This is not a retreat. This is the new standard of human
-              optimization.
+              Modern life has made health more complicated than ever. DARSHAI
+              simplifies it by combining the intelligence of Ayurveda, advanced
+              health assessments, and carefully curated wellness environments.
+              Every recommendation, retreat, and protocol is designed to help
+              you restore balance, build resilience, and create a foundation for
+              long-term vitality. This is not wellness tourism. This is
+              precision-guided longevity.
             </p>
 
             <button
@@ -275,7 +276,7 @@ function HomeMain() {
               </p>
 
               <h2 className="text-4xl md:text-5xl font-serif text-green-800 leading-tight">
-                The Six Gears of Longevity
+                The DARSHAI Longevity Ecosystem
               </h2>
             </div>
 
@@ -372,44 +373,44 @@ function HomeMain() {
             >
               {[
                 {
-                  gear: "GEAR 1",
-                  title: "Sovereign Protocols",
-                  desc: "7-Day Luxury Geo-Wellness Interventions",
+                  gear: "",
+                  title: "Precision Assessment",
+                  desc: "AI-powered biological, lifestyle, and environmental analysis to identify the root causes of health decline",
                   img: sover,
                   delay: 1.4,
                 },
                 {
-                  gear: "GEAR 2",
-                  title: "Corporate Wellness Reset ",
-                  desc: "5-Day Executive Reset for B2B",
+                  gear: "",
+                  title: "Sovereign Protocols ",
+                  desc: "Personalized Geo-Wellness interventions delivered through curated wellness destinations and evidence-based therapeutic protocols",
                   img: corporate,
                   delay: 1.6,
                 },
                 {
-                  gear: "GEAR 3",
-                  title: "Long-Term Wellness Support",
-                  desc: "Habit Tracking & Video Library",
+                  gear: "",
+                  title: "Longevity Concierge",
+                  desc: "Continuous support, monitoring, accountability, and optimization beyond the retreat experience",
                   img: maintenance,
                   delay: 1.8,
                 },
                 {
-                  gear: "GEAR 4",
-                  title: "Longevity Wellness Kits",
-                  desc: "Waitlist / Coming Soon",
+                  gear: "",
+                  title: "Corporate Longevity",
+                  desc: "Executive recovery programs, workforce resilience, and workplace health optimization",
                   img: prepkit,
                   delay: 2,
                 },
                 {
-                  gear: "GEAR 5",
-                  title: "Wellness & Innovation Events",
-                  desc: "Bio-hacking Workshops / Hackathons",
+                  gear: "",
+                  title: "Longevity Intelligence",
+                  desc: "Protocol Efficacy Score (PES), health analytics, progress tracking, and biological outcome measurement.",
                   img: precision,
                   delay: 2.2,
                 },
                 {
-                  gear: "GEAR 6",
-                  title: "Corporate Wellness Optimization",
-                  desc: "Office Auditing",
+                  gear: "",
+                  title: "The DARSHAI Collective",
+                  desc: "A global network of wellness centers, longevity experts, innovators, and health-conscious individuals.",
                   img: environment,
                   delay: 2.4,
                 },
@@ -776,9 +777,34 @@ function HomeMain() {
         leading-relaxed
       "
           >
-            Reclaim your 168. Join an elite group of founders and leaders in our
-            2026 Sovereign Pilot. We map your data to South India's most potent
-            coordinates to reverse your biological age
+            Your biology deserves more than generic wellness. 
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              ease: [0.19, 1, 0.22, 1],
+              delay: 1.1,
+            }}
+            className="
+        text-lg
+        md:text-l
+
+        text-white/80
+
+        mb-8
+
+        max-w-2xl
+        mx-auto
+
+        leading-relaxed
+      "
+          >
+             DARSHAI combines biological intelligence, environmental precision, and evidence-based
+            longevity interventions to help high-performing individuals restore
+            resilience, elevate performance, and build long-term health
+            sovereignty.
           </motion.p>
 
           {/* BUTTON */}
@@ -813,7 +839,7 @@ function HomeMain() {
           shadow-xl
         "
             >
-              Apply for the Sovereign 168
+              Begin Your Sovereign Journey
             </motion.button>
           </Link>
         </div>
