@@ -27,3 +27,5 @@ export const updateSalesNotes=(id,sales_notes)=>request(`/api/sales/${id}/notes`
 export const updateFollowup=(id,followup_date,sales_notes)=>request(`/api/sales/${id}/followup`,{method:"PATCH",body:JSON.stringify({followup_date,sales_notes})});
 export const assignDoctor=(id,doctor_id)=>request(`/api/sales/${id}/assign`,{method:"PATCH",body:JSON.stringify({doctor_id})});
 export const getDoctors=()=>request("/api/sales/doctors");
+export const getPasswordSetupPending=()=>request("/api/sales/password-setup/pending");
+export const sendPasswordSetupEmail=patientId=>request(`/api/sales/${patientId}/password-setup`,{method:"POST"});
