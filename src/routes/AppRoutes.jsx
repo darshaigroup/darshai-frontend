@@ -138,7 +138,6 @@ const AppRoutes = () => {
 
             {/* ========================= JOURNEY ========================= */}
             <Route path="/begin-your-journey" element={<Register />} />
-            <Route path="/international-wellness-india" element={<Register />} />
 
             {/* ========================= EXISTING ========================= */}
             <Route path="/pdf/:file" element={<FlipBookPage />} />

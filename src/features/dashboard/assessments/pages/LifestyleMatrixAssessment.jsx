@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
-
 import { useLocation, useNavigate } from "react-router-dom";
-
 import { lifestyleMatrixSections } from "../data/lifestyleMatrixData";
-
 import {
   saveLifestyleMatrix,
+  saveLifestyleMatrixForDoctor,
   getLifestyleMatrix,
+  getLifestyleMatrixForDoctor,
 } from "../services/lifestyleMatrixService";
 
 const LifestyleMatrixAssessment = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
 
   const patient = location.state?.patient;
+  const source = location.state?.source;
 
   const [answers, setAnswers] = useState({});
-
   const [currentSection, setCurrentSection] = useState(0);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const source = location.state?.source;
+  // Doctor flow is identified by the source passed from Doctor Dashboard
+  const isDoctorFlow = source === "doctor";
 
   useEffect(() => {
     if (patient?.id) {
@@ -32,7 +30,9 @@ const LifestyleMatrixAssessment = () => {
 
   const loadLifestyleMatrix = async () => {
     try {
-      const data = await getLifestyleMatrix(patient.id);
+      const data = isDoctorFlow
+        ? await getLifestyleMatrixForDoctor(patient.id)
+        : await getLifestyleMatrix(patient.id);
 
       if (data?.matrix_answers) {
         setAnswers(data.matrix_answers);
@@ -44,25 +44,17 @@ const LifestyleMatrixAssessment = () => {
 
   const multiSelectQuestions = [
     "retreat_goal",
-
     "mind_body_practice",
-
     "therapeutic_experience",
-
     "creative_activity",
-
     "wellness_learning",
-
     "retreat_experience",
-
     "exercise_type",
   ];
 
   const handleAnswer = (
     questionId,
-
     value,
-
     multiple = false,
   ) => {
     if (multiple) {
@@ -77,7 +69,6 @@ const LifestyleMatrixAssessment = () => {
 
         return {
           ...prev,
-
           [questionId]: updated,
         };
       });
@@ -87,7 +78,6 @@ const LifestyleMatrixAssessment = () => {
 
     setAnswers((prev) => ({
       ...prev,
-
       [questionId]: value,
     }));
   };
@@ -108,76 +98,78 @@ const LifestyleMatrixAssessment = () => {
     try {
       setIsSubmitting(true);
 
-      const report = await saveLifestyleMatrix({
+      const payload = {
         patient_id: patient.id,
-
         matrix_answers: answers,
-      });
+      };
 
-     if (source === "questionnaire") {
+      const report = isDoctorFlow
+        ? await saveLifestyleMatrixForDoctor(payload)
+        : await saveLifestyleMatrix(payload);
 
-  navigate(
-    `/dashboard/report-display/${patient.id}`,
-    {
-      state: {
-        reportType: "lifestyle"
+      if (source === "questionnaire") {
+        navigate(
+          `/dashboard/report-display/${patient.id}`,
+          {
+            state: {
+              reportType: "lifestyle",
+            },
+          },
+        );
+      } else {
+        navigate(
+          "/dashboard/lifestyle-matrix-result",
+          {
+            state: {
+              patient,
+              report,
+            },
+          },
+        );
       }
-    }
-  );
-
-} else {
-
-  navigate(
-    "/dashboard/lifestyle-matrix-result",
-    {
-      state: {
-        patient,
-        report
-      }
-    }
-  );
-
-}
     } catch (error) {
       console.error("SAVE MATRIX ERROR", error);
-
       alert(error.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const activeSection = lifestyleMatrixSections[currentSection];
+  const activeSection =
+    lifestyleMatrixSections[currentSection];
 
   const visibleQuestions =
-  activeSection?.questions?.filter(
-    (question) => {
+    activeSection?.questions?.filter(
+      (question) => {
+        if (!question.visibleFor) {
+          return true;
+        }
 
-      if (!question.visibleFor) {
-        return true;
-      }
+        return question.visibleFor.includes(
+          answers.retreat_for,
+        );
+      },
+    ) || [];
 
-      return question.visibleFor.includes(
-        answers.retreat_for
-      );
-
-    }
-  ) || [];
-  const totalQuestions = lifestyleMatrixSections.reduce(
-    (sum, section) => sum + (section.questions?.length || 0),
-    0,
-  );
+  const totalQuestions =
+    lifestyleMatrixSections.reduce(
+      (sum, section) =>
+        sum + (section.questions?.length || 0),
+      0,
+    );
 
   const validSections =
-  lifestyleMatrixSections.filter(
-    (section) =>
-      section.title &&
-      Array.isArray(section.questions)
-  );
+    lifestyleMatrixSections.filter(
+      (section) =>
+        section.title &&
+        Array.isArray(section.questions),
+    );
 
   const answeredQuestions = Object.keys(answers).length;
 
-  const progress = Math.round((answeredQuestions / totalQuestions) * 100);
+  const progress = Math.round(
+    (answeredQuestions / totalQuestions) * 100,
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F6FFF8] via-white to-[#F0FFF4]">
@@ -190,7 +182,8 @@ const LifestyleMatrixAssessment = () => {
           </h1>
 
           <p className="text-slate-500 mt-2">
-            Personalized wellness & retreat preference assessment.
+            Personalized wellness & retreat preference
+            assessment.
           </p>
         </div>
 
@@ -213,7 +206,8 @@ const LifestyleMatrixAssessment = () => {
           </div>
 
           <p className="mt-3 text-sm text-slate-500">
-            {answeredQuestions} of {totalQuestions} questions completed
+            {answeredQuestions} of {totalQuestions}{" "}
+            questions completed
           </p>
         </div>
 
@@ -221,27 +215,29 @@ const LifestyleMatrixAssessment = () => {
 
         <div className="flex flex-wrap gap-3 mb-8">
           {lifestyleMatrixSections
-  .filter(
-    (section) =>
-      section.title &&
-      Array.isArray(section.questions)
-  )
-  .map((section, index) => (
-    <button
-      key={section.id}
-      onClick={() => setCurrentSection(index)}
-      className={`
-        px-5 py-3 rounded-2xl text-sm font-medium transition-all
-        ${
-          currentSection === index
-            ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white shadow-lg scale-[1.02]"
-            : "bg-white border border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
-        }
-      `}
-    >
-      {section.title}
-    </button>
-))}
+            .filter(
+              (section) =>
+                section.title &&
+                Array.isArray(section.questions),
+            )
+            .map((section, index) => (
+              <button
+                key={section.id}
+                onClick={() =>
+                  setCurrentSection(index)
+                }
+                className={`
+                  px-5 py-3 rounded-2xl text-sm font-medium transition-all
+                  ${
+                    currentSection === index
+                      ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white shadow-lg scale-[1.02]"
+                      : "bg-white border border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+                  }
+                `}
+              >
+                {section.title}
+              </button>
+            ))}
         </div>
 
         {/* ACTIVE SECTION */}
@@ -279,14 +275,24 @@ const LifestyleMatrixAssessment = () => {
                     min="0"
                     max={question.max || 100}
                     value={answers[question.id] || ""}
-                    onChange={(e) => handleAnswer(question.id, e.target.value)}
+                    onChange={(e) =>
+                      handleAnswer(
+                        question.id,
+                        e.target.value,
+                      )
+                    }
                     placeholder={`Enter ${question.question}`}
                     className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:border-[#00C853]"
                   />
                 ) : question.type === "select" ? (
                   <select
                     value={answers[question.id] || ""}
-                    onChange={(e) => handleAnswer(question.id, e.target.value)}
+                    onChange={(e) =>
+                      handleAnswer(
+                        question.id,
+                        e.target.value,
+                      )
+                    }
                     className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:border-[#00C853]"
                   >
                     <option value="">Select</option>
@@ -297,7 +303,10 @@ const LifestyleMatrixAssessment = () => {
                       },
                       (_, i) => i + 1,
                     ).map((value) => (
-                      <option key={value} value={value}>
+                      <option
+                        key={value}
+                        value={value}
+                      >
                         {value}
                       </option>
                     ))}
@@ -308,25 +317,30 @@ const LifestyleMatrixAssessment = () => {
                       <button
                         key={option}
                         onClick={() =>
-                          handleAnswer(question.id, option, question.multiple)
+                          handleAnswer(
+                            question.id,
+                            option,
+                            question.multiple,
+                          )
                         }
                         className={`
-          px-5
-          py-3
-          rounded-2xl
-          border
-          font-medium
-          transition-all
-          ${
-            (
-              question.multiple
-                ? (answers[question.id] || []).includes(option)
-                : answers[question.id] === option
-            )
-              ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
-              : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
-          }
-        `}
+                          px-5 py-3 rounded-2xl border font-medium transition-all
+                          ${
+                            question.multiple
+                              ? (
+                                  answers[
+                                    question.id
+                                  ] || []
+                                ).includes(option)
+                                ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
+                                : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+                              : answers[
+                                    question.id
+                                  ] === option
+                                ? "bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white border-transparent shadow-md"
+                                : "bg-white border-slate-200 text-slate-700 hover:border-[#00C853] hover:text-[#00C853]"
+                          }
+                        `}
                       >
                         {option}
                       </button>
@@ -336,17 +350,25 @@ const LifestyleMatrixAssessment = () => {
 
                 {question.allowOther &&
                   question.multiple &&
-                  Array.isArray(answers[question.id]) &&
-                  answers[question.id].includes("Other") && (
+                  Array.isArray(
+                    answers[question.id],
+                  ) &&
+                  answers[question.id].includes(
+                    "Other",
+                  ) && (
                     <div className="mt-4">
                       <input
                         type="text"
-                        value={answers[`${question.id}_other`] || ""}
+                        value={
+                          answers[
+                            `${question.id}_other`
+                          ] || ""
+                        }
                         onChange={(e) =>
                           setAnswers((prev) => ({
                             ...prev,
-
-                            [`${question.id}_other`]: e.target.value,
+                            [`${question.id}_other`]:
+                              e.target.value,
                           }))
                         }
                         placeholder="Please specify"
@@ -370,13 +392,16 @@ const LifestyleMatrixAssessment = () => {
             Previous
           </button>
 
-          {currentSection === lifestyleMatrixSections.length - 1 ? (
+          {currentSection ===
+          lifestyleMatrixSections.length - 1 ? (
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
               className="px-5 py-2 rounded-2xl bg-gradient-to-r from-[#00C853] to-[#1DB954] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Generating Report..." : "View Report"}
+              {isSubmitting
+                ? "Generating Report..."
+                : "View Report"}
             </button>
           ) : (
             <button

@@ -1,33 +1,31 @@
 import { useNavigate } from "react-router-dom";
-import { FaEnvelope,FaPhone,FaHeartbeat } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaHeartbeat } from "react-icons/fa";
 import DefaultAvatar from "@/assets/images/profile.jpg";
 
-const PatientCard=({patient})=>{
-  const navigate=useNavigate();
+const PatientCard = ({ patient }) => {
+  const navigate = useNavigate();
 
-  if(!patient) return null;
+  if (!patient) return null;
 
-  const calculateAge=(dob)=>{
-    if(!dob) return "-";
+  const calculateAge = (dob) => {
+    if (!dob) return "-";
 
-    const birthDate=new Date(dob);
-    const today=new Date();
+    const birthDate = new Date(dob);
+    const today = new Date();
 
-    let age=today.getFullYear()-birthDate.getFullYear();
+    let age = today.getFullYear() - birthDate.getFullYear();
 
-    const hasBirthdayPassed=
-      today.getMonth()>birthDate.getMonth()||
-      (
-        today.getMonth()===birthDate.getMonth() &&
-        today.getDate()>=birthDate.getDate()
-      );
+    const hasBirthdayPassed =
+      today.getMonth() > birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() &&
+        today.getDate() >= birthDate.getDate());
 
-    if(!hasBirthdayPassed) age--;
+    if (!hasBirthdayPassed) age--;
 
     return age;
   };
 
-  return(
+  return (
     <div
       className="
         relative overflow-hidden
@@ -39,9 +37,8 @@ const PatientCard=({patient})=>{
         transition-all duration-300
       "
     >
-
       {/* Top Accent */}
-      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-[#1E7A3A]/10 to-[#4FDAB9]/10"/>
+      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-[#1E7A3A]/10 to-[#4FDAB9]/10" />
 
       {/* Status */}
       <div className="absolute top-5 right-5">
@@ -53,7 +50,7 @@ const PatientCard=({patient})=>{
       {/* Avatar */}
       <div className="flex flex-col items-center relative z-10">
         <img
-          src={patient.profile_image||DefaultAvatar}
+          src={patient.profile_image || DefaultAvatar}
           alt={patient.name}
           className="
             w-24 h-24 rounded-full
@@ -72,36 +69,51 @@ const PatientCard=({patient})=>{
         </p>
       </div>
 
+      {/* Client & Journey IDs */}
+      <div className="mt-5 space-y-2">
+        <div className="rounded-2xl bg-[#F8FAF9] px-4 py-3">
+          <p className="text-xs text-gray-500">Client ID</p>
+          <p className="mt-1 text-sm font-semibold text-[#173C68] break-all">
+            {patient.client_id || "-"}
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-[#F8FAF9] px-4 py-3">
+          <p className="text-xs text-gray-500">Journey ID</p>
+          <p className="mt-1 text-sm font-semibold text-[#173C68] break-all">
+            {patient.journey_id || "-"}
+          </p>
+        </div>
+      </div>
+
       {/* Wellness Badge */}
       <div className="mt-5 flex justify-center">
         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#F3FBF8] text-[#1E7A3A] text-sm font-medium">
-          <FaHeartbeat/>
+          <FaHeartbeat />
           Wellness Journey Active
         </div>
       </div>
 
       {/* Contact */}
       <div className="mt-6 space-y-3">
-
         <div className="flex items-center gap-3 bg-[#F8FAF9] p-3 rounded-2xl">
-          <FaEnvelope className="text-[#1E7A3A]"/>
+          <FaEnvelope className="text-[#1E7A3A]" />
           <span className="text-sm text-gray-700 truncate">
             {patient.email}
           </span>
         </div>
 
         <div className="flex items-center gap-3 bg-[#F8FAF9] p-3 rounded-2xl">
-          <FaPhone className="text-[#1E7A3A]"/>
+          <FaPhone className="text-[#1E7A3A]" />
           <span className="text-sm text-gray-700">
             {patient.phone}
           </span>
         </div>
-
       </div>
 
       {/* CTA */}
       <button
-        onClick={()=>navigate(`/dashboard/patients/${patient.id}`)}
+        onClick={() => navigate(`/dashboard/patients/${patient.id}`)}
         className="
           mt-6 w-full py-3
           rounded-2xl

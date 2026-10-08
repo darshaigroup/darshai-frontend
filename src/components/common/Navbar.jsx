@@ -64,11 +64,11 @@ export default function Navbar(){
         </Link>
 
         {/* GEO-WELLNESS */}
-        <Link to="/geo-wellness-centres" className={`group ${textColor}`}>
+        {/* <Link to="/geo-wellness-centres" className={`group ${textColor}`}>
           <span className={`${hoverItem} text-[10px] md:text-[11px] lg:text-xs xl:text-sm`}>
             GEO-WELLNESS
           </span>
-        </Link>
+        </Link> */}
 
         {/* PROGRAMS - DIRECT LINK */}
         <Link to="/program" className={`group ${textColor}`}>
@@ -78,11 +78,11 @@ export default function Navbar(){
         </Link>
 
         {/* INTERNATIONAL */}
-        <Link to="/international-wellness-india" className={`group ${textColor}`}>
+        {/* <Link to="/international-wellness-india" className={`group ${textColor}`}>
           <span className={`${hoverItem} text-[10px] md:text-[11px] lg:text-xs xl:text-sm whitespace-nowrap`}>
             INTERNATIONAL
           </span>
-        </Link>
+        </Link> */}
 
         {/* INSIGHTS DROPDOWN */}
         <div
@@ -222,11 +222,11 @@ export default function Navbar(){
             </Link>
 
             {/* GEO-WELLNESS */}
-            <Link to="/geo-wellness-centres" onClick={closeMobile} className="px-2 py-2 group">
+            {/* <Link to="/geo-wellness-centres" onClick={closeMobile} className="px-2 py-2 group">
               <span className="text-[#1E7A3A] group-hover:text-[#C9A75B] transition-colors">
                 Geo-Wellness
               </span>
-            </Link>
+            </Link> */}
 
             {/* PROGRAMS */}
             <Link to="/program" onClick={closeMobile} className="px-2 py-2 group">
@@ -236,11 +236,11 @@ export default function Navbar(){
             </Link>
 
             {/* INTERNATIONAL */}
-            <Link to="/international-wellness-india" onClick={closeMobile} className="px-2 py-2 group">
+            {/* <Link to="/international-wellness-india" onClick={closeMobile} className="px-2 py-2 group">
               <span className="text-[#1E7A3A] group-hover:text-[#C9A75B] transition-colors">
                 International
               </span>
-            </Link>
+            </Link> */}
 
             {/* INSIGHTS */}
             <div className="px-2 py-2">

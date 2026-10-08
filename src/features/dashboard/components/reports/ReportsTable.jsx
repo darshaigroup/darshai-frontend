@@ -44,88 +44,175 @@ const ReportsTable=()=>{
   if(loading)return <div className="p-8 text-center">Loading reports...</div>;
 
   return(
-    <div className="bg-white rounded-[32px] shadow-sm p-6">
-      <div className="flex justify-between items-center mb-8">
-        <input placeholder="Search patient..." className="w-[320px] px-5 py-3 rounded-full bg-[#F6F9F8] outline-none"/>
-        <div className="flex gap-2">
-          <button className="px-4 py-2 rounded-full border">Filter</button>
-          <button className="px-4 py-2 rounded-full border">Date</button>
-        </div>
+    <div className="bg-white rounded-[32px] shadow-sm p-4 sm:p-6">
+      {/* DESKTOP/TABLET */}
+
+      <div className="hidden sm:block overflow-x-auto">
+        <table className="w-full min-w-[900px]">
+          <thead>
+            <tr className="text-xs text-slate-400 border-b">
+              <th className="text-left pb-4">PATIENT</th>
+              <th className="text-left pb-4">REPORTS AVAILABLE</th>
+              <th className="text-left pb-4">LAST UPDATED</th>
+              <th className="text-left pb-4">STATUS</th>
+              <th className="text-left pb-4">SUMMARY</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentPatients.map(item=>(
+              <tr key={item.patient_id} className="border-b hover:bg-[#F9FBFA] transition">
+                <td className="py-6">
+                  <div className="flex items-center gap-4">
+                    <img src={item.profile_image||DefaultAvatar} alt="" className="w-12 h-12 rounded-full object-cover"/>
+                    <div>
+                      <h3 className="font-semibold text-[#173C68]">{item.name}</h3>
+                      <p className="text-xs font-semibold text-[#173C68]">
+                        {item.journey_id||"-"}
+                      </p>
+                      <p className="text-xs text-slate-500">{item.email||"-"}</p>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div className="flex flex-wrap gap-2">
+                    {Number(item.risk_report)>0&&<ReportPill label="Risk" type="risk" patientId={item.patient_id} color="bg-red-50 text-red-600"/>}
+                    {Number(item.ayurveda_report)>0&&<ReportPill label="Ayurveda" type="ayurveda" patientId={item.patient_id} color="bg-emerald-50 text-emerald-600"/>}
+                    {Number(item.clinical_report)>0&&<ReportPill label="Clinical" type="clinical" patientId={item.patient_id} color="bg-blue-50 text-blue-600"/>}
+                    {Number(item.lifestyle_report)>0&&<ReportPill label="Lifestyle" type="lifestyle" patientId={item.patient_id} color="bg-violet-50 text-violet-600"/>}
+
+                    {Array.isArray(item.lab_reports)&&item.lab_reports.map(report=>(
+                      <ReportPill
+                        key={report.id}
+                        label="Lab"
+                        type="lab"
+                        patientId={item.patient_id}
+                        reportId={report.id}
+                        color="bg-amber-50 text-amber-600"
+                      />
+                    ))}
+                  </div>
+                </td>
+
+                <td className="text-slate-600 whitespace-nowrap">
+                  {item.last_updated?new Date(item.last_updated).toLocaleDateString():"-"}
+                </td>
+
+                <td>
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusStyle(item.status)}`}>
+                    {item.status}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    onClick={()=>navigate(`/dashboard/patient-report-summary/${item.patient_id}`)}
+                    className="w-10 h-10 rounded-full bg-[#F6F9F8] flex items-center justify-center hover:bg-[#173C68] hover:text-white transition"
+                  >
+                    <FaEye/>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      <table className="w-full">
-        <thead>
-          <tr className="text-xs text-slate-400 border-b">
-            <th className="text-left pb-4">PATIENT</th>
-            <th className="text-left pb-4">REPORTS AVAILABLE</th>
-            <th className="text-left pb-4">LAST UPDATED</th>
-            <th className="text-left pb-4">STATUS</th>
-            <th className="text-left pb-4">SUMMARY</th>
-          </tr>
-        </thead>
+      {/* MOBILE */}
 
-        <tbody>
-          {currentPatients.map(item=>(
-            <tr key={item.patient_id} className="border-b hover:bg-[#F9FBFA] transition">
-              <td className="py-6">
-                <div className="flex items-center gap-4">
-                  <img src={item.profile_image||DefaultAvatar} alt="" className="w-12 h-12 rounded-full object-cover"/>
-                  <div>
-                    <h3 className="font-semibold text-[#173C68]">{item.name}</h3>
-                    <p className="text-xs text-slate-500">Patient ID #{item.patient_id}</p>
-                  </div>
-                </div>
-              </td>
+      <div className="sm:hidden space-y-4">
+        {currentPatients.map(item=>(
+          <div key={item.patient_id} className="border border-slate-100 rounded-2xl p-4 bg-[#F9FBFA]">
 
-              <td>
-                <div className="flex flex-wrap gap-2">
-                  {Number(item.risk_report)>0&&<ReportPill label="Risk" type="risk" patientId={item.patient_id} color="bg-red-50 text-red-600"/>}
-                  {Number(item.ayurveda_report)>0&&<ReportPill label="Ayurveda" type="ayurveda" patientId={item.patient_id} color="bg-emerald-50 text-emerald-600"/>}
-                  {Number(item.clinical_report)>0&&<ReportPill label="Clinical" type="clinical" patientId={item.patient_id} color="bg-blue-50 text-blue-600"/>}
-                  {Number(item.lifestyle_report)>0&&<ReportPill label="Lifestyle" type="lifestyle" patientId={item.patient_id} color="bg-violet-50 text-violet-600"/>}
+            <div className="flex items-center gap-3">
+              <img src={item.profile_image||DefaultAvatar} alt="" className="w-12 h-12 rounded-full object-cover shrink-0"/>
 
-                  {Array.isArray(item.lab_reports)&&item.lab_reports.map(report=>(
-                    <ReportPill
-                      key={report.id}
-                      label="Lab"
-                      type="lab"
-                      patientId={item.patient_id}
-                      reportId={report.id}
-                      color="bg-amber-50 text-amber-600"
-                    />
-                  ))}
-                </div>
-              </td>
+              <div className="min-w-0">
+                <h3 className="font-semibold text-[#173C68] truncate">{item.name}</h3>
+                <p className="text-xs text-slate-500 truncate">{item.email||"-"}</p>
+              </div>
+            </div>
 
-              <td className="text-slate-600">
-                {item.last_updated?new Date(item.last_updated).toLocaleDateString():"-"}
-              </td>
+            <div className="mt-4 bg-white rounded-xl p-3">
+              <p className="text-[11px] text-slate-400 uppercase tracking-wide">Journey ID</p>
+              <p className="mt-1 text-sm font-semibold text-[#173C68] break-all">
+                {item.journey_id||"-"}
+              </p>
+            </div>
 
-              <td>
-                <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusStyle(item.status)}`}>
+            <div className="grid grid-cols-2 gap-3 mt-3">
+              <div className="bg-white rounded-xl p-3">
+                <p className="text-[11px] text-slate-400 uppercase tracking-wide">Last Updated</p>
+                <p className="mt-1 text-sm text-slate-600">
+                  {item.last_updated?new Date(item.last_updated).toLocaleDateString():"-"}
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl p-3">
+                <p className="text-[11px] text-slate-400 uppercase tracking-wide">Status</p>
+                <span className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${statusStyle(item.status)}`}>
                   {item.status}
                 </span>
-              </td>
+              </div>
+            </div>
 
-              <td>
-                <button
-                  onClick={()=>navigate(`/dashboard/patient-report-summary/${item.patient_id}`)}
-                  className="w-10 h-10 rounded-full bg-[#F6F9F8] flex items-center justify-center hover:bg-[#173C68] hover:text-white transition"
-                >
-                  <FaEye/>
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            <div className="mt-3 bg-white rounded-xl p-3">
+              <p className="text-[11px] text-slate-400 uppercase tracking-wide mb-2">Reports Available</p>
 
-      <div className="flex justify-between items-center mt-8 text-sm text-slate-400">
-        <span>Securely stored in Darshai Clinical Cloud</span>
+              <div className="flex flex-wrap gap-2">
+                {Number(item.risk_report)>0&&<ReportPill label="Risk" type="risk" patientId={item.patient_id} color="bg-red-50 text-red-600"/>}
+                {Number(item.ayurveda_report)>0&&<ReportPill label="Ayurveda" type="ayurveda" patientId={item.patient_id} color="bg-emerald-50 text-emerald-600"/>}
+                {Number(item.clinical_report)>0&&<ReportPill label="Clinical" type="clinical" patientId={item.patient_id} color="bg-blue-50 text-blue-600"/>}
+                {Number(item.lifestyle_report)>0&&<ReportPill label="Lifestyle" type="lifestyle" patientId={item.patient_id} color="bg-violet-50 text-violet-600"/>}
+
+                {Array.isArray(item.lab_reports)&&item.lab_reports.map(report=>(
+                  <ReportPill
+                    key={report.id}
+                    label="Lab"
+                    type="lab"
+                    patientId={item.patient_id}
+                    reportId={report.id}
+                    color="bg-amber-50 text-amber-600"
+                  />
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={()=>navigate(`/dashboard/patient-report-summary/${item.patient_id}`)}
+              className="mt-4 w-full h-11 rounded-xl bg-[#F6F9F8] text-[#173C68] flex items-center justify-center gap-2 hover:bg-[#173C68] hover:text-white transition"
+            >
+              <FaEye/>
+              View Summary
+            </button>
+
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 text-sm text-slate-400">
+        <span className="text-center sm:text-left">Securely stored in Darshai Clinical Cloud</span>
+
         <div className="flex items-center gap-3">
-          <button disabled={currentPage===1} onClick={()=>setCurrentPage(p=>p-1)} className="px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50">Previous</button>
-          <span className="px-4 py-2 rounded-full bg-[#F6F9F8] text-[#173C68] font-medium">Page {currentPage} of {totalPages}</span>
-          <button disabled={currentPage===totalPages} onClick={()=>setCurrentPage(p=>p+1)} className="px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50">Next</button>
+          <button
+            disabled={currentPage===1}
+            onClick={()=>setCurrentPage(p=>p-1)}
+            className="px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+          >
+            Previous
+          </button>
+
+          <span className="px-4 py-2 rounded-full bg-[#F6F9F8] text-[#173C68] font-medium whitespace-nowrap">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            disabled={currentPage===totalPages}
+            onClick={()=>setCurrentPage(p=>p+1)}
+            className="px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
