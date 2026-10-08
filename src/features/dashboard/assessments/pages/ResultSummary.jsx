@@ -1,7 +1,8 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+
 import SummaryHeader from "../components/resultSummary/SummaryHeader";
 import PatientDetails from "../components/resultSummary/PatientDetails";
 import LifestyleMatrixSummary from "../components/resultSummary/LifestyleMatrixSummary";
@@ -13,9 +14,9 @@ import LabReports from "../components/resultSummary/LabReports";
 import SummaryFooter from "../components/resultSummary/SummaryFooter";
 import Watermark from "../components/resultSummary/Watermark";
 
-const ResultSummary = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+const ResultSummary=()=>{
+  const location=useLocation();
+  const navigate=useNavigate();
 
   const {
     patient,
@@ -26,135 +27,293 @@ const ResultSummary = () => {
     doctorNotes,
     selectedSignature,
     uploadedReports,
-  } = location.state || {};
+  }=location.state||{};
 
-  const hasValue = (value) => {
-    if (Array.isArray(value)) return value.length > 0;
-
-    return value !== undefined && value !== null && value !== "";
+  const hasValue=(value)=>{
+    if(Array.isArray(value))return value.length>0;
+    return value!==undefined&&value!==null&&value!=="";
   };
 
-  const getDisplayValue = (field, answers) => {
-    const value = answers?.[field];
+  const getDisplayValue=(field,answers)=>{
+    const value=answers?.[field];
 
-    if (Array.isArray(value)) {
-      const otherValue = answers?.[`${field}_other`];
+    if(Array.isArray(value)){
+      const otherValue=answers?.[`${field}_other`];
 
       return value
-        .map((item) =>
-          item === "Other" && otherValue ? `Other (${otherValue})` : item,
+        .map((item)=>
+          item==="Other"&&otherValue
+            ?`Other (${otherValue})`
+            :item,
         )
         .join(", ");
     }
 
-    return value || "-";
+    return value||"-";
   };
-  const filteredLifestyleMatrix = {
-    ...lifestyleMatrix,
 
-    matrix_answers: Object.entries(
-      lifestyleMatrix?.matrix_answers || {},
-    ).reduce((acc, [key, value]) => {
-      if (hasValue(value)) {
-        acc[key] = Array.isArray(value)
-          ? getDisplayValue(key, lifestyleMatrix.matrix_answers)
-          : value;
+  const filteredLifestyleMatrix={
+    ...lifestyleMatrix,
+    matrix_answers:Object.entries(
+      lifestyleMatrix?.matrix_answers||{},
+    ).reduce((acc,[key,value])=>{
+      if(hasValue(value)){
+        acc[key]=Array.isArray(value)
+          ?getDisplayValue(key,lifestyleMatrix.matrix_answers)
+          :value;
       }
 
       return acc;
-    }, {}),
+    },{}),
   };
-  const downloadPDF = async () => {
-    const report = document.getElementById("summary-report");
 
-    if (!report) return;
+  const downloadPDF=async()=>{
+    const report=document.getElementById("summary-report");
 
-    const canvas = await html2canvas(report, {
-      scale: 2,
-      useCORS: true,
-    });
+    if(!report)return;
 
-    const imgData = canvas.toDataURL("image/png");
+    const pdf=new jsPDF("p","mm","a4");
 
-    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth=pdf.internal.pageSize.getWidth();
+    const pdfHeight=pdf.internal.pageSize.getHeight();
 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const margin=8;
+    const contentWidth=pdfWidth-margin*2;
+    const contentHeight=pdfHeight-margin*2;
 
-    const pageHeight = pdf.internal.pageSize.getHeight();
+    const sections=Array.from(
+      report.querySelectorAll("[data-pdf-section]"),
+    );
 
-    const imgWidth = pdfWidth;
+    let currentY=margin;
+    let isFirstPage=true;
 
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let heightLeft = imgHeight;
-
-    let position = 0;
-
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-
+    const addPage=()=>{
       pdf.addPage();
+      currentY=margin;
+    };
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    for(const section of sections){
+      const canvas=await html2canvas(section,{
+        scale:2,
+        useCORS:true,
+        backgroundColor:"#ffffff",
+        logging:false,
+        windowWidth:report.scrollWidth,
+      });
 
-      heightLeft -= pageHeight;
+      const imageWidth=contentWidth;
+      const imageHeight=
+        (canvas.height*imageWidth)/canvas.width;
+
+      /*
+       * If the section doesn't fit in the remaining
+       * space, start it on a new page.
+       */
+      if(
+        !isFirstPage&&
+        currentY!==margin&&
+        currentY+imageHeight>pdfHeight-margin
+      ){
+        addPage();
+      }
+
+      /*
+       * If one section is larger than a complete A4 page,
+       * split only that section across pages.
+       */
+      if(imageHeight>contentHeight){
+        let sourceY=0;
+
+        const pagePixelHeight=Math.floor(
+          (contentHeight/imageWidth)*canvas.width,
+        );
+
+        while(sourceY<canvas.height){
+          if(!isFirstPage&&currentY!==margin){
+            addPage();
+          }
+
+          isFirstPage=false;
+
+          const remainingHeight=
+            canvas.height-sourceY;
+
+          const sliceHeight=Math.min(
+            pagePixelHeight,
+            remainingHeight,
+          );
+
+          const pageCanvas=document.createElement("canvas");
+
+          pageCanvas.width=canvas.width;
+          pageCanvas.height=sliceHeight;
+
+          const ctx=pageCanvas.getContext("2d");
+
+          ctx.fillStyle="#ffffff";
+          ctx.fillRect(
+            0,
+            0,
+            pageCanvas.width,
+            pageCanvas.height,
+          );
+
+          ctx.drawImage(
+            canvas,
+            0,
+            sourceY,
+            canvas.width,
+            sliceHeight,
+            0,
+            0,
+            canvas.width,
+            sliceHeight,
+          );
+
+          const pageImage=pageCanvas.toDataURL("image/png");
+
+          const pageImageHeight=
+            (sliceHeight*imageWidth)/canvas.width;
+
+          pdf.addImage(
+            pageImage,
+            "PNG",
+            margin,
+            currentY,
+            imageWidth,
+            pageImageHeight,
+          );
+
+          sourceY+=sliceHeight;
+          currentY+=pageImageHeight;
+
+          if(sourceY<canvas.height){
+            addPage();
+          }
+        }
+
+        continue;
+      }
+
+      isFirstPage=false;
+
+      const imageData=canvas.toDataURL("image/png");
+
+      pdf.addImage(
+        imageData,
+        "PNG",
+        margin,
+        currentY,
+        imageWidth,
+        imageHeight,
+      );
+
+      currentY+=imageHeight;
     }
 
-    const totalPages = pdf.internal.getNumberOfPages();
+    /*
+     * Add page numbers after all report pages
+     * have been created.
+     */
+    const totalPages=pdf.internal.getNumberOfPages();
 
-    for (let i = 1; i <= totalPages; i++) {
+    for(let i=1;i<=totalPages;i++){
       pdf.setPage(i);
 
-      pdf.setFontSize(10);
+      pdf.setFontSize(9);
+      pdf.setTextColor(100,100,100);
 
-      pdf.text(`Page ${i} of ${totalPages}`, 170, 290);
+      pdf.text(
+        `Page ${i} of ${totalPages}`,
+        pdfWidth-margin,
+        pdfHeight-4,
+        {
+          align:"right",
+        },
+      );
     }
 
-    pdf.save(`DarshAI_Report_${patient?.name || "Patient"}.pdf`);
+    pdf.save(
+      `DarshAI_Report_${patient?.name||"Patient"}.pdf`,
+    );
   };
 
-  const printReport = () => {
+  const printReport=()=>{
     window.print();
   };
 
-  return (
+  return(
     <div className="min-h-screen bg-slate-100 py-10">
       <Watermark />
 
-      <div id="summary-report" className="max-w-7xl mx-auto px-4 relative z-10">
-        <SummaryHeader
-          patient={patient}
-          onDownload={downloadPDF}
-          onPrint={printReport}
-        />
+      <div
+        id="summary-report"
+        className="max-w-7xl mx-auto px-4 relative z-10"
+      >
+        {/* Header */}
+        <div data-pdf-section>
+          <SummaryHeader
+            patient={patient}
+            onDownload={downloadPDF}
+            onPrint={printReport}
+          />
+        </div>
 
-        <PatientDetails patient={patient} />
+        {/* Patient Details */}
+        <div data-pdf-section>
+          <PatientDetails patient={patient} />
+        </div>
 
-        {/* <LifestyleMatrixSummary
-          lifestyleMatrixReport={filteredLifestyleMatrix}
-        /> */}
+        {/* Lifestyle Matrix */}
+        {/* 
+        <div data-pdf-section>
+          <LifestyleMatrixSummary
+            lifestyleMatrixReport={filteredLifestyleMatrix}
+          />
+        </div>
+        */}
 
-        <RiskSummary riskReport={riskReport} />
+        {/* Risk Summary */}
+        <div data-pdf-section>
+          <RiskSummary riskReport={riskReport} />
+        </div>
 
-        <AyurvedaSummary ayurvedaReport={ayurvedaReport} />
+        {/* Ayurveda Assessment */}
+        <div data-pdf-section>
+          <AyurvedaSummary
+            ayurvedaReport={ayurvedaReport}
+          />
+        </div>
 
-        <ClinicalSummary clinicalReport={clinicalReport} />
+        {/* Clinical Findings */}
+        <div data-pdf-section>
+          <ClinicalSummary
+            clinicalReport={clinicalReport}
+          />
+        </div>
 
-        <LabReports uploadedReports={uploadedReports} />
+        {/* Lab Reports */}
+        <div>
+          <LabReports
+            uploadedReports={uploadedReports}
+          />
+        </div>
 
-        <PractitionerNotes
-          doctorNotes={doctorNotes}
-          selectedSignature={selectedSignature}
-        />
+        {/* Practitioner Notes */}
+        <div data-pdf-section>
+          <PractitionerNotes
+            doctorNotes={doctorNotes}
+            selectedSignature={selectedSignature}
+          />
+        </div>
       </div>
+
+      {/* Bottom Actions */}
       <div className="print-hidden max-w-7xl mx-auto px-4 mt-8">
         <div className="bg-white rounded-[24px] shadow-xl p-6 flex justify-center items-center gap-4">
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={()=>navigate("/dashboard")}
             className="h-12 px-8 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-all"
           >
             ← Back to Dashboard

@@ -1,25 +1,60 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL=import.meta.env.VITE_API_URL;
 
 /* =========================
    SAVE MATRIX
 ========================= */
 
-export const saveLifestyleMatrix = async (payload) => {
-  const token = localStorage.getItem("token");
+export const saveLifestyleMatrix=async(payload)=>{
+  const token=localStorage.getItem("token");
 
-  const response = await fetch(`${API_URL}/api/lifestyle-matrix`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  const response=await fetch(
+    `${API_URL}/api/lifestyle-matrix`,
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${token}`,
+      },
+      body:JSON.stringify(payload),
     },
-    body: JSON.stringify(payload),
-  });
+  );
 
-  const result = await response.json();
+  const result=await response.json();
 
-  if (!response.ok) {
-    throw new Error(result.message || "Failed to save lifestyle matrix");
+  if(!response.ok){
+    throw new Error(
+      result.message||"Failed to save lifestyle matrix",
+    );
+  }
+
+  return result.data;
+};
+
+/* =========================
+   SAVE MATRIX - DOCTOR
+========================= */
+
+export const saveLifestyleMatrixForDoctor=async(payload)=>{
+  const token=localStorage.getItem("token");
+
+  const response=await fetch(
+    `${API_URL}/api/lifestyle-matrix/doctor`,
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${token}`,
+      },
+      body:JSON.stringify(payload),
+    },
+  );
+
+  const result=await response.json();
+
+  if(!response.ok){
+    throw new Error(
+      result.message||"Failed to save lifestyle matrix",
+    );
   }
 
   return result.data;
@@ -29,22 +64,51 @@ export const saveLifestyleMatrix = async (payload) => {
    GET MATRIX
 ========================= */
 
-export const getLifestyleMatrix = async (patientId) => {
-  const token = localStorage.getItem("token");
+export const getLifestyleMatrix=async(patientId)=>{
+  const token=localStorage.getItem("token");
 
-  const response = await fetch(
+  const response=await fetch(
     `${API_URL}/api/lifestyle-matrix/${patientId}`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
+      headers:{
+        Authorization:`Bearer ${token}`,
       },
     },
   );
 
-  const result = await response.json();
+  const result=await response.json();
 
-  if (!response.ok) {
-    throw new Error(result.message || "Failed to fetch lifestyle matrix");
+  if(!response.ok){
+    throw new Error(
+      result.message||"Failed to fetch lifestyle matrix",
+    );
+  }
+
+  return result.data;
+};
+
+/* =========================
+   GET MATRIX - DOCTOR
+========================= */
+
+export const getLifestyleMatrixForDoctor=async(patientId)=>{
+  const token=localStorage.getItem("token");
+
+  const response=await fetch(
+    `${API_URL}/api/lifestyle-matrix/doctor/${patientId}`,
+    {
+      headers:{
+        Authorization:`Bearer ${token}`,
+      },
+    },
+  );
+
+  const result=await response.json();
+
+  if(!response.ok){
+    throw new Error(
+      result.message||"Failed to fetch lifestyle matrix",
+    );
   }
 
   return result.data;

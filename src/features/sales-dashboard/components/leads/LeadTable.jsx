@@ -14,10 +14,13 @@ export default function LeadTable({ leads = [] }) {
     setSelectedLead(lead);
     setOpenLifestyle(true);
   };
+
   if (!leads.length) {
     return (
       <div className="rounded-[32px] border border-[#ECE7DD] bg-white p-16 text-center shadow-[0_20px_60px_rgba(0,0,0,.06)]">
-        <h3 className="font-serif text-2xl text-[#173C68]">No Leads Found</h3>
+        <h3 className="font-serif text-2xl text-[#173C68]">
+          No Leads Found
+        </h3>
 
         <p className="mt-3 text-slate-500">
           New lifestyle assessments will appear here.
@@ -39,6 +42,7 @@ export default function LeadTable({ leads = [] }) {
           <thead className="bg-[#F8F6F2]">
             <tr className="text-left text-sm font-semibold text-[#173C68]">
               <th className="px-8 py-5">Patient</th>
+              <th>Client ID</th>
               <th>Email</th>
               <th>Phone</th>
               <th>Program</th>
@@ -55,9 +59,15 @@ export default function LeadTable({ leads = [] }) {
                 className="border-t border-[#F1ECE4] transition hover:bg-[#FBFAF7]"
               >
                 <td className="px-8 py-6">
-                  <h4 className="font-semibold text-[#173C68]">{lead.name}</h4>
+                  <h4 className="font-semibold text-[#173C68]">
+                    {lead.name}
+                  </h4>
+                </td>
 
-                  <p className="text-sm text-slate-500">#{lead.id}</p>
+                <td>
+                  <span className="font-medium text-[#173C68]">
+                    {lead.client_id || "-"}
+                  </span>
                 </td>
 
                 <td>
@@ -121,9 +131,17 @@ export default function LeadTable({ leads = [] }) {
           <div key={lead.id} className="p-5">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-semibold text-[#173C68]">{lead.name}</h3>
+                <h3 className="font-semibold text-[#173C68]">
+                  {lead.name}
+                </h3>
 
-                <p className="mt-1 text-sm text-slate-500">{lead.email}</p>
+                <p className="mt-1 text-sm text-slate-500">
+                  {lead.email}
+                </p>
+
+                <p className="mt-1 text-sm font-medium text-[#173C68]">
+                  Client ID: {lead.client_id || "-"}
+                </p>
 
                 <button
                   onClick={() => handleOpenLifestyle(lead)}
@@ -150,7 +168,9 @@ export default function LeadTable({ leads = [] }) {
             </div>
 
             <button
-              onClick={() => navigate(`/sales-dashboard/leads/${lead.id}`)}
+              onClick={() =>
+                navigate(`/sales-dashboard/leads/${lead.id}`)
+              }
               className="mt-5 w-full rounded-full bg-[#173C68] py-3 text-white transition hover:bg-[#1E7A3A]"
             >
               View Lead
@@ -158,6 +178,7 @@ export default function LeadTable({ leads = [] }) {
           </div>
         ))}
       </div>
+
       <LifestyleModal
         open={openLifestyle}
         lead={selectedLead}

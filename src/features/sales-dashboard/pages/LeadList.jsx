@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-
 import SectionTitle from "../components/ui/SectionTitle";
 import SearchBar from "../components/filters/SearchBar";
 import StatusFilter from "../components/filters/StatusFilter";
@@ -8,71 +7,70 @@ import LeadTable from "../components/leads/LeadTable";
 import AssignDoctorModal from "../components/leads/AssignDoctorModal";
 import Loading from "../components/common/Loading";
 import EmptyState from "../components/common/EmptyState";
-
 import { searchLeads, getLeads } from "../services/salesService";
 
 export default function LeadList() {
-  const [loading, setLoading] = useState(true);
-  const [leads, setLeads] = useState([]);
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("All");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [selectedLead, setSelectedLead] = useState(null);
+  const [loading,setLoading]=useState(true);
+  const [leads,setLeads]=useState([]);
+  const [search,setSearch]=useState("");
+  const [status,setStatus]=useState("All");
+  const [from,setFrom]=useState("");
+  const [to,setTo]=useState("");
+  const [selectedLead,setSelectedLead]=useState(null);
 
-  useEffect(() => {
-  loadLeads();
-}, []);
+  useEffect(()=>{
+    loadLeads();
+  },[]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  useEffect(()=>{
+    const timer=setTimeout(()=>{
       loadLeads(search);
-    }, 300);
+    },300);
 
-    return () => clearTimeout(timer);
-  }, [search]);
+    return()=>clearTimeout(timer);
+  },[search]);
 
-  async function loadLeads(keyword = "") {
-    try {
-      const data = keyword.trim()
-        ? await searchLeads(keyword)
-        : await getLeads();
+  async function loadLeads(keyword=""){
+    try{
+      const data=keyword.trim()
+        ?await searchLeads(keyword)
+        :await getLeads();
 
       setLeads(
-        (data || []).filter(
-          (lead) =>
-            lead.lead_status !== "Closed" &&
-            lead.lead_status !== "Not Interested",
+        (data||[]).filter(
+          lead=>lead.lead_status!=="Closed"&&
+          lead.lead_status!=="Not Interested",
         ),
       );
-    } catch (err) {
+    }catch(err){
       console.error(err);
-    } finally {
+    }finally{
       setLoading(false);
     }
   }
 
-  const filtered = useMemo(() => {
-    return leads.filter((lead) => {
-      const keyword =
-        lead.name?.toLowerCase().includes(search.toLowerCase()) ||
-        lead.email?.toLowerCase().includes(search.toLowerCase()) ||
+  const filtered=useMemo(()=>{
+    return leads.filter(lead=>{
+      const keyword=
+        lead.name?.toLowerCase().includes(search.toLowerCase())||
+        lead.email?.toLowerCase().includes(search.toLowerCase())||
         lead.phone?.includes(search);
 
-      const statusMatch = status === "All" || lead.lead_status === status;
+      const statusMatch=
+        status==="All"||lead.lead_status===status;
 
-      const created = lead.created_at?.slice(0, 10);
+      const created=lead.created_at?.slice(0,10);
 
-      const fromMatch = !from || created >= from;
-      const toMatch = !to || created <= to;
+      const fromMatch=!from||created>=from;
+      const toMatch=!to||created<=to;
 
-      return keyword && statusMatch && fromMatch && toMatch;
+      return keyword&&statusMatch&&fromMatch&&toMatch;
     });
-  }, [leads, search, status, from, to]);
+  },[leads,search,status,from,to]);
 
-  if (loading) return <Loading />;
+  if(loading)return <Loading />;
 
-  return (
+  return(
     <div className="space-y-8">
       <SectionTitle
         title="Lead Management"
@@ -84,7 +82,7 @@ export default function LeadList() {
           <SearchBar
             value={search}
             onChange={setSearch}
-            onSearch={() => loadLeads(search)}
+            onSearch={()=>loadLeads(search)}
             placeholder="Search patient, email or phone..."
           />
         </div>
@@ -110,9 +108,12 @@ export default function LeadList() {
         />
       </div>
 
-      {filtered.length ? (
-        <LeadTable leads={filtered} onAssign={setSelectedLead} />
-      ) : (
+      {filtered.length?(
+        <LeadTable
+          leads={filtered}
+          onAssign={setSelectedLead}
+        />
+      ):(
         <EmptyState
           title="No Active Leads"
           description="No active leads match the selected filters."
@@ -122,8 +123,8 @@ export default function LeadList() {
       <AssignDoctorModal
         open={!!selectedLead}
         leadId={selectedLead?.id}
-        onClose={() => setSelectedLead(null)}
-        onAssigned={() => {
+        onClose={()=>setSelectedLead(null)}
+        onAssigned={()=>{
           setSelectedLead(null);
           loadLeads();
         }}
