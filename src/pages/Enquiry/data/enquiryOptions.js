@@ -20,20 +20,12 @@ export const enquiryOptions={
     "Not sure yet, I would like guidance"
   ],
 
-  pathways:[
-    "Restore",
-    "Rebalance",
-    "Longevity",
-    "Sovereign",
-    "I would like DARSHAI to recommend a suitable pathway"
-  ],
-
-  durations:[
-    "7 days",
-    "14 days",
-    "21 days",
-    "Not decided yet"
-  ],
+  journeyPreferences:[
+  "Restore (7 Day)",
+  "Rebalance (14 Day)",
+  "Longevity (21 Day)",
+  "Not Yet Decided"
+],
 
   startTimes:[
     "Within 30 days",

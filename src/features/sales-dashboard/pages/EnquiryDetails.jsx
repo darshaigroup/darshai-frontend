@@ -707,35 +707,56 @@ export default function EnquiryDetails() {
           {/* ===================================================
               JOURNEY PREFERENCES
           =================================================== */}
-
           <AccordionSection
             id="journey"
             title="Journey Preferences"
-            description="Preferred duration, start date and investment"
+            description="Preferred pathway, duration, start date and investment"
             icon={CalendarDays}
             open={openSections.journey}
             onToggle={toggleSection}
           >
             <div className="grid gap-3 sm:grid-cols-2">
-              <Row
-                label="Duration Being Considered"
-                value={lifestyle.duration || travel.duration}
-              />
+              {(() => {
+                const journeyPreference=String(enquiry.journey_preference||"").trim();
 
-              <Row
-                label="Starting Your Journey"
-                value={lifestyle.startTime || travel.startTime}
-              />
+                let pathway="Not Yet Decided";
+                let duration="Not Yet Decided";
 
-              <Row
-                label="Approximate Budget Range"
-                value={enquiry.investment_preference}
-              />
+                if(/restore/i.test(journeyPreference)){
+                  pathway="Restore";
+                  duration="7 Days";
+                }else if(/rebalance/i.test(journeyPreference)){
+                  pathway="Rebalance";
+                  duration="14 Days";
+                }else if(/longevity/i.test(journeyPreference)){
+                  pathway="Longevity";
+                  duration="21 Days";
+                }
 
-              <Row
-                label="Journey Preference"
-                value={enquiry.journey_preference}
-              />
+                return(
+                  <>
+                    <Row
+                      label="Wellness Pathway"
+                      value={pathway}
+                    />
+
+                    <Row
+                      label="Duration"
+                      value={duration}
+                    />
+
+                    <Row
+                      label="Starting Your Journey"
+                      value={lifestyle.startTime||travel.startTime}
+                    />
+
+                    <Row
+                      label="Approximate Budget Range"
+                      value={enquiry.investment_preference}
+                    />
+                  </>
+                );
+              })()}
             </div>
           </AccordionSection>
 
