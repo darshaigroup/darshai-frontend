@@ -25,7 +25,7 @@ import EnquiryPage from"@/pages/Enquiry/WellnessEnquiry";
 export default function LegacyRoutes(){
   return(
     <Routes>
-      {/* Standalone enquiry page - no navbar/footer */}
+   
       <Route path="/enquiry" element={<EnquiryPage/>}/>
 
       {/* Legacy website */}
