@@ -56,9 +56,9 @@ export const lifestyleMatrixSections = [
         id: "preferred_experience",
         question: "Which Darshai wellness experience interests you the most?",
         options: [
-          "Darshai Vital Reset",
-          "Darshai Mind Balance",
-          "Darshai Deep Detox",
+          "Darshai Resore",
+          "Darshai Rebalance",
+          "Darshai Longivity",
           "Darshai Personalised Journey",
         ],
       },
@@ -69,17 +69,7 @@ export const lifestyleMatrixSections = [
         options: ["Within 30 Days", "Within 60 Days", "Exploring Options"],
       },
 
-      {
-        id: "budget_range",
-        question:
-          "What is your preferred investment range for this wellness retreat?(per person)",
-        options: [
-          "₹10,000–20,000",
-          "₹20,000–40,000",
-          "₹40,000–75,000",
-          "₹75,000+",
-        ],
-      },
+    
     ],
   },
 

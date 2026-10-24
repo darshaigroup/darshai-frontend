@@ -1,32 +1,47 @@
 const API=import.meta.env.VITE_API_URL||"http://localhost:5000";
-
 const getToken=()=>localStorage.getItem("token");
 
 const request=async(endpoint,options={})=>{
-  const response=await fetch(`${API}${endpoint}`,{cache:"no-store",...options,headers:{"Content-Type":"application/json",Authorization:`Bearer ${getToken()}`,...options.headers}});
+  const response=await fetch(`${API}${endpoint}`,{
+    cache:"no-store",
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:`Bearer ${getToken()}`,
+      ...options.headers
+    }
+  });
   const data=await response.json().catch(()=>({}));
-
   if(response.status===401){
     window.dispatchEvent(new CustomEvent("session-expired",{detail:{message:data.message||"Your session has expired. Please login again."}}));
     throw new Error("SESSION_EXPIRED");
   }
-
-  if(!response.ok) throw new Error(data.message||"Something went wrong");
+  if(!response.ok)throw new Error(data.message||"Something went wrong");
   return data.data;
 };
 
+// Dashboard
 export const getDashboard=()=>request("/api/sales/dashboard");
 export const getAnalytics=()=>request("/api/sales/analytics");
+export const getDoctors=()=>request("/api/sales/doctors");
 export const getLeads=()=>request("/api/sales");
 export const searchLeads=search=>request(`/api/sales/search?search=${encodeURIComponent(search)}`);
 export const getLeadDetails=id=>request(`/api/sales/${id}`);
-export const getLifestyleAssessment=id=>request(`/api/sales/${id}/lifestyle`);
-export const getFollowupHistory=id=>request(`/api/sales/${id}/followups`);
 export const updateLeadStatus=(id,lead_status)=>request(`/api/sales/${id}/status`,{method:"PATCH",body:JSON.stringify({lead_status})});
 export const updateSalesNotes=(id,sales_notes)=>request(`/api/sales/${id}/notes`,{method:"PATCH",body:JSON.stringify({sales_notes})});
 export const updateFollowup=(id,followup_date,sales_notes)=>request(`/api/sales/${id}/followup`,{method:"PATCH",body:JSON.stringify({followup_date,sales_notes})});
 export const assignDoctor=(id,doctor_id)=>request(`/api/sales/${id}/assign`,{method:"PATCH",body:JSON.stringify({doctor_id})});
-export const getDoctors=()=>request("/api/sales/doctors");
+export const getFollowupHistory=id=>request(`/api/sales/${id}/followups`);
+export const getLifestyleAssessment=id=>request(`/api/sales/${id}/lifestyle`);
+export const getClientAssessmentReports=id=>request(`/api/sales/${id}/assessment-reports`);
 export const getPasswordSetupPending=()=>request("/api/sales/password-setup/pending");
 export const sendPasswordSetupEmail=patientId=>request(`/api/sales/${patientId}/password-setup`,{method:"POST"});
-export const getClientAssessmentReports=(patientId)=>request(`/api/sales/${patientId}/assessment-reports`);
+export const sendWellnessAssessmentEmail=id=>request(`/api/sales/${id}/wellness-assessment/send`,{method:"POST"});
+export const getWellnessAssessmentStatus=id=>request(`/api/sales/${id}/wellness-assessment`);
+export const getEnquiries=()=>request("/api/sales/enquiries");
+export const searchEnquiries=search=>request(`/api/sales/enquiries/search?search=${encodeURIComponent(search)}`);
+export const getEnquiryDetails=id=>request(`/api/sales/enquiries/${id}`);
+export const updateEnquiryStatus=(id,status)=>request(`/api/sales/enquiries/${id}/status`,{method:"PATCH",body:JSON.stringify({status})});
+export const updateEnquiryNotes=(id,notes)=>request(`/api/sales/enquiries/${id}/notes`,{method:"PATCH",body:JSON.stringify({notes})});
+export const assignEnquiry=(id,assigned_to)=>request(`/api/sales/enquiries/${id}/assign`,{method:"PATCH",body:JSON.stringify({assigned_to})});
+export const sendEnquiryRegistrationEmail=id=>request(`/api/sales/enquiries/${id}/registration`,{method:"POST"});

@@ -130,9 +130,9 @@ Balmatta, Mangalore-575 001
           <FooterLink to="/program">
             Wellness Programmes
           </FooterLink>
-          <FooterLink to="/program/geo-wellness-center">
+          {/* <FooterLink to="/program/geo-wellness-center">
             Geo-Wellness Center
-          </FooterLink>
+          </FooterLink> */}
         </FooterColumn>
 
         {/* 🔥 ARCHIVE */}
