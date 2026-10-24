@@ -29,3 +29,4 @@ export const assignDoctor=(id,doctor_id)=>request(`/api/sales/${id}/assign`,{met
 export const getDoctors=()=>request("/api/sales/doctors");
 export const getPasswordSetupPending=()=>request("/api/sales/password-setup/pending");
 export const sendPasswordSetupEmail=patientId=>request(`/api/sales/${patientId}/password-setup`,{method:"POST"});
+export const getClientAssessmentReports=(patientId)=>request(`/api/sales/${patientId}/assessment-reports`);

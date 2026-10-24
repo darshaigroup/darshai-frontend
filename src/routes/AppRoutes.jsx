@@ -78,6 +78,7 @@ const FollowupHistory = lazy(() => import("@/features/sales-dashboard/pages/Foll
 const AssignDoctor = lazy(() => import("@/features/sales-dashboard/pages/AssignDoctor"));
 const ClosedLeads = lazy(() => import("@/features/sales-dashboard/pages/ClosedLeads"));
 const PasswordSetup = lazy(() =>import("@/features/sales-dashboard/pages/PasswordSetup"));
+const ClientAssessments = lazy(() => import("@/features/sales-dashboard/pages/ClientAssessments"));
 
 // HR Dashboard
 const HRDashboardLayout = lazy(() => import("@/features/hr-dashboard/HRDashboardLayout"));
@@ -194,6 +195,7 @@ const AppRoutes = () => {
             <Route path="followups" element={<FollowUps />} />
             <Route path="followups/:id" element={<FollowupHistory />} />
             <Route path="assign-doctor" element={<AssignDoctor />} />
+            <Route path="client-assessments" element={<ClientAssessments />} />
             <Route path="password-setup" element={<PasswordSetup />} />
             <Route path="closed" element={<ClosedLeads />} />
           </Route>
