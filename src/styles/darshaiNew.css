@@ -1,0 +1,1420 @@
+
+@media (prefers-reduced-motion: reduce) {
+  .darshai-new-site, .darshai-new-site * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.darshai-new-site :focus-visible {
+  outline: 2px solid #0E4D3A;
+  outline-offset: 2px;
+}
+
+/* On dark sections use white outline */
+.darshai-new-site .bg-\[\#1D1D1F\] :focus-visible,
+.darshai-new-site .section-hero :focus-visible,
+.darshai-new-site .darshai-card-dark :focus-visible,
+.darshai-new-site [data-theme="dark"] :focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+.darshai-new-site {
+  /* Design System Color Tokens */
+  --canvas: #F5F5F7;
+  --white: #FFFFFF;
+  --graphite: #1D1D1F;
+  --darshai-green: #0E4D3A;
+  --muted-gold: #C6A660;
+  --secondary-text: #3A3A3C;
+  --border-color: #D2D2D7;
+
+  --background: #F5F5F7;
+  --foreground: #1D1D1F;
+  --primary: #0E4D3A;
+  --primary-foreground: #FFFFFF;
+  --accent: #C6A660;
+  --muted-foreground: #3A3A3C;
+  --border: #D2D2D7;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Global Unified Typography Tokens (Apple-inspired system) */
+  --text-hero: clamp(42px, 5vw, 80px);
+  --text-section: clamp(38px, 4.2vw, 64px);
+  --text-subsection: clamp(30px, 3vw, 44px);
+  --text-lead: clamp(18px, 1.7vw, 24px);
+  --text-body: 17px;
+  --text-body-bold: clamp(17px, 1.2vw, 19px);
+  --text-card-title: clamp(17px, 1.4vw, 22px);
+  --text-ui: clamp(14px, 0.9vw, 15px);
+  --text-small: 14px;
+  --text-caption: 12px;
+  --text-eyebrow: clamp(10px, 0.75vw, 11px);
+
+  /* Layout & Grid System Tokens */
+  --max-content-width: 1320px;
+  --base-unit: 8px;
+
+  /* Spacing Scale (Base: 8px)
+     8 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 120 / 144 / 160 px */
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-120: 120px;
+  --space-144: 144px;
+  --space-160: 160px;
+
+  /* ==========================================================================
+     Responsive System Parameters (Institutional 4-Tier Specification)
+     - Tier 1 (≤767 px):    4-col,  20 px padding, Single-flow, compact nav, horizontal tabs
+     - Tier 2 (768–1279 px): 8-col,  32–40 px padding, Simplify multi-column compositions
+     - Tier 3 (1280–1439 px):12-col, 40–48 px padding, Slight type/density reduction
+     - Tier 4 (≥1440 px):   12-col, 48–64 px padding, Full editorial / immersive layouts
+     ========================================================================== */
+  --range-mobile-cols: 4;
+  --range-mobile-pad: 20px;
+  --range-mobile-gutter: 16px;
+
+  --range-tablet-cols: 8;
+  --range-tablet-pad: 36px; /* 32–40 px */
+  --range-tablet-gutter: 20px;
+
+  --range-desktop-cols: 12;
+  --range-desktop-pad: 44px; /* 40–48 px */
+  --range-desktop-gutter: 24px;
+
+  --range-editorial-cols: 12;
+  --range-editorial-pad: 56px; /* 48–64 px */
+  --range-editorial-gutter: 28px;
+
+  /* Aliases */
+  --mobile-cols: var(--range-mobile-cols);
+  --mobile-side-pad: var(--range-mobile-pad);
+  --mobile-gutter: var(--range-mobile-gutter);
+
+  --tablet-cols: var(--range-tablet-cols);
+  --tablet-side-pad: var(--range-tablet-pad);
+  --tablet-gutter: var(--range-tablet-gutter);
+
+  --desktop-cols: var(--range-desktop-cols);
+  --desktop-side-pad: var(--range-desktop-pad);
+  --desktop-gutter: var(--range-desktop-gutter);
+}
+
+/* ==========================================================================
+   Universal Four-Tier Layout & Responsive Grid Classes
+   - Range ≥1440 px:   12-col grid, 48–64 px padding, Full editorial / immersive layouts
+   - Range 1280–1439 px: 12-col grid, 40–48 px padding, Slight type/density reduction
+   - Range 768–1279 px:  8-col grid, 32–40 px padding, Simplify multi-column compositions
+   - Range ≤767 px:      4-col grid, 20 px padding, Single-flow, compact nav, horizontal tabs
+   ========================================================================== */
+
+.darshai-container,
+.responsive-container,
+.darshai-layout-container {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--range-mobile-pad); /* ≤767 px: 20 px */
+  padding-right: var(--range-mobile-pad);
+}
+
+@media (min-width: 768px) {
+  .darshai-container,
+  .responsive-container,
+  .darshai-layout-container {
+    padding-left: 36px; /* 768–1279 px: 32–40 px */
+    padding-right: 36px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .darshai-container,
+  .responsive-container,
+  .darshai-layout-container {
+    padding-left: 44px; /* 1280–1439 px: 40–48 px */
+    padding-right: 44px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .darshai-container,
+  .responsive-container,
+  .darshai-layout-container {
+    padding-left: 56px; /* ≥1440 px: 48–64 px */
+    padding-right: 56px;
+  }
+}
+
+/* Institutional Four-Tier Responsive Grid Component */
+.darshai-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Range ≤767 px: 4-col */
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .darshai-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr)); /* Range 768–1279 px: 8-col */
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .darshai-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr)); /* Range 1280–1439 px: 12-col */
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .darshai-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr)); /* Range ≥1440 px: 12-col */
+    gap: 28px;
+  }
+}
+
+/* Density and Editorial Typography Behaviors */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  /* Range 1280–1439: Slight type/density reduction */
+  .darshai-editorial-heading {
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .darshai-editorial-body {
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 1440px) {
+  /* Range ≥1440: Full editorial / immersive layouts */
+  .darshai-editorial-heading {
+    letter-spacing: -0.025em;
+    line-height: 1.06;
+  }
+  .darshai-editorial-body {
+    line-height: 1.68;
+  }
+}
+
+/* ==========================================================================
+   Universal Section Sizing Archetypes
+   - Hero: 88–100vh desktop, minimum about 760 px; mobile uses content-driven
+     height with an appropriate minimum (560–600 px).
+   - Standard editorial section: roughly 680–840 px (desktop min-h 720 px).
+   - Immersive feature: roughly 760–1000 px (desktop min-h 840 px).
+   - Large image/story section: roughly 720–920 px (desktop min-h 780 px).
+   - Final CTA: roughly 720–860 px (desktop min-h 760 px).
+   ========================================================================== */
+
+.section-hero {
+  position: relative;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .section-hero {
+    min-height: 680px;
+  }
+}
+@media (min-width: 1024px) {
+  .section-hero {
+    min-height: 760px;
+    height: 92vh; /* 88–100vh desktop */
+  }
+}
+
+.section-editorial {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-editorial {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-editorial {
+    min-height: 720px; /* 680–840 px */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.section-immersive {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-immersive {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-immersive {
+    min-height: 840px; /* 760–1000 px */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+  }
+}
+
+.section-story {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-story {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-story {
+    min-height: 780px; /* 720–920 px */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.section-cta {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-cta {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-cta {
+    min-height: 760px; /* 720–860 px */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+  }
+}
+
+.section-editorial > div,
+.section-immersive > div,
+.section-story > div,
+.section-cta > div {
+  width: 100%;
+}
+
+.darshai-new-site,
+.darshai-new-site * {
+  box-sizing: border-box;
+}
+
+ .darshai-new-site {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  letter-spacing: -0.02em;
+}
+
+/* Inter is strictly the ONLY font family */
+.darshai-new-site .font-mono,
+.darshai-new-site code,
+.darshai-new-site pre,
+.darshai-new-site kbd {
+  font-family: var(--font-body) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Apple-Inspired Unified Responsive Typography System
+   ========================================================================== */
+
+.typography-hero-display,
+.text-hero {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.typography-page-h1,
+.typography-section-h2,
+.text-section-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-section);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.typography-h3,
+.text-subsection-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-subsection);
+  font-weight: 600;
+  line-height: 1.10;
+  letter-spacing: -0.02em;
+}
+
+.typography-body-large,
+.typography-lead,
+.text-lead {
+  font-family: var(--font-body);
+  font-size: var(--text-lead);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.typography-body,
+.text-body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.60;
+  letter-spacing: 0;
+}
+
+.typography-body-bold,
+.text-body-bold {
+  font-family: var(--font-body);
+  font-size: var(--text-body-bold);
+  font-weight: 600;
+  line-height: 1.50;
+  letter-spacing: 0;
+}
+
+.typography-card-title,
+.text-card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-card-title);
+  font-weight: 600;
+  line-height: 1.20;
+  letter-spacing: -0.015em;
+}
+
+.typography-ui-button,
+.text-ui-btn {
+  font-family: var(--font-body);
+  font-size: var(--text-ui);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.typography-eyebrow,
+.text-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  line-height: 1.20;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+.typography-metadata,
+.typography-caption,
+.text-caption {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.darshai-new-site::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.darshai-new-site::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.darshai-new-site::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.darshai-new-site .no-scrollbar::-webkit-scrollbar,
+.darshai-new-site .scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.darshai-new-site .no-scrollbar,
+.darshai-new-site .scrollbar-none {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes revealRight {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards slideInRight;
+}
+
+.animate-fade-up {
+  animation: 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards fadeUp;
+}
+
+.animate-fade-in {
+  animation: 1s forwards fadeIn;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.opacity-0-init {
+  opacity: 0;
+}
+
+/* ==========================================================================
+   Universal Button Design System
+   Specification:
+   - Primary: 48–52 px desktop / 46–50 px mobile, pill radius about 999 px,
+     DARSHAI green (#0E4D3A) with white text.
+   - Secondary: quiet text link or restrained outline.
+   - One primary CTA per major section.
+   - Hover: subtle color/opacity/1–2% lift; no glow.
+   ========================================================================== */
+
+.darshai-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  height: 48px; /* 46–50 px mobile */
+  border-radius: 9999px; /* pill radius about 999 px */
+  background-color: #0E4D3A; /* DARSHAI green */
+  color: #FFFFFF;
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid #0E4D3A;
+  box-shadow: none; /* strictly no glow */
+  outline: none;
+  cursor: pointer;
+  transition: background-color 200ms ease-out, border-color 200ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .darshai-btn-primary {
+    height: 50px; /* 48–52 px desktop */
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: 14.5px;
+  }
+}
+
+.darshai-btn-primary:hover {
+  background-color: #0B3B2C;
+  border-color: #0B3B2C;
+  transform: scale(1.01);
+  box-shadow: none;
+}
+
+.darshai-btn-primary:active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+}
+
+.darshai-btn-primary svg,
+.darshai-btn-secondary svg,
+.darshai-btn-secondary-dark svg,
+.darshai-btn-link svg,
+.darshai-btn-link-dark svg {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.darshai-btn-primary:hover svg,
+.darshai-btn-secondary:hover svg,
+.darshai-btn-secondary-dark:hover svg,
+.darshai-btn-link:hover svg,
+.darshai-btn-link-dark:hover svg {
+  transform: translateX(3px);
+}
+
+.darshai-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.darshai-btn-primary:focus-visible {
+  outline: 2px solid #0E4D3A;
+  outline-offset: 2px;
+}
+
+/* Secondary Variant: Restrained Outline (Pill) */
+.darshai-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  height: 48px; /* 46–50 px mobile */
+  border-radius: 9999px; /* pill radius about 999 px */
+  background-color: transparent;
+  color: #1D1D1F;
+  border: 1px solid #D2D2D7;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: none; /* strictly no glow */
+  outline: none;
+  cursor: pointer;
+  transition: border-color 200ms ease-out, background-color 200ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .darshai-btn-secondary {
+    height: 50px; /* 48–52 px desktop */
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    font-size: 14.5px;
+  }
+}
+
+.darshai-btn-secondary:hover {
+  border-color: #1D1D1F;
+  background-color: rgba(0, 0, 0, 0.03);
+  transform: scale(1.01);
+  box-shadow: none;
+}
+
+.darshai-btn-secondary:active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+}
+
+.darshai-btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.darshai-btn-secondary:focus-visible {
+  outline: 2px solid #1D1D1F;
+  outline-offset: 2px;
+}
+
+/* Secondary Variant (Over dark backgrounds): Restrained Outline Dark */
+.darshai-btn-secondary-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  height: 48px; /* 46–50 px mobile */
+  border-radius: 9999px; /* pill radius about 999 px */
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: none; /* strictly no glow */
+  outline: none;
+  cursor: pointer;
+  transition: border-color 200ms ease-out, background-color 200ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .darshai-btn-secondary-dark {
+    height: 50px; /* 48–52 px desktop */
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    font-size: 14.5px;
+  }
+}
+
+.darshai-btn-secondary-dark:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.06);
+  transform: scale(1.01);
+  box-shadow: none;
+}
+
+.darshai-btn-secondary-dark:active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+}
+
+.darshai-btn-secondary-dark:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.darshai-btn-secondary-dark:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* Secondary Variant: Quiet Text Link */
+.darshai-btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: #6E6E73;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: color 200ms ease-out, opacity 200ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.darshai-btn-link:hover {
+  color: #1D1D1F;
+  transform: scale(1.01);
+}
+
+.darshai-btn-link:active {
+  transform: scale(0.98);
+}
+
+.darshai-btn-link-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: color 200ms ease-out, opacity 200ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.darshai-btn-link-dark:hover {
+  color: #FFFFFF;
+  transform: scale(1.01);
+}
+
+.darshai-btn-link-dark:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   Universal Card Design System
+   Specification:
+   - Default radius: 20–24 px (20 px mobile, 24 px desktop)
+   - Border: 1 px #D2D2D7 only when needed
+   - Shadow: soft and low-contrast; strictly no floating-card overload
+   - Padding: 24–32 px (24 px mobile, 32 px desktop)
+   - Scope: Used strictly for grouped information, not as default layout primitive
+   ========================================================================== */
+
+.darshai-card {
+  border-radius: 20px;
+  background-color: #FFFFFF;
+  padding: 24px;
+  /* Soft, low-contrast ambient shadow — no floating card overload */
+  box-shadow: 0 4px 20px -2px rgba(29, 29, 31, 0.04), 0 2px 6px -1px rgba(29, 29, 31, 0.02);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+@media (min-width: 768px) {
+  .darshai-card {
+    border-radius: 24px;
+    padding: 32px;
+  }
+}
+
+.darshai-card-bordered {
+  border: 1px solid #D2D2D7;
+}
+
+.darshai-card-subtle {
+  background-color: #F5F5F7;
+  box-shadow: 0 2px 12px -2px rgba(29, 29, 31, 0.03);
+}
+
+.darshai-card-dark {
+  background-color: #1D1D1F;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.25);
+}
+
+.darshai-card-interactive {
+  cursor: pointer;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.darshai-card-interactive:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 26px -4px rgba(29, 29, 31, 0.07), 0 3px 8px -2px rgba(29, 29, 31, 0.03);
+}
+
+.darshai-card-interactive.darshai-card-bordered:hover {
+  border-color: #0E4D3A;
+}
+
+.darshai-card-interactive.darshai-card-dark:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Universal Tab Component Design System
+   Specification:
+   - Purpose: Used for the four program frameworks and category navigation
+   - Height: 40–48 px (40 px mobile, 44–48 px desktop)
+   - Selected state: DARSHAI green (#0E4D3A) or strong contrast
+   - Keyboard accessible: Native button focus, ARIA role="tab", visible focus rings
+   - Mobile: Horizontal scrolling strictly preferred to wrapping into multiple rows
+   ========================================================================== */
+
+.darshai-tabs-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding-bottom: 4px;
+}
+
+.darshai-tabs-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.darshai-tab-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 9999px; /* Pill form for single-line label dignity */
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  border: 1px solid #D2D2D7;
+  background-color: #FFFFFF;
+  color: #1D1D1F;
+}
+
+@media (min-width: 768px) {
+  .darshai-tab-item {
+    height: 44px;
+    min-height: 44px;
+    font-size: 14px;
+    padding: 0 22px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .darshai-tab-item {
+    height: 48px;
+    min-height: 48px;
+  }
+}
+
+.darshai-tab-item:hover:not(.darshai-tab-item-selected) {
+  background-color: #F5F5F7;
+  border-color: #6E6E73;
+  color: #1D1D1F;
+}
+
+.darshai-tab-item-selected {
+  background-color: #0E4D3A;
+  border-color: #0E4D3A;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px -1px rgba(14, 77, 58, 0.25);
+}
+
+.darshai-tab-item-selected:hover {
+  background-color: #0B3B2C;
+  border-color: #0B3B2C;
+}
+
+.darshai-tab-item:focus-visible {
+  outline: 2px solid #0E4D3A;
+  outline-offset: 2px;
+}
+
+/* Dark mode tab variant */
+.darshai-tab-item-dark {
+  background-color: #1D1D1F;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.darshai-tab-item-dark:hover:not(.darshai-tab-item-dark-selected) {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+.darshai-tab-item-dark-selected {
+  background-color: #0E4D3A;
+  border-color: #0E4D3A;
+  color: #FFFFFF;
+  box-shadow: 0 2px 12px -1px rgba(14, 77, 58, 0.4);
+}
+
+.darshai-tab-item-dark:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   DARSHAI Institutional Form System
+   - Field height: 52–56 px desktop / 50–54 px mobile
+   - Radius: 12–16 px (standard 14 px)
+   - Visible labels: high contrast, clear semantic associations
+   - Inline validation states: idle, focus, valid (#0E4D3A), invalid (#C93B32)
+   - Smooth micro-transitions for progressive disclosure
+   ========================================================================== */
+
+.darshai-form-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #1D1D1F;
+  margin-bottom: 8px;
+}
+
+.darshai-form-label-badge {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #6E6E73;
+}
+
+.darshai-input,
+.darshai-select {
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+  max-height: 54px;
+  border-radius: 14px; /* 12–16 px standard */
+  border: 1.5px solid #D2D2D7;
+  background-color: #FFFFFF;
+  padding: 0 18px;
+  font-size: 15px;
+  color: #1D1D1F;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .darshai-input,
+  .darshai-select {
+    height: 54px;
+    min-height: 52px;
+    max-height: 56px;
+    font-size: 15px;
+    padding: 0 20px;
+    border-radius: 14px; /* 12–16 px standard */
+  }
+}
+
+.darshai-input:hover,
+.darshai-select:hover {
+  border-color: #86868B;
+}
+
+.darshai-input:focus,
+.darshai-select:focus {
+  border-color: #0E4D3A;
+  box-shadow: 0 0 0 3px rgba(14, 77, 58, 0.12);
+  background-color: #FFFFFF;
+}
+
+/* Valid input state */
+.darshai-input-valid,
+.darshai-select-valid {
+  border-color: #0E4D3A;
+}
+
+.darshai-input-valid:focus,
+.darshai-select-valid:focus {
+  border-color: #0E4D3A;
+  box-shadow: 0 0 0 3px rgba(14, 77, 58, 0.15);
+}
+
+/* Invalid / Error input state */
+.darshai-input-error,
+.darshai-select-error {
+  border-color: #C93B32 !important;
+  background-color: #FFFBFB;
+}
+
+.darshai-input-error:focus,
+.darshai-select-error:focus {
+  border-color: #C93B32 !important;
+  box-shadow: 0 0 0 3px rgba(201, 59, 50, 0.12) !important;
+}
+
+/* Textarea styling */
+.darshai-textarea {
+  width: 100%;
+  min-height: 130px;
+  border-radius: 14px; /* 12–16 px standard */
+  border: 1.5px solid #D2D2D7;
+  background-color: #FFFFFF;
+  padding: 16px 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1D1D1F;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+  outline: none;
+  resize: vertical;
+}
+
+@media (min-width: 768px) {
+  .darshai-textarea {
+    min-height: 140px;
+    padding: 18px 20px;
+    border-radius: 14px;
+  }
+}
+
+.darshai-textarea:hover {
+  border-color: #86868B;
+}
+
+.darshai-textarea:focus {
+  border-color: #0E4D3A;
+  box-shadow: 0 0 0 3px rgba(14, 77, 58, 0.12);
+}
+
+.darshai-textarea-error {
+  border-color: #C93B32 !important;
+  background-color: #FFFBFB;
+}
+
+.darshai-textarea-error:focus {
+  border-color: #C93B32 !important;
+  box-shadow: 0 0 0 3px rgba(201, 59, 50, 0.12) !important;
+}
+
+/* Error message text */
+.darshai-field-error-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #C93B32;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Helper text */
+.darshai-field-helper-msg {
+  font-size: 12px;
+  color: #6E6E73;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Apple-Style Ambient Diffused Shadow & Card Hover System
+   - Slow, subtle Apple Store product-card hover feeling (https://www.apple.com/in/store)
+   - 800ms cubic-bezier(0.22, 1, 0.36, 1) continuous motion
+   ========================================================================== */
+.apple-hover-wrapper {
+  position: relative;
+}
+
+.apple-hover-shadow {
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.035);
+  filter: blur(20px);
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.apple-hover-wrapper:hover .apple-hover-shadow,
+.group:hover .apple-hover-shadow,
+.group\/apple-img:hover .apple-hover-shadow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.apple-hover-card {
+  position: relative;
+  z-index: 10;
+  transition: 
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1), 
+    box-shadow 800ms cubic-bezier(0.22, 1, 0.36, 1), 
+    border-color 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, box-shadow, border-color;
+}
+
+.apple-hover-wrapper:hover .apple-hover-card,
+.group:hover .apple-hover-card,
+.group\/apple-img:hover .apple-hover-card {
+  z-index: 30;
+  transform: translateY(-4px) scale(1.02) !important;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.04),
+    0 16px 36px rgba(0, 0, 0, 0.07),
+    0 28px 65px rgba(0, 0, 0, 0.055) !important;
+  border-color: rgba(0, 0, 0, 0.085) !important;
+}
+
+.apple-hover-card img,
+.apple-hover-card .smart-image {
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.apple-hover-wrapper:hover .apple-hover-card img,
+.group:hover .apple-hover-card img,
+.group\/apple-img:hover .apple-hover-card img,
+.apple-hover-wrapper:hover .apple-hover-card .smart-image,
+.group:hover .apple-hover-card .smart-image,
+.group\/apple-img:hover .apple-hover-card .smart-image {
+  transform: translateY(-2px) scale(1.025);
+}
+
+/* Premium Apple-Style Product Card Component with Smooth Elevation */
+.apple-product-card {
+  position: relative;
+  z-index: 10;
+  transition: 
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1), 
+    border-color 500ms cubic-bezier(0.22, 1, 0.36, 1), 
+    box-shadow 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, box-shadow, border-color;
+}
+
+/* Light / White cards default styling */
+.apple-product-card:not([class*="bg-[#1"]):not([class*="bg-[#2"]):not([class*="bg-black"]) {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.055);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025), 0 6px 18px rgba(0, 0, 0, 0.025);
+}
+
+/* Base Soft Ambient Light/Shadow separation layer behind the card */
+.apple-product-card::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: rgba(0, 0, 0, 0.035);
+  filter: blur(16px);
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: -1;
+  will-change: opacity, transform;
+}
+
+/* Hover for Light/Cement Sections (Card scale: 1.00 -> 1.015, no 3D tilt) */
+.apple-product-card:hover {
+  z-index: 30;
+  transform: scale(1.015) !important;
+}
+
+.apple-product-card:not([class*="bg-[#1"]):not([class*="bg-[#2"]):not([class*="bg-black"]):hover {
+  border-color: rgba(0, 0, 0, 0.085) !important;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.035),
+    0 12px 28px rgba(0, 0, 0, 0.06) !important;
+}
+
+.apple-product-card:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Product Image inside card hover: scale 1.00 -> 1.03 */
+.apple-product-card img,
+.apple-product-card .smart-image,
+.apple-product-card picture,
+.group:hover .card-image img {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  will-change: transform;
+}
+
+.apple-product-card:hover img,
+.apple-product-card:hover .smart-image,
+.apple-product-card:hover picture,
+.group:hover .card-image img {
+  transform: scale(1.03) !important;
+}
+
+/* Arrow inside card hover: translateX 0 -> 4px */
+.apple-product-card .card-arrow,
+.apple-product-card [data-arrow],
+.apple-product-card svg[class*="lucide-arrow"],
+.apple-product-card svg[class*="lucide-chevron"],
+.group .card-arrow,
+.group [data-arrow],
+.group svg[class*="lucide-arrow-right"],
+.group svg[class*="lucide-chevron-right"],
+.group-hover\:translate-x-1 {
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  will-change: transform;
+}
+
+.apple-product-card:hover .card-arrow,
+.apple-product-card:hover [data-arrow],
+.apple-product-card:hover svg[class*="lucide-arrow"],
+.apple-product-card:hover svg[class*="lucide-chevron"],
+.group:hover .card-arrow,
+.group:hover [data-arrow],
+.group:hover svg[class*="lucide-arrow-right"],
+.group:hover svg[class*="lucide-chevron-right"],
+.group:hover .group-hover\:translate-x-1 {
+  transform: translateX(4px) !important;
+}
+
+/* Customize for Dark/Graphite Section Backgrounds (#1D1D1F, #242426, #232326) */
+.bg-\[\#1D1D1F\] .apple-product-card,
+.bg-\[\#242426\] .apple-product-card,
+.bg-\[\#232326\] .apple-product-card,
+[class*="bg-[#1D"] .apple-product-card,
+[class*="bg-[#24"] .apple-product-card,
+[class*="bg-[#23"] .apple-product-card,
+.apple-product-card[class*="bg-[#1D"],
+.apple-product-card[class*="bg-[#24"],
+.apple-product-card[class*="bg-[#23"] {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bg-\[\#1D1D1F\] .apple-product-card::before,
+.bg-\[\#242426\] .apple-product-card::before,
+.bg-\[\#232326\] .apple-product-card::before,
+[class*="bg-[#1D"] .apple-product-card::before,
+[class*="bg-[#24"] .apple-product-card::before,
+[class*="bg-[#23"] .apple-product-card::before,
+.apple-product-card[class*="bg-[#1D"]::before,
+.apple-product-card[class*="bg-[#24"]::before,
+.apple-product-card[class*="bg-[#23"]::before {
+  background: rgba(255, 255, 255, 0.03);
+  filter: blur(16px);
+}
+
+.bg-\[\#1D1D1F\] .apple-product-card:hover,
+.bg-\[\#242426\] .apple-product-card:hover,
+.bg-\[\#232326\] .apple-product-card:hover,
+[class*="bg-[#1D"] .apple-product-card:hover,
+[class*="bg-[#24"] .apple-product-card:hover,
+[class*="bg-[#23"] .apple-product-card:hover,
+.apple-product-card[class*="bg-[#1D"]:hover,
+.apple-product-card[class*="bg-[#24"]:hover,
+.apple-product-card[class*="bg-[#23"]:hover {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.35),
+    0 16px 36px rgba(0, 0, 0, 0.45) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apple-hover-shadow {
+    transition: none !important;
+    opacity: 0 !important;
+  }
+  .apple-hover-card {
+    transition: none !important;
+  }
+  .apple-hover-wrapper:hover .apple-hover-card,
+  .group:hover .apple-hover-card,
+  .group\/apple-img:hover .apple-hover-card {
+    transform: none !important;
+    filter: none !important;
+  }
+  .apple-product-card {
+    transition: none !important;
+  }
+  .apple-product-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .apple-product-card img,
+  .apple-product-card .smart-image {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   Cross-Document View Transitions (Safari 18+, Chrome, Edge)
+   Subtle Apple soft fade transition (200-350ms, no dramatic wipes)
+   ========================================================================== */
+::view-transition-old(root) {
+  animation: 200ms cubic-bezier(0.22, 1, 0.36, 1) both darshai-view-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 260ms cubic-bezier(0.22, 1, 0.36, 1) both darshai-view-fade-in;
+}
+
+@keyframes darshai-view-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes darshai-view-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes arrowSlide {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+} 
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+
+

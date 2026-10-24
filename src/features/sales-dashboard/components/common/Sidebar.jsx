@@ -1,105 +1,52 @@
-import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import {
-  LayoutDashboard,
-  Users,
-  CalendarClock,
-  UserCheck,
-  ShieldCheck,
-  CheckCircle2,
-  ClipboardList,
-  LogOut,
-  ChevronRight,
-} from "lucide-react";
-import logo from "@/assets/images/logo.png";
-import { getDashboard, getLeads } from "../../services/salesService";
+import{useEffect,useState}from"react";
+import{NavLink,useNavigate}from"react-router-dom";
+import{motion}from"framer-motion";
+import{LayoutDashboard,Users,CalendarClock,UserCheck,ShieldCheck,CheckCircle2,ClipboardList,LogOut,ChevronRight,Inbox}from"lucide-react";
+import logo from"@/assets/images/logo.png";
+import{getDashboard,getLeads,getEnquiries}from"../../services/salesService";
 
-const menus = [
-  {
-    title: "Leads",
-    icon: Users,
-    path: "/sales-dashboard/leads",
-    key: "lead",
-  },
-  {
-    title: "Follow Ups",
-    icon: CalendarClock,
-    path: "/sales-dashboard/followups",
-    key: "followups",
-  },
-  {
-    title: "Assign Doctor",
-    icon: UserCheck,
-    path: "/sales-dashboard/assign-doctor",
-    key: "purchased",
-  },
-  {
-    title: "Client Assessment",
-    icon: ClipboardList,
-    path: "/sales-dashboard/client-assessments",
-    key: "client_assessments",
-  },
-  {
-    title: "Password Setup",
-    icon: ShieldCheck,
-    path: "/sales-dashboard/password-setup",
-    key: "password_setup",
-  },
-  {
-    title: "Closed Leads",
-    icon: CheckCircle2,
-    path: "/sales-dashboard/closed",
-    key: "closed",
-  },
+const menus=[
+  {title:"Leads",icon:Users,path:"/sales-dashboard/leads",key:"lead"},
+  {title:"Follow Ups",icon:CalendarClock,path:"/sales-dashboard/followups",key:"followups"},
+  {title:"Assign Doctor",icon:UserCheck,path:"/sales-dashboard/assign-doctor",key:"purchased"},
+  {title:"Client Enquiries",icon:Inbox,path:"/sales-dashboard/enquiries",key:"enquiries"},
+  // {title:"Client Assessment",icon:ClipboardList,path:"/sales-dashboard/client-assessments",key:"client_assessments"},
+  {title:"Password Setup",icon:ShieldCheck,path:"/sales-dashboard/password-setup",key:"password_setup"},
+  {title:"Closed Leads",icon:CheckCircle2,path:"/sales-dashboard/closed",key:"closed"}
 ];
 
-export default function Sidebar({ mobile, close }) {
-  const navigate = useNavigate();
+export default function Sidebar({mobile,close}){
+  const navigate=useNavigate();
+  const[stats,setStats]=useState({total_leads:0,enquiries:0,lead:0,contacted:0,interested:0,purchased:0,assigned:0,closed:0,lost:0,followups:0});
 
-  const [stats, setStats] = useState({
-    total_leads: 0,
-    lead: 0,
-    contacted: 0,
-    interested: 0,
-    purchased: 0,
-    assigned: 0,
-    closed: 0,
-    lost: 0,
-    followups: 0,
-  });
-
-  useEffect(() => {
+  useEffect(()=>{
     loadDashboard();
+    const interval=setInterval(loadDashboard,10000);
+    return()=>clearInterval(interval);
+  },[]);
 
-    const interval = setInterval(loadDashboard, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
-  async function loadDashboard() {
-    try {
-      const [dashboard, leads] = await Promise.all([
+  async function loadDashboard(){
+    try{
+      const[dashboard,leads,enquiries]=await Promise.all([
         getDashboard(),
         getLeads(),
+        getEnquiries()
       ]);
-
-      const followups = (leads || []).filter(
-        (lead) => !!lead.followup_date
-      ).length;
-
+      const followups=(leads||[]).filter(lead=>!!lead.followup_date).length;
       setStats({
-        total_leads: dashboard.total_leads || 0,
-        lead: dashboard.lead || 0,
-        contacted: dashboard.contacted || 0,
-        interested: dashboard.interested || 0,
-        purchased: dashboard.purchased || 0,
-        assigned: dashboard.assigned || 0,
-        closed: dashboard.closed || 0,
-        lost: dashboard.lost || 0,
-        followups,
+        total_leads:dashboard.total_leads||0,
+        enquiries:(enquiries||[]).length,
+        lead:dashboard.lead||0,
+        contacted:dashboard.contacted||0,
+        interested:dashboard.interested||0,
+        purchased:dashboard.purchased||0,
+        assigned:dashboard.assigned||0,
+        closed:dashboard.closed||0,
+        lost:dashboard.lost||0,
+        followups
       });
-    } catch (err) {
-      console.error(err);
+    }catch(err){
+      console.error("SIDEBAR STATS ERROR:",err);
     }
   }
 

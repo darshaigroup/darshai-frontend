@@ -21,6 +21,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 @keyframes blob {
   0% { 
     transform: translate(0px, 0px) scale(1); 
