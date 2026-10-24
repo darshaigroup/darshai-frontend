@@ -52,7 +52,7 @@
     "tailwind-merge": "^3.5.0",
     "tsparticles": "^3.9.1",
     "vanilla-tilt": "^1.8.1",
-    "zod": "^3.25.76"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
