@@ -342,6 +342,7 @@ const AppRoutes = () => {
         {/* ========================= LEGACY DARSHAI WEBSITE ========================= */}
         {/* Existing public site is preserved under /legacy. */}
         <Route path="/*" element={<LegacyRoutes />} />
+        
 
         {/* ========================= DOCTOR DASHBOARD ========================= */}
         <Route element={<ProtectedRoute />}>
